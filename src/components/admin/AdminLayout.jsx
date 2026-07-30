@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store, HeadphonesIcon, CreditCard, Percent } from "lucide-react";
 import logo from '../../assets/logo.jpeg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -19,6 +19,9 @@ const NAV = [
   { href: "/admin/vendor-products", label: "Vendor Products", icon: <Store className="w-4 h-4" /> },
   { href: "/admin/vendor-wallets", label: "Vendor Wallets", icon: <Wallet className="w-4 h-4" /> },
   { href: "/admin/vendor-orders", label: "Vendor Orders", icon: <ShoppingBag className="w-4 h-4" /> },
+  { href: "/admin/support", label: "Support", icon: <HeadphonesIcon className="w-4 h-4" /> },
+  { href: "/admin/subscriptions", label: "Subscriptions", icon: <CreditCard className="w-4 h-4" /> },
+  { href: "/admin/offers", label: "Offers", icon: <Percent className="w-4 h-4" /> },
 ];
 
 export function AdminLayout({ children }) {
@@ -97,7 +100,7 @@ export function AdminLayout({ children }) {
           <p className="text-[#036e26]/40 text-[10px] font-sans truncate">{admin.email}</p>
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {NAV.map((item) => (
             <Link key={item.href} to={item.href} onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-sans font-medium transition-colors ${

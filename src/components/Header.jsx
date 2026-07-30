@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
-  Menu, Search, Heart, ShoppingCart, ArrowLeft, Share2,
-  User, LogIn, Package, MapPin, LayoutDashboard, LogOut,
-  Settings, Shield, ChevronDown, X
+  Menu, Search, Heart, ShoppingCart, LogIn, Package, MapPin, LayoutDashboard, LogOut,
+  Settings, Shield, ChevronDown, X, Tag, Grid3X3
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useWishlistStore } from '../store/useWishlistStore';
+import { useStoreData } from '../store/useStoreData';
 import logo from '../assets/logo.jpeg';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
 function AvatarDropdown({ user, onLogout }) {
   const [open, setOpen] = useState(false);
@@ -35,22 +37,18 @@ function AvatarDropdown({ user, onLogout }) {
 
   return (
     <div ref={ref} className="relative">
-      <button onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 group">
+      <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 group">
         <div className="w-8 h-8 rounded-full bg-brand-orange text-white text-xs font-bold flex items-center justify-center shadow-sm ring-2 ring-orange-200 group-hover:ring-orange-400 transition-all">
           {initials}
         </div>
         <ChevronDown className={`w-3 h-3 text-gray-500 transition-transform hidden md:block ${open ? 'rotate-180' : ''}`} />
       </button>
-
       {open && (
         <div className="absolute right-0 top-11 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
-          {/* User info */}
           <div className="px-4 py-3 border-b border-gray-100">
             <p className="text-sm font-bold text-gray-900 truncate">{user?.name}</p>
             <p className="text-[11px] text-gray-500 truncate">{user?.email}</p>
           </div>
-
           {items.map(({ icon: Icon, label, path }) => (
             <button key={path} onClick={() => { navigate(path); setOpen(false); }}
               className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-brand-orange transition-colors text-left">
@@ -58,7 +56,6 @@ function AvatarDropdown({ user, onLogout }) {
               {label}
             </button>
           ))}
-
           <div className="border-t border-gray-100 mt-1">
             <button onClick={() => { onLogout(); setOpen(false); }}
               className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
@@ -72,43 +69,114 @@ function AvatarDropdown({ user, onLogout }) {
   );
 }
 
+function CategoriesDropdown() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const navigate = useNavigate();
+  const categories = useStoreData(s => s.categories);
+
+  return (
+    <div ref={ref} className="relative py-4 -my-4"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}>
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">
+        Categories <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute top-full left-0 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
+          <button onClick={() => { navigate('/category/all'); setOpen(false); }}
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
+            <Grid3X3 className="w-4 h-4" /> All Categories
+          </button>
+          <div className="border-t border-gray-100 my-1" />
+          {categories.map(cat => (
+            <button key={cat.id} onClick={() => { navigate(`/category/${cat.id}`); setOpen(false); }}
+              className="w-full flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-brand-orange transition-colors">
+              {cat.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OffersDropdown() {
+  const [open, setOpen] = useState(false);
+  const [offers, setOffers] = useState([]);
+  const ref = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/offers/active`)
+      .then(r => r.json())
+      .then(d => setOffers(d.offers || []))
+      .catch(() => {});
+  }, []);
+
+  return (
+    <div ref={ref} className="relative py-4 -my-4"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}>
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">
+        Offers <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="absolute top-full left-0 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
+          <button onClick={() => { navigate('/offers'); setOpen(false); }}
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
+            <Tag className="w-4 h-4" /> View All Offers
+          </button>
+          {offers.length > 0 && <div className="border-t border-gray-100 my-1" />}
+          {offers.slice(0, 6).map(offer => (
+            <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setOpen(false); }}
+              className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-orange-50 transition-colors">
+              <span className="text-sm font-semibold text-gray-800 truncate">{offer.name || offer.code}</span>
+              <span className="text-xs font-bold text-brand-orange ml-2 shrink-0">
+                {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
+              </span>
+            </button>
+          ))}
+          {offers.length === 0 && (
+            <p className="px-4 py-3 text-xs text-gray-400">No active offers right now</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout }) {
   return (
     <>
       <div className="h-[76px] hidden md:block" />
       <header className="fixed top-0 left-0 z-50 w-full bg-brand-green px-6 md:px-10 lg:px-12 py-3.5 shadow-md hidden md:block">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
-          
-          {/* Left: Logo */}
+
           <Link to="/" className="flex-1 flex items-center gap-2 justify-start group">
-            <img src={logo} alt="Logo" className="h-10 md:h-11 object-contain mix-blend-multiply scale-125 md:scale-150 origin-left" />
+            <img src={logo} alt="Logo" className="h-10 md:h-11 object-cover rounded-full" />
           </Link>
 
-          {/* Center: Navigation */}
           <nav className="hidden lg:flex shrink-0 items-center justify-center gap-6">
             <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Home</Link>
-            <Link to="/category/all" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Categories</Link>
+            <CategoriesDropdown />
+            <OffersDropdown />
             <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">About</Link>
             <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Contact</Link>
             <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Orders</Link>
           </nav>
 
-          {/* Right: Search & Icons */}
           <div className="flex-1 flex items-center justify-end gap-4 lg:gap-6">
             <div className="relative hidden xl:block w-[220px]">
               <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search products..."
+              <input type="text" placeholder="Search products..."
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim()) {
+                  if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
-                  }
                 }}
-                className="w-full bg-white rounded-full py-2 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 transition-all shadow-[inset_0_1px_2px_rgba(0,0,0,0.02)]"
+                className="w-full bg-white rounded-full py-2 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 transition-all"
               />
             </div>
-
             <div className="flex items-center gap-3 lg:gap-4">
               <Link to="/wishlist" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
                 <Heart className="w-5 h-5 text-white" strokeWidth={1.5} />
@@ -144,116 +212,119 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
 export function Header({ variant = 'default', title, showShare = false }) {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileCatsOpen, setMobileCatsOpen] = useState(false);
+  const categories = useStoreData(s => s.categories);
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
-  
   const wishlistItems = useWishlistStore((state) => state.items);
   const wishlistCount = wishlistItems ? wishlistItems.length : 0;
-  
   const { token, user, logout } = useAuthStore();
-
   const handleLogout = () => { logout(); navigate('/'); };
 
-  const MobileSidebar = () => {
-    const navLinks = [
-      { name: "Home", path: "/" },
-      { name: "Categories", path: "/category/all" },
-      { name: "About Us", path: "/about" },
-      { name: "Contact Us", path: "/contact" },
-      { name: "My Orders", path: "/my-orders" },
-      { name: "My Profile", path: "/profile" },
-    ];
+  const navLinks = [
+    { name: 'Home', path: '/' },
+    { name: 'Offers', path: '/offers' },
+    { name: 'About Us', path: '/about' },
+    { name: 'Contact Us', path: '/contact' },
+    { name: 'My Orders', path: '/my-orders' },
+    { name: 'My Profile', path: '/profile' },
+  ];
 
-    const containerVariants = {
-      hidden: { opacity: 0 },
-      visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.1, delayChildren: 0.1 }
-      }
-    };
-
-    const itemVariants = {
-      hidden: { opacity: 0, x: -20 },
-      visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
-    };
-
-    return (
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div 
-            key="overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/50 z-[100] md:hidden backdrop-blur-sm" 
-            onClick={() => setMobileMenuOpen(false)} 
-          />
-        )}
-        {mobileMenuOpen && (
-          <motion.div 
-            key="sidebar"
-            initial={{ x: '-100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '-100%' }}
-            transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
-            className="fixed top-0 left-0 w-[280px] h-full bg-white z-[101] shadow-2xl md:hidden flex flex-col"
-          >
-            <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
-              <div className="flex items-center gap-2">
-                <img src={logo} alt="Logo" className="h-8 object-contain mix-blend-multiply" />
-                <span className="font-bold text-lg text-brand-maroon"><span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span></span>
-              </div>
-              <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 text-gray-500 hover:text-gray-800 bg-white rounded-full shadow-sm">
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            <motion.nav 
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="flex flex-col p-4 gap-2 flex-grow overflow-y-auto"
-            >
-              {navLinks.map((link) => (
-                <motion.div key={link.name} variants={itemVariants}>
-                  <Link 
-                    to={link.path} 
-                    onClick={() => setMobileMenuOpen(false)} 
-                    className="block text-gray-700 font-semibold text-base py-3 px-4 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </motion.div>
-              ))}
-            </motion.nav>
-            
-            {!token && (
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="p-4 border-t border-gray-100 bg-gray-50"
-              >
-                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="flex items-center justify-center gap-2 w-full bg-brand-orange text-white font-bold py-3 rounded-xl shadow-sm">
-                  <LogIn className="w-4 h-4" /> Login to Account
-                </Link>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.05 } }
+  };
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
   };
 
   return (
     <>
-      {/* Desktop Header is always full header */}
       <DesktopFullHeader cartCount={cartCount} wishlistCount={wishlistCount} token={token} user={user} handleLogout={handleLogout} />
-      
-      {/* Mobile Header is now global */}
+
+      {/* Mobile */}
       <div className="md:hidden">
-        <MobileSidebar />
+        {/* Sidebar overlay */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div key="overlay"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-[100] backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+          )}
+          {mobileMenuOpen && (
+            <motion.div key="sidebar"
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+              transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
+              className="fixed top-0 left-0 w-[280px] h-full bg-white z-[101] shadow-2xl flex flex-col">
+
+              <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
+                <div className="flex items-center gap-2">
+                  <img src={logo} alt="Logo" className="h-8 w-8 object-cover rounded-full" />
+                  <span className="font-bold text-lg"><span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span></span>
+                </div>
+                <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 text-gray-500 bg-white rounded-full shadow-sm">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <motion.nav variants={containerVariants} initial="hidden" animate="visible"
+                className="flex flex-col p-4 gap-1 flex-grow overflow-y-auto">
+
+                {/* Categories accordion */}
+                <motion.div variants={itemVariants}>
+                  <button onClick={() => setMobileCatsOpen(o => !o)}
+                    className="w-full flex items-center justify-between text-gray-700 font-semibold text-base py-3 px-4 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                    Categories
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileCatsOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }} className="overflow-hidden">
+                        <div className="ml-4 border-l-2 border-orange-100 pl-3 py-1 space-y-0.5">
+                          <Link to="/category/all" onClick={() => setMobileMenuOpen(false)}
+                            className="block text-sm font-bold text-brand-orange py-2 px-2 rounded-lg hover:bg-orange-50">
+                            All Categories
+                          </Link>
+                          {categories.map(cat => (
+                            <Link key={cat.id} to={`/category/${cat.id}`} onClick={() => setMobileMenuOpen(false)}
+                              className="block text-sm text-gray-600 py-2 px-2 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                              {cat.name}
+                            </Link>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
+                {navLinks.map(link => (
+                  <motion.div key={link.name} variants={itemVariants}>
+                    <Link to={link.path} onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-700 font-semibold text-base py-3 px-4 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                      {link.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.nav>
+
+              {!token && (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                  className="p-4 border-t border-gray-100 bg-gray-50">
+                  <Link to="/login" onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full bg-brand-orange text-white font-bold py-3 rounded-xl shadow-sm">
+                    <LogIn className="w-4 h-4" /> Login to Account
+                  </Link>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
         <div className="h-[110px]" />
         <header className="fixed top-0 left-0 z-50 w-full bg-brand-green px-4 py-3 shadow-md">
           <div className="w-full">
@@ -262,13 +333,10 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 <button onClick={() => setMobileMenuOpen(true)} className="p-1 -ml-1">
                   <Menu className="w-6 h-6 text-white" strokeWidth={1.5} />
                 </button>
-
-                <Link to="/" className="flex items-center gap-2">
-                  {/* Using text for logo since bg is dark */}
+                <Link to="/">
                   <span className="font-bold text-2xl text-white"><span className="text-white">Ind</span><span className="text-brand-orange">Basket</span></span>
                 </Link>
               </div>
-
               <div className="flex items-center gap-3">
                 <Link to="/wishlist" className="relative p-1 cursor-pointer">
                   <Heart className="w-6 h-6 text-white" strokeWidth={1.5} />
@@ -288,26 +356,15 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 </Link>
               </div>
             </div>
-
-            {/* Mobile Search */}
             <div className="relative mt-2">
               <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search products, brands and more..."
+              <input type="text" placeholder="Search products, brands and more..."
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim()) {
+                  if (e.key === 'Enter' && e.target.value.trim())
                     navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
-                  }
                 }}
-                className="w-full bg-white rounded-xl py-3 pl-10 pr-12 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-orange shadow-inner"
+                className="w-full bg-white rounded-xl py-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-orange shadow-inner"
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-brand-green/10 p-1.5 rounded-lg cursor-pointer">
-                {/* Adding a scan-like icon per design */}
-                <svg className="w-4 h-4 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10v4M7 10v4M11 10v4M15 10v4M19 10v4M3 18h18M3 6h18" />
-                </svg>
-              </div>
             </div>
           </div>
         </header>

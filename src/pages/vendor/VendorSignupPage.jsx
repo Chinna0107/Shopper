@@ -1,80 +1,119 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Phone, Store, FileText, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Mail, Lock, User, Phone, Store, ArrowRight, ShieldCheck, CheckCircle2, CreditCard } from 'lucide-react';
 import { toast } from 'react-toastify';
 import logo from '../../assets/logo.jpeg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
+
+const STEP_LABELS = ['Personal', 'Store', 'Plan', 'Verify'];
 
 export function VendorSignupPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [plans, setPlans] = useState([]);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [paymentDone, setPaymentDone] = useState(false);
+  const [paymentId, setPaymentId] = useState('');
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    password: '',
-    storeName: '',
-    storeAddress: '',
-    otp: ''
+    firstName: '', lastName: '', email: '', phone: '',
+    password: '', storeName: '', storeAddress: '', otp: ''
   });
 
-  const handleChange = (e) => {
-    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  useEffect(() => {
+    fetch(`${BACKEND_URL}/subscriptions/plans`)
+      .then(r => r.json())
+      .then(d => setPlans(d.plans || []))
+      .catch(() => {});
+  }, []);
+
+  const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handlePayment = async () => {
+    if (!selectedPlan) return setError('Please select a plan');
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch(`${BACKEND_URL}/subscriptions/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: selectedPlan.id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      const options = {
+        key: data.key,
+        amount: data.order.amount,
+        currency: 'INR',
+        name: 'Indbasket',
+        description: `${selectedPlan.name} Vendor Subscription`,
+        order_id: data.order.id,
+        handler: (response) => {
+          setPaymentId(response.razorpay_payment_id);
+          setPaymentDone(true);
+          toast.success('Payment successful!');
+        },
+        prefill: { name: `${formData.firstName} ${formData.lastName}`, email: formData.email, contact: formData.phone },
+        theme: { color: '#fe6603' },
+      };
+      const rzp = new window.Razorpay(options);
+      rzp.on('payment.failed', () => { setError('Payment failed. Please try again.'); });
+      rzp.open();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (step === 1) {
-      setStep(2);
-    } else if (step === 2) {
-      // Submit initial application & send OTP
+    if (step === 1) return setStep(2);
+
+    if (step === 2) return setStep(3);
+
+    if (step === 3) {
+      if (!paymentDone) return setError('Please complete payment to continue');
+      // Submit signup + send OTP
       setLoading(true);
       try {
         const payload = {
           name: `${formData.firstName} ${formData.lastName}`.trim(),
-          email: formData.email,
-          phone: formData.phone,
+          email: formData.email, phone: formData.phone,
           password: formData.password,
-          store_name: formData.storeName,
-          address: formData.storeAddress
+          store_name: formData.storeName, address: formData.storeAddress,
+          plan_id: selectedPlan.id, payment_id: paymentId,
         };
-
         const res = await fetch(`${BACKEND_URL}/vendorAuth/signup`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
-
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to sign up');
-
-        setStep(3);
+        setStep(4);
       } catch (err) {
         setError(err.message);
       } finally {
         setLoading(false);
       }
-    } else if (step === 3) {
-      // Verify OTP
+    }
+
+    if (step === 4) {
       setLoading(true);
       try {
         const res = await fetch(`${BACKEND_URL}/vendorAuth/verify-otp`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: formData.email, otp: formData.otp })
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: formData.email, otp: formData.otp }),
         });
-
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Failed to verify OTP');
-
-        toast.success("Application verified! We will review your request and notify you once approved.");
+        toast.success('Application verified! We will review and notify you once approved.');
         navigate('/vendor-login');
       } catch (err) {
         setError(err.message);
@@ -99,141 +138,183 @@ export function VendorSignupPage() {
         </div>
 
         <div className="bg-white rounded-3xl p-8 shadow-sm border border-[#fe6603]/10">
-          {/* Progress Indicator */}
-          <div className="flex items-center justify-center mb-8">
-            <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${step >= 1 ? 'bg-[#fe6603] text-white' : 'bg-gray-100 text-gray-400'}`}>1</div>
-            <div className={`w-12 sm:w-16 h-1 mx-2 rounded-full ${step >= 2 ? 'bg-[#fe6603]' : 'bg-gray-100'}`} />
-            <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${step >= 2 ? 'bg-[#fe6603] text-white' : 'bg-gray-100 text-gray-400'}`}>2</div>
-            <div className={`w-12 sm:w-16 h-1 mx-2 rounded-full ${step >= 3 ? 'bg-[#fe6603]' : 'bg-gray-100'}`} />
-            <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${step >= 3 ? 'bg-[#fe6603] text-white' : 'bg-gray-100 text-gray-400'}`}>3</div>
+          {/* Progress */}
+          <div className="flex items-center justify-center mb-8 gap-1">
+            {STEP_LABELS.map((label, i) => {
+              const n = i + 1;
+              const active = step >= n;
+              return (
+                <React.Fragment key={n}>
+                  <div className="flex flex-col items-center gap-1">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${active ? 'bg-[#fe6603] text-white' : 'bg-gray-100 text-gray-400'}`}>{n}</div>
+                    <span className={`text-[10px] font-medium ${active ? 'text-[#fe6603]' : 'text-gray-400'}`}>{label}</span>
+                  </div>
+                  {i < STEP_LABELS.length - 1 && <div className={`w-8 sm:w-12 h-1 rounded-full mb-4 transition-colors ${step > n ? 'bg-[#fe6603]' : 'bg-gray-100'}`} />}
+                </React.Fragment>
+              );
+            })}
           </div>
 
-          {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm font-medium">
-              {error}
-            </div>
-          )}
+          {error && <div className="mb-5 p-4 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm">{error}</div>}
 
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Step 1 — Personal */}
             {step === 1 && (
-              <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+              <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">First Name</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <User className="h-5 w-5 text-gray-400" />
+                  {['firstName', 'lastName'].map(f => (
+                    <div key={f}>
+                      <label className="block text-sm font-medium text-gray-700 mb-1.5 capitalize">{f === 'firstName' ? 'First Name' : 'Last Name'}</label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                        <input type="text" name={f} value={formData[f]} onChange={handleChange} required
+                          className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                          placeholder={f === 'firstName' ? 'John' : 'Doe'} />
                       </div>
-                      <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="John" />
                     </div>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1.5">Last Name</label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <User className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="Doe" />
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Mail className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input type="email" name="email" value={formData.email} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="vendor@example.com" />
+                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input type="email" name="email" value={formData.email} onChange={handleChange} required
+                      className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                      placeholder="vendor@example.com" />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone Number</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Phone className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="+91 98765 43210" />
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required
+                      className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                      placeholder="+91 98765 43210" />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input type="password" name="password" value={formData.password} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="••••••••" />
+                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input type="password" name="password" value={formData.password} onChange={handleChange} required
+                      className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                      placeholder="••••••••" />
                   </div>
                 </div>
               </div>
             )}
 
+            {/* Step 2 — Store */}
             {step === 2 && (
-              <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+              <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store/Business Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store / Business Name</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                      <Store className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <input type="text" name="storeName" value={formData.storeName} onChange={handleChange} required className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" placeholder="My Awesome Store" />
+                    <Store className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input type="text" name="storeName" value={formData.storeName} onChange={handleChange} required
+                      className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                      placeholder="My Awesome Store" />
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Address</label>
-                  <textarea name="storeAddress" value={formData.storeAddress} onChange={handleChange} required rows={3} className="block w-full p-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent resize-none" placeholder="Enter complete business address" />
+                  <textarea name="storeAddress" value={formData.storeAddress} onChange={handleChange} required rows={3}
+                    className="block w-full p-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent resize-none"
+                    placeholder="Enter complete business address" />
                 </div>
               </div>
             )}
 
+            {/* Step 3 — Subscription Plan */}
             {step === 3 && (
-              <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300 text-center">
-                 <ShieldCheck className="w-16 h-16 text-[#fe6603] mx-auto mb-4" />
-                 <h2 className="text-xl font-bold text-gray-900">Verify Your Email</h2>
-                 <p className="text-gray-500 text-sm">We've sent a 6-digit OTP to <strong>{formData.email}</strong>. Enter it below to verify your application.</p>
-                 
-                 <div className="pt-4 max-w-xs mx-auto">
-                    <input 
-                      type="text" 
-                      name="otp" 
-                      value={formData.otp} 
-                      onChange={handleChange} 
-                      required 
-                      maxLength={6}
-                      className="block w-full text-center tracking-[0.5em] font-bold text-2xl py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" 
-                      placeholder="------" 
-                    />
-                 </div>
+              <div className="space-y-4">
+                <div className="text-center mb-2">
+                  <CreditCard className="w-10 h-10 text-[#fe6603] mx-auto mb-2" />
+                  <h2 className="text-lg font-bold text-gray-900">Choose a Subscription Plan</h2>
+                  <p className="text-gray-500 text-sm">Select a plan to activate your vendor account</p>
+                </div>
+
+                {plans.length === 0 ? (
+                  <p className="text-center text-gray-400 py-4">Loading plans...</p>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3">
+                    {plans.map(plan => (
+                      <button key={plan.id} type="button"
+                        onClick={() => { setSelectedPlan(plan); setPaymentDone(false); setPaymentId(''); }}
+                        className={`relative p-4 rounded-2xl border-2 text-left transition-all ${
+                          selectedPlan?.id === plan.id
+                            ? 'border-[#fe6603] bg-[#fe6603]/5'
+                            : 'border-gray-200 hover:border-[#fe6603]/40'
+                        }`}>
+                        {selectedPlan?.id === plan.id && (
+                          <CheckCircle2 className="absolute top-3 right-3 w-4 h-4 text-[#fe6603]" />
+                        )}
+                        <p className="font-bold text-gray-900 text-sm">{plan.name}</p>
+                        <p className="text-[#fe6603] font-bold text-lg mt-1">₹{plan.price}</p>
+                        <p className="text-gray-400 text-xs mt-0.5">{plan.months} month{plan.months > 1 ? 's' : ''} access</p>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {selectedPlan && !paymentDone && (
+                  <button type="button" onClick={handlePayment} disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 bg-[#036e26] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#025a1f] transition-colors disabled:opacity-50">
+                    {loading ? 'Opening payment...' : `Pay ₹${selectedPlan.price} & Continue`}
+                  </button>
+                )}
+
+                {paymentDone && (
+                  <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
+                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0" />
+                    <div>
+                      <p className="text-green-700 font-semibold text-sm">Payment Successful!</p>
+                      <p className="text-green-600 text-xs">ID: {paymentId}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 4 — OTP */}
+            {step === 4 && (
+              <div className="space-y-4 text-center">
+                <ShieldCheck className="w-16 h-16 text-[#fe6603] mx-auto mb-4" />
+                <h2 className="text-xl font-bold text-gray-900">Verify Your Email</h2>
+                <p className="text-gray-500 text-sm">We've sent a 6-digit OTP to <strong>{formData.email}</strong></p>
+                <div className="pt-4 max-w-xs mx-auto">
+                  <input type="text" name="otp" value={formData.otp} onChange={handleChange} required maxLength={6}
+                    className="block w-full text-center tracking-[0.5em] font-bold text-2xl py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
+                    placeholder="------" />
+                </div>
               </div>
             )}
 
             <div className="flex gap-4 pt-4">
-              {step === 2 && (
-                <button type="button" disabled={loading} onClick={() => setStep(1)} className="px-6 py-3.5 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
+              {step > 1 && step < 4 && (
+                <button type="button" disabled={loading} onClick={() => setStep(s => s - 1)}
+                  className="px-6 py-3.5 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
                   Back
                 </button>
               )}
-              {step === 3 && (
-                <button type="button" disabled={loading} onClick={() => { setStep(2); setFormData(p => ({...p, otp: ''})); }} className="px-6 py-3.5 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
+              {step === 4 && (
+                <button type="button" disabled={loading} onClick={() => setStep(3)}
+                  className="px-6 py-3.5 border border-gray-200 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50">
                   Back
                 </button>
               )}
-              <button type="submit" disabled={loading} className="flex-1 flex items-center justify-center gap-2 bg-[#fe6603] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
-                {loading ? 'Processing...' : (step === 1 ? 'Continue' : (step === 2 ? 'Send OTP' : 'Verify & Submit'))} 
+              <button type="submit" disabled={loading || (step === 3 && !paymentDone)}
+                className="flex-1 flex items-center justify-center gap-2 bg-[#fe6603] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+                {loading ? 'Processing...' : step === 1 ? 'Continue' : step === 2 ? 'Continue' : step === 3 ? 'Send OTP' : 'Verify & Submit'}
                 {!loading && <ArrowRight className="w-5 h-5" />}
               </button>
             </div>
           </form>
 
-          {step < 3 && (
+          {step < 4 && (
             <p className="mt-8 text-center text-gray-600">
               Already have a vendor account?{' '}
-              <Link to="/vendor-login" className="text-[#fe6603] font-medium hover:underline">
-                Sign In
-              </Link>
+              <Link to="/vendor-login" className="text-[#fe6603] font-medium hover:underline">Sign In</Link>
             </p>
           )}
         </div>

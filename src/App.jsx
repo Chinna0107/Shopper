@@ -28,6 +28,7 @@ import { ReturnsPolicyPage } from './pages/ReturnsPolicyPage';
 import { FAQPage } from './pages/FAQPage';
 import { CollectionPage } from './pages/CollectionPage';
 import { SearchPage } from './pages/SearchPage';
+import { OffersPage } from './pages/OffersPage';
 
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
@@ -43,6 +44,16 @@ import { AdminVendorProfilesPage } from './pages/admin/AdminVendorProfilesPage';
 import { AdminVendorProductsPage } from './pages/admin/AdminVendorProductsPage';
 import { AdminVendorWalletsPage } from './pages/admin/AdminVendorWalletsPage';
 import { AdminVendorOrdersPage } from './pages/admin/AdminVendorOrdersPage';
+import { AdminSupportPage } from './pages/admin/AdminSupportPage';
+import { AdminSubscriptionsPage } from './pages/admin/AdminSubscriptionsPage';
+import { AdminOffersPage } from './pages/admin/AdminOffersPage';
+
+import { SupportLayout } from './components/support/SupportLayout';
+import { SupportLoginPage } from './pages/support/SupportLoginPage';
+import { SupportDashboardPage } from './pages/support/SupportDashboardPage';
+import { SupportOrdersPage } from './pages/support/SupportOrdersPage';
+import { SupportProductsPage } from './pages/support/SupportProductsPage';
+import { SupportCategoriesPage } from './pages/support/SupportCategoriesPage';
 
 import { VendorLayout } from './components/vendor/VendorLayout';
 import { VendorLoginPage } from './pages/vendor/VendorLoginPage';
@@ -53,6 +64,8 @@ import { VendorOrdersPage } from './pages/vendor/VendorOrdersPage';
 import { VendorCategoriesPage } from './pages/vendor/VendorCategoriesPage';
 import { VendorWalletPage } from './pages/vendor/VendorWalletPage';
 import { VendorProfilePage } from './pages/vendor/VendorProfilePage';
+import { VendorSupportPage } from './pages/vendor/VendorSupportPage';
+import { VendorOffersPage } from './pages/vendor/VendorOffersPage';
 
 function PageTransition({ children }) {
   return (
@@ -79,6 +92,7 @@ function AnimatedAppRoutes() {
         <Route path="/returns-policy" element={<PageTransition><ReturnsPolicyPage /></PageTransition>} />
         <Route path="/faqs" element={<PageTransition><FAQPage /></PageTransition>} />
         <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
+        <Route path="/offers" element={<PageTransition><OffersPage /></PageTransition>} />
         <Route path="/collection/:type" element={<PageTransition><CollectionPage /></PageTransition>} />
         <Route path="/category/:categoryId" element={<PageTransition><CategoryListingPage /></PageTransition>} />
         <Route path="/product/:id" element={<PageTransition><ProductDetailPage /></PageTransition>} />
@@ -115,6 +129,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/vendor-login" element={<VendorLoginPage />} />
             <Route path="/vendor-signup" element={<VendorSignupPage />} />
+            <Route path="/support-login" element={<SupportLoginPage />} />
 
             {/* Admin — using AdminLayout */}
             <Route path="/admin/*" element={
@@ -133,8 +148,23 @@ function App() {
                   <Route path="vendor-products" element={<AdminVendorProductsPage />} />
                   <Route path="vendor-wallets" element={<AdminVendorWalletsPage />} />
                   <Route path="vendor-orders" element={<AdminVendorOrdersPage />} />
+                  <Route path="support" element={<AdminSupportPage />} />
+                  <Route path="subscriptions" element={<AdminSubscriptionsPage />} />
+                  <Route path="offers" element={<AdminOffersPage />} />
                 </Routes>
               </AdminLayout>
+            } />
+
+            {/* Support — using SupportLayout */}
+            <Route path="/support/*" element={
+              <SupportLayout>
+                <Routes>
+                  <Route path="/" element={<SupportDashboardPage />} />
+                  <Route path="orders" element={<SupportOrdersPage />} />
+                  <Route path="products" element={<SupportProductsPage />} />
+                  <Route path="categories" element={<SupportCategoriesPage />} />
+                </Routes>
+              </SupportLayout>
             } />
 
             {/* Vendor — using VendorLayout */}
@@ -147,6 +177,8 @@ function App() {
                   <Route path="categories" element={<VendorCategoriesPage />} />
                   <Route path="wallet" element={<VendorWalletPage />} />
                   <Route path="profile" element={<VendorProfilePage />} />
+                  <Route path="support" element={<VendorSupportPage />} />
+                  <Route path="offers" element={<VendorOffersPage />} />
                 </Routes>
               </VendorLayout>
             } />

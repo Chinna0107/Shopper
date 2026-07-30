@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Home, Compass, ShoppingBag, CircleUserRound, Search } from 'lucide-react';
+import { Home, LayoutGrid, Search, Tag, CircleUserRound } from 'lucide-react';
 import { cn } from '../utils/cn';
 import { useAuthStore } from '../store/useAuthStore';
 
@@ -10,10 +10,10 @@ export function BottomNav() {
 
   const tabs = [
     { name: 'Home', icon: Home, path: '/' },
-    { name: 'Explore', icon: Compass, path: '/category/all' },
+    { name: 'Categories', icon: LayoutGrid, path: '/category/all' },
     { name: 'Search', icon: Search, path: '/search' },
-    { name: 'Orders', icon: ShoppingBag, path: '/my-orders' },
-    { name: 'Profile', icon: CircleUserRound, path: token ? '/dashboard' : '/login' },
+    { name: 'Offers', icon: Tag, path: '/offers' },
+    { name: 'Account', icon: CircleUserRound, path: token ? '/dashboard' : '/login' },
   ];
 
   return (
@@ -21,11 +21,12 @@ export function BottomNav() {
       <div className="flex justify-around items-center h-[72px] px-2">
         {tabs.map((tab) => {
           const Icon = tab.icon;
-          const isActive = tab.name === 'Explore'
-            ? location.pathname.startsWith('/category')
-            : tab.name === 'Profile'
-            ? location.pathname === '/profile' || location.pathname === '/dashboard' || location.pathname === '/my-addresses'
-            : location.pathname === tab.path || (tab.name === 'Orders' && location.pathname.startsWith('/my-orders'));
+          const isActive =
+            tab.name === 'Categories' ? location.pathname.startsWith('/category') :
+            tab.name === 'Offers' ? location.pathname === '/offers' :
+            tab.name === 'Search' ? location.pathname === '/search' :
+            tab.name === 'Account' ? ['/dashboard', '/profile', '/my-addresses', '/account-settings', '/login'].includes(location.pathname) :
+            location.pathname === tab.path;
 
           return (
             <NavLink key={tab.name} to={tab.path}
@@ -34,18 +35,13 @@ export function BottomNav() {
                 isActive ? 'text-white -translate-y-1' : 'text-white/70 hover:text-white'
               )}>
               <div className={cn(
-                "p-1.5 rounded-full transition-all duration-300", 
-                isActive ? "bg-white text-brand-orange shadow-sm" : "bg-transparent"
+                'p-1.5 rounded-full transition-all duration-300',
+                isActive ? 'bg-white text-brand-orange shadow-sm' : 'bg-transparent'
               )}>
                 <Icon className={cn('w-5 h-5 transition-transform duration-300', isActive ? 'scale-110' : '')} strokeWidth={isActive ? 2.5 : 1.5} />
               </div>
-              <span className={cn(
-                "text-[10px] font-bold transition-all duration-300",
-                isActive ? "opacity-100" : "opacity-80"
-              )}>{tab.name}</span>
-              {isActive && (
-                <div className="absolute -bottom-2 w-1 h-1 bg-white rounded-full"></div>
-              )}
+              <span className={cn('text-[10px] font-bold transition-all duration-300', isActive ? 'opacity-100' : 'opacity-80')}>{tab.name}</span>
+              {isActive && <div className="absolute -bottom-2 w-1 h-1 bg-white rounded-full" />}
             </NavLink>
           );
         })}
