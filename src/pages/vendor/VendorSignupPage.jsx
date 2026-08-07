@@ -237,23 +237,44 @@ export function VendorSignupPage() {
                 {plans.length === 0 ? (
                   <p className="text-center text-gray-400 py-4">Loading plans...</p>
                 ) : (
-                  <div className="grid grid-cols-2 gap-3">
-                    {plans.map(plan => (
-                      <button key={plan.id} type="button"
-                        onClick={() => { setSelectedPlan(plan); setPaymentDone(false); setPaymentId(''); }}
-                        className={`relative p-4 rounded-2xl border-2 text-left transition-all ${
-                          selectedPlan?.id === plan.id
-                            ? 'border-[#fe6603] bg-[#fe6603]/5'
-                            : 'border-gray-200 hover:border-[#fe6603]/40'
-                        }`}>
-                        {selectedPlan?.id === plan.id && (
-                          <CheckCircle2 className="absolute top-3 right-3 w-4 h-4 text-[#fe6603]" />
-                        )}
-                        <p className="font-bold text-gray-900 text-sm">{plan.name}</p>
-                        <p className="text-[#fe6603] font-bold text-lg mt-1">₹{plan.price}</p>
-                        <p className="text-gray-400 text-xs mt-0.5">{plan.months} month{plan.months > 1 ? 's' : ''} access</p>
-                      </button>
-                    ))}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {plans.map(plan => {
+                      const features = plan.features || {};
+                      const featureList = [
+                        { label: 'Products', value: features.product_limit || 'Unlimited' },
+                        { label: 'Commission', value: `${features.commission_percent || '0'}%` },
+                        { label: 'Images/Product', value: features.images_per_product || '—' },
+                        features.seo_enabled ? { label: 'Advanced SEO' } : null,
+                        features.analytics_enabled ? { label: 'Store Analytics' } : null,
+                        features.verification_badge_enabled ? { label: 'Verification Badge' } : null,
+                      ].filter(Boolean);
+
+                      return (
+                        <button key={plan.id} type="button"
+                          onClick={() => { setSelectedPlan(plan); setPaymentDone(false); setPaymentId(''); }}
+                          className={`relative p-5 rounded-2xl border-2 text-left transition-all flex flex-col ${
+                            selectedPlan?.id === plan.id
+                              ? 'border-[#fe6603] bg-[#fe6603]/5'
+                              : 'border-gray-200 hover:border-[#fe6603]/40'
+                          }`}>
+                          {selectedPlan?.id === plan.id && (
+                            <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#fe6603]" />
+                          )}
+                          <p className="font-bold text-gray-900 text-lg">{plan.name}</p>
+                          <p className="text-[#fe6603] font-extrabold text-2xl mt-1">₹{plan.price}</p>
+                          <p className="text-gray-500 text-sm mt-0.5 mb-4">{plan.months} month{plan.months > 1 ? 's' : ''} access</p>
+                          
+                          <ul className="space-y-2 mt-auto">
+                            {featureList.map((f, i) => (
+                              <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                                <CheckCircle2 className="w-4 h-4 text-[#fe6603] mt-0.5 flex-shrink-0" />
+                                <span>{f.label}{f.value ? `: ${f.value}` : ''}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
 

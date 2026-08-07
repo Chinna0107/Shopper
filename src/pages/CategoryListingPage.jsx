@@ -18,6 +18,15 @@ export function CategoryListingPage() {
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [sortBy, setSortBy] = useState('featured'); // featured, price_asc, price_desc
   const { products, categories, loading } = useStoreData();
+  const [banners, setBanners] = useState([]);
+  
+  useEffect(() => {
+    const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
+    fetch(`${url}/general/banners?type=category_page_banner`)
+      .then(r => r.json())
+      .then(d => { if (d.banners) setBanners(d.banners); })
+      .catch(e => console.error(e));
+  }, []);
   
   const modelQuery = searchParams.get('model');
   const searchQuery = searchParams.get('search');
@@ -228,10 +237,18 @@ export function CategoryListingPage() {
         </div>
 
         {/* Ad Block */}
-        <AdBanner 
-          imageUrl={imgMeditation} 
-          altText="Category Special Ad" 
-        />
+        {banners.length > 0 ? (
+          <AdBanner 
+            imageUrl={banners[0].image_url} 
+            altText={banners[0].title || "Category Special Ad"} 
+            link={banners[0].link_url || "/category/all"}
+          />
+        ) : (
+          <AdBanner 
+            imageUrl={imgMeditation} 
+            altText="Category Special Ad" 
+          />
+        )}
 
         {/* Filter and Sort Bar for Mobile / Top Bar for Desktop */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 bg-white p-3 md:p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-brand-orange/10 gap-3">
@@ -273,10 +290,18 @@ export function CategoryListingPage() {
                     <ProductCard product={product} layout={layout} />
                     {isAdSlot && (
                       <div className="col-span-full">
-                        <AdBanner 
-                          imageUrl={imgAarti} 
-                          altText="In-Feed Ad" 
-                        />
+                        {banners.length > 1 ? (
+                          <AdBanner 
+                            imageUrl={banners[1 % banners.length].image_url} 
+                            altText={banners[1 % banners.length].title || "In-Feed Ad"} 
+                            link={banners[1 % banners.length].link_url || "/category/all"}
+                          />
+                        ) : (
+                          <AdBanner 
+                            imageUrl={imgAarti} 
+                            altText="In-Feed Ad" 
+                          />
+                        )}
                       </div>
                     )}
                   </React.Fragment>
@@ -300,10 +325,24 @@ export function CategoryListingPage() {
         </div>
 
         {/* Bottom Ad Block */}
-        <AdBanner 
-          imageUrl={imgAarti} 
-          altText="Category Bottom Ad" 
-        />
+        {banners.length > 2 ? (
+          <AdBanner 
+            imageUrl={banners[2 % banners.length].image_url} 
+            altText={banners[2 % banners.length].title || "Category Bottom Ad"} 
+            link={banners[2 % banners.length].link_url || "/category/all"}
+          />
+        ) : banners.length > 0 ? (
+          <AdBanner 
+            imageUrl={banners[0].image_url} 
+            altText={banners[0].title || "Category Bottom Ad"} 
+            link={banners[0].link_url || "/category/all"}
+          />
+        ) : (
+          <AdBanner 
+            imageUrl={imgAarti} 
+            altText="Category Bottom Ad" 
+          />
+        )}
       </div>
 
       {/* Mobile Filters Drawer/Modal */}

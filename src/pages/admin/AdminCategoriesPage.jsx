@@ -8,8 +8,9 @@ export function AdminCategoriesPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editCategory, setEditCategory] = useState(null);
-  const [formData, setFormData] = useState({ name: "", models: [], image_url: "", custom_fields: [] });
+  const [formData, setFormData] = useState({ name: "", models: [], image_url: "", custom_fields: [], subcategories: [] });
   const [newModel, setNewModel] = useState("");
+  const [newSub, setNewSub] = useState("");
   const [newField, setNewField] = useState({ name: "", type: "text", required: true });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -61,16 +62,18 @@ export function AdminCategoriesPage() {
   };
 
   const handleAdd = () => {
-    setFormData({ name: "", models: [], image_url: "", custom_fields: [] });
+    setFormData({ name: "", models: [], image_url: "", custom_fields: [], subcategories: [] });
     setNewModel("");
+    setNewSub("");
     setNewField({ name: "", type: "text", required: true });
     setEditCategory({});
     setIsNew(true);
   };
 
   const handleEdit = (cat) => {
-    setFormData({ name: cat.name, models: cat.models || [], image_url: cat.image_url || "", custom_fields: cat.custom_fields || [] });
+    setFormData({ name: cat.name, models: cat.models || [], image_url: cat.image_url || "", custom_fields: cat.custom_fields || [], subcategories: cat.subcategories || [] });
     setNewModel("");
+    setNewSub("");
     setNewField({ name: "", type: "text", required: true });
     setEditCategory(cat);
     setIsNew(false);
@@ -88,14 +91,33 @@ export function AdminCategoriesPage() {
   };
 
   const addModel = () => {
-    if (newModel.trim() && !formData.models.includes(newModel.trim())) {
-      setFormData({ ...formData, models: [...formData.models, newModel.trim()] });
+    const t = newModel.trim();
+    if (t) {
+      setFormData(prev => ({
+        ...prev,
+        models: prev.models?.includes(t) ? prev.models : [...(prev.models || []), t]
+      }));
       setNewModel("");
     }
   };
 
   const removeModel = (modelToRemove) => {
-    setFormData({ ...formData, models: formData.models.filter(m => m !== modelToRemove) });
+    setFormData(prev => ({ ...prev, models: (prev.models || []).filter(m => m !== modelToRemove) }));
+  };
+
+  const addSub = () => {
+    const t = newSub.trim();
+    if (t) {
+      setFormData(prev => ({
+        ...prev,
+        subcategories: (prev.subcategories || []).includes(t) ? prev.subcategories : [...(prev.subcategories || []), t]
+      }));
+      setNewSub("");
+    }
+  };
+
+  const removeSub = (sub) => {
+    setFormData(prev => ({ ...prev, subcategories: (prev.subcategories || []).filter(s => s !== sub) }));
   };
 
   const addCustomField = () => {
@@ -120,9 +142,9 @@ export function AdminCategoriesPage() {
         name: formData.name,
         models: formData.models,
         image_url: formData.image_url,
-        custom_fields: formData.custom_fields
+        custom_fields: formData.custom_fields,
+        subcategories: formData.subcategories || [],
       };
-      
       await fetch(url, {
         method: isNew ? "POST" : "PUT",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
@@ -193,6 +215,19 @@ export function AdminCategoriesPage() {
                 </div>
               )}
 
+              {cat.subcategories && cat.subcategories.length > 0 && (
+                <>
+                  <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 mt-4">Sub Categories</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {cat.subcategories.map((sub, i) => (
+                      <span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 border border-blue-100 text-xs font-semibold text-blue-700">
+                        {sub}
+                      </span>
+                    ))}
+                  </div>
+                </>
+              )}
+
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 mt-4">Custom Fields</h4>
               {(!cat.custom_fields || cat.custom_fields.length === 0) ? (
                 <p className="text-sm text-gray-900/30">No custom fields.</p>
@@ -261,9 +296,9 @@ export function AdminCategoriesPage() {
               <div className="pt-2 border-t border-gray-100">
                 <label className="text-xs font-semibold text-gray-700 mb-1 block">Available Models</label>
                 <div className="flex gap-2 mb-3">
-                  <input value={newModel} onChange={(e) => setNewModel(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && addModel()} placeholder="e.g. iPhone 15"
+                  <input value={newModel} onChange={(e) => setNewModel(e.target.value)} onKeyDown={(e) => { if(e.key === 'Enter') { e.preventDefault(); addModel(); } }} placeholder="e.g. iPhone 15"
                     className="flex-1 px-3 py-2 rounded-lg bg-white border border-gray-100 text-gray-900 focus:outline-none focus:border-gray-300" />
-                  <button onClick={addModel} className="bg-white text-gray-900 border border-gray-200 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                  <button type="button" onClick={(e) => { e.preventDefault(); addModel(); }} className="bg-white text-gray-900 border border-gray-200 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
                     Add
                   </button>
                 </div>
@@ -277,6 +312,28 @@ export function AdminCategoriesPage() {
                   ))}
                   {formData.models.length === 0 && (
                     <span className="text-sm text-gray-400 italic">No models added. Type above to add.</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-gray-100">
+                <label className="text-xs font-semibold text-gray-700 mb-1 block">Sub Categories</label>
+                <div className="flex gap-2 mb-3">
+                  <input value={newSub} onChange={(e) => setNewSub(e.target.value)} onKeyDown={(e) => { if(e.key === 'Enter') { e.preventDefault(); addSub(); } }} placeholder="e.g. Smartphones"
+                    className="flex-1 px-3 py-2 rounded-lg bg-white border border-gray-100 text-gray-900 focus:outline-none focus:border-gray-300" />
+                  <button type="button" onClick={(e) => { e.preventDefault(); addSub(); }} className="bg-white text-gray-900 border border-gray-200 px-4 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
+                    Add
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {(formData.subcategories || []).map((sub, i) => (
+                    <span key={i} className="inline-flex items-center gap-1 pl-3 pr-1 py-1 rounded-lg bg-blue-50 border border-blue-200 text-sm font-medium text-blue-700">
+                      {sub}
+                      <button onClick={() => removeSub(sub)} className="p-1 hover:bg-red-50 text-red-400 hover:text-red-600 rounded-md transition-colors"><X className="w-3 h-3" /></button>
+                    </span>
+                  ))}
+                  {(formData.subcategories || []).length === 0 && (
+                    <span className="text-sm text-gray-400 italic">No sub categories. Type above to add.</span>
                   )}
                 </div>
               </div>

@@ -50,6 +50,45 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
+  forgotPassword: async (email) => {
+    set({ loading: true, error: null });
+    try {
+      await api.post('/auth/forgot-password', { email });
+      set({ loading: false });
+      return { success: true };
+    } catch (err) {
+      const error = err.response?.data?.error || 'Failed to send OTP';
+      set({ loading: false, error });
+      return { success: false, error };
+    }
+  },
+
+  verifyResetOtp: async (email, otp) => {
+    set({ loading: true, error: null });
+    try {
+      await api.post('/auth/verify-reset-otp', { email, otp });
+      set({ loading: false });
+      return { success: true };
+    } catch (err) {
+      const error = err.response?.data?.error || 'Invalid OTP';
+      set({ loading: false, error });
+      return { success: false, error };
+    }
+  },
+
+  resetPassword: async (email, otp, newPassword) => {
+    set({ loading: true, error: null });
+    try {
+      await api.post('/auth/reset-password', { email, otp, newPassword });
+      set({ loading: false });
+      return { success: true };
+    } catch (err) {
+      const error = err.response?.data?.error || 'Password reset failed';
+      set({ loading: false, error });
+      return { success: false, error };
+    }
+  },
+
   fetchProfile: async () => {
     if (!get().token) return;
     set({ loading: true });

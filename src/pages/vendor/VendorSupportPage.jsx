@@ -20,8 +20,18 @@ const STATUS_COLORS = {
   cancelled: "bg-red-100 text-red-700",
 };
 
-function AddAgentModal({ onClose, onAdd }) {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+const VENDOR_PAGES = [
+  { path: "/support/dashboard", label: "Dashboard" },
+  { path: "/support/orders", label: "Orders" },
+  { path: "/support/products", label: "Products" },
+  { path: "/support/categories", label: "Categories" },
+  { path: "/support/wallet", label: "Virtual Wallet" },
+  { path: "/support/profile", label: "Profile" },
+  { path: "/support/offers", label: "Offers" },
+];
+
+function AddAgentModal({ onClose, onAdd, accent }) {
+  const [form, setForm] = useState({ name: "", email: "", password: "", access_pages: [] });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -51,11 +61,36 @@ function AddAgentModal({ onClose, onAdd }) {
                 required
                 value={form[field]}
                 onChange={e => setForm(p => ({ ...p, [field]: e.target.value }))}
-                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#fe6603] focus:border-transparent"
-                placeholder={field === "email" ? "agent@store.com" : field === "password" ? "••••••••" : "Full name"}
+                className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:border-transparent"
+                style={{ "--tw-ring-color": accent }}
+                placeholder={field === "email" ? "agent@vendor.com" : field === "password" ? "••••••••" : "Full name"}
               />
             </div>
           ))}
+
+          <div>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Page Access</label>
+            <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+              {VENDOR_PAGES.map(page => (
+                <label key={page.path} className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    className="rounded border-gray-300 text-[#fe6603] focus:ring-[#fe6603]"
+                    checked={form.access_pages.includes(page.path)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setForm(p => ({ ...p, access_pages: [...p.access_pages, page.path] }));
+                      } else {
+                        setForm(p => ({ ...p, access_pages: p.access_pages.filter(path => path !== page.path) }));
+                      }
+                    }}
+                  />
+                  {page.label}
+                </label>
+              ))}
+            </div>
+          </div>
+
           <button type="submit" disabled={loading}
             className="w-full py-3 rounded-xl bg-[#fe6603] text-white text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">
             {loading ? "Adding..." : "Add Member"}

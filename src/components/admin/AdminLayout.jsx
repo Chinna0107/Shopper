@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store, HeadphonesIcon, CreditCard, Percent } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store, HeadphonesIcon, CreditCard, Percent, Megaphone, ClipboardList } from "lucide-react";
 import logo from '../../assets/logo.jpeg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -22,6 +22,8 @@ const NAV = [
   { href: "/admin/support", label: "Support", icon: <HeadphonesIcon className="w-4 h-4" /> },
   { href: "/admin/subscriptions", label: "Subscriptions", icon: <CreditCard className="w-4 h-4" /> },
   { href: "/admin/offers", label: "Offers", icon: <Percent className="w-4 h-4" /> },
+  { href: "/admin/advertisements", label: "Advertisements", icon: <Megaphone className="w-4 h-4" /> },
+  { href: "/admin/product-requests", label: "Product Requests", icon: <ClipboardList className="w-4 h-4" /> },
 ];
 
 export function AdminLayout({ children }) {

@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, ShoppingBag, Package, Layers, LogOut, Headphones, Menu, X } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, Layers, LogOut, Headphones, Menu, X, Users, ImageIcon, Tag, BarChart3, UserPlus, UserCircle, Store, Wallet, CreditCard, Percent, Megaphone } from "lucide-react";
 import logo from '../../assets/logo.jpeg';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 
-const NAV = [
-  { href: "/support", label: "Dashboard", icon: <LayoutDashboard className="w-4 h-4" /> },
+const ALL_NAV = [
+  { href: "/support/dashboard", label: "Dashboard", icon: <LayoutDashboard className="w-4 h-4" /> },
   { href: "/support/orders", label: "Orders", icon: <ShoppingBag className="w-4 h-4" /> },
+  { href: "/support/customers", label: "Customers", icon: <Users className="w-4 h-4" /> },
   { href: "/support/products", label: "Products", icon: <Package className="w-4 h-4" /> },
   { href: "/support/categories", label: "Categories", icon: <Layers className="w-4 h-4" /> },
+  { href: "/support/banners", label: "Banners", icon: <ImageIcon className="w-4 h-4" /> },
+  { href: "/support/coupons", label: "Coupons", icon: <Tag className="w-4 h-4" /> },
+  { href: "/support/reports", label: "Reports", icon: <BarChart3 className="w-4 h-4" /> },
+  { href: "/support/vendor-requests", label: "Vendor Requests", icon: <UserPlus className="w-4 h-4" /> },
+  { href: "/support/vendor-profiles", label: "Vendor Profiles", icon: <UserCircle className="w-4 h-4" /> },
+  { href: "/support/vendor-products", label: "Vendor Products", icon: <Store className="w-4 h-4" /> },
+  { href: "/support/vendor-wallets", label: "Vendor Wallets", icon: <Wallet className="w-4 h-4" /> },
+  { href: "/support/vendor-orders", label: "Vendor Orders", icon: <ShoppingBag className="w-4 h-4" /> },
+  { href: "/support/subscriptions", label: "Subscriptions", icon: <CreditCard className="w-4 h-4" /> },
+  { href: "/support/offers", label: "Offers", icon: <Percent className="w-4 h-4" /> },
+  { href: "/support/advertisements", label: "Advertisements", icon: <Megaphone className="w-4 h-4" /> },
+  { href: "/support/wallet", label: "Virtual Wallet", icon: <Wallet className="w-4 h-4" /> },
+  { href: "/support/profile", label: "Profile", icon: <UserCircle className="w-4 h-4" /> },
 ];
 
 export function SupportLayout({ children }) {
@@ -97,8 +111,12 @@ export function SupportLayout({ children }) {
           )}
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
-          {NAV.map(item => (
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+          {ALL_NAV.filter(item => {
+            // Default allow dashboard if empty access pages
+            if (item.href === "/support/dashboard" && (!agent.access_pages || agent.access_pages.length === 0)) return true;
+            return agent.access_pages && agent.access_pages.includes(item.href);
+          }).map(item => (
             <Link key={item.href} to={item.href} onClick={() => setMobileOpen(false)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-sans font-medium transition-colors ${
                 pathname === item.href

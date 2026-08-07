@@ -169,16 +169,35 @@ export function VendorProfilePage() {
         {showPlans && (
           <div className="mt-5 pt-5 border-t border-gray-100">
             <p className="text-sm font-semibold text-gray-700 mb-3">Select a plan to renew</p>
-            <div className="grid grid-cols-2 gap-3 mb-4">
-              {plans.map(plan => (
-                <button key={plan.id} type="button" onClick={() => setSelectedPlan(plan)}
-                  className={`relative p-3 rounded-xl border-2 text-left transition-all ${selectedPlan?.id === plan.id ? 'border-[#fe6603] bg-[#fe6603]/5' : 'border-gray-200 hover:border-[#fe6603]/40'}`}>
-                  {selectedPlan?.id === plan.id && <CheckCircle2 className="absolute top-2 right-2 w-4 h-4 text-[#fe6603]" />}
-                  <p className="font-bold text-gray-900 text-sm">{plan.name}</p>
-                  <p className="text-[#fe6603] font-bold text-base mt-0.5">₹{plan.price}</p>
-                  <p className="text-gray-400 text-xs">{plan.months} month{plan.months > 1 ? 's' : ''}</p>
-                </button>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              {plans.map(plan => {
+                const features = plan.features || {};
+                const featureList = [
+                  { label: 'Products', value: features.product_limit || 'Unlimited' },
+                  { label: 'Commission', value: `${features.commission_percent || '0'}%` },
+                  features.seo_enabled ? { label: 'Advanced SEO' } : null,
+                  features.verification_badge_enabled ? { label: 'Verification Badge' } : null,
+                ].filter(Boolean);
+
+                return (
+                  <button key={plan.id} type="button" onClick={() => setSelectedPlan(plan)}
+                    className={`relative p-5 rounded-2xl border-2 text-left transition-all flex flex-col ${selectedPlan?.id === plan.id ? 'border-[#fe6603] bg-[#fe6603]/5' : 'border-gray-200 hover:border-[#fe6603]/40'}`}>
+                    {selectedPlan?.id === plan.id && <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#fe6603]" />}
+                    <p className="font-bold text-gray-900 text-lg">{plan.name}</p>
+                    <p className="text-[#fe6603] font-extrabold text-2xl mt-1">₹{plan.price}</p>
+                    <p className="text-gray-500 text-sm mt-0.5 mb-4">{plan.months} month{plan.months > 1 ? 's' : ''}</p>
+                    
+                    <ul className="space-y-2 mt-auto">
+                      {featureList.map((f, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
+                          <CheckCircle2 className="w-4 h-4 text-[#fe6603] mt-0.5 flex-shrink-0" />
+                          <span>{f.label}{f.value ? `: ${f.value}` : ''}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </button>
+                );
+              })}
             </div>
             <button onClick={handleRenew} disabled={renewLoading || !selectedPlan}
               className="w-full py-3 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">

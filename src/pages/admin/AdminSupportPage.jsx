@@ -20,8 +20,27 @@ const STATUS_COLORS = {
   cancelled: "bg-red-100 text-red-700",
 };
 
+const ADMIN_PAGES = [
+  { path: "/support/dashboard", label: "Dashboard" },
+  { path: "/support/orders", label: "Orders" },
+  { path: "/support/customers", label: "Customers" },
+  { path: "/support/products", label: "Products" },
+  { path: "/support/categories", label: "Categories" },
+  { path: "/support/banners", label: "Banners" },
+  { path: "/support/coupons", label: "Coupons" },
+  { path: "/support/reports", label: "Reports" },
+  { path: "/support/vendor-requests", label: "Vendor Requests" },
+  { path: "/support/vendor-profiles", label: "Vendor Profiles" },
+  { path: "/support/vendor-products", label: "Vendor Products" },
+  { path: "/support/vendor-wallets", label: "Vendor Wallets" },
+  { path: "/support/vendor-orders", label: "Vendor Orders" },
+  { path: "/support/subscriptions", label: "Subscriptions" },
+  { path: "/support/offers", label: "Offers" },
+  { path: "/support/advertisements", label: "Advertisements" },
+];
+
 function AddAgentModal({ onClose, onAdd, accent }) {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", access_pages: [] });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -57,6 +76,30 @@ function AddAgentModal({ onClose, onAdd, accent }) {
               />
             </div>
           ))}
+          
+          <div>
+            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Page Access</label>
+            <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto p-1">
+              {ADMIN_PAGES.map(page => (
+                <label key={page.path} className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    className="rounded border-gray-300 text-[#036e26] focus:ring-[#036e26]"
+                    checked={form.access_pages.includes(page.path)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setForm(p => ({ ...p, access_pages: [...p.access_pages, page.path] }));
+                      } else {
+                        setForm(p => ({ ...p, access_pages: p.access_pages.filter(path => path !== page.path) }));
+                      }
+                    }}
+                  />
+                  {page.label}
+                </label>
+              ))}
+            </div>
+          </div>
+
           <button type="submit" disabled={loading}
             className="w-full py-3 rounded-xl text-white text-sm font-semibold transition-colors disabled:opacity-50"
             style={{ backgroundColor: accent }}>
