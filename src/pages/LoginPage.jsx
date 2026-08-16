@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo.png';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -72,13 +72,17 @@ export function LoginPage() {
   const displayError = localError || (step === 'login' && error);
 
   return (
-    <div className="min-h-screen bg-brand-green flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent flex items-center justify-center px-4 py-12 relative overflow-hidden">
+      {/* Decorative background elements for login page */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] pointer-events-none"></div>
+
+      <div className="w-full max-w-md glass-panel rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/20 p-8 md:p-10 relative z-10">
         
         {step !== 'login' && (
           <button 
             onClick={() => { setStep('login'); clearMessages(); }}
-            className="absolute top-6 left-6 text-gray-400 hover:text-brand-orange transition-colors flex items-center gap-1 text-sm font-medium"
+            className="absolute top-6 left-6 text-brand-text-muted hover:text-brand-orange transition-colors flex items-center gap-1 text-sm font-medium"
           >
             <ArrowLeft className="w-4 h-4" /> Back
           </button>
@@ -86,12 +90,12 @@ export function LoginPage() {
 
         <div className="flex flex-col items-center mb-8 mt-2">
           <div className="flex justify-center mb-4">
-            <img src={logo} alt="Indbasket" className="h-16 object-contain mix-blend-multiply" />
+            <img src={logo} alt="Indbasket" className="h-16 object-contain rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
           </div>
-          <h1 className="text-2xl font-extrabold text-gray-900 mt-2 tracking-tight">
+          <h1 className="text-2xl font-extrabold text-white mt-2 tracking-tight">
             {step === 'login' ? 'Welcome Back' : step === 'forgot_reset' ? 'Create New Password' : 'Reset Password'}
           </h1>
-          <p className="text-sm text-gray-500 mt-1 text-center">
+          <p className="text-sm text-brand-text-muted mt-1 text-center">
             {step === 'login' && 'Login to your account to continue'}
             {step === 'forgot_email' && 'Enter your email to receive an OTP'}
             {step === 'forgot_otp' && 'Enter the OTP sent to your email'}
@@ -103,17 +107,17 @@ export function LoginPage() {
         {step === 'login' && (
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-xs font-bold text-gray-700 block mb-1.5 uppercase tracking-wide">Email</label>
+              <label className="text-xs font-bold text-brand-text-muted block mb-1.5 uppercase tracking-wide">Email</label>
               <input
                 name="email" type="email" value={form.email} onChange={handleChange} required
                 placeholder="you@example.com"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white"
+                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
               />
             </div>
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-gray-700 uppercase tracking-wide">Password</label>
-                <button type="button" onClick={() => { setStep('forgot_email'); clearMessages(); }} className="text-xs font-semibold text-brand-orange hover:underline">
+                <label className="text-xs font-bold text-brand-text-muted uppercase tracking-wide">Password</label>
+                <button type="button" onClick={() => { setStep('forgot_email'); clearMessages(); }} className="text-xs font-semibold text-brand-orange hover:underline hover:text-orange-400">
                   Forgot Password?
                 </button>
               </div>
@@ -122,59 +126,59 @@ export function LoginPage() {
                   name="password" type={showPass ? 'text' : 'password'} value={form.password}
                   onChange={handleChange} required
                   placeholder="Your password"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12"
+                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors">
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
                   {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
             {displayError && (
-              <div className="bg-red-50 text-red-500 text-xs font-semibold px-3 py-2 rounded-lg border border-red-100 text-center">
+              <div className="bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-2 rounded-lg border border-red-500/20 text-center">
                 {displayError}
               </div>
             )}
             
             {successMsg && (
-              <div className="bg-green-50 text-green-600 text-xs font-semibold px-3 py-2 rounded-lg border border-green-100 text-center">
+              <div className="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-2 rounded-lg border border-green-500/20 text-center">
                 {successMsg}
               </div>
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-brand-orange to-brand-green text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:from-[#e55c02] hover:to-[#02561d] transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Logging in...' : 'Login Securely'}
             </button>
             
-            <p className="text-center text-sm text-gray-500 pt-4">
+            <p className="text-center text-sm text-brand-text-muted pt-4">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-brand-green font-bold hover:underline underline-offset-2">Sign Up</Link>
+              <Link to="/signup" className="text-brand-orange font-bold hover:underline underline-offset-2">Sign Up</Link>
             </p>
           </form>
         )}
 
-        {/* --- FORGOT EMAIL FORM --- */}
+        {/* --- FOR শকGOT EMAIL FORM --- */}
         {step === 'forgot_email' && (
           <form onSubmit={handleForgotEmail} className="space-y-5">
             <div>
-              <label className="text-xs font-bold text-gray-700 block mb-1.5 uppercase tracking-wide">Email</label>
+              <label className="text-xs font-bold text-brand-text-muted block mb-1.5 uppercase tracking-wide">Email</label>
               <input
                 name="email" type="email" value={form.email} onChange={handleChange} required
                 placeholder="Enter your registered email"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white"
+                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
               />
             </div>
             
             {displayError && (
-              <div className="bg-red-50 text-red-500 text-xs font-semibold px-3 py-2 rounded-lg border border-red-100 text-center">
+              <div className="bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-2 rounded-lg border border-red-500/20 text-center">
                 {displayError}
               </div>
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-brand-orange to-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:from-[#e55c02] hover:to-[#e55c02] transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Sending OTP...' : 'Send OTP'}
             </button>
           </form>
@@ -184,28 +188,28 @@ export function LoginPage() {
         {step === 'forgot_otp' && (
           <form onSubmit={handleForgotOtp} className="space-y-5">
             <div>
-              <label className="text-xs font-bold text-gray-700 block mb-1.5 uppercase tracking-wide">Enter OTP</label>
+              <label className="text-xs font-bold text-brand-text-muted block mb-1.5 uppercase tracking-wide">Enter OTP</label>
               <input
                 name="otp" type="text" value={form.otp} onChange={handleChange} required maxLength={6}
                 placeholder="6-digit OTP"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest text-lg font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white"
+                className="w-full border border-white/10 rounded-xl px-4 py-3 text-center tracking-widest text-lg font-bold text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-600 shadow-inner"
               />
-              <p className="text-xs text-gray-500 mt-2 text-center">Sent to {form.email}</p>
+              <p className="text-xs text-brand-text-muted mt-2 text-center">Sent to {form.email}</p>
             </div>
             
             {displayError && (
-              <div className="bg-red-50 text-red-500 text-xs font-semibold px-3 py-2 rounded-lg border border-red-100 text-center">
+              <div className="bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-2 rounded-lg border border-red-500/20 text-center">
                 {displayError}
               </div>
             )}
             {successMsg && (
-              <div className="bg-green-50 text-green-600 text-xs font-semibold px-3 py-2 rounded-lg border border-green-100 text-center">
+              <div className="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-2 rounded-lg border border-green-500/20 text-center">
                 {successMsg}
               </div>
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-brand-green to-brand-green text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:from-[#02561d] hover:to-[#02561d] transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-[#1e3a8a]/80 backdrop-blur border border-blue-400/30 text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_20px_rgba(30,58,138,0.5)] hover:bg-blue-600 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Verifying...' : 'Verify OTP'}
             </button>
           </form>
@@ -215,49 +219,49 @@ export function LoginPage() {
         {step === 'forgot_reset' && (
           <form onSubmit={handleForgotReset} className="space-y-5">
             <div>
-              <label className="text-xs font-bold text-gray-700 block mb-1.5 uppercase tracking-wide">New Password</label>
+              <label className="text-xs font-bold text-brand-text-muted block mb-1.5 uppercase tracking-wide">New Password</label>
               <div className="relative">
                 <input
                   name="newPassword" type={showNewPass ? 'text' : 'password'} value={form.newPassword}
                   onChange={handleChange} required minLength={6}
                   placeholder="New password"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12"
+                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
                 />
                 <button type="button" onClick={() => setShowNewPass(!showNewPass)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors">
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
                   {showNewPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
             <div>
-              <label className="text-xs font-bold text-gray-700 block mb-1.5 uppercase tracking-wide">Confirm New Password</label>
+              <label className="text-xs font-bold text-brand-text-muted block mb-1.5 uppercase tracking-wide">Confirm New Password</label>
               <div className="relative">
                 <input
                   name="confirmPassword" type={showConfirmPass ? 'text' : 'password'} value={form.confirmPassword}
                   onChange={handleChange} required minLength={6}
                   placeholder="Confirm password"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12"
+                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
                 />
                 <button type="button" onClick={() => setShowConfirmPass(!showConfirmPass)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors">
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
                   {showConfirmPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
             
             {displayError && (
-              <div className="bg-red-50 text-red-500 text-xs font-semibold px-3 py-2 rounded-lg border border-red-100 text-center">
+              <div className="bg-red-500/10 text-red-400 text-xs font-semibold px-3 py-2 rounded-lg border border-red-500/20 text-center">
                 {displayError}
               </div>
             )}
             {successMsg && (
-              <div className="bg-green-50 text-green-600 text-xs font-semibold px-3 py-2 rounded-lg border border-green-100 text-center">
+              <div className="bg-green-500/10 text-green-400 text-xs font-semibold px-3 py-2 rounded-lg border border-green-500/20 text-center">
                 {successMsg}
               </div>
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-gradient-to-r from-brand-orange to-brand-green text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:from-[#e55c02] hover:to-[#02561d] transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>

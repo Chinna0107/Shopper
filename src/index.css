@@ -2,7 +2,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-orange: #fe6603;
+  --color-brand-orange: #ff7b00; /* Brighter neon orange */
+  --color-brand-orange-glow: rgba(255, 123, 0, 0.5);
+  --color-brand-dark-blue: #020617; /* Deep space black/navy */
+  --color-brand-glass: rgba(10, 15, 35, 0.7); /* Much darker glass */
+  --color-brand-glass-border: rgba(255, 255, 255, 0.08);
+  --color-brand-text: #f8fafc;
+  --color-brand-text-muted: #94a3b8;
+  
+  /* Keeping old ones just in case for legacy components, but overriding where possible */
   --color-brand-maroon: #036e26;
   --color-brand-gold: #C69C6D;
   --color-brand-cream: #FDFBF7;
@@ -22,14 +30,28 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
+  /* New Glassmorphism Utilities */
+  .glass-panel {
+    background-color: var(--color-brand-glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-brand-glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px var(--color-brand-orange-glow);
+  }
 }
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #045e1a;
-  color: #ffffff;
+  background-color: var(--color-brand-dark-blue);
+  color: var(--color-brand-text);
+  /* Deeper radial gradient */
+  background-image: radial-gradient(circle at top, #0a1128, #020617);
+  background-attachment: fixed;
 }
 
-input, textarea, select {
-  color: #111827;
-}
+

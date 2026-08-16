@@ -123,12 +123,12 @@ export function CategoryListingPage() {
     <div className="flex flex-col gap-6">
       {/* Categories */}
       <div>
-        <h3 className="text-sm font-bold text-brand-orange mb-3 uppercase tracking-wider">Categories</h3>
-        <ul className="space-y-1">
+        <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider glow-text">Categories</h3>
+        <ul className="space-y-1.5">
           <li>
             <button 
               onClick={() => handleCategoryChange('all')}
-              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${categoryId === 'all' ? 'bg-brand-green/10 text-brand-orange font-bold' : 'text-brand-orange/70 hover:bg-gray-100'}`}
+              className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all border ${categoryId === 'all' ? 'bg-brand-orange/10 border-brand-orange/50 text-brand-orange font-bold shadow-[0_0_15px_rgba(255,123,0,0.2)]' : 'border-transparent text-brand-text-muted hover:bg-white/5 hover:text-white hover:border-white/10'}`}
             >
               All Products
             </button>
@@ -137,7 +137,7 @@ export function CategoryListingPage() {
             <li key={cat.id}>
               <button 
                 onClick={() => handleCategoryChange(cat.id.toString())}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${categoryId === cat.id.toString() ? 'bg-brand-green/10 text-brand-orange font-bold' : 'text-brand-orange/70 hover:bg-gray-100'}`}
+                className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all border ${categoryId === cat.id.toString() ? 'bg-brand-orange/10 border-brand-orange/50 text-brand-orange font-bold shadow-[0_0_15px_rgba(255,123,0,0.2)]' : 'border-transparent text-brand-text-muted hover:bg-white/5 hover:text-white hover:border-white/10'}`}
               >
                 {cat.name}
               </button>
@@ -148,20 +148,20 @@ export function CategoryListingPage() {
 
       {/* Subcategories (Models) */}
       {currentModels.length > 0 && (
-        <div className="border-t border-brand-orange/10 pt-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-bold text-brand-orange uppercase tracking-wider">Subcategories</h3>
+        <div className="border-t border-white/10 pt-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider glow-text">Subcategories</h3>
             {modelQuery && (
-              <button onClick={() => handleModelChange('')} className="text-[10px] text-brand-orange hover:underline font-bold">Clear</button>
+              <button onClick={() => handleModelChange('')} className="text-[11px] text-brand-orange hover:text-white font-bold bg-brand-orange/10 px-2 py-1 rounded-md transition-colors">Clear</button>
             )}
           </div>
-          <div className="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+          <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
             {currentModels.map(model => (
-              <label key={model} className="flex items-center gap-2 cursor-pointer group">
-                <div className={`w-4 h-4 rounded border flex items-center justify-center transition-colors ${modelQuery === model ? 'border-brand-orange bg-brand-green' : 'border-gray-300 group-hover:border-brand-orange'}`}>
-                  {modelQuery === model && <Check className="w-3 h-3 text-white" />}
+              <label key={model} className="flex items-center gap-3 cursor-pointer group">
+                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${modelQuery === model ? 'border-brand-orange bg-brand-orange shadow-[0_0_10px_rgba(255,123,0,0.5)]' : 'border-white/20 group-hover:border-white/50 bg-white/5'}`}>
+                  {modelQuery === model && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
                 </div>
-                <span className={`text-sm ${modelQuery === model ? 'text-brand-orange font-bold' : 'text-brand-orange/70'}`}>{model}</span>
+                <span className={`text-sm ${modelQuery === model ? 'text-brand-orange font-bold' : 'text-brand-text-muted group-hover:text-white'}`}>{model}</span>
                 <input type="radio" name="model_radio" className="hidden" checked={modelQuery === model} onChange={() => handleModelChange(model)} />
               </label>
             ))}
@@ -170,19 +170,19 @@ export function CategoryListingPage() {
       )}
 
       {/* Sort By */}
-      <div className="border-t border-brand-orange/10 pt-6">
-        <h3 className="text-sm font-bold text-brand-orange mb-3 uppercase tracking-wider">Sort By</h3>
-        <div className="space-y-2">
+      <div className="border-t border-white/10 pt-6">
+        <h3 className="text-sm font-bold text-white mb-4 uppercase tracking-wider glow-text">Sort By</h3>
+        <div className="space-y-3">
           {[
             { id: 'featured', label: 'Featured' },
             { id: 'price_asc', label: 'Price: Low to High' },
             { id: 'price_desc', label: 'Price: High to Low' },
           ].map(opt => (
-            <label key={opt.id} className="flex items-center gap-2 cursor-pointer group">
-              <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${sortBy === opt.id ? 'border-brand-orange bg-brand-green' : 'border-gray-300 group-hover:border-brand-orange'}`}>
-                {sortBy === opt.id && <Check className="w-3 h-3 text-white" />}
+            <label key={opt.id} className="flex items-center gap-3 cursor-pointer group">
+              <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-all ${sortBy === opt.id ? 'border-brand-orange bg-brand-orange shadow-[0_0_10px_rgba(255,123,0,0.5)]' : 'border-white/20 group-hover:border-white/50 bg-white/5'}`}>
+                {sortBy === opt.id && <div className="w-2 h-2 rounded-full bg-white" />}
               </div>
-              <span className={`text-sm ${sortBy === opt.id ? 'text-brand-orange font-bold' : 'text-brand-orange/70'}`}>{opt.label}</span>
+              <span className={`text-sm ${sortBy === opt.id ? 'text-brand-orange font-bold' : 'text-brand-text-muted group-hover:text-white'}`}>{opt.label}</span>
               <input type="radio" name="sort_radio" className="hidden" checked={sortBy === opt.id} onChange={() => handleSortChange(opt.id)} />
             </label>
           ))}
@@ -192,20 +192,21 @@ export function CategoryListingPage() {
   );
 
   return (
-    <div className="bg-brand-green min-h-screen pb-20">
+    <div className="bg-transparent min-h-screen pb-20">
       <Header title={categoryName} showShare={true} />
       
       {/* Category Banner */}
-      <div className="w-full bg-brand-green">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-6 md:px-12 md:py-8 gap-6">
-          <div className="text-center md:text-left text-white max-w-xl">
-            <h1 className="text-3xl md:text-5xl font-serif font-bold mb-3 tracking-wide">{categoryName}</h1>
-            <p className="text-white/80 font-sans text-sm md:text-base leading-relaxed">
+      <div className="glass-panel mx-4 lg:mx-8 rounded-3xl mt-6 relative overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.6)] border border-white/10">
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-orange/10 to-transparent pointer-events-none" />
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-6 md:px-12 md:py-10 gap-6 relative z-10">
+          <div className="text-center md:text-left text-white max-w-2xl">
+            <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight glow-text">{categoryName}</h1>
+            <p className="text-brand-text-muted font-sans text-sm md:text-lg leading-relaxed max-w-xl">
               Explore our handpicked collection of authentic, premium essentials for your divine rituals. Each item is crafted with devotion and purity.
             </p>
           </div>
-          <div className="w-24 h-24 md:w-36 md:h-36 shrink-0 rounded-full bg-white/10 p-2 border border-white/20 backdrop-blur-md hidden md:block">
-            <img src={bannerImg} alt={categoryName} className="w-full h-full object-cover rounded-full mix-blend-multiply opacity-80" />
+          <div className="w-28 h-28 md:w-40 md:h-40 shrink-0 rounded-full bg-white/5 p-2 border border-brand-orange/30 shadow-[0_0_30px_rgba(255,123,0,0.3)] hidden md:block group-hover:shadow-[0_0_40px_rgba(255,123,0,0.5)] transition-all">
+            <img src={bannerImg} alt={categoryName} className="w-full h-full object-cover rounded-full" />
           </div>
         </div>
       </div>
@@ -213,24 +214,24 @@ export function CategoryListingPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         
         {/* Categories Ribbon */}
-        <div className="bg-white shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-brand-orange/10 rounded-xl mb-6 px-2 py-4 overflow-x-auto hide-scrollbar">
-          <div className="flex gap-6 md:gap-12 justify-start md:justify-center min-w-max mx-auto px-4">
-            <Link to="/category/all" className="flex flex-col items-center gap-2 group">
-              <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center border overflow-hidden group-hover:shadow-md transition-all ${categoryId === 'all' ? 'border-brand-orange border-2 shadow-sm' : 'border-gray-100 bg-gray-50'}`}>
-                <div className="w-full h-full bg-orange-100 flex items-center justify-center text-brand-orange font-bold text-xs text-center leading-tight">All<br/>Products</div>
+        <div className="glass-panel border-white/10 rounded-3xl mb-8 px-4 py-6 overflow-x-auto hide-scrollbar shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
+          <div className="flex gap-6 md:gap-10 justify-start md:justify-center min-w-max mx-auto px-2">
+            <Link to="/category/all" className="flex flex-col items-center gap-3 group">
+              <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border overflow-hidden group-hover:border-brand-orange group-hover:shadow-[0_0_15px_rgba(255,123,0,0.4)] transition-all ${categoryId === 'all' ? 'border-brand-orange border-2 shadow-[0_0_20px_rgba(255,123,0,0.5)] bg-brand-orange/10' : 'border-white/10 bg-white/5'}`}>
+                <div className="w-full h-full flex items-center justify-center text-white font-extrabold text-sm text-center leading-tight">All<br/>Products</div>
               </div>
-              <span className={`text-[12px] md:text-sm font-semibold text-center transition-colors ${categoryId === 'all' ? 'text-brand-orange' : 'text-gray-800 group-hover:text-brand-orange'}`}>All Products</span>
+              <span className={`text-[13px] md:text-sm font-bold text-center transition-colors ${categoryId === 'all' ? 'text-brand-orange' : 'text-brand-text-muted group-hover:text-white'}`}>All Products</span>
             </Link>
             {categories.map(cat => (
-              <Link key={cat.id} to={`/category/${cat.id}`} className="flex flex-col items-center gap-2 group">
-                <div className={`w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center border overflow-hidden group-hover:shadow-md transition-all ${categoryId === cat.id.toString() ? 'border-brand-orange border-2 shadow-sm' : 'border-gray-100 bg-gray-50'}`}>
+              <Link key={cat.id} to={`/category/${cat.id}`} className="flex flex-col items-center gap-3 group">
+                <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border overflow-hidden group-hover:border-brand-orange group-hover:shadow-[0_0_15px_rgba(255,123,0,0.4)] transition-all ${categoryId === cat.id.toString() ? 'border-brand-orange border-2 shadow-[0_0_20px_rgba(255,123,0,0.5)] bg-brand-orange/10' : 'border-white/10 bg-white/5 p-1'}`}>
                   {cat.image_url ? (
-                    <img src={cat.image_url} alt={cat.name} className="w-full h-full object-cover" />
+                    <img src={cat.image_url} alt={cat.name} className="w-full h-full object-cover rounded-xl" />
                   ) : (
-                    <img src={imgAarti} alt="Cat" className="w-full h-full object-cover opacity-50" />
+                    <img src={imgAarti} alt="Cat" className="w-full h-full object-cover opacity-50 rounded-xl" />
                   )}
                 </div>
-                <span className={`text-[12px] md:text-sm font-semibold text-center transition-colors ${categoryId === cat.id.toString() ? 'text-brand-orange' : 'text-gray-800 group-hover:text-brand-orange'}`}>{cat.name}</span>
+                <span className={`text-[13px] md:text-sm font-bold text-center transition-colors ${categoryId === cat.id.toString() ? 'text-brand-orange' : 'text-brand-text-muted group-hover:text-white'}`}>{cat.name}</span>
               </Link>
             ))}
           </div>
@@ -251,32 +252,32 @@ export function CategoryListingPage() {
         )}
 
         {/* Filter and Sort Bar for Mobile / Top Bar for Desktop */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 bg-white p-3 md:p-4 rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-brand-orange/10 gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 glass-panel p-4 md:p-5 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.4)] border border-white/10 gap-4">
           <div className="flex items-center justify-between w-full sm:w-auto gap-4">
-            <span className="text-sm font-bold text-brand-orange bg-orange-50 px-3 py-1.5 rounded-lg">{filteredProducts.length} Items</span>
+            <span className="text-sm font-extrabold text-white bg-white/10 border border-white/20 px-4 py-2 rounded-xl">{filteredProducts.length} Items</span>
             
             {/* Mobile Filter Trigger */}
             <button 
               onClick={() => setShowMobileFilters(true)}
-              className="lg:hidden flex items-center gap-1.5 text-sm font-bold text-brand-orange bg-brand-green/10 px-4 py-1.5 rounded-lg"
+              className="lg:hidden flex items-center gap-2 text-sm font-bold text-white bg-brand-orange px-5 py-2 rounded-xl shadow-[0_0_15px_rgba(255,123,0,0.4)]"
             >
               <Filter className="w-4 h-4" />
               Filters
             </button>
           </div>
 
-          <div className="hidden lg:flex items-center gap-3">
-            <span className="text-sm font-semibold text-brand-orange/60">View:</span>
-            <div className="flex bg-gray-100 rounded-lg p-1">
-              <button onClick={() => setLayout('grid')} className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors ${layout === 'grid' ? 'bg-white shadow-sm text-brand-orange' : 'text-gray-500 hover:text-gray-900'}`}>Grid</button>
-              <button onClick={() => setLayout('list')} className={`px-4 py-1.5 text-xs font-bold rounded-md transition-colors ${layout === 'list' ? 'bg-white shadow-sm text-brand-orange' : 'text-gray-500 hover:text-gray-900'}`}>List</button>
+          <div className="hidden lg:flex items-center gap-4">
+            <span className="text-sm font-bold text-brand-text-muted uppercase tracking-wider">View:</span>
+            <div className="flex bg-white/5 border border-white/10 rounded-xl p-1.5">
+              <button onClick={() => setLayout('grid')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${layout === 'grid' ? 'bg-brand-orange text-white shadow-[0_0_10px_rgba(255,123,0,0.4)]' : 'text-brand-text-muted hover:text-white'}`}>Grid</button>
+              <button onClick={() => setLayout('list')} className={`px-5 py-2 text-sm font-bold rounded-lg transition-all ${layout === 'list' ? 'bg-brand-orange text-white shadow-[0_0_10px_rgba(255,123,0,0.4)]' : 'text-brand-text-muted hover:text-white'}`}>List</button>
             </div>
           </div>
         </div>
 
         <div className="flex gap-8 items-start">
           {/* Desktop Sidebar */}
-          <aside className="hidden lg:block w-64 shrink-0 bg-white p-6 rounded-2xl shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-brand-orange/10 sticky top-24">
+          <aside className="hidden lg:block w-72 shrink-0 glass-panel p-6 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10 sticky top-28">
             <FilterSidebarContent />
           </aside>
 
@@ -309,13 +310,13 @@ export function CategoryListingPage() {
               })}
               
               {filteredProducts.length === 0 && (
-                <div className="col-span-full py-20 text-center flex flex-col items-center bg-white rounded-2xl shadow-sm border border-brand-orange/5">
-                  <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4 text-gray-400">
-                    <Search className="w-6 h-6 text-brand-orange/50" />
+                <div className="col-span-full py-24 text-center flex flex-col items-center glass-panel rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/10">
+                  <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mb-6 shadow-inner">
+                    <Search className="w-8 h-8 text-brand-text-muted/50" />
                   </div>
-                  <h3 className="font-serif text-xl font-bold text-brand-orange mb-1">No products found</h3>
-                  <p className="text-sm text-brand-orange/60 max-w-md">Try adjusting your filters or search terms to find what you're looking for.</p>
-                  <button onClick={() => { handleCategoryChange('all'); setSortBy('featured'); }} className="mt-6 text-brand-orange font-bold text-sm bg-brand-green/10 px-6 py-2 rounded-full hover:bg-brand-green/20 transition-colors">
+                  <h3 className="text-2xl font-extrabold text-white mb-2 glow-text">No products found</h3>
+                  <p className="text-brand-text-muted max-w-md">Try adjusting your filters or search terms to find what you're looking for.</p>
+                  <button onClick={() => { handleCategoryChange('all'); setSortBy('featured'); }} className="mt-8 bg-brand-orange text-white font-bold px-8 py-3 rounded-xl shadow-[0_0_20px_rgba(255,123,0,0.4)] hover:-translate-y-1 transition-all">
                     Clear Filters
                   </button>
                 </div>
@@ -348,31 +349,31 @@ export function CategoryListingPage() {
       {/* Mobile Filters Drawer/Modal */}
       {showMobileFilters && (
         <div className="fixed inset-0 z-[60] lg:hidden flex">
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onClick={() => setShowMobileFilters(false)} />
-          <div className="relative ml-auto w-[85%] max-w-sm bg-white h-full flex flex-col shadow-2xl transition-transform transform translate-x-0">
-            <div className="flex items-center justify-between p-5 border-b border-brand-orange/10">
-              <h2 className="font-serif text-xl font-bold text-brand-orange flex items-center gap-2">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity" onClick={() => setShowMobileFilters(false)} />
+          <div className="relative ml-auto w-[85%] max-w-sm glass-panel bg-black/95 h-full flex flex-col shadow-2xl transition-transform border-l border-white/10">
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/5">
+              <h2 className="text-xl font-bold text-white flex items-center gap-2 glow-text">
                 <Filter className="w-5 h-5 text-brand-orange" /> Filters
               </h2>
-              <button onClick={() => setShowMobileFilters(false)} className="p-2 text-gray-400 hover:text-gray-900 bg-gray-50 rounded-full">
+              <button onClick={() => setShowMobileFilters(false)} className="p-2 text-brand-text-muted hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all">
                 <X className="w-5 h-5" />
               </button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
               <FilterSidebarContent />
             </div>
             
-            <div className="p-5 border-t border-brand-orange/10 bg-gray-50 flex gap-3">
+            <div className="p-6 border-t border-white/10 bg-black/40 flex gap-4">
               <button 
                 onClick={() => { handleCategoryChange('all'); setSortBy('featured'); setShowMobileFilters(false); }}
-                className="flex-1 px-4 py-3 border border-brand-orange/20 text-brand-orange font-bold rounded-xl bg-white shadow-sm"
+                className="flex-1 px-4 py-3 border border-white/20 text-white hover:bg-white/5 font-bold rounded-xl transition-all"
               >
                 Reset
               </button>
               <button 
                 onClick={() => setShowMobileFilters(false)}
-                className="flex-[2] px-4 py-3 bg-brand-green text-white font-bold rounded-xl shadow-md"
+                className="flex-[2] px-4 py-3 bg-brand-orange text-white font-bold rounded-xl shadow-[0_0_15px_rgba(255,123,0,0.4)]"
               >
                 Apply Filters
               </button>

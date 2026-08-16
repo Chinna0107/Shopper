@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Headphones, ArrowLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
-import logo from '../../assets/logo.jpeg';
+import logo from '../../assets/logo.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 

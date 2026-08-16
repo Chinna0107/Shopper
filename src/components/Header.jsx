@@ -9,7 +9,7 @@ import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useWishlistStore } from '../store/useWishlistStore';
 import { useStoreData } from '../store/useStoreData';
-import logo from '../assets/logo.jpeg';
+import logo from '../assets/logo.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api';
 
@@ -149,15 +149,11 @@ function OffersDropdown() {
 function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout }) {
   return (
     <>
-      <div className="h-[76px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-brand-green px-6 md:px-10 lg:px-12 py-3.5 shadow-md hidden md:block">
+      <div className="h-[120px] lg:h-[160px] hidden md:block" />
+      <header className="fixed top-0 left-0 z-50 w-full glass-panel border-x-0 border-t-0 rounded-none px-6 md:px-10 lg:px-12 py-3.5 hidden md:block">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
-          <Link to="/" className="flex-1 flex items-center gap-2 justify-start group">
-            <img src={logo} alt="Logo" className="h-10 md:h-11 object-cover rounded-full" />
-          </Link>
-
-          <nav className="hidden lg:flex shrink-0 items-center justify-center gap-6">
+          <nav className="flex-1 hidden lg:flex items-center justify-start gap-6">
             <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Home</Link>
             <CategoriesDropdown />
             <OffersDropdown />
@@ -165,6 +161,10 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
             <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Contact</Link>
             <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Orders</Link>
           </nav>
+
+          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0">
+            <img src={logo} alt="Logo" className="h-24 md:h-32 lg:h-40 w-auto max-w-[300px] lg:max-w-[450px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-300 group-hover:scale-105" />
+          </Link>
 
           <div className="flex-1 flex items-center justify-end gap-4 lg:gap-6">
             <div className="relative hidden xl:block w-[220px]">
@@ -174,22 +174,22 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
                 }}
-                className="w-full bg-white rounded-full py-2 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 transition-all"
+                className="w-full bg-white/10 border border-white/20 rounded-full py-2 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-orange shadow-inner backdrop-blur"
               />
             </div>
             <div className="flex items-center gap-3 lg:gap-4">
-              <Link to="/wishlist" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
+              <Link to="/wishlist" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full border border-white/10">
                 <Heart className="w-5 h-5 text-white" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-brand-green shadow-sm">
+                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20 shadow-[0_0_10px_rgba(255,123,0,0.5)]">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
-              <Link to="/cart" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
+              <Link to="/cart" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full border border-white/10">
                 <ShoppingCart className="w-5 h-5 text-white" strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-brand-green shadow-sm">
+                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20 shadow-[0_0_10px_rgba(255,123,0,0.5)]">
                     {cartCount}
                   </span>
                 )}
@@ -197,7 +197,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
               {token ? (
                 <AvatarDropdown user={user} onLogout={handleLogout} />
               ) : (
-                <Link to="/login" className="flex items-center gap-1.5 text-sm font-bold text-white bg-gradient-to-r from-brand-orange to-[#ff7b24] px-4 lg:px-5 py-2 rounded-full hover:shadow-md transition-all ml-1 shadow-sm">
+                <Link to="/login" className="flex items-center gap-1.5 text-sm font-bold text-white bg-brand-orange px-4 lg:px-5 py-2 rounded-full shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_20px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all ml-1">
                   <LogIn className="w-4 h-4" /> Login
                 </Link>
               )}
@@ -258,14 +258,13 @@ export function Header({ variant = 'default', title, showShare = false }) {
             <motion.div key="sidebar"
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
-              className="fixed top-0 left-0 w-[280px] h-full bg-white z-[101] shadow-2xl flex flex-col">
+              className="fixed top-0 left-0 w-[280px] h-full glass-panel bg-black/90 backdrop-blur-3xl border-r border-white/10 z-[101] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col">
 
-              <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
-                <div className="flex items-center gap-2">
-                  <img src={logo} alt="Logo" className="h-8 w-8 object-cover rounded-full" />
-                  <span className="font-bold text-lg"><span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span></span>
+              <div className="p-4 flex items-center justify-between border-b border-white/10 bg-brand-orange/5 shadow-inner">
+                <div className="flex items-center gap-3">
+                  <img src={logo} alt="Logo" className="h-16 w-auto max-w-[180px] object-contain filter drop-shadow-[0_0_15px_rgba(255,123,0,0.5)]" />
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="p-1.5 text-gray-500 bg-white rounded-full shadow-sm">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-brand-text-muted hover:text-white bg-white/5 hover:bg-white/10 rounded-full border border-white/10 transition-colors shadow-[0_0_10px_rgba(0,0,0,0.5)]">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -276,23 +275,23 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {/* Categories accordion */}
                 <motion.div variants={itemVariants}>
                   <button onClick={() => setMobileCatsOpen(o => !o)}
-                    className="w-full flex items-center justify-between text-gray-700 font-semibold text-base py-3 px-4 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                    className="w-full flex items-center justify-between text-white font-bold text-base py-3 px-4 rounded-xl hover:bg-white/5 hover:text-brand-orange transition-all">
                     Categories
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180 text-brand-orange' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {mobileCatsOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }} className="overflow-hidden">
-                        <div className="ml-4 border-l-2 border-orange-100 pl-3 py-1 space-y-0.5">
+                        <div className="ml-5 border-l-2 border-white/10 pl-4 py-2 space-y-1 mt-1 mb-2">
                           <Link to="/category/all" onClick={() => setMobileMenuOpen(false)}
-                            className="block text-sm font-bold text-brand-orange py-2 px-2 rounded-lg hover:bg-orange-50">
+                            className="block text-sm font-extrabold text-brand-orange py-2.5 px-3 rounded-lg hover:bg-white/5 transition-colors shadow-inner">
                             All Categories
                           </Link>
                           {categories.map(cat => (
                             <Link key={cat.id} to={`/category/${cat.id}`} onClick={() => setMobileMenuOpen(false)}
-                              className="block text-sm text-gray-600 py-2 px-2 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                              className="block text-sm font-medium text-brand-text-muted py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-white transition-colors">
                               {cat.name}
                             </Link>
                           ))}
@@ -305,7 +304,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {navLinks.map(link => (
                   <motion.div key={link.name} variants={itemVariants}>
                     <Link to={link.path} onClick={() => setMobileMenuOpen(false)}
-                      className="block text-gray-700 font-semibold text-base py-3 px-4 rounded-lg hover:bg-orange-50 hover:text-brand-orange transition-colors">
+                      className="block text-white font-bold text-base py-3 px-4 rounded-xl hover:bg-white/5 hover:text-brand-orange transition-all">
                       {link.name}
                     </Link>
                   </motion.div>
@@ -314,10 +313,10 @@ export function Header({ variant = 'default', title, showShare = false }) {
 
               {!token && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                  className="p-4 border-t border-gray-100 bg-gray-50">
+                  className="p-5 border-t border-white/10 bg-black/40">
                   <Link to="/login" onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full bg-brand-orange text-white font-bold py-3 rounded-xl shadow-sm">
-                    <LogIn className="w-4 h-4" /> Login to Account
+                    className="flex items-center justify-center gap-2 w-full bg-brand-orange text-white font-extrabold py-3.5 rounded-xl shadow-[0_0_20px_rgba(255,123,0,0.4)] hover:bg-orange-500 transition-all">
+                    <LogIn className="w-5 h-5" /> Login to Account
                   </Link>
                 </motion.div>
               )}
@@ -325,46 +324,58 @@ export function Header({ variant = 'default', title, showShare = false }) {
           )}
         </AnimatePresence>
 
-        <div className="h-[110px]" />
-        <header className="fixed top-0 left-0 z-50 w-full bg-brand-green px-4 py-3 shadow-md">
+        <div className="h-[130px]" />
+        <header className="fixed top-0 left-0 z-50 w-full glass-panel border-x-0 border-t-0 rounded-none px-4 py-3 shadow-md">
           <div className="w-full">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between mb-3 relative">
+              <div className="flex items-center">
                 <button onClick={() => setMobileMenuOpen(true)} className="p-1 -ml-1">
                   <Menu className="w-6 h-6 text-white" strokeWidth={1.5} />
                 </button>
+              </div>
+              
+              {/* Centered Logo for Mobile */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                 <Link to="/">
-                  <span className="font-bold text-2xl text-white"><span className="text-white">Ind</span><span className="text-brand-orange">Basket</span></span>
+                  <img src={logo} alt="Logo" className="h-20 md:h-24 w-auto max-w-[260px] md:max-w-[300px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:drop-shadow-[0_0_30px_rgba(255,123,0,0.6)] transition-all scale-110" />
                 </Link>
               </div>
+
               <div className="flex items-center gap-3">
-                <Link to="/wishlist" className="relative p-1 cursor-pointer">
-                  <Heart className="w-6 h-6 text-white" strokeWidth={1.5} />
+                <Link to="/wishlist" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
+                  <Heart className="w-5 h-5 text-white" strokeWidth={1.5} />
                   {wishlistCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-brand-green">
+                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20">
                       {wishlistCount}
                     </span>
                   )}
                 </Link>
-                <Link to="/cart" className="relative p-1 cursor-pointer">
-                  <ShoppingCart className="w-6 h-6 text-white" strokeWidth={1.5} />
+                <Link to="/cart" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
+                  <ShoppingCart className="w-5 h-5 text-white" strokeWidth={1.5} />
                   {cartCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-brand-green">
+                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20">
                       {cartCount}
                     </span>
                   )}
                 </Link>
               </div>
             </div>
-            <div className="relative mt-2">
-              <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input type="text" placeholder="Search products, brands and more..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim())
-                    navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
-                }}
-                className="w-full bg-white rounded-xl py-3 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-orange shadow-inner"
-              />
+            <div className="relative mt-3 flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                <input type="text" placeholder="Search products, brands and more..."
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && e.target.value.trim())
+                      navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
+                  }}
+                  className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner backdrop-blur"
+                />
+              </div>
+              <button className="w-10 h-10 shrink-0 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+              </button>
             </div>
           </div>
         </header>

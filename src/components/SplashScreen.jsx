@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import logoImg from '../assets/logo.jpeg';
+import logoImg from '../assets/logo.png';
 
 export function SplashScreen({ onComplete }) {
   const container = useRef(null);
   const logo = useRef(null);
   const textRef = useRef(null);
+  const glowRef = useRef(null);
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -15,54 +16,76 @@ export function SplashScreen({ onComplete }) {
       }
     });
 
-    // Phase 1: 3D Flip Reveal
+    // Phase 1: Reveal logo with a smooth scale and fade
     tl.from(logo.current, {
-      rotationX: 90,
-      scale: 0.8,
+      y: 30,
+      scale: 0.9,
       opacity: 0,
-      duration: 1.2,
-      ease: 'back.out(1.5)'
+      duration: 1.5,
+      ease: 'back.out(1.2)'
     })
-      // Phase 2: Text gently fades in
-      .from(textRef.current, {
-        y: 15,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out'
-      }, "-=0.6")
-      // Hold for a moment to let the user read
-      .to({}, { duration: 0.8 })
-      // Phase 3: Logo smoothly scales up and fades out
-      .to(logo.current, {
-        scale: 3,
-        opacity: 0,
-        duration: 0.7,
-        ease: 'power3.in'
-      })
-      // Phase 4: Container fades to transparent to reveal the app smoothly
-      .to(container.current, {
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.inOut'
-      }, "-=0.5");
+    // Phase 1.5: Expand the ambient glow behind the logo
+    .from(glowRef.current, {
+      opacity: 0,
+      scale: 0.5,
+      duration: 2,
+      ease: 'power2.out'
+    }, "-=1.2")
+    // Phase 2: Text gently fades and slides in
+    .from(textRef.current, {
+      y: 15,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.out'
+    }, "-=1")
+    // Hold for a moment to let the user admire the screen
+    .to({}, { duration: 1.2 })
+    // Phase 3: Logo and elements smoothly scale up and fade out
+    .to([logo.current, glowRef.current], {
+      scale: 1.2,
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power3.in'
+    })
+    .to(textRef.current, {
+      opacity: 0,
+      y: -10,
+      duration: 0.5,
+      ease: 'power2.in'
+    }, "-=0.6")
+    // Phase 4: Container fades to transparent to reveal the app
+    .to(container.current, {
+      opacity: 0,
+      duration: 0.8,
+      ease: 'power2.inOut'
+    }, "-=0.3");
   }, { scope: container });
 
   return (
     <div
       ref={container}
-      className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center w-full h-full"
+      className="fixed inset-0 z-[100] bg-[#020617] flex flex-col items-center justify-center w-full h-full overflow-hidden"
     >
-      <div className="flex flex-col items-center justify-center gap-6">
-        <div ref={logo} className="perspective-1000">
+      {/* Background Ambient Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-orange/10 via-[#020617] to-[#020617] pointer-events-none" />
+      
+      <div className="relative flex flex-col items-center justify-center gap-8 z-10 w-full px-4">
+        {/* Dynamic Center Glow */}
+        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 bg-brand-orange/20 rounded-full blur-[80px] pointer-events-none" />
+        
+        {/* Logo */}
+        <div ref={logo} className="relative w-full max-w-sm md:max-w-md flex justify-center">
           <img
             src={logoImg}
-            alt="Indbasket"
-            className="w-56 md:w-80 object-contain"
+            alt="Zesto"
+            className="w-4/5 md:w-full object-contain filter drop-shadow-[0_0_20px_rgba(255,123,0,0.5)]"
           />
         </div>
-        <div ref={textRef} className="text-center overflow-hidden">
-          <p className="text-brand-orange text-xs md:text-sm font-bold tracking-[0.2em] uppercase opacity-80">
-            Everything in one place - INDBASKET
+        
+        {/* Subtitle */}
+        <div ref={textRef} className="text-center overflow-hidden relative">
+          <p className="text-brand-orange text-[11px] md:text-sm font-bold tracking-[0.3em] uppercase opacity-90 glow-text">
+            Shop Smart. Live Better.
           </p>
         </div>
       </div>

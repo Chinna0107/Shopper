@@ -11,7 +11,7 @@ export function ProfilePage() {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-brand-green flex flex-col items-center justify-center gap-4 pb-20">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center gap-4 pb-20">
         <Header title="My Profile" />
         <User className="w-16 h-16 text-white/50 mt-20" />
         <p className="text-white font-semibold">You're not logged in</p>
@@ -32,46 +32,46 @@ export function ProfilePage() {
   ];
 
   return (
-    <div className="min-h-screen bg-brand-green pb-20">
+    <div className="min-h-screen bg-transparent pb-20">
       <Header title="My Profile" />
-      <div className="bg-brand-orange text-white px-6 pt-6 pb-8 rounded-b-[2.5rem] shadow-sm">
+      <div className="glass-panel bg-black/40 border-b border-white/10 text-white px-6 pt-6 pb-8 shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-4xl mx-auto flex items-center gap-4">
           <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center border-2 border-white/40 shrink-0">
             <User className="w-8 h-8 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold">{user?.name}</h1>
-            <p className="text-xs text-white/80 mt-0.5">{user?.phone || user?.email}</p>
+            <h1 className="text-xl font-bold">{user?.name}</h1>
+            <p className="text-xs text-brand-text-muted mt-0.5">{user?.phone || user?.email}</p>
             <Link to="/dashboard"
-              className="mt-2 inline-block bg-white/20 hover:bg-white/30 text-white text-[10px] font-bold px-4 py-1 rounded-full border border-white/30 transition-colors">
+              className="mt-3 inline-block bg-brand-orange/20 hover:bg-brand-orange/40 text-brand-orange hover:text-white text-xs font-bold px-4 py-1.5 rounded-full border border-brand-orange/30 shadow-[0_0_10px_rgba(255,123,0,0.2)] hover:shadow-[0_0_15px_rgba(255,123,0,0.4)] transition-all">
               View Dashboard
             </Link>
           </div>
         </div>
       </div>
 
-      <div className="p-4 mt-2 max-w-4xl mx-auto">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="p-4 mt-6 max-w-4xl mx-auto">
+        <div className="glass-panel rounded-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (
               <button key={index} onClick={item.action}
-                className={`w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors ${index !== menuItems.length - 1 ? 'border-b border-gray-100' : ''}`}>
-                <div className="flex items-center gap-3 text-gray-700">
-                  <Icon className="w-4 h-4" />
-                  <span className="text-xs font-semibold">{item.label}</span>
+                className={`w-full flex items-center justify-between p-4 bg-transparent hover:bg-white/5 transition-colors ${index !== menuItems.length - 1 ? 'border-b border-white/10' : ''}`}>
+                <div className="flex items-center gap-3 text-white">
+                  <Icon className="w-5 h-5 text-brand-orange" />
+                  <span className="text-sm font-semibold">{item.label}</span>
                 </div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
+                <ChevronRight className="w-5 h-5 text-brand-text-muted" />
               </button>
             );
           })}
           <button onClick={() => { logout(); navigate('/'); }}
-            className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors border-t border-gray-100">
+            className="w-full flex items-center justify-between p-4 bg-transparent hover:bg-red-500/10 transition-colors border-t border-white/10">
             <div className="flex items-center gap-3 text-red-500">
-              <LogOut className="w-4 h-4" />
-              <span className="text-xs font-semibold">Logout</span>
+              <LogOut className="w-5 h-5" />
+              <span className="text-sm font-semibold">Logout</span>
             </div>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <ChevronRight className="w-5 h-5 text-red-500/50" />
           </button>
         </div>
       </div>

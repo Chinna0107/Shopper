@@ -40,26 +40,26 @@ export function SearchPage() {
   });
 
   return (
-    <div className="min-h-screen bg-brand-green font-sans pb-24">
+    <div className="min-h-screen bg-transparent font-sans pb-24">
       {/* Search Header */}
-      <div className="bg-white sticky top-0 z-40 px-4 py-4 shadow-sm border-b border-gray-100 flex items-center gap-3">
-        <button onClick={() => navigate(-1)} className="p-2 text-gray-900 hover:bg-gray-100 rounded-full transition-colors">
+      <div className="glass-panel bg-[#020617]/90 backdrop-blur-2xl sticky top-0 z-40 px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.5)] border-x-0 border-t-0 border-b border-white/10 flex items-center gap-3">
+        <button onClick={() => navigate(-1)} className="p-2 text-white hover:bg-white/10 rounded-full transition-colors border border-transparent hover:border-white/20">
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <div className="flex-1 relative">
-          <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
+        <div className="flex-1 relative group">
+          <Search className="w-5 h-5 text-brand-text-muted absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for products, categories..."
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl py-3 pl-10 pr-10 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-orange focus:bg-white transition-all"
+            className="w-full bg-white/5 border border-white/10 rounded-2xl py-3.5 pl-12 pr-12 text-sm text-white focus:outline-none focus:ring-0 focus:border-brand-orange focus:bg-white/10 focus:shadow-[0_0_15px_rgba(255,123,0,0.3)] transition-all placeholder-brand-text-muted/70"
           />
           {query && (
             <button 
               onClick={() => setQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-text-muted hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -75,14 +75,14 @@ export function SearchPage() {
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 w-full max-w-4xl px-4">
               {categories.map(cat => (
                 <Link key={cat.id} to={`/category/${cat.id}`} className="flex flex-col items-center gap-3 group">
-                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center border-2 border-transparent group-hover:border-brand-orange overflow-hidden shadow-sm transition-all group-hover:scale-105">
+                  <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl glass-panel bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-brand-orange group-hover:shadow-[0_0_20px_rgba(255,123,0,0.3)] overflow-hidden transition-all group-hover:scale-105 group-hover:-translate-y-1">
                     {cat.image_url ? (
-                      <img src={cat.image_url} alt={cat.name} className="w-full h-full object-cover" />
+                      <img src={cat.image_url} alt={cat.name} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
                     ) : (
-                      <div className="w-full h-full bg-orange-100 flex items-center justify-center text-brand-orange font-bold text-xl">{cat.name.charAt(0)}</div>
+                      <div className="w-full h-full bg-white/5 flex items-center justify-center text-brand-orange font-bold text-xl">{cat.name.charAt(0)}</div>
                     )}
                   </div>
-                  <span className="text-white text-xs md:text-sm font-semibold text-center group-hover:text-brand-orange transition-colors line-clamp-2">{cat.name}</span>
+                  <span className="text-brand-text-muted text-xs md:text-sm font-semibold text-center group-hover:text-white transition-colors line-clamp-2">{cat.name}</span>
                 </Link>
               ))}
             </div>

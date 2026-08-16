@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { LayoutDashboard, ShoppingBag, Package, Layers, LogOut, Headphones, Menu, X, Users, ImageIcon, Tag, BarChart3, UserPlus, UserCircle, Store, Wallet, CreditCard, Percent, Megaphone } from "lucide-react";
-import logo from '../../assets/logo.jpeg';
+import logo from '../../assets/logo.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 

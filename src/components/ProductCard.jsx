@@ -92,47 +92,46 @@ export function ProductCard({ product, layout = 'grid' }) {
 
   if (layout === 'list') {
     return (
-      <Link to={`/product/${product.id}`} className="flex gap-4 p-4 bg-white rounded-xl shadow-sm mb-4 relative hover:shadow-md transition-shadow">
-        <div className="w-24 h-24 bg-white rounded-lg flex-shrink-0 p-2 relative border border-[#036e26]/10">
-          <img src={firstImg} alt={product.name} className="w-full h-full object-contain" />
+      <Link to={`/product/${product.id}`} className="flex gap-4 p-4 glass-panel bg-gradient-to-br from-[#0a1128]/80 to-[#020617]/90 rounded-2xl mb-4 relative hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] hover:-translate-y-1 transition-all duration-300 border border-white/5 hover:border-blue-500/30 group">
+        <div className="w-24 h-24 bg-white/5 rounded-xl flex-shrink-0 p-2 relative border border-white/5 overflow-hidden shadow-inner">
+          <img src={firstImg} alt={product.name} className="w-full h-full object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500" />
         </div>
-        <div className="flex flex-col justify-center flex-grow">
-          <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 leading-snug mb-1">{product.name}</h3>
+        <div className="flex flex-col justify-center flex-grow pr-8">
+          <h3 className="text-sm font-semibold text-white line-clamp-2 leading-snug mb-1 group-hover:text-brand-orange transition-colors">{product.name}</h3>
           
           <div className="flex items-center gap-1 mb-2">
             <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-            <span className="text-[10px] font-medium text-gray-500">4.5 (12)</span>
+            <span className="text-[10px] font-medium text-yellow-400">4.5</span>
             {color && (
               <>
-                <span className="text-[10px] font-medium text-gray-300 px-1">•</span>
-                <span className="text-[10px] font-medium text-gray-500">{color}</span>
+                <span className="text-[10px] font-medium text-brand-text-muted px-1">•</span>
+                <span className="text-[10px] font-medium text-brand-text-muted">{color}</span>
               </>
             )}
           </div>
 
           <div className="flex items-center justify-between mt-auto">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-bold text-brand-orange">₹{displayPrice}</span>
-              <span className="text-[9px] text-brand-green font-bold bg-brand-green/10 px-1 py-0.5 rounded">{defaultSize.size}</span>
+            <div className="flex flex-col">
+              <span className="text-base font-bold text-white tracking-tight">₹{displayPrice}</span>
+              <span className="text-[10px] text-brand-text-muted line-through">₹{Math.round(displayPrice * 1.4)}</span>
             </div>
-            <button onClick={handleAddToCart} className="bg-brand-green text-white text-xs font-semibold px-4 py-1.5 rounded-md hover:bg-green-900 transition-colors flex items-center gap-1">
-              <ShoppingCart className="w-3.5 h-3.5" />
-              Add
+            <button onClick={handleAddToCart} className="bg-[#2563eb] hover:bg-blue-600 transition-colors p-2 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:scale-110 relative z-20">
+              <ShoppingCart className="w-4 h-4 text-white" strokeWidth={2} />
             </button>
           </div>
         </div>
         <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
           <button 
             onClick={handleWishlist}
-            className="text-gray-300 hover:scale-110 transition-transform bg-white/80 p-1 rounded-full shadow-sm"
+            className="hover:scale-110 transition-transform"
           >
-            <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-brand-orange text-brand-orange' : ''}`} />
+            <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-brand-text-muted hover:text-white'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
           </button>
           <button 
             onClick={handleShare}
-            className="text-gray-400 hover:scale-110 transition-transform bg-white/80 p-1 rounded-full shadow-sm"
+            className="hover:scale-110 transition-transform mt-1"
           >
-            <Share2 className="w-4 h-4" />
+            <Share2 className="w-4 h-4 text-brand-text-muted hover:text-white" strokeWidth={1.5} />
           </button>
         </div>
       </Link>
@@ -142,44 +141,36 @@ export function ProductCard({ product, layout = 'grid' }) {
   return (
     <div 
       onClick={handleCardClick}
-      className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.03)] border border-brand-green/10 cursor-pointer transition-all duration-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:-translate-y-1 h-full p-3 relative"
+      className="group flex flex-col glass-panel bg-gradient-to-br from-[#0a1128]/80 to-[#020617]/90 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_12px_40px_rgba(37,99,235,0.2)] hover:-translate-y-1 hover:border-blue-500/30 h-full p-3 relative border border-white/5"
     >
-      <div className="absolute top-3 right-3 z-20 flex flex-col gap-2">
-        <button onClick={handleWishlist} className="p-1.5 hover:scale-110 transition-transform bg-white/90 rounded-full shadow-sm border border-gray-100">
-          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-brand-orange text-brand-orange' : 'text-gray-400'}`} />
-        </button>
-        <button onClick={handleShare} className="p-1.5 hover:scale-110 transition-transform bg-white/90 rounded-full shadow-sm border border-gray-100">
-          <Share2 className="w-4 h-4 text-gray-400" />
+      <div className="absolute top-3 right-3 z-20">
+        <button onClick={handleWishlist} className="hover:scale-110 transition-transform">
+          <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-brand-text-muted hover:text-white'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
         </button>
       </div>
 
-      <div className="relative aspect-square bg-gray-50 overflow-hidden rounded-xl mb-3">
-        <img src={firstImg} alt={product.name} className="w-full h-full object-contain p-2 mix-blend-multiply transition-transform duration-500 group-hover:scale-110" />
+      <div className="relative aspect-square overflow-hidden rounded-xl mb-3 mt-2 flex items-center justify-center bg-white/5 shadow-inner border border-white/5">
+        <img src={firstImg} alt={product.name} className="w-4/5 h-4/5 object-contain drop-shadow-xl transition-transform duration-500 group-hover:scale-110" />
       </div>
 
-      <div className="flex flex-col flex-grow">
-        <h3 className="text-sm font-semibold text-gray-800 line-clamp-2 leading-snug mb-1.5">{product.name}</h3>
-        
-        <div className="flex items-center gap-1 mb-2">
+      <div className="flex flex-col flex-grow px-1">
+        <div className="flex items-center gap-1 mb-1.5">
           <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-          <span className="text-[10px] font-medium text-gray-500">4.5 (12)</span>
-          {color && (
-            <>
-              <span className="text-[10px] font-medium text-gray-300 px-1">•</span>
-              <span className="text-[10px] font-medium text-gray-500 line-clamp-1">{color}</span>
-            </>
-          )}
+          <span className="text-[10px] md:text-xs font-semibold text-yellow-400">4.8</span>
         </div>
 
-        <div className="flex flex-col gap-1 mb-3 mt-auto">
-          <span className="text-[9px] text-brand-green font-bold bg-brand-green/10 px-1.5 py-0.5 rounded w-fit">{defaultSize.size}</span>
-          <span className="text-base font-bold text-brand-orange">₹{displayPrice}</span>
-        </div>
+        <h3 className="text-xs md:text-sm font-medium text-brand-text-muted line-clamp-2 leading-snug mb-3 group-hover:text-white transition-colors">{product.name}</h3>
 
-        <button onClick={handleAddToCart} className="w-full bg-brand-green text-white text-xs font-semibold py-2 rounded-lg hover:bg-green-900 transition-colors flex items-center justify-center gap-1.5">
-          <ShoppingCart className="w-4 h-4" />
-          Add to Cart
-        </button>
+        <div className="flex items-end justify-between mt-auto">
+          <div className="flex flex-col">
+            <span className="text-sm md:text-base font-bold text-white tracking-tight">₹{displayPrice}</span>
+            <span className="text-[10px] text-brand-text-muted line-through">₹{Math.round(displayPrice * 1.4)}</span>
+          </div>
+          
+          <button onClick={handleAddToCart} className="bg-[#2563eb] hover:bg-blue-600 transition-colors p-2 md:p-2.5 rounded-lg shadow-[0_0_15px_rgba(37,99,235,0.4)] group-hover:scale-110 relative z-20">
+            <ShoppingCart className="w-4 h-4 text-white" strokeWidth={2} />
+          </button>
+        </div>
       </div>
     </div>
   );
