@@ -11,11 +11,9 @@ export function Footer() {
           
           {/* Brand Info */}
           <div className="flex flex-col gap-5">
-            <div className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 shadow-[0_0_15px_rgba(255,255,255,0.2)] p-1 bg-white/5">
-                <img src={logoUrl} alt="Zesto" className="w-full h-full object-contain" />
-              </div>
-              <h2 className="text-2xl font-extrabold tracking-tight glow-text text-white">
+            <div className="flex items-center gap-3">
+              <img src={logoUrl} alt="Zesto" className="w-16 md:w-20 object-contain filter drop-shadow-[0_0_15px_rgba(255,123,0,0.5)]" />
+              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight glow-text text-white">
                 Zesto
               </h2>
             </div>
