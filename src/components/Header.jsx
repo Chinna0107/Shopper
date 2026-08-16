@@ -149,8 +149,8 @@ function OffersDropdown() {
 function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout }) {
   return (
     <>
-      <div className="h-[120px] lg:h-[160px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-[#020617]/70 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-6 md:px-10 lg:px-12 py-3.5 hidden md:block transition-all duration-300">
+      <div className="h-[90px] lg:h-[110px] hidden md:block" />
+      <header className="fixed top-0 left-0 z-50 w-full bg-[#020617]/70 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
           {/* Navigation Links */}
@@ -177,8 +177,8 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
 
           {/* Centered Logo */}
           <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-brand-orange/20 rounded-full blur-[40px] group-hover:bg-brand-orange/30 transition-colors pointer-events-none"></div>
-            <img src={logo} alt="Logo" className="relative z-10 h-24 md:h-32 lg:h-40 w-auto max-w-[300px] lg:max-w-[450px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-500 group-hover:scale-105" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-brand-orange/20 rounded-full blur-[30px] group-hover:bg-brand-orange/30 transition-colors pointer-events-none"></div>
+            <img src={logo} alt="Logo" className="relative z-10 h-16 md:h-20 lg:h-24 w-auto max-w-[200px] lg:max-w-[280px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-500 group-hover:scale-105" />
           </Link>
 
           {/* Right Action Icons & Search */}
