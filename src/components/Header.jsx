@@ -150,55 +150,78 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
   return (
     <>
       <div className="h-[120px] lg:h-[160px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full glass-panel border-x-0 border-t-0 rounded-none px-6 md:px-10 lg:px-12 py-3.5 hidden md:block">
+      <header className="fixed top-0 left-0 z-50 w-full bg-[#020617]/70 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-6 md:px-10 lg:px-12 py-3.5 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
-          <nav className="flex-1 hidden lg:flex items-center justify-start gap-6">
-            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Home</Link>
+          {/* Navigation Links */}
+          <nav className="flex-1 hidden lg:flex items-center justify-start gap-8">
+            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+              Home
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+            </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">About</Link>
-            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Contact</Link>
-            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">Orders</Link>
+            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+              About
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+            </Link>
+            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+              Contact
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+            </Link>
+            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+              Orders
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+            </Link>
           </nav>
 
-          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0">
-            <img src={logo} alt="Logo" className="h-24 md:h-32 lg:h-40 w-auto max-w-[300px] lg:max-w-[450px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-300 group-hover:scale-105" />
+          {/* Centered Logo */}
+          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-brand-orange/20 rounded-full blur-[40px] group-hover:bg-brand-orange/30 transition-colors pointer-events-none"></div>
+            <img src={logo} alt="Logo" className="relative z-10 h-24 md:h-32 lg:h-40 w-auto max-w-[300px] lg:max-w-[450px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-500 group-hover:scale-105" />
           </Link>
 
-          <div className="flex-1 flex items-center justify-end gap-4 lg:gap-6">
-            <div className="relative hidden xl:block w-[220px]">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+          {/* Right Action Icons & Search */}
+          <div className="flex-1 flex items-center justify-end gap-5 lg:gap-8">
+            <div className="relative hidden xl:block w-[260px] group">
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors z-10" />
               <input type="text" placeholder="Search products..."
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
                 }}
-                className="w-full bg-white/10 border border-white/20 rounded-full py-2 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand-orange shadow-inner backdrop-blur"
+                className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:bg-white/10 focus:border-brand-orange/50 shadow-inner backdrop-blur-md transition-all"
               />
+              <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(255,123,0,0)] group-focus-within:shadow-[0_0_20px_rgba(255,123,0,0.2)] pointer-events-none transition-shadow"></div>
             </div>
-            <div className="flex items-center gap-3 lg:gap-4">
-              <Link to="/wishlist" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full border border-white/10">
-                <Heart className="w-5 h-5 text-white" strokeWidth={1.5} />
+            
+            <div className="flex items-center gap-4 lg:gap-5">
+              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-white/5 hover:bg-white/10 rounded-full border border-white/10 hover:border-brand-orange/40 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(255,123,0,0.3)] transition-all group">
+                <Heart className="w-5 h-5 text-white/90 group-hover:text-white group-hover:fill-white/10 transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20 shadow-[0_0_10px_rgba(255,123,0,0.5)]">
+                  <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-brand-orange to-orange-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-[#020617] shadow-[0_0_10px_rgba(255,123,0,0.8)]">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
-              <Link to="/cart" className="relative p-1.5 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full border border-white/10">
-                <ShoppingCart className="w-5 h-5 text-white" strokeWidth={1.5} />
+              
+              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-white/5 hover:bg-white/10 rounded-full border border-white/10 hover:border-brand-orange/40 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(255,123,0,0.3)] transition-all group">
+                <ShoppingCart className="w-5 h-5 text-white/90 group-hover:text-white transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20 shadow-[0_0_10px_rgba(255,123,0,0.5)]">
+                  <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-brand-orange to-orange-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-[#020617] shadow-[0_0_10px_rgba(255,123,0,0.8)] animate-pulse">
                     {cartCount}
                   </span>
                 )}
               </Link>
+              
               {token ? (
-                <AvatarDropdown user={user} onLogout={handleLogout} />
+                <div className="ml-2">
+                  <AvatarDropdown user={user} onLogout={handleLogout} />
+                </div>
               ) : (
-                <Link to="/login" className="flex items-center gap-1.5 text-sm font-bold text-white bg-brand-orange px-4 lg:px-5 py-2 rounded-full shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_20px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all ml-1">
-                  <LogIn className="w-4 h-4" /> Login
+                <Link to="/login" className="flex items-center gap-2 text-sm font-bold text-white bg-gradient-to-r from-brand-orange to-orange-600 px-5 lg:px-6 py-2.5 rounded-full shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.7)] hover:-translate-y-0.5 transition-all ml-2 group">
+                  <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform" /> 
+                  <span className="tracking-wide">Login</span>
                 </Link>
               )}
             </div>
