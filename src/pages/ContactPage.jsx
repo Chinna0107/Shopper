@@ -18,7 +18,7 @@ export function ContactPage() {
       {/* Top Banner */}
       <div className="bg-brand-green text-white py-10 md:py-14 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">Indbasket Help Center</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-2">Zesto Help Center</h1>
           <p className="text-sm md:text-base text-green-100">We are here to help you 24x7. How can we assist you today?</p>
         </div>
       </div>
@@ -74,7 +74,7 @@ export function ContactPage() {
                   <Mail className="w-4 h-4 text-[#fe6603] mt-0.5 shrink-0" />
                   <div>
                     <p className="text-xs font-semibold text-gray-800 mb-0.5">Email</p>
-                    <p className="text-xs text-gray-600">indbasket@gmail.com</p>
+                    <p className="text-xs text-gray-600">zesto@gmail.com</p>
                   </div>
                 </div>
               </div>

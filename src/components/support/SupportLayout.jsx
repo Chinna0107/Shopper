@@ -62,7 +62,7 @@ export function SupportLayout({ children }) {
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-[#036e26]/10 px-4 py-3 flex items-center justify-between z-50">
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Indbasket" className="h-8 object-contain mix-blend-multiply" />
+          <img src={logo} alt="Zesto" className="h-8 object-contain mix-blend-multiply" />
           <span className="font-bold text-lg">
             <span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span>{' '}
             <span className="text-sm font-normal text-gray-500">Support</span>
@@ -83,7 +83,7 @@ export function SupportLayout({ children }) {
       }`}>
         <div className="p-5 border-b border-[#036e26]/10">
           <div className="flex items-center gap-3">
-            <img src={logo} alt="Indbasket" className="h-10 object-contain mix-blend-multiply" />
+            <img src={logo} alt="Zesto" className="h-10 object-contain mix-blend-multiply" />
             <div>
               <p className="font-bold text-xl tracking-tight leading-none">
                 <span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span>

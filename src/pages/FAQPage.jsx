@@ -38,7 +38,7 @@ export function FAQPage() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4">Frequently Asked Questions</h1>
           <p className="text-sm md:text-base text-green-100 max-w-2xl mx-auto">
-            Find answers to the most common questions about shopping with Indbasket.
+            Find answers to the most common questions about shopping with Zesto.
           </p>
         </div>
       </div>

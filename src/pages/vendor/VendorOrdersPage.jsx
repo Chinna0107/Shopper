@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 const FROM_ADDRESS = {
-  name: "Indbasket (Vendor Portal)",
+  name: "Zesto (Vendor Portal)",
   line1: "1-1-738, Vinayaka temple road",
   city: "Koratla",
   state: "Telangana",
@@ -119,7 +119,7 @@ export function VendorOrdersPage() {
                       <tr>
                           <td style="width: 50%;">
                               <!-- Brand Placeholder -->
-                              <div style="font-size: 24pt; font-weight: 800; color: #E63A12; letter-spacing: -1px; line-height: 1;">Indbasket</div>
+                              <div style="font-size: 24pt; font-weight: 800; color: #E63A12; letter-spacing: -1px; line-height: 1;">Zesto</div>
                               <div style="font-size: 10pt; color: #666; margin-top: 4px; font-weight: 500;">Vendor Partner Invoice</div>
                           </td>
                           <td style="width: 50%;" class="invoice-title-block">
@@ -186,7 +186,7 @@ export function VendorOrdersPage() {
               </div>
   
               <div class="footer">
-                  <p><strong>Thank you for shopping with Indbasket!</strong></p>
+                  <p><strong>Thank you for shopping with Zesto!</strong></p>
                   <p>This is a computer-generated invoice and does not require a physical signature.</p>
               </div>
           </div>

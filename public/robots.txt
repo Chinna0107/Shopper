@@ -5,4 +5,4 @@ Disallow: /checkout
 Disallow: /cart
 Disallow: /orders
 
-Sitemap: https://indbasket.com/sitemap.xml
+Sitemap: https://zesto.com/sitemap.xml

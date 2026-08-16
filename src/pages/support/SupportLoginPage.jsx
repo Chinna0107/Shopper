@@ -116,7 +116,7 @@ export function SupportLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-block mb-6">
-            <img src={logo} alt="Indbasket" className="h-12 mx-auto mix-blend-multiply" />
+            <img src={logo} alt="Zesto" className="h-12 mx-auto mix-blend-multiply" />
           </Link>
           <div className="flex items-center justify-center gap-2 mb-2">
             <Headphones className="w-6 h-6 text-[#036e26]" />
@@ -153,7 +153,7 @@ export function SupportLoginPage() {
                   <input
                     type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
                     className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#036e26] focus:border-transparent transition-all"
-                    placeholder="support@indbasket.com"
+                    placeholder="support@zesto.com"
                   />
                 </div>
               </div>

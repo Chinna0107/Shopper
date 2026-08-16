@@ -55,7 +55,7 @@ export function ProductCard({ product, layout = 'grid' }) {
     const url = window.location.origin + `/product/${product.id}`;
     const shareData = {
       title: product.name,
-      text: `Check out ${product.name} on Indbasket!`,
+      text: `Check out ${product.name} on Zesto!`,
       url: url
     };
 

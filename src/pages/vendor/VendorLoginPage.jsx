@@ -116,7 +116,7 @@ export function VendorLoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-block mb-6">
-            <img src={logo} alt="Indbasket" className="h-12 mx-auto mix-blend-multiply" />
+            <img src={logo} alt="Zesto" className="h-12 mx-auto mix-blend-multiply" />
           </Link>
           <div className="flex items-center justify-center gap-2 mb-2">
             <Store className="w-6 h-6 text-[#fe6603]" />

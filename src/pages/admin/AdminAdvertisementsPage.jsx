@@ -334,7 +334,7 @@ export function AdminAdvertisementsPage() {
                     <input type="url" 
                       value={formData.link_url} 
                       onChange={e => setFormData({...formData, link_url: e.target.value})}
-                      placeholder="https://indbasket.com/category/electronics"
+                      placeholder="https://zesto.com/category/electronics"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#036e26] focus:border-transparent" />
                   </div>
                 </div>
@@ -355,7 +355,7 @@ export function AdminAdvertisementsPage() {
                     <input type="url" 
                       value={formData.link_url} 
                       onChange={e => setFormData({...formData, link_url: e.target.value})}
-                      placeholder="https://indbasket.com/promo"
+                      placeholder="https://zesto.com/promo"
                       className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#036e26] focus:border-transparent" />
                   </div>
                 </div>

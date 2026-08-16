@@ -62,7 +62,7 @@ export function ShippingPolicyPage() {
               <h2 className="text-xl font-bold text-gray-900">Damages</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Indbasket is not liable for any products damaged or lost during shipping. If you received your order damaged, please contact the shipment carrier to file a claim. Please save all packaging materials and damaged goods before filing a claim.
+              Zesto is not liable for any products damaged or lost during shipping. If you received your order damaged, please contact the shipment carrier to file a claim. Please save all packaging materials and damaged goods before filing a claim.
             </p>
           </section>
 

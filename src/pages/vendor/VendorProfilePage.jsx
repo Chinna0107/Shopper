@@ -51,7 +51,7 @@ export function VendorProfilePage() {
         key: data.key,
         amount: data.order.amount,
         currency: 'INR',
-        name: 'Indbasket',
+        name: 'Zesto',
         description: `${selectedPlan.name} Vendor Subscription`,
         order_id: data.order.id,
         handler: async (response) => {
@@ -99,7 +99,7 @@ export function VendorProfilePage() {
               {isExpired ? 'Subscription Expired' : `Subscription expiring in ${days} day${days !== 1 ? 's' : ''}`}
             </p>
             <p className={`text-xs mt-0.5 ${isExpired ? 'text-red-600' : 'text-amber-600'}`}>
-              {isExpired ? 'Renew now to continue selling on Indbasket.' : 'Renew early to avoid interruption.'}
+              {isExpired ? 'Renew now to continue selling on Zesto.' : 'Renew early to avoid interruption.'}
             </p>
           </div>
           <button onClick={() => setShowPlans(true)}

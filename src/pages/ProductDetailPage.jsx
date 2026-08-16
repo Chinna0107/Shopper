@@ -105,7 +105,7 @@ export function ProductDetailPage() {
     const url = window.location.href;
     const shareData = {
       title: product.name,
-      text: `Check out ${product.name} on Indbasket!`,
+      text: `Check out ${product.name} on Zesto!`,
       url: url
     };
 
