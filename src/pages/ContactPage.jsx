@@ -11,119 +11,180 @@ export function ContactPage() {
     { icon: HelpCircle, title: 'I want help with other issues', desc: 'Offers, account, etc.' }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   return (
-    <div className="bg-brand-green min-h-screen pb-24 md:pb-16 font-sans">
-      <Header title="Help Center" />
+    <div className="bg-transparent min-h-screen pb-24 md:pb-16 font-sans relative">
+      {/* Decorative dark background blobs for better glass effect */}
+      <div className="absolute top-40 left-10 w-72 h-72 bg-brand-orange/10 rounded-full mix-blend-screen filter blur-[100px] opacity-70 pointer-events-none"></div>
+      <div className="absolute top-60 right-10 w-80 h-80 bg-blue-500/10 rounded-full mix-blend-screen filter blur-[100px] opacity-70 pointer-events-none"></div>
+      <div className="absolute bottom-10 left-1/3 w-96 h-96 bg-brand-orange/5 rounded-full mix-blend-screen filter blur-[120px] opacity-60 pointer-events-none"></div>
+
+      <Header title="Help Center" variant="home" />
       
       {/* Top Banner */}
-      <div className="bg-brand-green text-white py-10 md:py-14 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2">Zesto Help Center</h1>
-          <p className="text-sm md:text-base text-green-100">We are here to help you 24x7. How can we assist you today?</p>
-        </div>
+      <div className="relative glass-panel border-x-0 border-t-0 border-b border-brand-orange/20 py-16 md:py-20 px-4 overflow-hidden mt-2">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-brand-orange via-transparent to-transparent"></div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-6xl mx-auto relative z-10 text-center"
+        >
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight text-white glow-text">How can we help you?</h1>
+          <p className="text-base md:text-lg text-brand-text-muted max-w-2xl mx-auto">Our dedicated team is here to assist you 24x7. Reach out to us for any queries or support.</p>
+        </motion.div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-        <div className="flex flex-col lg:flex-row gap-6">
+      <div className="max-w-6xl mx-auto px-4 py-12 relative z-20">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-col lg:flex-row gap-8"
+        >
           
-          {/* Left Column - Help Topics */}
-          <div className="w-full lg:w-1/3 flex flex-col gap-4">
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
-              <div className="p-4 border-b border-gray-100 bg-gray-50">
-                <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wide">Help Topics</h2>
+          {/* Left Column - Help Topics & Contact */}
+          <div className="w-full lg:w-1/3 flex flex-col gap-6">
+            
+            {/* Help Topics */}
+            <motion.div variants={itemVariants} className="glass-panel rounded-2xl border border-white/10 overflow-hidden">
+              <div className="p-5 border-b border-white/10 bg-white/5">
+                <h2 className="text-sm font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4 text-brand-orange" />
+                  Quick Help Topics
+                </h2>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col p-2">
                 {helpTopics.map((topic, index) => (
-                  <button key={index} className="flex items-start gap-4 p-4 border-b border-gray-50 hover:bg-orange-50 transition-colors text-left group">
-                    <topic.icon className="w-5 h-5 text-[#fe6603] mt-0.5" />
-                    <div>
-                      <h3 className="text-sm font-bold text-gray-800 group-hover:text-[#fe6603] transition-colors">{topic.title}</h3>
-                      <p className="text-xs text-gray-500 mt-1">{topic.desc}</p>
+                  <motion.button 
+                    whileHover={{ scale: 1.02, x: 4 }}
+                    whileTap={{ scale: 0.98 }}
+                    key={index} 
+                    className="flex items-start gap-4 p-3 m-1 rounded-xl hover:bg-white/5 transition-all text-left group border border-transparent hover:border-white/10"
+                  >
+                    <div className="bg-brand-orange/10 p-2 rounded-lg group-hover:bg-brand-orange/20 transition-colors">
+                      <topic.icon className="w-5 h-5 text-brand-orange drop-shadow-md" />
                     </div>
-                  </button>
+                    <div className="mt-0.5">
+                      <h3 className="text-sm font-bold text-white group-hover:text-brand-orange transition-colors">{topic.title}</h3>
+                      <p className="text-xs text-brand-text-muted mt-1 leading-relaxed">{topic.desc}</p>
+                    </div>
+                  </motion.button>
                 ))}
               </div>
-            </div>
+            </motion.div>
             
             {/* Contact Info Card */}
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-6">
-              <h2 className="text-sm font-bold text-gray-800 uppercase tracking-wide mb-4">Direct Contact</h2>
+            <motion.div variants={itemVariants} className="glass-panel rounded-2xl border border-white/10 p-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/10 rounded-bl-full -z-10 blur-xl"></div>
+              <h2 className="text-sm font-extrabold text-white uppercase tracking-wider mb-6 flex items-center gap-2">
+                <Phone className="w-4 h-4 text-brand-orange" />
+                Get in Touch
+              </h2>
               
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-4 h-4 text-[#fe6603] mt-0.5 shrink-0" />
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 group">
+                  <div className="bg-white/5 border border-white/10 p-2.5 rounded-xl group-hover:bg-white/10 transition-colors shrink-0">
+                    <MapPin className="w-5 h-5 text-blue-400" />
+                  </div>
                   <div>
-                    <p className="text-xs font-semibold text-gray-800 mb-0.5">Corporate Office</p>
-                    <p className="text-xs text-gray-600 leading-relaxed">
+                    <p className="text-sm font-bold text-white mb-1">Corporate Office</p>
+                    <p className="text-sm text-brand-text-muted leading-relaxed">
                       1-1-738, Vinayaka temple road,<br/>
                       Koratla, Telangana, India
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3">
-                  <Phone className="w-4 h-4 text-[#fe6603] mt-0.5 shrink-0" />
+                <div className="flex items-start gap-4 group">
+                  <div className="bg-white/5 border border-white/10 p-2.5 rounded-xl group-hover:bg-brand-orange/20 transition-colors shrink-0">
+                    <Phone className="w-5 h-5 text-brand-orange" />
+                  </div>
                   <div>
-                    <p className="text-xs font-semibold text-gray-800 mb-0.5">Customer Support</p>
-                    <p className="text-xs text-gray-600">+91 90326 75205</p>
-                    <p className="text-[10px] text-gray-500">Mon-Sat, 9:00 AM - 6:00 PM</p>
+                    <p className="text-sm font-bold text-white mb-1">Customer Support</p>
+                    <p className="text-sm text-brand-text-muted font-medium">+91 90326 75205</p>
+                    <p className="text-xs text-brand-text-muted/70 mt-0.5">Mon-Sat, 9:00 AM - 6:00 PM</p>
                   </div>
                 </div>
                 
-                <div className="flex items-start gap-3">
-                  <Mail className="w-4 h-4 text-[#fe6603] mt-0.5 shrink-0" />
+                <div className="flex items-start gap-4 group">
+                  <div className="bg-white/5 border border-white/10 p-2.5 rounded-xl group-hover:bg-blue-500/20 transition-colors shrink-0">
+                    <Mail className="w-5 h-5 text-blue-400" />
+                  </div>
                   <div>
-                    <p className="text-xs font-semibold text-gray-800 mb-0.5">Email</p>
-                    <p className="text-xs text-gray-600">zesto@gmail.com</p>
+                    <p className="text-sm font-bold text-white mb-1">Email Address</p>
+                    <a href="mailto:zesto@gmail.com" className="text-sm text-blue-400 hover:text-blue-300 hover:underline font-medium transition-colors">zesto@gmail.com</a>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Column - Contact Form */}
-          <div className="w-full lg:w-2/3 flex flex-col">
-            <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-6 md:p-8 flex-1 flex flex-col">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100">
-                <MessageSquare className="w-6 h-6 text-brand-orange" />
-                <h2 className="text-lg md:text-xl font-bold text-gray-800">Still need help? Write to us.</h2>
+          <motion.div variants={itemVariants} className="w-full lg:w-2/3 flex flex-col">
+            <div className="glass-panel rounded-2xl border border-white/10 p-8 md:p-10 flex-1 flex flex-col relative overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-brand-orange/10 to-transparent rounded-full blur-[80px] -z-10 pointer-events-none"></div>
+              
+              <div className="flex items-center gap-4 mb-8">
+                <div className="bg-white/5 border border-white/10 p-3 rounded-2xl shadow-inner">
+                  <MessageSquare className="w-6 h-6 text-brand-orange" />
+                </div>
+                <div>
+                  <h2 className="text-xl md:text-2xl font-extrabold text-white tracking-tight">Send us a Message</h2>
+                  <p className="text-sm text-brand-text-muted mt-1">We typically reply within 24 hours.</p>
+                </div>
               </div>
               
               <form className="space-y-6 flex-1 flex flex-col" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase">Full Name</label>
-                    <input type="text" className="w-full px-4 py-3 rounded border border-gray-200 text-sm focus:outline-none focus:border-[#fe6603] transition-colors bg-gray-50 focus:bg-white" placeholder="John Doe" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-brand-text-muted uppercase tracking-wider ml-1">Full Name</label>
+                    <input type="text" className="w-full px-4 py-3.5 rounded-xl border border-white/10 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange/50 transition-all bg-black/20 hover:bg-black/40 focus:bg-black/60 shadow-inner placeholder-white/20" placeholder="John Doe" />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase">Email Address</label>
-                    <input type="email" className="w-full px-4 py-3 rounded border border-gray-200 text-sm focus:outline-none focus:border-[#fe6603] transition-colors bg-gray-50 focus:bg-white" placeholder="john@example.com" />
+                  <div className="space-y-1.5">
+                    <label className="block text-xs font-bold text-brand-text-muted uppercase tracking-wider ml-1">Email Address</label>
+                    <input type="email" className="w-full px-4 py-3.5 rounded-xl border border-white/10 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange/50 transition-all bg-black/20 hover:bg-black/40 focus:bg-black/60 shadow-inner placeholder-white/20" placeholder="john@example.com" />
                   </div>
                 </div>
                 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase">Subject / Order ID</label>
-                  <input type="text" className="w-full px-4 py-3 rounded border border-gray-200 text-sm focus:outline-none focus:border-[#fe6603] transition-colors bg-gray-50 focus:bg-white" placeholder="What is this regarding?" />
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold text-brand-text-muted uppercase tracking-wider ml-1">Subject / Order ID</label>
+                  <input type="text" className="w-full px-4 py-3.5 rounded-xl border border-white/10 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange/50 transition-all bg-black/20 hover:bg-black/40 focus:bg-black/60 shadow-inner placeholder-white/20" placeholder="What is this regarding?" />
                 </div>
                 
-                <div className="flex-1 flex flex-col">
-                  <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase">Description</label>
-                  <textarea className="w-full flex-1 min-h-[150px] px-4 py-3 rounded border border-gray-200 text-sm focus:outline-none focus:border-[#fe6603] transition-colors bg-gray-50 focus:bg-white resize-none" placeholder="Please describe your issue in detail..."></textarea>
+                <div className="flex-1 flex flex-col space-y-1.5">
+                  <label className="block text-xs font-bold text-brand-text-muted uppercase tracking-wider ml-1">Description</label>
+                  <textarea className="w-full flex-1 min-h-[180px] px-4 py-3.5 rounded-xl border border-white/10 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange/50 focus:border-brand-orange/50 transition-all bg-black/20 hover:bg-black/40 focus:bg-black/60 shadow-inner resize-none placeholder-white/20" placeholder="Please describe your issue in detail..."></textarea>
                 </div>
                 
-                <motion.button 
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-[#fe6603] text-white font-bold py-3.5 px-8 rounded shadow-sm hover:shadow-md hover:bg-orange-600 transition-all flex items-center justify-center gap-2 mt-auto w-full md:w-auto md:self-end"
-                >
-                  <Send className="w-4 h-4" />
-                  Submit Request
-                </motion.button>
+                <div className="pt-4 flex justify-end">
+                  <motion.button 
+                    whileHover={{ scale: 1.02, translateY: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="bg-gradient-to-r from-brand-orange to-orange-500 text-white font-bold py-4 px-10 rounded-xl shadow-[0_0_20px_rgba(255,123,0,0.4)] hover:shadow-[0_0_30px_rgba(255,123,0,0.6)] transition-all flex items-center justify-center gap-3 w-full md:w-auto overflow-hidden relative group"
+                  >
+                    <span className="absolute inset-0 w-full h-full bg-white/20 scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-out"></span>
+                    <Send className="w-5 h-5 relative z-10 drop-shadow-md" />
+                    <span className="relative z-10 drop-shadow-md">Send Message</span>
+                  </motion.button>
+                </div>
               </form>
             </div>
-          </div>
+          </motion.div>
           
-        </div>
+        </motion.div>
       </div>
     </div>
   );
