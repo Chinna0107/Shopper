@@ -102,7 +102,7 @@ export function MyOrdersPage() {
                           <div style="font-size: 9pt; color: #555555; margin-top: 8px; line-height: 1.5;">
                               <strong style="font-size: 20px;"><span className="text-[#fe6603]">Ind</span><span className="text-brand-orange">basket</span></strong><br>
                               1-1-738, Vinayaka temple road<br>
-                              Phone: +91 90326 75205 | Email: zesto@gmail.com<br>
+                              Phone: +91 90326 75205 | Email: swabhivarshoppers@gmail.com<br>
                           </div>
                       </td>
                       <td class="invoice-title-block">

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 const FROM_ADDRESS = {
-  name: "Zesto",
+  name: "Swabhivar Shoppers",
   line1: "1-1-738, Vinayaka temple road",
   city: "Koratla",
   state: "Telangana",
@@ -175,7 +175,7 @@ export function AdminOrdersPage() {
                           <div style="font-size: 9pt; color: #555555; margin-top: 8px; line-height: 1.5;">
                               <strong style="font-size: 20px;"><span style="color: #fe6603;">Ind</span><span style="color: #036e26;">basket</span></strong><br>
                               1-1-738, Vinayaka temple road<br>
-                              Phone: +91 90326 75205 | Email: zesto@gmail.com<br>
+                              Phone: +91 90326 75205 | Email: swabhivarshoppers@gmail.com<br>
                           </div>
                       </td>
                       <td class="invoice-title-block">
@@ -274,7 +274,7 @@ export function AdminOrdersPage() {
       `Hi ${order.user_name || address.name || 'Customer'}! 🙏 Please find your *Invoice* for Order *#${order.order_number || order.id}* below:\n\n` +
       `*Items:*\n${itemsText}\n\n` +
       `*Total: ₹${order.total}*\n\n` +
-      `Thank you for shopping with Zesto!`
+      `Thank you for shopping with Swabhivar Shoppers!`
     );
     window.open(`https://wa.me/${phone}?text=${msg}`, "_blank");
   };

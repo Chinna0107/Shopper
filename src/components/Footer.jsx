@@ -121,7 +121,7 @@ export function Footer() {
               <div className="w-9 h-9 rounded-full bg-[#054335] border border-brand-orange/20 flex items-center justify-center shrink-0 group-hover:bg-brand-orange group-hover:border-brand-orange transition-all text-brand-orange group-hover:text-white">
                 <Mail className="w-4 h-4" />
               </div>
-              <span className="font-medium group-hover:text-white transition-colors">zesto@gmail.com</span>
+              <span className="font-medium group-hover:text-white transition-colors">swabhivarshoppers@gmail.com</span>
             </div>
           </div>
 

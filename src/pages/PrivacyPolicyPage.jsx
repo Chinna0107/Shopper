@@ -70,7 +70,7 @@ export function PrivacyPolicyPage() {
               <p className="font-bold text-[#022A21] mb-1">SWABHIVAR SHOPPER</p>
               <p className="text-gray-600 mb-1">1-1-738, Vinayaka temple road, Koratla, Telangana, India</p>
               <p className="text-gray-600 mb-1">Phone: +91 90326 75205</p>
-              <p className="text-brand-orange font-medium">Email: zesto@gmail.com</p>
+              <p className="text-brand-orange font-medium">Email: swabhivarshoppers@gmail.com</p>
             </div>
           </section>
         </div>

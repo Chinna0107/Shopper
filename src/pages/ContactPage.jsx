@@ -120,7 +120,7 @@ export function ContactPage() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-[#022A21] mb-1">Email Address</p>
-                    <a href="mailto:zesto@gmail.com" className="text-sm text-brand-orange hover:text-brand-orange/80 hover:underline font-medium transition-colors">zesto@gmail.com</a>
+                    <a href="mailto:swabhivarshoppers@gmail.com" className="text-sm text-brand-orange hover:text-brand-orange/80 hover:underline font-medium transition-colors">swabhivarshoppers@gmail.com</a>
                   </div>
                 </div>
               </div>
