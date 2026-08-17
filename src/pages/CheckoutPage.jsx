@@ -186,7 +186,7 @@ export function CheckoutPage() {
           name: address.name,
           contact: address.mobile
         },
-        theme: { color: '#036e26' },
+        theme: { color: '#022A21' },
         modal: {
           ondismiss: function () {
             setIsPlacingOrder(false);
@@ -205,29 +205,29 @@ export function CheckoutPage() {
   const renderStepIndicator = () => (
     <div className="flex justify-between items-center mb-6 px-4 bg-white border border-gray-100 p-3 rounded-2xl shadow-sm">
       <div className="flex flex-col items-center cursor-pointer" onClick={() => navigate('/cart')}>
-        <div className="w-8 h-8 rounded-full bg-brand-blue text-white flex items-center justify-center text-sm font-bold shadow-sm">✓</div>
-        <span className="text-[11px] text-brand-blue font-bold mt-2">Cart</span>
+        <div className="w-8 h-8 rounded-full bg-[#022A21] text-white flex items-center justify-center text-sm font-bold shadow-sm">✓</div>
+        <span className="text-[11px] text-[#022A21] font-bold mt-2">Cart</span>
       </div>
-      <div className={`h-[2px] flex-1 mx-4 ${step >= 2 ? 'bg-brand-blue' : 'bg-gray-200'}`}></div>
+      <div className={`h-[2px] flex-1 mx-4 ${step >= 2 ? 'bg-[#022A21]' : 'bg-gray-200'}`}></div>
       
       <div className="flex flex-col items-center">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 2 ? 'bg-brand-blue text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 2 ? 'bg-[#022A21] text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>
           {step > 2 ? '✓' : (token ? '✓' : '1')}
         </div>
-        <span className={`text-[11px] font-bold mt-2 ${step >= 2 ? 'text-brand-blue' : 'text-gray-500'}`}>{token ? 'Auth' : 'Login'}</span>
+        <span className={`text-[11px] font-bold mt-2 ${step >= 2 ? 'text-[#022A21]' : 'text-gray-500'}`}>{token ? 'Auth' : 'Login'}</span>
       </div>
-      <div className={`h-[2px] flex-1 mx-4 ${step >= 2 ? 'bg-brand-blue' : 'bg-gray-200'}`}></div>
+      <div className={`h-[2px] flex-1 mx-4 ${step >= 2 ? 'bg-[#022A21]' : 'bg-gray-200'}`}></div>
 
       <div className="flex flex-col items-center">
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 2 ? 'bg-brand-blue text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 2 ? 'bg-[#022A21] text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>
           {step > 2 ? '✓' : '2'}
         </div>
-        <span className={`text-[11px] font-bold mt-2 ${step >= 2 ? 'text-brand-blue' : 'text-gray-500'}`}>Address</span>
+        <span className={`text-[11px] font-bold mt-2 ${step >= 2 ? 'text-[#022A21]' : 'text-gray-500'}`}>Address</span>
       </div>
-      <div className={`h-[2px] flex-1 mx-4 ${step >= 3 ? 'bg-brand-blue' : 'bg-gray-200'}`}></div>
+      <div className={`h-[2px] flex-1 mx-4 ${step >= 3 ? 'bg-[#022A21]' : 'bg-gray-200'}`}></div>
       <div className={`flex flex-col items-center ${step < 3 ? 'opacity-50' : ''}`}>
-        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 3 ? 'bg-brand-blue text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>3</div>
-        <span className={`text-[11px] font-bold mt-2 ${step >= 3 ? 'text-brand-blue' : 'text-gray-500'}`}>Payment</span>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${step >= 3 ? 'bg-[#022A21] text-white shadow-sm' : 'bg-gray-50 text-gray-400 border border-gray-200'}`}>3</div>
+        <span className={`text-[11px] font-bold mt-2 ${step >= 3 ? 'text-[#022A21]' : 'text-gray-500'}`}>Payment</span>
       </div>
     </div>
   );
@@ -259,14 +259,14 @@ export function CheckoutPage() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Login Option */}
-                  <div className="bg-blue-50 p-6 rounded-3xl shadow-sm border border-brand-blue/30 flex flex-col justify-between hover:border-brand-blue hover:shadow-md transition-all">
+                  <div className="bg-orange-50/50 p-6 rounded-3xl shadow-sm border border-brand-orange/30 flex flex-col justify-between hover:border-brand-orange hover:shadow-md transition-all">
                     <div>
-                      <h3 className="font-bold text-xl text-gray-900 mb-3">Login / Sign Up</h3>
+                      <h3 className="font-bold text-xl text-[#022A21] mb-3 font-serif">Login / Sign Up</h3>
                       <p className="text-[15px] text-gray-600 mb-8 leading-relaxed">Access your saved addresses, track orders easily, and get exclusive offers.</p>
                     </div>
                     <button 
                       onClick={() => navigate('/login?redirect=/checkout')}
-                      className="w-full bg-brand-blue text-white font-bold py-4 rounded-xl shadow-md hover:bg-blue-700 transition-all hover:-translate-y-1"
+                      className="w-full bg-[#022A21] text-white font-bold py-4 rounded-xl shadow-md hover:bg-[#033429] transition-all hover:-translate-y-1"
                     >
                       Login to Continue
                     </button>
@@ -291,15 +291,15 @@ export function CheckoutPage() {
 
             {step === 2 && (
           <div className="space-y-4 max-w-3xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-blue-50 border border-brand-blue/30 shadow-sm flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-brand-blue" />
+            <h2 className="text-xl font-bold text-[#022A21] flex items-center gap-3 mb-8 font-serif">
+              <div className="w-10 h-10 rounded-full bg-brand-orange/10 border border-brand-orange/30 shadow-sm flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-brand-orange" />
               </div>
               Delivery Address
             </h2>
             
             <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-blue/10 to-transparent rounded-bl-full pointer-events-none opacity-50 blur-xl"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-orange/10 to-transparent rounded-bl-full pointer-events-none opacity-50 blur-xl"></div>
               <div className="space-y-6">
                 <div>
                   <label className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-2 block">Full Name</label>
@@ -340,9 +340,9 @@ export function CheckoutPage() {
 
         {step === 3 && (
           <div className="space-y-4 max-w-3xl mx-auto">
-            <h2 className="text-xl font-bold text-gray-900 flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-blue-50 border border-brand-blue/30 shadow-sm flex items-center justify-center">
-                <CreditCard className="w-5 h-5 text-brand-blue" />
+            <h2 className="text-xl font-bold text-[#022A21] flex items-center gap-3 mb-8 font-serif">
+              <div className="w-10 h-10 rounded-full bg-brand-orange/10 border border-brand-orange/30 shadow-sm flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-brand-orange" />
               </div>
               Payment Method
             </h2>
@@ -350,9 +350,9 @@ export function CheckoutPage() {
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
               <div className="space-y-4">
                 {/* Online Payment */}
-                <label className={`flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'razorpay' ? 'border-brand-blue bg-blue-50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mr-4 shrink-0 shadow-sm">
-                    <CreditCard className="w-5 h-5 text-blue-500" />
+                <label className={`flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'razorpay' ? 'border-brand-orange bg-orange-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                  <div className="w-10 h-10 rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center mr-4 shrink-0 shadow-sm">
+                    <CreditCard className="w-5 h-5 text-brand-orange" />
                   </div>
                   <div className="flex-1" onClick={() => setPaymentMethod('razorpay')}>
                     <span className="text-lg font-bold text-gray-900 block">Online Payment</span>
@@ -364,7 +364,7 @@ export function CheckoutPage() {
                     value="razorpay"
                     checked={paymentMethod === 'razorpay'}
                     onChange={() => setPaymentMethod('razorpay')}
-                    className="w-5 h-5 accent-brand-blue bg-transparent border-gray-200"
+                    className="w-5 h-5 accent-brand-orange bg-transparent border-gray-200"
                   />
                 </label>
 
@@ -433,7 +433,7 @@ export function CheckoutPage() {
               <div className="border-t border-dashed border-gray-200 pt-5 mb-6">
                 <div className="flex justify-between font-extrabold text-gray-900 text-xl">
                   <span>Grand Total</span>
-                  <span className="text-brand-blue">₹{grandTotal.toFixed(2)}</span>
+                  <span className="text-brand-orange">₹{grandTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -447,7 +447,7 @@ export function CheckoutPage() {
               ) : step === 2 ? (
                 <button 
                   onClick={handleProceedToPayment}
-                  className="w-full bg-brand-blue text-white font-bold text-base rounded-xl py-4 shadow-md hover:bg-blue-700 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:shadow-brand-orange/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
                 >
                   Proceed to Payment
                 </button>
@@ -459,7 +459,7 @@ export function CheckoutPage() {
                     isPlacingOrder ? 'opacity-70 cursor-not-allowed shadow-none bg-gray-100 border border-gray-200 text-gray-500' :
                     paymentMethod === 'cod'
                       ? 'bg-green-600 hover:bg-green-500 shadow-md hover:-translate-y-1'
-                      : 'bg-brand-blue hover:bg-blue-700 shadow-md hover:-translate-y-1'
+                      : 'bg-gradient-to-r from-brand-orange to-yellow-500 shadow-lg hover:shadow-brand-orange/30 hover:-translate-y-1'
                   }`}
                 >
                   {isPlacingOrder ? (
@@ -515,7 +515,7 @@ export function CheckoutPage() {
           ) : step === 2 ? (
             <button 
               onClick={handleProceedToPayment}
-              className="w-full bg-brand-blue text-white font-bold text-base rounded-xl py-4 shadow-md hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-2 hover:shadow-brand-orange/30"
             >
               Proceed to Payment
               <span className="w-1.5 h-1.5 bg-white rounded-full mx-1 opacity-50" />
@@ -529,7 +529,7 @@ export function CheckoutPage() {
                 isPlacingOrder ? 'opacity-70 cursor-not-allowed shadow-none bg-gray-100 border border-gray-200 text-gray-500' :
                 paymentMethod === 'cod'
                   ? 'bg-green-600 shadow-md hover:-translate-y-1'
-                  : 'bg-brand-blue shadow-md hover:-translate-y-1'
+                  : 'bg-gradient-to-r from-brand-orange to-yellow-500 shadow-lg hover:-translate-y-1 hover:shadow-brand-orange/30'
               }`}
             >
               {isPlacingOrder ? (

@@ -64,28 +64,28 @@ export function SplashScreen({ onComplete }) {
   return (
     <div
       ref={container}
-      className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center w-full h-full overflow-hidden"
+      className="fixed inset-0 z-[100] bg-[#022A21] flex flex-col items-center justify-center w-full h-full overflow-hidden"
     >
       {/* Background Ambient Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-white to-white pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#054335] via-[#022A21] to-[#022A21] pointer-events-none" />
       
       <div className="relative flex flex-col items-center justify-center gap-8 z-10 w-full px-4">
         {/* Dynamic Center Glow */}
-        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 bg-brand-blue/10 rounded-full blur-[80px] pointer-events-none" />
+        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 bg-brand-orange/10 rounded-full blur-[80px] pointer-events-none" />
         
         {/* Logo */}
         <div ref={logo} className="relative w-full max-w-sm md:max-w-md flex justify-center">
           <img
             src={logoImg}
-            alt="Zesto"
-            className="w-4/5 md:w-full object-contain filter drop-shadow-sm mix-blend-multiply"
+            alt="Swabhivar Shopper"
+            className="w-4/5 md:w-full object-contain filter drop-shadow-sm"
           />
         </div>
         
         {/* Subtitle */}
         <div ref={textRef} className="text-center overflow-hidden relative">
-          <p className="text-brand-blue text-[11px] md:text-sm font-bold tracking-[0.3em] uppercase opacity-90">
-            Shop Smart. Live Better.
+          <p className="text-orange-200 text-[11px] md:text-sm font-bold tracking-[0.3em] uppercase opacity-90">
+            Style Premium. Live Better.
           </p>
         </div>
       </div>

@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import api from '../utils/api';
 
+const BACKEND = import.meta.env.VITE_BACKEND_URL?.replace('/api', '') || 'http://localhost:5000';
+
+
 export const useAuthStore = create((set, get) => ({
   user: null,
   token: localStorage.getItem('token') || null,
@@ -136,4 +139,15 @@ export const useAuthStore = create((set, get) => ({
   },
 
   isLoggedIn: () => !!get().token,
+
+  // Google OAuth - redirects to backend which handles Google flow
+  loginWithGoogle: () => {
+    window.location.href = `${BACKEND}/api/auth/google`;
+  },
+
+  // Called on redirect back from Google with ?token=xxx in URL
+  handleGoogleCallback: (token, user) => {
+    localStorage.setItem('token', token);
+    set({ token, user });
+  },
 }));

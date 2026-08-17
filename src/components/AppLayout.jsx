@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BottomNav } from './BottomNav';
 import { Toast } from './Toast';
-
 import { Footer } from './Footer';
 
 export function AppLayout({ children }) {
@@ -13,8 +12,8 @@ export function AppLayout({ children }) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Determine if bottom nav should be shown
-  const showBottomNav = ['/', '/wishlist', '/profile', '/dashboard'].includes(pathname) || pathname.startsWith('/category/');
+  // Hide BottomNav on product detail pages — they have their own sticky Add to Cart / Buy Now bar
+  const isProductPage = pathname.startsWith('/product/');
 
   return (
     <div className="min-h-screen bg-transparent flex justify-center w-full">
@@ -22,15 +21,15 @@ export function AppLayout({ children }) {
         <Toast />
         
         {/* Main Content Area */}
-        <main className={`flex-grow flex flex-col ${showBottomNav ? 'pb-20 md:pb-0' : 'pb-0'}`}>
+        <main className={`flex-grow flex flex-col ${isProductPage ? 'pb-0' : 'pb-20 md:pb-0'}`}>
           {children}
         </main>
         
         {/* Footer */}
         <Footer />
         
-        {/* Bottom Navigation */}
-        {showBottomNav && <BottomNav />}
+        {/* Bottom Navigation — hidden on product detail pages */}
+        {!isProductPage && <BottomNav />}
       </div>
     </div>
   );

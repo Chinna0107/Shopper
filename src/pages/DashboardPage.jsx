@@ -5,7 +5,6 @@ import {
   LogOut, ChevronRight, User, Plus, Trash2, Edit2, X, Check
 } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
-import { BottomNav } from '../components/BottomNav';
 import { Header } from '../components/Header';
 
 function AddressModal({ onClose, onSave }) {
@@ -270,7 +269,7 @@ export function DashboardPage() {
 
       {showAddressModal && <AddressModal onClose={() => setShowAddressModal(false)} onSave={handleSaveAddress} />}
       {showEditModal && <EditProfileModal user={user} onClose={() => setShowEditModal(false)} onSave={handleSaveProfile} />}
-      <BottomNav />
     </div>
   );
 }
+

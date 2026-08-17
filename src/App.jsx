@@ -29,6 +29,8 @@ import { FAQPage } from './pages/FAQPage';
 import { CollectionPage } from './pages/CollectionPage';
 import { SearchPage } from './pages/SearchPage';
 import { OffersPage } from './pages/OffersPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsPage } from './pages/TermsPage';
 
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
@@ -94,6 +96,8 @@ function AnimatedAppRoutes() {
         <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
         <Route path="/shipping-policy" element={<PageTransition><ShippingPolicyPage /></PageTransition>} />
         <Route path="/returns-policy" element={<PageTransition><ReturnsPolicyPage /></PageTransition>} />
+        <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicyPage /></PageTransition>} />
+        <Route path="/terms" element={<PageTransition><TermsPage /></PageTransition>} />
         <Route path="/faqs" element={<PageTransition><FAQPage /></PageTransition>} />
         <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
         <Route path="/offers" element={<PageTransition><OffersPage /></PageTransition>} />

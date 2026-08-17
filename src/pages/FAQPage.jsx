@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: "Are your products authentic?",
-    answer: "Yes, absolutely! We source all our electronics, fashion, and home products directly from trusted brands and verified vendors to ensure you receive 100% authentic items."
+    answer: "Yes, absolutely! We source all our puja essentials, traditional items, and sacred decor directly from trusted artisans and verified vendors to ensure you receive 100% authentic items."
   }
 ];
 
@@ -30,24 +30,24 @@ export function FAQPage() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <div className="bg-brand-green min-h-screen pb-24 md:pb-16 font-sans">
+    <div className="bg-[#f9f9f9] min-h-screen pb-24 md:pb-16 font-sans">
       <Header title="FAQs" />
       
       {/* Top Banner */}
-      <div className="bg-brand-green text-white py-10 md:py-14 px-4">
+      <div className="bg-[#022A21] text-white py-10 md:py-14 px-4 shadow-md">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-4">Frequently Asked Questions</h1>
-          <p className="text-sm md:text-base text-green-100 max-w-2xl mx-auto">
-            Find answers to the most common questions about shopping with Zesto.
+          <h1 className="text-3xl md:text-4xl font-extrabold mb-4 font-serif">Frequently Asked Questions</h1>
+          <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
+            Find answers to the most common questions about shopping with SWABHIVAR.
           </p>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 py-8 md:py-12">
-        <div className="bg-white rounded-sm shadow-sm border border-gray-100 p-6 md:p-10">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-10">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
-            <HelpCircle className="w-6 h-6 text-[#fe6603]" />
-            <h2 className="text-xl font-bold text-gray-900">Common Queries</h2>
+            <HelpCircle className="w-6 h-6 text-brand-orange" />
+            <h2 className="text-xl font-bold text-[#022A21] font-serif">Common Queries</h2>
           </div>
 
           <div className="space-y-4">
@@ -55,17 +55,17 @@ export function FAQPage() {
               <div 
                 key={index} 
                 className={cn(
-                  "border rounded-lg overflow-hidden transition-all duration-200",
-                  openIndex === index ? "border-[#fe6603] shadow-sm" : "border-gray-200 hover:border-gray-300"
+                  "border rounded-xl overflow-hidden transition-all duration-200",
+                  openIndex === index ? "border-brand-orange shadow-md" : "border-gray-200 hover:border-gray-300"
                 )}
               >
                 <button 
                   onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                   className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
                 >
-                  <span className="font-bold text-gray-900 text-sm pr-4">{faq.question}</span>
+                  <span className="font-bold text-[#022A21] text-sm pr-4">{faq.question}</span>
                   {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 text-[#fe6603] shrink-0" />
+                    <ChevronUp className="w-5 h-5 text-brand-orange shrink-0" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-gray-400 shrink-0" />
                   )}
