@@ -64,27 +64,27 @@ export function SplashScreen({ onComplete }) {
   return (
     <div
       ref={container}
-      className="fixed inset-0 z-[100] bg-[#020617] flex flex-col items-center justify-center w-full h-full overflow-hidden"
+      className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center w-full h-full overflow-hidden"
     >
       {/* Background Ambient Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-orange/10 via-[#020617] to-[#020617] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-white to-white pointer-events-none" />
       
       <div className="relative flex flex-col items-center justify-center gap-8 z-10 w-full px-4">
         {/* Dynamic Center Glow */}
-        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 bg-brand-orange/20 rounded-full blur-[80px] pointer-events-none" />
+        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 md:w-80 md:h-80 bg-brand-blue/10 rounded-full blur-[80px] pointer-events-none" />
         
         {/* Logo */}
         <div ref={logo} className="relative w-full max-w-sm md:max-w-md flex justify-center">
           <img
             src={logoImg}
             alt="Zesto"
-            className="w-4/5 md:w-full object-contain filter drop-shadow-[0_0_20px_rgba(255,123,0,0.5)]"
+            className="w-4/5 md:w-full object-contain filter drop-shadow-sm mix-blend-multiply"
           />
         </div>
         
         {/* Subtitle */}
         <div ref={textRef} className="text-center overflow-hidden relative">
-          <p className="text-brand-orange text-[11px] md:text-sm font-bold tracking-[0.3em] uppercase opacity-90 glow-text">
+          <p className="text-brand-blue text-[11px] md:text-sm font-bold tracking-[0.3em] uppercase opacity-90">
             Shop Smart. Live Better.
           </p>
         </div>
