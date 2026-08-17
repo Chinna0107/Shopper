@@ -77,7 +77,7 @@ export function HomePage() {
         {banners.length > 0 ? (
           <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-6 mt-6">
             {banners.map((banner) => (
-              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-3xl md:rounded-[3rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[260px] sm:h-[320px] md:h-[480px] group">
+              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-gray-50 border border-gray-100 h-[180px] sm:h-[240px] md:h-[340px] group">
                 {/* Background image with subtle zoom on hover */}
                 <img src={banner.image_url} alt={banner.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out" />
                 
@@ -97,9 +97,9 @@ export function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="relative w-full rounded-3xl md:rounded-[3rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[260px] sm:h-[320px] md:h-[480px] mt-6 group">
+          <div className="relative w-full rounded-3xl md:rounded-[2.5rem] overflow-hidden bg-gray-50 border border-gray-100 h-[180px] sm:h-[240px] md:h-[340px] mt-6 group">
             {/* Fallback Image */}
-            <img src={imgHeroBannerPremium} alt="Hero Banner" className="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 ease-out" />
+            <img src={imgHeroBannerPremium} alt="Hero Banner" className="w-full h-full object-cover opacity-100 group-hover:scale-105 transition-all duration-700 ease-out" />
             
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end px-6 py-8">
               <div className="mb-2">

@@ -153,7 +153,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
   return (
     <>
       <div className="h-[90px] lg:h-[110px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] border-b border-[#054335] shadow-[0_4px_20px_rgba(0,0,0,0.3)] px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
+      <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] border-b border-[#054335] shadow-sm px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
           {/* Navigation Links */}
@@ -179,9 +179,8 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
           </nav>
 
           {/* Centered Logo */}
-          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-brand-orange/20 rounded-full blur-[30px] group-hover:bg-brand-orange/30 transition-colors pointer-events-none"></div>
-            <img src={logo} alt="Logo" className="relative z-10 h-12 md:h-14 lg:h-16 w-auto max-w-[200px] lg:max-w-[280px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-sm" />
+          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative -ml-2 md:-ml-8 lg:-ml-16">
+            <img src={logo} alt="Logo" className="relative z-10 h-20 md:h-28 lg:h-32 w-auto max-w-[320px] lg:max-w-[400px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-md" />
           </Link>
 
           {/* Right Action Icons & Search */}
@@ -288,7 +287,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
 
               <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
                 <div className="flex items-center gap-3">
-                  <img src={logo} alt="Logo" className="h-16 w-auto max-w-[180px] object-contain" />
+                  <img src={logo} alt="Logo" className="h-24 w-auto max-w-[240px] object-contain" />
                 </div>
                 <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 rounded-full border border-gray-200 transition-colors shadow-sm">
                   <X className="w-5 h-5" />
@@ -350,22 +349,20 @@ export function Header({ variant = 'default', title, showShare = false }) {
           )}
         </AnimatePresence>
 
-        <div className="h-[155px]" />
-        <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] px-4 py-3 shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+        <div className="h-[135px]" />
+        <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] px-4 py-2 shadow-sm border-b border-[#054335]">
           <div className="w-full max-w-lg mx-auto">
             {/* Location row */}
-            <div className="flex items-center gap-1.5 mb-2">
+            <div className="flex items-center gap-1.5 mb-1.5">
               <MapPin className="w-3.5 h-3.5 text-brand-orange fill-brand-orange/20" />
-              <span className="text-xs text-gray-300 font-medium">Deliver to Hyderabad 500081</span>
+              <span className="text-[11px] text-gray-300 font-medium">Deliver to Hyderabad 500081</span>
             </div>
 
             {/* Title and Actions row */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex-1">
+            <div className="flex items-center justify-between mb-2 mt-1">
+              <div className="flex-1 -ml-2">
                 <Link to="/">
-                  <h1 className="text-[26px] leading-[1.1] font-serif font-bold text-white tracking-tight uppercase" style={{ fontFamily: 'Georgia, serif' }}>
-                    SWABHIVAR<br/>SHOPPER.
-                  </h1>
+                  <img src={logo} alt="Logo" className="h-14 md:h-16 w-auto max-w-[240px] object-contain filter drop-shadow-lg" />
                 </Link>
               </div>
               
