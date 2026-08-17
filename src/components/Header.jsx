@@ -346,7 +346,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
           )}
         </AnimatePresence>
 
-        <div className="h-[130px]" />
+        <div className="h-[115px]" />
         <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 rounded-none px-4 py-3 shadow-sm">
           <div className="w-full">
             <div className="flex items-center justify-between mb-3 relative">

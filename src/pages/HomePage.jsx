@@ -42,22 +42,22 @@ export function HomePage() {
       <Header variant="home" />
       
       {/* 1. Hero Banner Carousel */}
-      <div className="animate-section px-4 md:px-6 mb-8 max-w-[1280px] mx-auto mt-6">
+      <div className="animate-section px-4 md:px-6 mb-8 max-w-[1280px] mx-auto mt-2 md:mt-4">
         {banners.length > 0 ? (
           <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-6 mt-6">
             {banners.map((banner) => (
-              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-[2.5rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[320px] md:h-[500px] group">
+              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-3xl md:rounded-[3rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[260px] sm:h-[320px] md:h-[480px] group">
                 {/* Background image with subtle zoom on hover */}
                 <img src={banner.image_url} alt={banner.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out" />
                 
                 {/* Light Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent flex flex-col justify-center px-8 md:px-24">
+                <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent flex flex-col justify-center px-6 sm:px-10 md:px-20">
                   
-                  <h2 className="relative z-10 text-gray-900 text-4xl md:text-7xl font-extrabold mb-4 md:mb-8 max-w-3xl leading-[1.1] tracking-tight">
+                  <h2 className="relative z-10 text-gray-900 text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 md:mb-6 max-w-2xl leading-[1.1] tracking-tight">
                     {banner.title}
                   </h2>
                   {(banner.link_url || banner.link_url === '') && (
-                    <Link to={banner.link_url || "/category/all"} className="relative z-10 bg-brand-blue text-white text-sm md:text-lg font-bold px-8 md:px-12 py-3 md:py-4 rounded-xl shadow-md w-fit hover:scale-105 hover:bg-blue-700 transition-all flex items-center gap-3 group/btn">
+                    <Link to={banner.link_url || "/category/all"} className="relative z-10 bg-brand-blue text-white text-sm md:text-base lg:text-lg font-bold px-6 md:px-10 py-3 rounded-xl shadow-md w-fit hover:scale-105 hover:bg-blue-700 transition-all flex items-center gap-3 group/btn">
                       Shop Now <span className="text-xl group-hover/btn:translate-x-1 transition-transform">→</span>
                     </Link>
                   )}
@@ -66,20 +66,20 @@ export function HomePage() {
             ))}
           </div>
         ) : (
-          <div className="relative w-full rounded-[2.5rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[320px] md:h-[500px] mt-6 group">
+          <div className="relative w-full rounded-3xl md:rounded-[3rem] overflow-hidden bg-white border border-gray-100 shadow-md h-[260px] sm:h-[320px] md:h-[480px] mt-6 group">
             {/* Fallback Image */}
             <img src={imgHeroBannerPremium} alt="Hero Banner" className="w-full h-full object-cover opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-700 ease-out" />
             
-            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent flex flex-col justify-center px-8 md:px-24">
+            <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent flex flex-col justify-center px-6 sm:px-10 md:px-20">
               
-              <h2 className="relative z-10 text-brand-blue text-4xl md:text-7xl font-extrabold mb-4 md:mb-6 max-w-2xl leading-[1.1] tracking-tight">
+              <h2 className="relative z-10 text-brand-blue text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extrabold mb-3 md:mb-5 max-w-2xl leading-[1.1] tracking-tight">
                 SHOP SMART.<br/><span className="text-brand-orange">LIVE BETTER.</span>
               </h2>
-              <p className="relative z-10 text-gray-700 mb-10 text-lg md:text-xl max-w-lg hidden md:block leading-relaxed">
+              <p className="relative z-10 text-gray-700 mb-6 text-sm sm:text-base md:text-lg max-w-lg hidden sm:block leading-relaxed">
                 Top quality products. Best prices. Fast delivery.
               </p>
               
-              <Link to="/category/all" className="relative z-10 group/btn bg-brand-blue text-white text-sm md:text-lg font-bold px-8 py-3 md:py-4 rounded-xl shadow-md w-fit hover:bg-blue-700 hover:scale-105 transition-all flex items-center gap-4">
+              <Link to="/category/all" className="relative z-10 group/btn bg-brand-blue text-white text-sm md:text-base lg:text-lg font-bold px-6 md:px-10 py-3 rounded-xl shadow-md w-fit hover:bg-blue-700 hover:scale-105 transition-all flex items-center gap-4">
                 <span>Shop Now</span> 
                 <span className="text-white leading-none font-bold text-xl group-hover/btn:translate-x-1 transition-transform">→</span>
               </Link>
