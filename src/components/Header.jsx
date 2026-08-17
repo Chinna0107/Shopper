@@ -79,7 +79,7 @@ function CategoriesDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
         Categories <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
@@ -118,7 +118,7 @@ function OffersDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-white hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
         Offers <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
@@ -150,35 +150,35 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
   return (
     <>
       <div className="h-[90px] lg:h-[110px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-[#020617]/70 backdrop-blur-2xl border-b border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.6)] px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
+      <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.05)] px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
           {/* Navigation Links */}
           <nav className="flex-1 hidden lg:flex items-center justify-start gap-8">
-            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-600 hover:text-brand-orange transition-all relative group">
               Home
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-600 hover:text-brand-orange transition-all relative group">
               About
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-600 hover:text-brand-orange transition-all relative group">
               Contact
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-white/80 hover:text-white hover:glow-text transition-all relative group">
+            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-600 hover:text-brand-orange transition-all relative group">
               Orders
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out shadow-[0_0_10px_rgba(255,123,0,0.8)]"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
           </nav>
 
           {/* Centered Logo */}
           <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative">
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-brand-orange/20 rounded-full blur-[30px] group-hover:bg-brand-orange/30 transition-colors pointer-events-none"></div>
-            <img src={logo} alt="Logo" className="relative z-10 h-16 md:h-20 lg:h-24 w-auto max-w-[200px] lg:max-w-[280px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_35px_rgba(255,123,0,0.8)] transition-all duration-500 group-hover:scale-105" />
+            <img src={logo} alt="Logo" className="relative z-10 h-16 md:h-20 lg:h-24 w-auto max-w-[200px] lg:max-w-[280px] object-contain transition-all duration-500 group-hover:scale-105" />
           </Link>
 
           {/* Right Action Icons & Search */}
@@ -190,25 +190,24 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
                 }}
-                className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:bg-white/10 focus:border-brand-orange/50 shadow-inner backdrop-blur-md transition-all"
+                className="w-full bg-gray-100 hover:bg-gray-200 border border-transparent rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:bg-white focus:border-brand-orange/50 transition-all"
               />
-              <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(255,123,0,0)] group-focus-within:shadow-[0_0_20px_rgba(255,123,0,0.2)] pointer-events-none transition-shadow"></div>
             </div>
             
             <div className="flex items-center gap-4 lg:gap-5">
-              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-white/5 hover:bg-white/10 rounded-full border border-white/10 hover:border-brand-orange/40 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(255,123,0,0.3)] transition-all group">
-                <Heart className="w-5 h-5 text-white/90 group-hover:text-white group-hover:fill-white/10 transition-colors" strokeWidth={1.5} />
+              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
+                <Heart className="w-5 h-5 text-gray-700 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-brand-orange to-orange-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-[#020617] shadow-[0_0_10px_rgba(255,123,0,0.8)]">
+                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
               
-              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-white/5 hover:bg-white/10 rounded-full border border-white/10 hover:border-brand-orange/40 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(255,123,0,0.3)] transition-all group">
-                <ShoppingCart className="w-5 h-5 text-white/90 group-hover:text-white transition-colors" strokeWidth={1.5} />
+              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
+                <ShoppingCart className="w-5 h-5 text-gray-700 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-brand-orange to-orange-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-[#020617] shadow-[0_0_10px_rgba(255,123,0,0.8)] animate-pulse">
+                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white animate-pulse">
                     {cartCount}
                   </span>
                 )}
@@ -219,7 +218,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   <AvatarDropdown user={user} onLogout={handleLogout} />
                 </div>
               ) : (
-                <Link to="/login" className="flex items-center gap-2 text-sm font-bold text-white bg-gradient-to-r from-brand-orange to-orange-600 px-5 lg:px-6 py-2.5 rounded-full shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.7)] hover:-translate-y-0.5 transition-all ml-2 group">
+                <Link to="/login" className="flex items-center gap-2 text-sm font-bold text-white bg-brand-blue hover:bg-blue-700 px-5 lg:px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all ml-2 group">
                   <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform" /> 
                   <span className="tracking-wide">Login</span>
                 </Link>
@@ -281,13 +280,13 @@ export function Header({ variant = 'default', title, showShare = false }) {
             <motion.div key="sidebar"
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
               transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
-              className="fixed top-0 left-0 w-[280px] h-full glass-panel bg-black/90 backdrop-blur-3xl border-r border-white/10 z-[101] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col">
+              className="fixed top-0 left-0 w-[280px] h-full bg-white border-r border-gray-100 z-[101] shadow-xl flex flex-col">
 
-              <div className="p-4 flex items-center justify-between border-b border-white/10 bg-brand-orange/5 shadow-inner">
+              <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
                 <div className="flex items-center gap-3">
-                  <img src={logo} alt="Logo" className="h-16 w-auto max-w-[180px] object-contain filter drop-shadow-[0_0_15px_rgba(255,123,0,0.5)]" />
+                  <img src={logo} alt="Logo" className="h-16 w-auto max-w-[180px] object-contain" />
                 </div>
-                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-brand-text-muted hover:text-white bg-white/5 hover:bg-white/10 rounded-full border border-white/10 transition-colors shadow-[0_0_10px_rgba(0,0,0,0.5)]">
+                <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-gray-500 hover:text-gray-900 bg-white hover:bg-gray-100 rounded-full border border-gray-200 transition-colors shadow-sm">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -298,7 +297,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {/* Categories accordion */}
                 <motion.div variants={itemVariants}>
                   <button onClick={() => setMobileCatsOpen(o => !o)}
-                    className="w-full flex items-center justify-between text-white font-bold text-base py-3 px-4 rounded-xl hover:bg-white/5 hover:text-brand-orange transition-all">
+                    className="w-full flex items-center justify-between text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-orange transition-all">
                     Categories
                     <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180 text-brand-orange' : ''}`} />
                   </button>
@@ -307,14 +306,14 @@ export function Header({ variant = 'default', title, showShare = false }) {
                       <motion.div
                         initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }} className="overflow-hidden">
-                        <div className="ml-5 border-l-2 border-white/10 pl-4 py-2 space-y-1 mt-1 mb-2">
+                        <div className="ml-5 border-l-2 border-gray-100 pl-4 py-2 space-y-1 mt-1 mb-2">
                           <Link to="/category/all" onClick={() => setMobileMenuOpen(false)}
-                            className="block text-sm font-extrabold text-brand-orange py-2.5 px-3 rounded-lg hover:bg-white/5 transition-colors shadow-inner">
+                            className="block text-sm font-extrabold text-brand-orange py-2.5 px-3 rounded-lg hover:bg-orange-50 transition-colors">
                             All Categories
                           </Link>
                           {categories.map(cat => (
                             <Link key={cat.id} to={`/category/${cat.id}`} onClick={() => setMobileMenuOpen(false)}
-                              className="block text-sm font-medium text-brand-text-muted py-2.5 px-3 rounded-lg hover:bg-white/5 hover:text-white transition-colors">
+                              className="block text-sm font-medium text-gray-600 py-2.5 px-3 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-colors">
                               {cat.name}
                             </Link>
                           ))}
@@ -327,7 +326,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {navLinks.map(link => (
                   <motion.div key={link.name} variants={itemVariants}>
                     <Link to={link.path} onClick={() => setMobileMenuOpen(false)}
-                      className="block text-white font-bold text-base py-3 px-4 rounded-xl hover:bg-white/5 hover:text-brand-orange transition-all">
+                      className="block text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-orange transition-all">
                       {link.name}
                     </Link>
                   </motion.div>
@@ -336,9 +335,9 @@ export function Header({ variant = 'default', title, showShare = false }) {
 
               {!token && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-                  className="p-5 border-t border-white/10 bg-black/40">
+                  className="p-5 border-t border-gray-100 bg-gray-50">
                   <Link to="/login" onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full bg-brand-orange text-white font-extrabold py-3.5 rounded-xl shadow-[0_0_20px_rgba(255,123,0,0.4)] hover:bg-orange-500 transition-all">
+                    className="flex items-center justify-center gap-2 w-full bg-brand-blue text-white font-extrabold py-3.5 rounded-xl shadow-md hover:bg-blue-700 transition-all">
                     <LogIn className="w-5 h-5" /> Login to Account
                   </Link>
                 </motion.div>
@@ -348,35 +347,35 @@ export function Header({ variant = 'default', title, showShare = false }) {
         </AnimatePresence>
 
         <div className="h-[130px]" />
-        <header className="fixed top-0 left-0 z-50 w-full glass-panel border-x-0 border-t-0 rounded-none px-4 py-3 shadow-md">
+        <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 rounded-none px-4 py-3 shadow-sm">
           <div className="w-full">
             <div className="flex items-center justify-between mb-3 relative">
               <div className="flex items-center">
                 <button onClick={() => setMobileMenuOpen(true)} className="p-1 -ml-1">
-                  <Menu className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  <Menu className="w-6 h-6 text-gray-800" strokeWidth={1.5} />
                 </button>
               </div>
               
               {/* Centered Logo for Mobile */}
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                 <Link to="/">
-                  <img src={logo} alt="Logo" className="h-20 md:h-24 w-auto max-w-[260px] md:max-w-[300px] object-contain filter drop-shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:drop-shadow-[0_0_30px_rgba(255,123,0,0.6)] transition-all scale-110" />
+                  <img src={logo} alt="Logo" className="h-16 md:h-20 w-auto max-w-[260px] md:max-w-[300px] object-contain transition-all scale-110" />
                 </Link>
               </div>
 
               <div className="flex items-center gap-3">
-                <Link to="/wishlist" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
-                  <Heart className="w-5 h-5 text-white" strokeWidth={1.5} />
+                <Link to="/wishlist" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-gray-50 rounded-full border border-gray-200">
+                  <Heart className="w-5 h-5 text-gray-700" strokeWidth={1.5} />
                   {wishlistCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20">
+                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white">
                       {wishlistCount}
                     </span>
                   )}
                 </Link>
-                <Link to="/cart" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-white/10 rounded-full">
-                  <ShoppingCart className="w-5 h-5 text-white" strokeWidth={1.5} />
+                <Link to="/cart" className="relative p-1 cursor-pointer hover:-translate-y-0.5 transition-transform bg-gray-50 rounded-full border border-gray-200">
+                  <ShoppingCart className="w-5 h-5 text-gray-700" strokeWidth={1.5} />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white/20">
+                    <span className="absolute -top-1 -right-1 bg-brand-orange text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full border border-white">
                       {cartCount}
                     </span>
                   )}
@@ -391,11 +390,11 @@ export function Header({ variant = 'default', title, showShare = false }) {
                     if (e.key === 'Enter' && e.target.value.trim())
                       navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
                   }}
-                  className="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-blue-500/50 shadow-inner backdrop-blur"
+                  className="w-full bg-gray-100 border border-transparent rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:bg-white focus:border-brand-orange/50 transition-all"
                 />
               </div>
-              <button className="w-10 h-10 shrink-0 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+              <button className="w-10 h-10 shrink-0 bg-gray-100 border border-transparent rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-700">
                   <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                 </svg>
               </button>

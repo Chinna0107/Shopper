@@ -77,7 +77,7 @@ export function LoginPage() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="w-full max-w-md glass-panel rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/20 p-8 md:p-10 relative z-10">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 relative z-10">
         
         {step !== 'login' && (
           <button 
@@ -92,7 +92,7 @@ export function LoginPage() {
           <div className="flex justify-center mb-4">
             <img src={logo} alt="Zesto" className="h-16 object-contain rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
           </div>
-          <h1 className="text-2xl font-extrabold text-white mt-2 tracking-tight">
+          <h1 className="text-2xl font-extrabold text-gray-900 mt-2 tracking-tight">
             {step === 'login' ? 'Welcome Back' : step === 'forgot_reset' ? 'Create New Password' : 'Reset Password'}
           </h1>
           <p className="text-sm text-brand-text-muted mt-1 text-center">
@@ -111,7 +111,7 @@ export function LoginPage() {
               <input
                 name="email" type="email" value={form.email} onChange={handleChange} required
                 placeholder="you@example.com"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
             </div>
             <div>
@@ -126,7 +126,7 @@ export function LoginPage() {
                   name="password" type={showPass ? 'text' : 'password'} value={form.password}
                   onChange={handleChange} required
                   placeholder="Your password"
-                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12 placeholder-gray-400"
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
@@ -148,13 +148,13 @@ export function LoginPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Logging in...' : 'Login Securely'}
             </button>
             
             <p className="text-center text-sm text-brand-text-muted pt-4">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-brand-orange font-bold hover:underline underline-offset-2">Sign Up</Link>
+              <Link to="/signup" className="text-brand-blue font-bold hover:underline underline-offset-2">Sign Up</Link>
             </p>
           </form>
         )}
@@ -167,7 +167,7 @@ export function LoginPage() {
               <input
                 name="email" type="email" value={form.email} onChange={handleChange} required
                 placeholder="Enter your registered email"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
             </div>
             
@@ -178,7 +178,7 @@ export function LoginPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Sending OTP...' : 'Send OTP'}
             </button>
           </form>
@@ -192,9 +192,9 @@ export function LoginPage() {
               <input
                 name="otp" type="text" value={form.otp} onChange={handleChange} required maxLength={6}
                 placeholder="6-digit OTP"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-center tracking-widest text-lg font-bold text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-600 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-center tracking-widest text-lg font-bold text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
-              <p className="text-xs text-brand-text-muted mt-2 text-center">Sent to {form.email}</p>
+              <p className="text-xs text-gray-500 mt-2 text-center">Sent to {form.email}</p>
             </div>
             
             {displayError && (
@@ -209,7 +209,7 @@ export function LoginPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-[#1e3a8a]/80 backdrop-blur border border-blue-400/30 text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_20px_rgba(30,58,138,0.5)] hover:bg-blue-600 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Verifying...' : 'Verify OTP'}
             </button>
           </form>
@@ -225,7 +225,7 @@ export function LoginPage() {
                   name="newPassword" type={showNewPass ? 'text' : 'password'} value={form.newPassword}
                   onChange={handleChange} required minLength={6}
                   placeholder="New password"
-                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12 placeholder-gray-400"
                 />
                 <button type="button" onClick={() => setShowNewPass(!showNewPass)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
@@ -240,7 +240,7 @@ export function LoginPage() {
                   name="confirmPassword" type={showConfirmPass ? 'text' : 'password'} value={form.confirmPassword}
                   onChange={handleChange} required minLength={6}
                   placeholder="Confirm password"
-                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange focus:border-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue focus:border-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12 placeholder-gray-400"
                 />
                 <button type="button" onClick={() => setShowConfirmPass(!showConfirmPass)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
@@ -261,7 +261,7 @@ export function LoginPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Resetting...' : 'Reset Password'}
             </button>
           </form>

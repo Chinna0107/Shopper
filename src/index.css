@@ -3,14 +3,14 @@
 
 @theme {
   --color-brand-orange: #ff7b00; /* Brighter neon orange */
-  --color-brand-orange-glow: rgba(255, 123, 0, 0.5);
-  --color-brand-dark-blue: #020617; /* Deep space black/navy */
-  --color-brand-glass: rgba(10, 15, 35, 0.7); /* Much darker glass */
-  --color-brand-glass-border: rgba(255, 255, 255, 0.08);
-  --color-brand-text: #f8fafc;
-  --color-brand-text-muted: #94a3b8;
+  --color-brand-orange-glow: rgba(255, 123, 0, 0.2);
+  --color-brand-blue: #0047FF; /* Vibrant Blue for Primary actions */
+  --color-brand-light-bg: #f8f9fa; /* Light background */
+  --color-brand-glass-border: #e2e8f0; /* Light gray border */
+  --color-brand-text: #1f2937; /* Dark gray for text */
+  --color-brand-text-muted: #6b7280; /* Medium gray for muted text */
   
-  /* Keeping old ones just in case for legacy components, but overriding where possible */
+  /* Legacy colors */
   --color-brand-maroon: #036e26;
   --color-brand-gold: #C69C6D;
   --color-brand-cream: #FDFBF7;
@@ -31,13 +31,17 @@
     scrollbar-width: none;
   }
   
-  /* New Glassmorphism Utilities */
+  /* Card Utilities (formerly glass-panel) */
   .glass-panel {
-    background-color: var(--color-brand-glass);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background-color: #ffffff;
     border: 1px solid var(--color-brand-glass-border);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Remove all glassy effects */
+  .glass-panel, [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
   
   .glow-text {
@@ -47,11 +51,7 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--color-brand-dark-blue);
+  background-color: var(--color-brand-light-bg);
   color: var(--color-brand-text);
-  /* Deeper radial gradient */
-  background-image: radial-gradient(circle at top, #0a1128, #020617);
-  background-attachment: fixed;
 }
-
 

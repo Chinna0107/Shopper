@@ -79,8 +79,8 @@ export function ProductDetailPage() {
   if (!product) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-brand-text-muted bg-transparent">
-        <p className="mb-4 text-lg">Product not found.</p>
-        <button onClick={() => navigate('/')} className="glass-panel bg-brand-orange text-white px-6 py-2 rounded-full font-medium hover:bg-orange-500 shadow-[0_0_15px_rgba(255,123,0,0.5)]">
+        <p className="mb-4 text-lg text-gray-600">Product not found.</p>
+        <button onClick={() => navigate('/')} className="bg-brand-blue text-white px-6 py-2 rounded-full font-medium hover:bg-blue-700 shadow-md">
           Go Home
         </button>
       </div>
@@ -156,7 +156,7 @@ export function ProductDetailPage() {
                     <div 
                       key={i} 
                       onClick={() => setMainImg(img)}
-                      className={`w-18 h-18 rounded-xl p-2 cursor-pointer glass-panel transition-all ${mainImg === img ? 'border-brand-orange shadow-[0_0_15px_rgba(255,123,0,0.3)] bg-brand-orange/10' : 'border-white/10 hover:border-white/30 bg-white/5'}`}
+                      className={`w-18 h-18 rounded-xl p-2 cursor-pointer transition-all ${mainImg === img ? 'border-brand-blue border-2 shadow-sm bg-blue-50' : 'border border-gray-200 hover:border-brand-blue bg-white'}`}
                     >
                       <img src={img} alt={`thumb-${i}`} className="w-full h-full object-contain drop-shadow-md" />
                     </div>
@@ -165,18 +165,18 @@ export function ProductDetailPage() {
                 
                 {/* Main Image */}
                 <div 
-                  className="flex-1 relative aspect-square glass-panel rounded-3xl p-4 group cursor-zoom-in border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden flex items-center justify-center bg-gradient-to-br from-white/5 to-transparent"
+                  className="flex-1 relative aspect-square bg-white rounded-3xl p-4 group cursor-zoom-in border border-gray-100 shadow-sm overflow-hidden flex items-center justify-center"
                   onClick={() => setIsImageModalOpen(true)}
                 >
                   <div className="absolute top-4 right-4 z-10 flex flex-col gap-3">
-                    <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }} className="w-10 h-10 glass-panel bg-black/40 rounded-full flex items-center justify-center border border-white/10 hover:scale-110 hover:border-brand-orange/50 transition-all shadow-sm">
-                      <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-white'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
+                    <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }} className="w-10 h-10 bg-white/80 rounded-full flex items-center justify-center border border-gray-200 hover:scale-110 hover:border-red-500 transition-all shadow-sm">
+                      <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
                     </button>
-                    <button onClick={handleShare} className="w-10 h-10 glass-panel bg-black/40 rounded-full flex items-center justify-center border border-white/10 hover:scale-110 hover:border-brand-orange/50 transition-all shadow-sm">
-                      <Share2 className="w-5 h-5 text-white" strokeWidth={1.5} />
+                    <button onClick={handleShare} className="w-10 h-10 bg-white/80 rounded-full flex items-center justify-center border border-gray-200 hover:scale-110 hover:border-brand-blue transition-all shadow-sm">
+                      <Share2 className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
                     </button>
                   </div>
-                  <img src={mainImg || productImages[0]} alt={product.name} className="w-4/5 h-4/5 object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-500" />
+                  <img src={mainImg || productImages[0]} alt={product.name} className="w-4/5 h-4/5 object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500" />
                 </div>
               </div>
 
@@ -186,7 +186,7 @@ export function ProductDetailPage() {
                   <div 
                     key={i} 
                     onClick={() => setMainImg(img)}
-                    className={`w-16 h-16 rounded-xl p-2 cursor-pointer flex-shrink-0 glass-panel snap-start transition-all ${mainImg === img ? 'border-brand-orange shadow-[0_0_15px_rgba(255,123,0,0.3)] bg-brand-orange/10' : 'border-white/10 bg-white/5'}`}
+                    className={`w-16 h-16 rounded-xl p-2 cursor-pointer flex-shrink-0 snap-start transition-all ${mainImg === img ? 'border-brand-blue border-2 shadow-sm bg-blue-50' : 'border border-gray-200 bg-white'}`}
                   >
                     <img src={img} alt={`thumb-${i}`} className="w-full h-full object-contain drop-shadow-md" />
                   </div>
@@ -195,39 +195,37 @@ export function ProductDetailPage() {
 
               {/* Desktop Action Buttons */}
               <div className="hidden md:flex gap-5 mt-8">
-                <button onClick={handleAddToCart} className="flex-1 relative overflow-hidden bg-white/5 hover:bg-white/10 border border-white/20 text-white font-bold py-4 rounded-2xl shadow-[0_4px_15px_rgba(0,0,0,0.2)] flex items-center justify-center gap-2 transition-all hover:-translate-y-1 hover:shadow-[0_8px_25px_rgba(255,255,255,0.1)] group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                <button onClick={handleAddToCart} className="flex-1 relative overflow-hidden bg-white hover:bg-gray-50 border border-brand-blue text-brand-blue font-bold py-4 rounded-2xl shadow-sm flex items-center justify-center gap-2 transition-all hover:-translate-y-1 hover:shadow-md group">
                   <ShoppingCart className="w-5 h-5" /> ADD TO CART
                 </button>
-                <button onClick={handleBuyNow} className="flex-[1.5] relative overflow-hidden bg-gradient-to-r from-brand-orange to-[#ff9533] border border-orange-400/50 text-white font-extrabold py-4 rounded-2xl shadow-[0_0_25px_rgba(255,123,0,0.5)] flex items-center justify-center gap-2 transition-all hover:-translate-y-1 hover:shadow-[0_0_35px_rgba(255,123,0,0.7)] hover:from-[#ff8c1a] hover:to-[#ffa64d] group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
-                  <Zap className="w-6 h-6 fill-current drop-shadow-md" /> BUY NOW
+                <button onClick={handleBuyNow} className="flex-[1.5] relative overflow-hidden bg-brand-blue border border-blue-600 text-white font-extrabold py-4 rounded-2xl shadow-md flex items-center justify-center gap-2 transition-all hover:-translate-y-1 hover:shadow-lg hover:bg-blue-700 group">
+                  <Zap className="w-6 h-6 fill-current drop-shadow-sm" /> BUY NOW
                 </button>
               </div>
             </div>
           </div>
 
           {/* RIGHT COLUMN: Product Details */}
-          <div className="md:w-[60%] p-6 md:p-10 text-brand-text-muted text-sm glass-panel rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.5)] border-white/10 mt-8 md:mt-0">
+          <div className="md:w-[60%] p-6 md:p-10 text-gray-600 text-sm bg-white rounded-3xl shadow-xl border border-gray-100 mt-8 md:mt-0">
             <div className="fade-up">
               {/* Title & Ratings */}
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 tracking-tight leading-tight">{product.name}</h1>
-              <div className="text-brand-text-muted mb-4 text-base">{product.short_description}</div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 tracking-tight leading-tight">{product.name}</h1>
+              <div className="text-gray-600 mb-4 text-base">{product.short_description}</div>
               
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex items-center gap-1 bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 px-2.5 py-1 rounded-lg text-[13px] font-bold shadow-[0_0_10px_rgba(234,179,8,0.2)]">
                   4.5 <Star className="w-3.5 h-3.5 fill-current" />
                 </div>
-                <span className="text-brand-text-muted font-medium">1,245 Ratings & 142 Reviews</span>
+                <span className="text-gray-500 font-medium">1,245 Ratings & 142 Reviews</span>
               </div>
 
               {/* Price */}
               <div className="flex items-baseline gap-4 mb-8">
-                <span className="text-4xl font-extrabold text-brand-orange glow-text">₹{selectedSizeObj?.price || 0}</span>
+                <span className="text-4xl font-extrabold text-gray-900">₹{selectedSizeObj?.price || 0}</span>
                 {discountPercent > 0 && (
                   <>
-                    <span className="text-gray-500 line-through text-xl">₹{originalPrice}</span>
-                    <span className="text-green-400 font-bold text-lg">{discountPercent}% off</span>
+                    <span className="text-gray-400 line-through text-xl">₹{originalPrice}</span>
+                    <span className="text-green-500 font-bold text-lg">{discountPercent}% off</span>
                   </>
                 )}
               </div>
@@ -235,8 +233,8 @@ export function ProductDetailPage() {
 
             {/* Colors */}
             {isHierarchical && parsedSizes.length > 0 && (
-              <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-white/10">
-                <span className="text-white font-semibold w-16 shrink-0 pt-2 text-base">Color</span>
+              <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-gray-100">
+                <span className="text-gray-900 font-semibold w-16 shrink-0 pt-2 text-base">Color</span>
                 <div className="flex flex-wrap gap-3">
                   {parsedSizes.map((variant, idx) => (
                     <button 
@@ -247,8 +245,8 @@ export function ProductDetailPage() {
                       }}
                       className={`px-5 py-2.5 rounded-xl border transition-all duration-300 font-medium ${
                         selectedVariantIdx === idx 
-                          ? 'border-brand-orange text-brand-orange bg-brand-orange/10 shadow-[0_0_15px_rgba(255,123,0,0.3)]' 
-                          : 'border-white/10 text-brand-text-muted hover:border-white/30 hover:bg-white/5'
+                          ? 'border-brand-blue text-brand-blue bg-blue-50 shadow-sm' 
+                          : 'border-gray-200 text-gray-600 hover:border-brand-blue hover:bg-gray-50'
                       }`}
                     >
                       {variant.color}
@@ -260,8 +258,8 @@ export function ProductDetailPage() {
 
             {/* Sizes/Variants */}
             {currentSizesArray && currentSizesArray.length > 0 && (
-              <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-white/10">
-                <span className="text-white font-semibold w-16 shrink-0 pt-2 text-base">Size</span>
+              <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-gray-100">
+                <span className="text-gray-900 font-semibold w-16 shrink-0 pt-2 text-base">Size</span>
                 <div className="flex flex-wrap gap-3">
                   {currentSizesArray.map((sizeObj, idx) => (
                     <button 
@@ -269,8 +267,8 @@ export function ProductDetailPage() {
                       onClick={() => setSelectedSizeIdx(idx)}
                       className={`px-5 py-2.5 rounded-xl border transition-all duration-300 font-medium ${
                         selectedSizeIdx === idx 
-                          ? 'border-brand-orange text-brand-orange bg-brand-orange/10 shadow-[0_0_15px_rgba(255,123,0,0.3)]' 
-                          : 'border-white/10 text-brand-text-muted hover:border-white/30 hover:bg-white/5'
+                          ? 'border-brand-blue text-brand-blue bg-blue-50 shadow-sm' 
+                          : 'border-gray-200 text-gray-600 hover:border-brand-blue hover:bg-gray-50'
                       }`}
                     >
                       {sizeObj.size}
@@ -281,62 +279,62 @@ export function ProductDetailPage() {
             )}
 
             {/* Delivery */}
-            <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-white/10">
-              <span className="text-white font-semibold w-16 shrink-0 pt-1 text-base">Delivery</span>
+            <div className="fade-up flex flex-col md:flex-row md:items-start gap-4 md:gap-8 mb-8 pb-8 border-b border-gray-100">
+              <span className="text-gray-900 font-semibold w-16 shrink-0 pt-1 text-base">Delivery</span>
               <div className="flex-1 w-full max-w-sm">
-                <div className="flex items-center border-b border-white/20 pb-2 mb-3 focus-within:border-brand-orange transition-colors">
-                  <MapPin className="w-5 h-5 text-brand-orange mr-3" />
+                <div className="flex items-center border-b border-gray-200 pb-2 mb-3 focus-within:border-brand-blue transition-colors">
+                  <MapPin className="w-5 h-5 text-gray-400 mr-3" />
                   <input 
                     type="text" 
                     placeholder="Enter Delivery Pincode" 
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
-                    className="flex-1 outline-none text-[15px] placeholder-gray-500 font-medium bg-transparent text-white" 
+                    className="flex-1 outline-none text-[15px] placeholder-gray-400 font-medium bg-transparent text-gray-900" 
                     maxLength={6}
                   />
-                  <button className="text-blue-400 hover:text-blue-300 font-bold text-[14px] transition-colors ml-2">Check</button>
+                  <button className="text-brand-blue hover:text-blue-700 font-bold text-[14px] transition-colors ml-2">Check</button>
                 </div>
-                <p className="text-[14px] font-medium mt-3 text-white">Delivery by {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} | <span className="text-green-400">Free</span> <span className="line-through text-gray-500 ml-1">₹40</span></p>
-                <p className="text-[12px] text-brand-text-muted mt-1.5">If ordered before 4:00 PM</p>
+                <p className="text-[14px] font-medium mt-3 text-gray-900">Delivery by {new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} | <span className="text-green-500">Free</span> <span className="line-through text-gray-400 ml-1">₹40</span></p>
+                <p className="text-[12px] text-gray-500 mt-1.5">If ordered before 4:00 PM</p>
               </div>
             </div>
 
             {/* Product Description */}
-            <div className="fade-up mb-8 pb-8 border-b border-white/10">
-              <h2 className="font-bold text-xl text-white mb-5 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-brand-orange rounded-full inline-block"></span>
+            <div className="fade-up mb-8 pb-8 border-b border-gray-100">
+              <h2 className="font-bold text-xl text-gray-900 mb-5 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-brand-blue rounded-full inline-block"></span>
                 Product Description
               </h2>
-              <div className="text-[15px] text-brand-text-muted leading-relaxed whitespace-pre-wrap pl-3">
+              <div className="text-[15px] text-gray-600 leading-relaxed whitespace-pre-wrap pl-3">
                 {product.description || "Experience the perfect blend of tradition and quality. This product is carefully crafted to meet your daily needs while maintaining an authentic feel. Suitable for all occasions and built to last."}
               </div>
             </div>
 
             {/* Specifications */}
             <div className="fade-up mb-4">
-              <h2 className="font-bold text-xl text-white mb-5 flex items-center gap-2">
-                <span className="w-1.5 h-6 bg-brand-orange rounded-full inline-block"></span>
+              <h2 className="font-bold text-xl text-gray-900 mb-5 flex items-center gap-2">
+                <span className="w-1.5 h-6 bg-brand-blue rounded-full inline-block"></span>
                 Specifications
               </h2>
               <div className="pl-3">
-                <div className="font-semibold text-[16px] mb-4 text-white">General</div>
+                <div className="font-semibold text-[16px] mb-4 text-gray-900">General</div>
                 <table className="w-full text-[15px]">
                   <tbody>
-                    <tr className="align-top border-b border-white/5">
-                      <td className="py-3.5 text-brand-text-muted w-32 md:w-48">Category</td>
-                      <td className="py-3.5 font-medium text-white">{product.category || 'General'}</td>
+                    <tr className="align-top border-b border-gray-100">
+                      <td className="py-3.5 text-gray-500 w-32 md:w-48">Category</td>
+                      <td className="py-3.5 font-medium text-gray-900">{product.category || 'General'}</td>
                     </tr>
                     {currentVariant?.color && (
-                      <tr className="align-top border-b border-white/5">
-                        <td className="py-3.5 text-brand-text-muted w-32 md:w-48">Color</td>
-                        <td className="py-3.5 font-medium text-white">{currentVariant.color}</td>
+                      <tr className="align-top border-b border-gray-100">
+                        <td className="py-3.5 text-gray-500 w-32 md:w-48">Color</td>
+                        <td className="py-3.5 font-medium text-gray-900">{currentVariant.color}</td>
                       </tr>
                     )}
                     {Object.entries(customAttrs).map(([key, value]) => (
-                      <tr key={key} className="align-top border-b border-white/5">
-                        <td className="py-3.5 text-brand-text-muted w-32 md:w-48 capitalize">{key.replace(/_/g, ' ')}</td>
-                        <td className="py-3.5 font-medium text-white">
-                           {String(value).startsWith('http') ? <a href={value} target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">View Document/Image</a> : value}
+                      <tr key={key} className="align-top border-b border-gray-100">
+                        <td className="py-3.5 text-gray-500 w-32 md:w-48 capitalize">{key.replace(/_/g, ' ')}</td>
+                        <td className="py-3.5 font-medium text-gray-900">
+                           {String(value).startsWith('http') ? <a href={value} target="_blank" rel="noreferrer" className="text-brand-blue hover:text-blue-700 hover:underline">View Document/Image</a> : value}
                         </td>
                       </tr>
                     ))}
@@ -350,8 +348,8 @@ export function ProductDetailPage() {
         
         {/* People Also Bought / Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="pt-12 border-t border-white/10 fade-up">
-            <h2 className="text-2xl font-bold text-white mb-8">People also bought</h2>
+          <div className="pt-12 border-t border-gray-100 fade-up">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">People also bought</h2>
             <div className="flex overflow-x-auto gap-6 hide-scrollbar pb-6 snap-x">
               {relatedProducts.map(rp => (
                 <div key={rp.id} className="w-[180px] md:w-[220px] flex-shrink-0 snap-start">
@@ -364,17 +362,17 @@ export function ProductDetailPage() {
       </div>
 
       {/* Mobile Sticky Bottom Bar (Visible only on mobile) */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 glass-panel bg-black/90 backdrop-blur-3xl border-t border-white/10 flex gap-3 p-3 pb-safe z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.7)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex gap-3 p-3 pb-safe z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         <button 
           onClick={handleAddToCart}
-          className="flex-1 bg-white/10 border border-white/20 rounded-xl text-white font-bold py-3.5 flex items-center justify-center gap-2 hover:bg-white/20 transition-all active:scale-95 shadow-sm"
+          className="flex-1 bg-gray-50 border border-brand-blue text-brand-blue font-bold py-3.5 flex items-center justify-center gap-2 hover:bg-gray-100 transition-all active:scale-95 rounded-xl shadow-sm"
         >
           <ShoppingCart className="w-5 h-5" />
           CART
         </button>
         <button 
           onClick={handleBuyNow}
-          className="flex-[1.5] bg-gradient-to-r from-brand-orange to-orange-500 rounded-xl text-white font-extrabold py-3.5 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(255,123,0,0.5)] hover:shadow-[0_0_30px_rgba(255,123,0,0.7)] transition-all active:scale-95"
+          className="flex-[1.5] bg-brand-blue rounded-xl text-white font-extrabold py-3.5 flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95 hover:bg-blue-700"
         >
            <Zap className="w-5 h-5 fill-current drop-shadow-sm" />
            BUY NOW

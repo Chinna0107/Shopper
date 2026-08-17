@@ -55,15 +55,15 @@ export function SignupPage() {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="w-full max-w-md glass-panel rounded-3xl shadow-[0_0_40px_rgba(0,0,0,0.5)] border border-white/20 p-8 md:p-10 relative z-10">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 relative z-10">
         
         {/* Logo */}
         <div className="flex flex-col items-center mb-6 mt-2">
           <div className="flex justify-center mb-4">
             <img src={logo} alt="Zesto" className="h-16 object-contain rounded-xl shadow-[0_0_15px_rgba(255,255,255,0.1)]" />
           </div>
-          <h1 className="text-2xl font-extrabold text-white mt-2 tracking-tight">Create Account</h1>
-          <p className="text-sm text-brand-text-muted mt-1 text-center">Join Zesto today</p>
+          <h1 className="text-2xl font-extrabold text-gray-900 mt-2 tracking-tight">Create Account</h1>
+          <p className="text-sm text-gray-500 mt-1 text-center">Join Zesto today</p>
         </div>
 
         {step === 'form' ? (
@@ -73,7 +73,7 @@ export function SignupPage() {
               <input
                 name="name" value={form.name} onChange={handleChange} required
                 placeholder="Your full name"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
             </div>
             <div>
@@ -81,7 +81,7 @@ export function SignupPage() {
               <input
                 name="email" type="email" value={form.email} onChange={handleChange} required
                 placeholder="you@example.com"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
             </div>
             <div>
@@ -89,7 +89,7 @@ export function SignupPage() {
               <input
                 name="phone" value={form.phone} onChange={handleChange} required
                 placeholder="+91 98765 43210"
-                className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur placeholder-gray-500 shadow-inner"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white placeholder-gray-400"
               />
             </div>
             <div>
@@ -99,7 +99,7 @@ export function SignupPage() {
                   name="password" type={showPass ? 'text' : 'password'} value={form.password}
                   onChange={handleChange} required minLength={6}
                   placeholder="Min 6 characters"
-                  className="w-full border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-brand-orange transition-all bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur pr-12 placeholder-gray-500 shadow-inner"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all bg-gray-50 hover:bg-white focus:bg-white pr-12 placeholder-gray-400"
                 />
                 <button type="button" onClick={() => setShowPass(!showPass)}
                   className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-brand-orange transition-colors">
@@ -115,7 +115,7 @@ export function SignupPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Sending OTP...' : 'Send OTP'}
             </button>
           </form>
@@ -123,7 +123,7 @@ export function SignupPage() {
           <form onSubmit={handleVerify} className="space-y-6">
             <div className="text-center">
               <p className="text-sm text-brand-text-muted">OTP sent to</p>
-              <p className="font-semibold text-white">{form.email}</p>
+              <p className="font-semibold text-gray-900">{form.email}</p>
             </div>
             <div className="flex justify-center gap-2">
               {otp.map((digit, idx) => (
@@ -133,7 +133,7 @@ export function SignupPage() {
                   type="text" inputMode="numeric" maxLength={1} value={digit}
                   onChange={(e) => handleOtpChange(e.target.value, idx)}
                   onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-                  className="w-10 h-12 text-center text-lg font-bold text-white border border-white/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-orange bg-black/30 hover:bg-black/50 focus:bg-black/50 backdrop-blur shadow-inner"
+                  className="w-10 h-12 text-center text-lg font-bold text-gray-900 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue bg-gray-50 hover:bg-white focus:bg-white"
                 />
               ))}
             </div>
@@ -145,11 +145,11 @@ export function SignupPage() {
             )}
 
             <button type="submit" disabled={loading}
-              className="w-full bg-brand-orange text-white font-bold py-3.5 rounded-xl text-sm shadow-[0_0_15px_rgba(255,123,0,0.4)] hover:shadow-[0_0_25px_rgba(255,123,0,0.6)] hover:bg-orange-500 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
+              className="w-full bg-brand-blue text-white font-bold py-3.5 rounded-xl text-sm shadow-md hover:shadow-lg hover:bg-blue-700 transition-all disabled:opacity-60 disabled:hover:shadow-md mt-2 hover:-translate-y-0.5">
               {loading ? 'Verifying...' : 'Verify & Create Account'}
             </button>
             <button type="button" onClick={() => setStep('form')}
-              className="w-full text-xs text-brand-text-muted hover:text-white transition-colors">
+              className="w-full text-xs text-brand-blue hover:text-blue-700 transition-colors">
               ← Change details
             </button>
           </form>
@@ -157,7 +157,7 @@ export function SignupPage() {
 
         <p className="text-center text-sm text-brand-text-muted mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-brand-orange font-bold hover:underline underline-offset-2">Login</Link>
+          <Link to="/login" className="text-brand-blue font-bold hover:underline underline-offset-2">Login</Link>
         </p>
       </div>
     </div>

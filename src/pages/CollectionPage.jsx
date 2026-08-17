@@ -32,7 +32,7 @@ export function CollectionPage() {
   }
 
   return (
-    <div className="bg-brand-green min-h-screen pb-24 md:pb-12">
+    <div className="bg-transparent min-h-screen pb-24 md:pb-12">
       <Header variant="back" title={title} />
       
       {/* Desktop Title Banner */}
@@ -62,13 +62,13 @@ export function CollectionPage() {
             <p className="text-sm text-gray-500 mt-2 max-w-md text-center">
               We couldn't find any products in this collection right now. Please check back later!
             </p>
-            <Link to="/" className="mt-6 bg-[#fe6603] text-white font-bold px-8 py-3 rounded-full hover:bg-orange-600 transition-colors">
+            <Link to="/" className="mt-6 bg-brand-blue text-white font-bold px-8 py-3 rounded-full hover:bg-blue-700 transition-colors">
               Continue Shopping
             </Link>
           </div>
         ) : (
           <div className="flex justify-center items-center py-20">
-            <div className="w-8 h-8 border-4 border-[#fe6603] border-t-transparent rounded-full animate-spin"></div>
+            <div className="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
       </div>
