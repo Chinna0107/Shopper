@@ -89,7 +89,7 @@ export function Footer() {
               { name: 'Contact Us', path: '/contact' },
               { name: 'About Us', path: '/about' },
               { name: 'Shipping Policy', path: '/shipping-policy' },
-              { name: 'Returns & Exchanges', path: '/returns-policy' },
+              { name: 'Replacements & Exchanges', path: '/returns-policy' },
               { name: 'FAQs', path: '/faqs' }
             ].map(link => (
               <Link key={link.name} to={link.path} className="group flex items-center text-[14px] text-gray-300 hover:text-brand-orange transition-colors w-fit">

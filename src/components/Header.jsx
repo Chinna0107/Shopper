@@ -114,7 +114,7 @@ function OffersDropdown() {
     fetch(`${BACKEND_URL}/offers/active`)
       .then(r => r.json())
       .then(d => setOffers(d.offers || []))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -195,7 +195,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                 className="w-full bg-[#054335] hover:bg-[#075c47] border border-[#065A46] rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:border-brand-orange/50 transition-all"
               />
             </div>
-            
+
             <div className="flex items-center gap-4 lg:gap-5">
               <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
                 <Heart className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
@@ -205,7 +205,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   </span>
                 )}
               </Link>
-              
+
               <Link to="/cart" className="relative p-2.5 cursor-pointer bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
                 <ShoppingCart className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
@@ -214,14 +214,14 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   </span>
                 )}
               </Link>
-              
+
               {token ? (
                 <div className="ml-2">
                   <AvatarDropdown user={user} onLogout={handleLogout} />
                 </div>
               ) : (
                 <Link to="/login" className="flex items-center gap-2 text-sm font-bold text-white bg-brand-blue hover:bg-blue-700 px-5 lg:px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all ml-2 group">
-                  <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform" /> 
+                  <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="tracking-wide">Login</span>
                 </Link>
               )}
@@ -352,10 +352,16 @@ export function Header({ variant = 'default', title, showShare = false }) {
         <div className="h-[135px]" />
         <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] px-4 py-2 shadow-sm border-b border-[#054335]">
           <div className="w-full max-w-lg mx-auto">
-            {/* Location row */}
-            <div className="flex items-center gap-1.5 mb-1.5">
-              <MapPin className="w-3.5 h-3.5 text-brand-orange fill-brand-orange/20" />
-              <span className="text-[11px] text-gray-300 font-medium">Deliver to Hyderabad 500081</span>
+            {/* Location & Refer row */}
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-brand-orange fill-brand-orange/20" />
+                <span className="text-[11px] text-gray-300 font-medium">Deliver to Hyderabad 500081</span>
+              </div>
+              <Link to="/refer" className="flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-yellow-500 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)] border border-yellow-300/30 animate-pulse hover:scale-105 transition-transform">
+                <Gift className="w-3 h-3 text-white" />
+                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer & Earn ₹501</span>
+              </Link>
             </div>
 
             {/* Title and Actions row */}
@@ -365,7 +371,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   <img src={logo} alt="Logo" className="h-14 md:h-16 w-auto max-w-[240px] object-contain filter drop-shadow-lg" />
                 </Link>
               </div>
-              
+
               <div className="flex items-center gap-3">
                 {/* Cart icon */}
                 <button
@@ -392,14 +398,16 @@ export function Header({ variant = 'default', title, showShare = false }) {
             </div>
 
             {/* Search Bar */}
-            <div className="relative flex items-center">
+            <div
+              className="relative flex items-center cursor-text"
+              onClick={() => navigate('/search')}
+            >
               <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
-              <input type="text" placeholder="Search sarees, kurtis, brands..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim())
-                    navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
-                }}
-                className="w-full bg-[#054335] border border-[#065A46] rounded-full py-3 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:border-brand-orange transition-all shadow-sm"
+              <input
+                type="text"
+                placeholder="Search sarees, kurtis, brands..."
+                readOnly
+                className="w-full bg-[#054335] border border-[#065A46] rounded-full py-3 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none transition-all shadow-sm cursor-text"
               />
             </div>
           </div>
@@ -434,7 +442,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                     SWABHIVAR
                   </p>
                   <p className="text-brand-orange text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5">
-                    Style Premium. Live Better.
+                    Your Choice, From Anywhere.
                   </p>
                 </div>
                 <button onClick={() => setMenuOpen(false)}

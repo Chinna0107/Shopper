@@ -123,9 +123,9 @@ export function LoginPage() {
             </div>
           </div>
           <h1 className="text-white text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.18em' }}>SWABHIVAR</h1>
-          <p className="text-brand-orange text-[10px] font-bold tracking-[0.28em] uppercase mt-1">Style Premium. Live Better.</p>
+          <p className="text-brand-orange text-[10px] font-bold tracking-[0.28em] uppercase mt-1">Your Choice, From Anywhere.</p>
           <div className="flex items-center gap-5 mt-5">
-            {['10K+ Members', '100% Secure', 'Free Returns'].map(t => (
+            {['10K+ Members', '100% Secure', 'Free Replacements'].map(t => (
               <div key={t} className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange/70" />
                 <span className="text-white/50 text-[10px] font-medium">{t}</span>

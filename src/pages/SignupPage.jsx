@@ -59,7 +59,7 @@ export function SignupPage() {
 
   const inputClass = "w-full border-2 border-gray-100 rounded-2xl px-4 py-3.5 pl-11 text-[15px] text-gray-900 focus:outline-none focus:border-[#022A21] focus:bg-white transition-all bg-gray-50 placeholder-gray-400 font-medium";
 
-  const perks = ['Premium ethnic wear', 'Exclusive festive offers', 'Free returns & exchanges'];
+  const perks = ['Premium ethnic wear', 'Exclusive festive offers', 'Free replacements & exchanges'];
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#022A21' }}>
@@ -93,7 +93,7 @@ export function SignupPage() {
           <h1 className="text-white text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
             SWABHIVAR
           </h1>
-          <p className="text-brand-orange text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5">Style Premium. Live Better.</p>
+          <p className="text-brand-orange text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5">Your Choice, From Anywhere.</p>
 
           {step === 'form' && (
             <div className="mt-5 space-y-2">

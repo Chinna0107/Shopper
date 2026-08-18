@@ -15,12 +15,23 @@ export function HomePage() {
   const container = useRef(null);
   const { products, categories, loading } = useStoreData();
   const [banners, setBanners] = React.useState([]);
+  const [vendors, setVendors] = React.useState([
+    { id: 'v1', business_name: 'Swabhivar Silks', store_image: 'https://images.unsplash.com/photo-1555529771-835f59bfc50c?w=500&q=80' },
+    { id: 'v2', business_name: 'Kavya Creations', store_image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&q=80' },
+    { id: 'v3', business_name: 'The Loom Story', store_image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80' },
+    { id: 'v4', business_name: 'Ethnic Aura', store_image: 'https://images.unsplash.com/photo-1605901309584-818e25960b8f?w=500&q=80' },
+  ]);
 
   React.useEffect(() => {
     const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
     fetch(`${url}/general/banners`)
       .then(r => r.json())
       .then(d => { if (d.banners) setBanners(d.banners); })
+      .catch(e => console.error(e));
+
+    fetch(`${url}/general/vendors`)
+      .then(r => r.json())
+      .then(d => { if (d.vendors && d.vendors.length > 0) setVendors(d.vendors); })
       .catch(e => console.error(e));
   }, []);
   
@@ -124,9 +135,37 @@ export function HomePage() {
         )}
       </div>
 
+      {/* 1.5. Shop by Store (Vendors) */}
+      <div className="animate-section z-30 mb-8 px-4 max-w-[1280px] mx-auto mt-8">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+          <h3 className="text-xl md:text-2xl font-bold text-[#022A21] tracking-tight font-serif">Shop by Store</h3>
+          <Link to="/stores" className="text-brand-orange hover:text-orange-700 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
+        </div>
+        <div className="flex gap-4 md:gap-6 overflow-x-auto hide-scrollbar pb-4 snap-x">
+          {vendors.map(vendor => (
+            <Link key={vendor.id} to={`/store/${vendor.id}`} className="w-[120px] md:w-[160px] shrink-0 snap-start flex flex-col gap-2 group">
+              <div className="w-full aspect-square rounded-2xl overflow-hidden shadow-sm border border-gray-100 group-hover:border-brand-orange group-hover:shadow-md transition-all duration-300">
+                <img 
+                  src={vendor.store_image || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80'} 
+                  alt={vendor.business_name} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                />
+              </div>
+              <span className="text-sm font-bold text-gray-800 text-center group-hover:text-brand-orange transition-colors truncate px-1">
+                {vendor.business_name || 'Vendor Shop'}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {/* 2. Categories Ribbon */}
-      <div className="animate-section z-30 mb-8 px-2 overflow-x-auto hide-scrollbar mt-4">
-        <div className="flex gap-4 md:gap-8 justify-start md:justify-center min-w-max mx-auto px-4">
+      <div className="animate-section z-30 mb-8 px-4 max-w-[1280px] mx-auto mt-4">
+        <div className="flex justify-between items-center mb-4 border-b border-gray-100 pb-2">
+          <h3 className="text-xl md:text-2xl font-bold text-[#022A21] tracking-tight font-serif">Shop by Category</h3>
+          <Link to="/category/all" className="text-brand-orange hover:text-orange-700 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
+        </div>
+        <div className="flex gap-4 md:gap-8 justify-start md:justify-center min-w-max mx-auto px-2 overflow-x-auto hide-scrollbar pb-2">
           {categories.slice(0, 10).map(cat => (
             <Link key={cat.id} to={`/category/${cat.id}`} className="flex flex-col items-center gap-3 group w-20 md:w-24">
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-3 border border-gray-100 shadow-sm transition-all duration-300 relative overflow-hidden group-hover:-translate-y-1 group-hover:border-brand-orange group-hover:shadow-md">
@@ -148,7 +187,70 @@ export function HomePage() {
         {/* Unified Transparent Block */}
         <div className="animate-section mb-12 flex flex-col gap-8 md:gap-10">
           
+          {/* Shop by Price */}
+          <div className="pt-2">
+            <div className="mb-4">
+              <h3 className="text-xl md:text-2xl font-bold text-[#022A21] tracking-tight font-serif">Shop by Price</h3>
+              <p className="text-gray-500 text-sm md:text-base">Find styles in your budget</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link to="/category/all?price=under_1000" className="bg-orange-50/50 hover:bg-brand-orange hover:-translate-y-1 group border border-orange-100 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md">
+                <span className="text-2xl">💸</span>
+                <span className="font-bold text-gray-800 group-hover:text-white transition-colors text-sm md:text-base">Under ₹1,000</span>
+              </Link>
+              <Link to="/category/all?price=1000_2000" className="bg-orange-50/50 hover:bg-brand-orange hover:-translate-y-1 group border border-orange-100 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md">
+                <span className="text-2xl">🛍️</span>
+                <span className="font-bold text-gray-800 group-hover:text-white transition-colors text-sm md:text-base">₹1,000 - ₹2,000</span>
+              </Link>
+              <Link to="/category/all?price=2000_5000" className="bg-orange-50/50 hover:bg-brand-orange hover:-translate-y-1 group border border-orange-100 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md">
+                <span className="text-2xl">✨</span>
+                <span className="font-bold text-gray-800 group-hover:text-white transition-colors text-sm md:text-base">₹2,000 - ₹5,000</span>
+              </Link>
+              <Link to="/category/all?price=above_5000" className="bg-orange-50/50 hover:bg-brand-orange hover:-translate-y-1 group border border-orange-100 rounded-2xl p-6 flex flex-col items-center justify-center gap-2 transition-all duration-300 shadow-sm hover:shadow-md">
+                <span className="text-2xl">👑</span>
+                <span className="font-bold text-gray-800 group-hover:text-white transition-colors text-sm md:text-base">Above ₹5,000</span>
+              </Link>
+            </div>
+          </div>
 
+          {/* Ad Block Below Prices (Sponsored Card) */}
+          <Link to={banners.length > 0 ? (banners[0].link_url || "/category/all") : "/category/all"} className="block bg-[#FFFBF4] border border-[#F4E6D4] rounded-[2rem] p-4 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+            <div className="flex items-center gap-2 mb-4">
+              <svg className="w-4 h-4 text-[#7A1D25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+              </svg>
+              <span className="text-[11px] font-bold text-[#7A1D25] tracking-widest uppercase">SWABHIVAR • SPONSORED</span>
+            </div>
+            
+            <div className="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch">
+              <div className="w-full md:w-56 h-56 rounded-3xl overflow-hidden shrink-0 border border-[#F4E6D4]/50">
+                <img 
+                  src={banners.length > 0 ? banners[0].image_url : imgAarti} 
+                  alt="Sponsored" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              
+              <div className="flex flex-col justify-center flex-1 w-full py-2">
+                <p className="text-gray-500 text-[13px] font-medium tracking-wider uppercase mb-1">
+                  SABYA COUTURE
+                </p>
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                  {banners.length > 0 ? banners[0].title || 'Bridal Season is Here' : 'Bridal Season is Here'}
+                </h3>
+                <p className="text-[#E87E15] font-medium text-sm md:text-base mb-6">
+                  Flat ₹500 off • Free shipping
+                </p>
+                
+                <div className="flex items-center justify-between mt-auto">
+                  <span className="text-2xl md:text-3xl font-extrabold text-[#7A1D25]">₹2,999</span>
+                  <button className="bg-[#7A1D25] hover:bg-[#5C161C] text-white px-6 py-2.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2 transition-colors">
+                    Shop Now <span>→</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Link>
 
           {/* Best Sellers */}
           {products.filter(p => p.is_bestseller).length > 0 && (
@@ -277,8 +379,8 @@ export function HomePage() {
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
                    <div className="w-12 h-12 rounded-full bg-[#022A21]/10 flex items-center justify-center text-[#022A21] text-2xl border border-[#022A21]/20">🔄</div>
                    <div>
-                     <h4 className="text-gray-900 font-semibold">Easy Returns</h4>
-                     <p className="text-gray-500 text-xs md:text-sm">30 days return policy</p>
+                     <h4 className="text-gray-900 font-semibold">Easy Replacements</h4>
+                     <p className="text-gray-500 text-xs md:text-sm">30 days replacement policy</p>
                    </div>
                 </div>
                 <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">

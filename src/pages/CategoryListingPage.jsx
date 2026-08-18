@@ -29,6 +29,7 @@ export function CategoryListingPage() {
   
   const modelQuery = searchParams.get('model');
   const searchQuery = searchParams.get('search');
+  const priceQuery = searchParams.get('price');
   
   // Prevent body scroll when mobile filter is open
   useEffect(() => {
@@ -48,6 +49,25 @@ export function CategoryListingPage() {
     }
   }
   if (searchQuery) categoryName = `Search: "${searchQuery}"`;
+
+  // Helper to safely get base price of a product
+  const getProductPrice = (p) => {
+    let price = p.price || 0;
+    try {
+      let parsedSizes = [];
+      if (typeof p.sizes === 'string') parsedSizes = JSON.parse(p.sizes);
+      else if (Array.isArray(p.sizes)) parsedSizes = p.sizes;
+      
+      if (parsedSizes?.length > 0) {
+        if (Array.isArray(parsedSizes[0].sizes) && parsedSizes[0].sizes.length > 0) {
+          price = parsedSizes[0].sizes[0].price || price;
+        } else if (parsedSizes[0].price) {
+          price = parsedSizes[0].price || price;
+        }
+      }
+    } catch (e) {}
+    return Number(price);
+  };
 
   // Filter products
   let filteredProducts = products.filter(p => {
@@ -69,22 +89,23 @@ export function CategoryListingPage() {
                     (p.description && p.description.toLowerCase().includes(lowerSearch));
     }
 
-    return matchCat && matchModel && matchSearch;
+    let matchPrice = true;
+    if (priceQuery) {
+      const pPrice = getProductPrice(p);
+      if (priceQuery === 'under_1000') matchPrice = pPrice < 1000;
+      else if (priceQuery === '1000_2000') matchPrice = pPrice >= 1000 && pPrice <= 2000;
+      else if (priceQuery === '2000_5000') matchPrice = pPrice > 2000 && pPrice <= 5000;
+      else if (priceQuery === 'above_5000') matchPrice = pPrice > 5000;
+    }
+
+    return matchCat && matchModel && matchSearch && matchPrice;
   });
 
   // Sort products
   if (sortBy === 'price_asc') {
-    filteredProducts.sort((a, b) => {
-      const pA = a.sizes && a.sizes.length > 0 ? a.sizes[0].price : 0;
-      const pB = b.sizes && b.sizes.length > 0 ? b.sizes[0].price : 0;
-      return pA - pB;
-    });
+    filteredProducts.sort((a, b) => getProductPrice(a) - getProductPrice(b));
   } else if (sortBy === 'price_desc') {
-    filteredProducts.sort((a, b) => {
-      const pA = a.sizes && a.sizes.length > 0 ? a.sizes[0].price : 0;
-      const pB = b.sizes && b.sizes.length > 0 ? b.sizes[0].price : 0;
-      return pB - pA;
-    });
+    filteredProducts.sort((a, b) => getProductPrice(b) - getProductPrice(a));
   }
 
   const handleCategoryChange = (newCatId) => {
@@ -96,10 +117,24 @@ export function CategoryListingPage() {
 
   const handleModelChange = (model) => {
     if (model) {
-      setSearchParams({ model });
+      const newParams = Object.fromEntries(searchParams.entries());
+      newParams.model = model;
+      setSearchParams(newParams);
     } else {
-      setSearchParams({});
+      const newParams = Object.fromEntries(searchParams.entries());
+      delete newParams.model;
+      setSearchParams(newParams);
     }
+  };
+
+  const handlePriceChange = (priceKey) => {
+    const newParams = Object.fromEntries(searchParams.entries());
+    if (priceKey && newParams.price !== priceKey) {
+      newParams.price = priceKey;
+    } else {
+      delete newParams.price; // toggle off
+    }
+    setSearchParams(newParams);
   };
 
   const handleSortChange = (newSort) => {
@@ -167,6 +202,27 @@ export function CategoryListingPage() {
           </div>
         </div>
       )}
+
+      {/* Shop by Price */}
+      <div className="border-t border-gray-100 pt-6 mb-6">
+        <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Shop by Price</h3>
+        <div className="space-y-3">
+          {[
+            { id: 'under_1000', label: 'Under ₹1,000' },
+            { id: '1000_2000', label: '₹1,000 - ₹2,000' },
+            { id: '2000_5000', label: '₹2,000 - ₹5,000' },
+            { id: 'above_5000', label: 'Above ₹5,000' },
+          ].map(opt => (
+            <label key={opt.id} className="flex items-center gap-3 cursor-pointer group">
+              <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${priceQuery === opt.id ? 'border-brand-orange bg-brand-orange shadow-sm' : 'border-gray-300 group-hover:border-brand-orange bg-white'}`}>
+                {priceQuery === opt.id && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
+              </div>
+              <span className={`text-sm ${priceQuery === opt.id ? 'text-brand-orange font-bold' : 'text-gray-600 group-hover:text-gray-900'}`}>{opt.label}</span>
+              <input type="radio" name="price_radio" className="hidden" checked={priceQuery === opt.id} onChange={() => handlePriceChange(opt.id)} />
+            </label>
+          ))}
+        </div>
+      </div>
 
       {/* Sort By */}
       <div className="border-t border-gray-100 pt-6">
