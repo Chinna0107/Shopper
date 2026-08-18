@@ -112,55 +112,49 @@ export function ProductDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f5f5] pb-40 md:pb-12">
-      <Header />
+      <div className="hidden md:block">
+        <Header />
+      </div>
 
-      {/* ── MOBILE: Full-width image section with green header bar ── */}
+      {/* ── MOBILE: Full-width image section ── */}
       <div className="md:hidden">
         {/* Image container */}
-        <div className="relative bg-white" style={{ minHeight: 340 }}>
+        <div className="relative w-full aspect-[3/4] bg-gray-100">
           {/* Back + actions */}
-          <div className="absolute top-4 left-0 right-0 z-20 flex items-center justify-between px-4">
+          <div className="absolute top-safe pt-4 left-0 right-0 z-20 flex items-center justify-between px-4">
             <button onClick={() => navigate(-1)}
-              className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md border border-gray-100">
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
+              className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
+              <ChevronLeft className="w-6 h-6 text-gray-800" />
             </button>
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }}
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
+                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-[#88313A] text-[#88313A]' : 'text-gray-800'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
               </button>
               <button onClick={handleShare}
-                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md border border-gray-100">
-                <Share2 className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+                className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
+                <Share2 className="w-5 h-5 text-gray-800" strokeWidth={1.5} />
               </button>
             </div>
           </div>
 
           {/* Main image */}
-          <div className="flex items-center justify-center bg-white" style={{ height: 340 }}
-            onClick={() => setIsImageModalOpen(true)}>
+          <div className="w-full h-full" onClick={() => setIsImageModalOpen(true)}>
             <img
               src={imgError ? PLACEHOLDER : (mainImg || productImages[0] || PLACEHOLDER)}
               alt={product.name}
               onError={() => setImgError(true)}
-              className="h-72 w-full object-contain px-4"
+              className="w-full h-full object-cover"
             />
           </div>
-
-          {/* Discount badge */}
-          {discountPercent > 0 && (
-            <div className="absolute bottom-4 left-4 bg-green-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
-              {discountPercent}% OFF
-            </div>
-          )}
         </div>
 
         {/* Mobile thumbnail row */}
         {productImages.length > 1 && (
-          <div className="flex gap-2 px-4 py-3 bg-white border-t border-gray-100 overflow-x-auto hide-scrollbar">
+          <div className="flex gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto hide-scrollbar">
             {productImages.map((img, i) => (
               <button key={i} onClick={() => { setMainImg(img); setImgError(false); }}
-                className={`w-14 h-14 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-brand-orange shadow-sm' : 'border-gray-200'}`}>
+                className={`w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-[#88313A]' : 'border-transparent'}`}>
                 <img src={img} alt={`thumb-${i}`} className="w-full h-full object-cover" onError={(e) => { e.target.src = PLACEHOLDER; }} />
               </button>
             ))}
@@ -224,39 +218,34 @@ export function ProductDetailPage() {
         </div>
 
         {/* ── RIGHT / MOBILE BOTTOM: Product Info ── */}
-        <div className="bg-white md:rounded-3xl md:shadow-md md:border md:border-gray-100 px-4 py-6 md:p-8 mt-0 md:mt-0">
+        <div className="bg-white md:rounded-3xl md:shadow-md md:border md:border-gray-100 px-4 py-5 md:p-8 mt-0 md:mt-0">
 
           {/* Category tag */}
           {product.category && (
-            <div className="inline-flex items-center gap-1.5 bg-[#022A21]/8 text-[#022A21] text-[11px] font-bold px-3 py-1 rounded-full mb-3 uppercase tracking-wider border border-[#022A21]/10">
-              {product.category}
+            <div className="text-gray-500 text-[11px] font-semibold mb-1 uppercase tracking-wide">
+              {product.category} · KANCHIPURAM, TN
             </div>
           )}
 
           {/* Title */}
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 leading-tight tracking-tight mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+          <h1 className="text-[22px] md:text-3xl font-bold text-gray-900 leading-snug tracking-tight mb-2" style={{ fontFamily: 'Georgia, serif' }}>
             {product.name}
           </h1>
 
-          {product.short_description && (
-            <p className="text-gray-500 text-[14px] mb-4 leading-relaxed">{product.short_description}</p>
-          )}
-
           {/* Ratings */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex items-center gap-1 bg-green-500 text-white px-2.5 py-1 rounded-lg text-[13px] font-bold shadow-sm">
-              4.5 <Star className="w-3 h-3 fill-white" />
-            </div>
-            <span className="text-gray-500 text-sm font-medium">1,245 Ratings • 142 Reviews</span>
+          <div className="flex items-center gap-1.5 mb-3">
+            <Star className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+            <span className="text-gray-900 font-bold text-[13px]">4.7</span>
+            <span className="text-gray-500 text-[13px]">(214 reviews)</span>
           </div>
 
-          {/* Price block */}
-          <div className="flex items-baseline gap-3 mb-6 pb-6 border-b border-gray-100">
-            <span className="text-4xl font-extrabold text-gray-900">₹{selectedSizeObj?.price?.toLocaleString('en-IN') || 0}</span>
-            {discountPercent > 0 && (
+          {/* Price */}
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-2xl font-bold text-gray-900">₹{selectedSizeObj.price.toLocaleString()}</span>
+            {originalPrice > selectedSizeObj.price && (
               <>
-                <span className="text-gray-400 line-through text-xl">₹{originalPrice?.toLocaleString('en-IN')}</span>
-                <span className="text-green-600 font-bold text-base">{discountPercent}% off</span>
+                <span className="text-sm text-gray-400 line-through">₹{originalPrice.toLocaleString()}</span>
+                <span className="text-[10px] font-bold text-[#D97706] bg-[#FEF3C7] px-2 py-0.5 rounded-full ml-1.5">{discountPercent}% OFF</span>
               </>
             )}
           </div>
@@ -403,14 +392,14 @@ export function ProductDetailPage() {
       )}
 
       {/* ── MOBILE sticky action bar ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex gap-3 px-4 pt-3 pb-5 z-[60] shadow-[0_-8px_30px_rgba(0,0,0,0.12)]">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex gap-3 px-4 py-3 z-[60]">
         <button onClick={handleAddToCart}
-          className="flex-1 bg-[#022A21] text-white font-bold py-4 flex items-center justify-center gap-2 active:scale-95 rounded-2xl text-[15px] shadow-sm hover:bg-[#054335] transition-all">
-          <ShoppingCart className="w-5 h-5" /> Add to Cart
+          className="flex-1 bg-white text-[#88313A] border border-[#88313A] font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform">
+          Add to Cart
         </button>
         <button onClick={handleBuyNow}
-          className="flex-1 bg-gradient-to-r from-brand-orange to-yellow-400 rounded-2xl text-white font-bold py-4 flex items-center justify-center gap-2 shadow-md hover:shadow-[0_8px_25px_rgba(254,102,3,0.4)] transition-all active:scale-95 text-[15px]">
-          <Zap className="w-5 h-5 fill-white" /> Buy Now
+          className="flex-1 bg-[#88313A] text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-[#88313A]/20">
+          Buy Now
         </button>
       </div>
 

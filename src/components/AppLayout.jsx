@@ -12,8 +12,8 @@ export function AppLayout({ children }) {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Hide BottomNav on product detail pages — they have their own sticky Add to Cart / Buy Now bar
-  const isProductPage = pathname.startsWith('/product/');
+  // Hide BottomNav on product detail, cart, and checkout pages — they have their own sticky action bars
+  const hideBottomNav = pathname.startsWith('/product/') || pathname.startsWith('/cart') || pathname.startsWith('/checkout');
 
   return (
     <div className="min-h-screen bg-transparent flex justify-center w-full">
@@ -21,15 +21,15 @@ export function AppLayout({ children }) {
         <Toast />
         
         {/* Main Content Area */}
-        <main className={`flex-grow flex flex-col ${isProductPage ? 'pb-0' : 'pb-20 md:pb-0'}`}>
+        <main className={`flex-grow flex flex-col ${hideBottomNav ? 'pb-0' : 'pb-20 md:pb-0'}`}>
           {children}
         </main>
         
         {/* Footer */}
         <Footer />
         
-        {/* Bottom Navigation — hidden on product detail pages */}
-        {!isProductPage && <BottomNav />}
+        {/* Bottom Navigation */}
+        {!hideBottomNav && <BottomNav />}
       </div>
     </div>
   );

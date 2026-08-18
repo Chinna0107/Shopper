@@ -250,7 +250,7 @@ export function CartPage() {
                 
                 <button 
                   onClick={handleCheckout}
-                  className="hidden lg:flex w-full mt-8 bg-brand-blue hover:bg-blue-700 text-white font-bold text-base rounded-xl py-4 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all items-center justify-center gap-2"
+                  className="hidden lg:flex w-full mt-8 bg-[#88313A] hover:bg-[#7A1D25] text-white font-bold text-base rounded-2xl py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all items-center justify-center gap-2"
                 >
                   Proceed to Checkout
                 </button>
@@ -271,10 +271,10 @@ export function CartPage() {
             </div>
             <button 
               onClick={handleCheckout}
-              className="flex-1 sm:max-w-md bg-brand-blue hover:bg-blue-700 text-white font-bold text-base rounded-xl py-4 shadow-md hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+              className="flex-1 sm:max-w-md bg-[#88313A] hover:bg-[#7A1D25] text-white font-bold text-[15px] rounded-full py-4 shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
             >
               Proceed to Checkout
-              <span className="w-1.5 h-1.5 bg-white rounded-full mx-1 opacity-50" />
+              <span className="w-1 h-1 bg-white/50 rounded-full mx-1" />
               Step 2
             </button>
           </div>

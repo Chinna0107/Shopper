@@ -183,52 +183,54 @@ export function ProductCard({ product, layout = 'grid' }) {
   /* ── GRID LAYOUT ── */
   return (
     <div onClick={handleCardClick}
-      className="group flex flex-col rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.1)] hover:-translate-y-1 h-full relative bg-white border border-gray-100">
+      className="group flex flex-col rounded-[1.5rem] md:rounded-[2rem] overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] h-full relative bg-white border border-gray-100 pb-3">
 
       {/* Discount badge */}
-      <div className="absolute top-2 left-2 bg-brand-orange text-white text-[10px] font-bold px-2 py-0.5 rounded-full z-20 shadow-sm">
-        -{(Math.round(((displayPrice * 1.4 - displayPrice) / (displayPrice * 1.4)) * 100))}%
+      <div className="absolute top-3 left-3 bg-[#7A1D25] text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full z-20 shadow-sm tracking-wide">
+        {(Math.round(((displayPrice * 1.4 - displayPrice) / (displayPrice * 1.4)) * 100))}% OFF
       </div>
 
       {/* Wishlist */}
-      <div className="absolute top-2 right-2 z-20">
+      <div className="absolute top-3 right-3 z-20">
         <button onClick={handleWishlist}
-          className="w-7 h-7 bg-white/90 rounded-full flex items-center justify-center shadow-sm border border-gray-100 hover:scale-110 transition-transform backdrop-blur-sm">
-          <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
+          className="w-8 h-8 md:w-9 md:h-9 bg-white rounded-full flex items-center justify-center shadow-md hover:scale-110 transition-transform">
+          <Heart className={`w-4 h-4 md:w-4.5 md:h-4.5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-900'}`} strokeWidth={isWishlisted ? 0 : 2} />
         </button>
       </div>
 
       {/* Image */}
-      <div className="relative bg-gray-50 overflow-hidden" style={{ aspectRatio: '1 / 1' }}>
+      <div className="relative bg-gray-50 w-full aspect-[4/5] overflow-hidden rounded-b-2xl md:rounded-b-3xl">
         <img
           src={imgErr ? fallbackImg : firstImg}
           alt={product.name}
           onError={() => setImgErr(true)}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
         />
       </div>
 
       {/* Info */}
-      <div className="flex flex-col flex-grow p-3">
-        <h3 className="text-xs md:text-sm font-semibold text-gray-900 line-clamp-2 leading-snug mb-1.5">{product.name}</h3>
+      <div className="flex flex-col flex-grow px-3 pt-4 md:px-4">
+        <p className="text-gray-400 text-[10px] md:text-[11px] font-medium tracking-widest uppercase mb-1">
+          {product.brand || product.category || 'KANCHI HERITAGE'}
+        </p>
+        
+        <h3 className="text-[15px] md:text-[17px] font-bold text-gray-900 line-clamp-2 leading-snug mb-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
+          {product.name}
+        </h3>
 
-        <div className="flex items-center gap-0.5 mb-2">
-          {[1,2,3,4,5].map(s => (
-            <Star key={s} className="w-2.5 h-2.5 fill-brand-orange text-brand-orange" />
-          ))}
-          <span className="text-[10px] text-gray-400 ml-1">(1,024)</span>
+        <div className="flex items-end gap-2 mb-2">
+          <span className="text-lg md:text-xl font-extrabold text-gray-900">₹{displayPrice?.toLocaleString('en-IN')}</span>
+          <span className="text-xs md:text-sm text-gray-400 line-through mb-0.5">₹{Math.round(displayPrice * 1.4)?.toLocaleString('en-IN')}</span>
         </div>
 
-        <div className="flex items-center gap-2 mb-3 mt-auto">
-          <span className="text-sm md:text-base font-bold text-brand-orange">₹{displayPrice?.toLocaleString('en-IN')}</span>
-          <span className="text-xs text-gray-400 line-through">₹{Math.round(displayPrice * 1.4)?.toLocaleString('en-IN')}</span>
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-[#3EA361] text-[10px] md:text-[11px] font-medium">₹100 wallet cash</span>
+          <span className="text-[#9061DF] text-[10px] md:text-[11px] font-medium">+50 pts</span>
         </div>
 
-        <button onClick={handleAddToCart}
-          className="w-full bg-[#022A21] hover:bg-[#054335] text-white font-semibold text-xs md:text-sm py-2 md:py-2.5 rounded-xl transition-all flex items-center justify-center gap-2 relative z-20 active:scale-95 shadow-sm">
-          <ShoppingCart className="w-4 h-4" strokeWidth={2} />
-          Add to Cart
-        </button>
+        <div className="mt-auto pt-1">
+          <p className="text-gray-500 text-[11px] md:text-xs">4-day replacements</p>
+        </div>
       </div>
     </div>
   );
