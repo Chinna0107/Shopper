@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
   Menu, Search, Heart, ShoppingCart, LogIn, Package, MapPin, LayoutDashboard, LogOut,
   Settings, Shield, ChevronDown, X, Tag, Grid3X3, Home, ShoppingBag, Zap,
-  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift
+  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift, Wallet
 } from 'lucide-react';
 
 
@@ -197,6 +197,11 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
             </div>
 
             <div className="flex items-center gap-4 lg:gap-5">
+              <div className="flex items-center gap-2 px-3.5 py-2 bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] transition-all cursor-pointer hover:border-brand-orange/40 hover:-translate-y-1 group">
+                <Wallet className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+                <span className="text-white text-sm font-bold">₹1,240</span>
+              </div>
+
               <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
                 <Heart className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
@@ -349,7 +354,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
           )}
         </AnimatePresence>
 
-        <div className="h-[135px]" />
+        <div className="h-[95px]" />
         <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] px-4 py-2 shadow-sm border-b border-[#054335]">
           <div className="w-full max-w-lg mx-auto">
             {/* Location & Refer row */}
@@ -360,7 +365,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               </div>
               <Link to="/refer" className="flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-yellow-500 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)] border border-yellow-300/30 animate-pulse hover:scale-105 transition-transform">
                 <Gift className="w-3 h-3 text-white" />
-                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer & Earn ₹501</span>
+                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer by A 501</span>
               </Link>
             </div>
 
@@ -373,6 +378,12 @@ export function Header({ variant = 'default', title, showShare = false }) {
               </div>
 
               <div className="flex items-center gap-3">
+                {/* Wallet */}
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#054335] rounded-full border border-[#065A46]">
+                  <Wallet className="w-4 h-4 text-brand-orange" strokeWidth={2} />
+                  <span className="text-white text-xs font-bold">₹1,240</span>
+                </div>
+
                 {/* Cart icon */}
                 <button
                   onClick={() => navigate('/cart')}
@@ -397,19 +408,6 @@ export function Header({ variant = 'default', title, showShare = false }) {
 
             </div>
 
-            {/* Search Bar */}
-            <div
-              className="relative flex items-center cursor-text"
-              onClick={() => navigate('/search')}
-            >
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search sarees, kurtis, brands..."
-                readOnly
-                className="w-full bg-[#054335] border border-[#065A46] rounded-full py-3 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none transition-all shadow-sm cursor-text"
-              />
-            </div>
           </div>
         </header>
       </div>
@@ -493,8 +491,9 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   { icon: <Package className="w-4.5 h-4.5" />, label: 'My Orders', path: '/my-orders', color: 'text-blue-400', badge: null },
                   { icon: <Heart className="w-4.5 h-4.5" />, label: 'Wishlist', path: '/wishlist', color: 'text-red-400', badge: wishlistCount > 0 ? wishlistCount : null },
                   { icon: <ShoppingCart className="w-4.5 h-4.5" />, label: 'Cart', path: '/cart', color: 'text-green-400', badge: cartCount > 0 ? cartCount : null },
+                  { icon: <MapPin className="w-4.5 h-4.5" />, label: 'My Addresses', path: token ? '/my-addresses' : '/login', color: 'text-indigo-400' },
                   { icon: <User className="w-4.5 h-4.5" />, label: 'My Profile', path: token ? '/profile' : '/login', color: 'text-brand-orange' },
-                  { icon: <Gift className="w-4.5 h-4.5" />, label: 'Refer & Earn', path: '/refer', color: 'text-pink-400' },
+                  { icon: <Gift className="w-4.5 h-4.5" />, label: 'Refer by A 501', path: '/refer', color: 'text-pink-400' },
                 ].map(item => (
                   <button key={item.path}
                     onClick={() => { navigate(item.path); setMenuOpen(false); }}

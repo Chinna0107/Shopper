@@ -32,6 +32,7 @@ import { OffersPage } from './pages/OffersPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsPage } from './pages/TermsPage';
 import { ReferPage } from './pages/ReferPage';
+import { WalletPage } from './pages/WalletPage';
 
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboardPage } from './pages/admin/AdminDashboardPage';
@@ -103,6 +104,7 @@ function AnimatedAppRoutes() {
         <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
         <Route path="/offers" element={<PageTransition><OffersPage /></PageTransition>} />
         <Route path="/refer" element={<PageTransition><ReferPage /></PageTransition>} />
+        <Route path="/wallet" element={<PageTransition><WalletPage /></PageTransition>} />
         <Route path="/collection/:type" element={<PageTransition><CollectionPage /></PageTransition>} />
         <Route path="/category/:categoryId" element={<PageTransition><CategoryListingPage /></PageTransition>} />
         <Route path="/product/:id" element={<PageTransition><ProductDetailPage /></PageTransition>} />

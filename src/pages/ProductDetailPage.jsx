@@ -30,7 +30,7 @@ export function ProductDetailPage() {
   try {
     if (typeof product?.sizes === 'string') parsedSizes = JSON.parse(product.sizes);
     else if (Array.isArray(product?.sizes)) parsedSizes = product.sizes;
-  } catch(e) {}
+  } catch (e) { }
 
   const isHierarchical = parsedSizes.length > 0 && Array.isArray(parsedSizes[0].sizes);
   const currentVariant = isHierarchical ? parsedSizes[selectedVariantIdx] : null;
@@ -104,7 +104,7 @@ export function ProductDetailPage() {
   let customAttrs = {};
   try {
     customAttrs = typeof product.custom_attributes === 'string' ? JSON.parse(product.custom_attributes) : product.custom_attributes || {};
-  } catch(e) {}
+  } catch (e) { }
 
   const deliveryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric' });
 

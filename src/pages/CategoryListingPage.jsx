@@ -8,6 +8,11 @@ import { useStoreData } from '../store/useStoreData';
 import imgAarti from '../assets/story_aarti.png';
 import imgMeditation from '../assets/story_meditation.png';
 
+const searchSuggestions = {
+  types: ['Cotton', 'Silk', 'Banarasi', 'Party Wear', 'Office Wear', 'Wedding', 'Festival'],
+  regions: ['Kanchipuram', 'Hyderabad', 'Varanasi', 'Jaipur', 'Lucknow', 'Thrissur', 'Mumbai', 'New Delhi', 'Bengaluru']
+};
+
 export function CategoryListingPage() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
@@ -250,21 +255,111 @@ export function CategoryListingPage() {
     <div className="bg-transparent min-h-screen pb-20">
       <Header title={categoryName} showShare={true} />
       
-      {/* Category Banner */}
-      <div className="bg-white mx-4 lg:mx-8 rounded-3xl mt-6 relative overflow-hidden shadow-sm border border-gray-100">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-50/50 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-6 md:px-12 md:py-10 gap-6 relative z-10">
-          <div className="text-center md:text-left text-gray-900 max-w-2xl">
-            <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight font-serif text-[#022A21]">{categoryName}</h1>
-            <p className="text-gray-600 font-sans text-sm md:text-lg leading-relaxed max-w-xl">
-              Explore our handpicked collection of authentic, premium essentials for your divine rituals. Each item is crafted with devotion and purity.
-            </p>
+      {/* Category Banner or Search UI */}
+      {categoryId === 'all' ? (
+        <div className="bg-[#FFFDF9] shadow-sm border-b border-gray-100 pb-6">
+          <div className="px-4 py-4 flex items-center gap-3 bg-[#FFFDF9] max-w-7xl mx-auto">
+            <div className="flex-1 relative group">
+              <Search className="w-4 h-4 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors" />
+              <input
+                type="text"
+                value={searchQuery || ''}
+                onChange={(e) => {
+                  const newParams = Object.fromEntries(searchParams.entries());
+                  if (e.target.value) newParams.search = e.target.value;
+                  else delete newParams.search;
+                  setSearchParams(newParams);
+                }}
+                placeholder="Search shop name, products, categories"
+                className="w-full bg-white border border-gray-200 rounded-full py-2.5 pl-11 pr-10 text-[15px] text-gray-900 focus:outline-none focus:ring-1 focus:border-brand-orange focus:shadow-sm transition-all placeholder-gray-400"
+              />
+              {searchQuery && (
+                <button 
+                  onClick={() => {
+                    const newParams = Object.fromEntries(searchParams.entries());
+                    delete newParams.search;
+                    setSearchParams(newParams);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            <button onClick={() => setShowMobileFilters(true)} className="w-10 h-10 bg-[#8E112E] rounded-full flex items-center justify-center text-white shadow-sm hover:bg-[#720e25] transition-colors shrink-0">
+              <SlidersHorizontal className="w-4 h-4" />
+            </button>
           </div>
-          <div className="w-28 h-28 md:w-40 md:h-40 shrink-0 rounded-full bg-white p-2 border border-brand-orange/30 shadow-sm hidden md:block group-hover:shadow-md transition-all">
-            <img src={bannerImg} alt={categoryName} className="w-full h-full object-cover rounded-full" />
+
+          {!searchQuery && (
+            <div className="px-4 pt-2 pb-2 space-y-6 max-w-7xl mx-auto">
+              <div>
+                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">TYPES</p>
+                <div className="flex flex-wrap gap-2.5">
+                  {searchSuggestions.types.map(type => (
+                    <button key={type} onClick={() => {
+                      const newParams = Object.fromEntries(searchParams.entries());
+                      newParams.search = type;
+                      setSearchParams(newParams);
+                    }}
+                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">PRICE</p>
+                <div className="flex flex-wrap gap-2.5">
+                  {[
+                    { id: 'under_1000', label: 'Under ₹1,000' },
+                    { id: '1000_2000', label: '₹1,000 - ₹2,000' },
+                    { id: '2000_5000', label: '₹2,000 - ₹5,000' },
+                    { id: 'above_5000', label: 'Above ₹5,000' },
+                  ].map(price => (
+                    <button key={price.id} onClick={() => handlePriceChange(price.id)}
+                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
+                      {price.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">REGION · SAREES</p>
+                <div className="flex flex-wrap gap-2.5">
+                  {searchSuggestions.regions.map(region => (
+                    <button key={region} onClick={() => {
+                      const newParams = Object.fromEntries(searchParams.entries());
+                      newParams.search = region;
+                      setSearchParams(newParams);
+                    }}
+                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
+                      {region}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="bg-white mx-4 lg:mx-8 rounded-3xl mt-6 relative overflow-hidden shadow-sm border border-gray-100">
+          <div className="absolute inset-0 bg-gradient-to-r from-orange-50/50 to-transparent pointer-events-none" />
+          <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between p-6 md:px-12 md:py-10 gap-6 relative z-10">
+            <div className="text-center md:text-left text-gray-900 max-w-2xl">
+              <h1 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight font-serif text-[#022A21]">{categoryName}</h1>
+              <p className="text-gray-600 font-sans text-sm md:text-lg leading-relaxed max-w-xl">
+                Explore our handpicked collection of authentic, premium essentials for your divine rituals. Each item is crafted with devotion and purity.
+              </p>
+            </div>
+            <div className="w-28 h-28 md:w-40 md:h-40 shrink-0 rounded-full bg-white p-2 border border-brand-orange/30 shadow-sm hidden md:block group-hover:shadow-md transition-all">
+              <img src={bannerImg} alt={categoryName} className="w-full h-full object-cover rounded-full" />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         

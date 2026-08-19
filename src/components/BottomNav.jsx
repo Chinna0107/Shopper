@@ -41,13 +41,13 @@ export function BottomNav() {
       )
     },
     {
-      name: 'Search',
-      path: '/search',
-      active: isActive(['/search']),
+      name: 'Wallet',
+      path: '/wallet',
+      active: isActive(['/wallet']),
       icon: (active) => (
         <svg viewBox="0 0 24 24" className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke={active ? '#ffffff' : '#9ca3af'} strokeWidth="2">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5z" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M16 12h5M16 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       )
     },

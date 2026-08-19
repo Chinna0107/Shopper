@@ -32,7 +32,7 @@ export function ReferPage() {
           <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
             <Gift className="w-16 h-16 text-brand-orange mx-auto mb-4" />
             <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-md">
-              Refer & Earn <span className="text-brand-orange">₹501</span>
+              Refer by <span className="text-brand-orange">A 501</span>
             </h1>
             <p className="text-gray-300 text-lg">Give your friends a treat, and get rewarded when they shop with us.</p>
           </motion.div>

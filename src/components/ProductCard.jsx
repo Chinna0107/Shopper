@@ -6,41 +6,41 @@ import { useCartStore } from '../store/useCartStore';
 
 // Category-based image fallback — high quality Unsplash images per category keyword
 const CATEGORY_IMAGES = {
-  saree:       'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
-  silk:        'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
-  kurta:       'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80',
-  kurti:       'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80',
-  lehenga:     'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
-  dupatta:     'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
-  dress:       'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=500&q=80',
-  shirt:       'https://images.unsplash.com/photo-1602810316693-3667c854239a?w=500&q=80',
-  tshirt:      'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80',
-  pant:        'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80',
-  jeans:       'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=80',
-  footwear:    'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
-  shoes:       'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
-  sandal:      'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
-  jewelry:     'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
-  jewellery:   'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
-  necklace:    'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
-  ring:        'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80',
-  bag:         'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80',
-  handbag:     'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80',
-  mobile:      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
-  phone:       'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
-  laptop:      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80',
+  saree: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
+  silk: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
+  kurta: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80',
+  kurti: 'https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=500&q=80',
+  lehenga: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
+  dupatta: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&q=80',
+  dress: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=500&q=80',
+  shirt: 'https://images.unsplash.com/photo-1602810316693-3667c854239a?w=500&q=80',
+  tshirt: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500&q=80',
+  pant: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80',
+  jeans: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=500&q=80',
+  footwear: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
+  shoes: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
+  sandal: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&q=80',
+  jewelry: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
+  jewellery: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
+  necklace: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500&q=80',
+  ring: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80',
+  bag: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80',
+  handbag: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80',
+  mobile: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
+  phone: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&q=80',
+  laptop: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&q=80',
   electronics: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=500&q=80',
-  headphone:   'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80',
-  watch:       'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
-  furniture:   'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80',
-  sofa:        'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80',
-  appliance:   'https://images.unsplash.com/photo-1584269600519-112d00e42a1f?w=500&q=80',
-  grocery:     'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80',
-  beauty:      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80',
-  cosmetic:    'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80',
-  fashion:     'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&q=80',
-  clothing:    'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&q=80',
-  default:     'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=500&q=80',
+  headphone: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&q=80',
+  watch: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&q=80',
+  furniture: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80',
+  sofa: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=500&q=80',
+  appliance: 'https://images.unsplash.com/photo-1584269600519-112d00e42a1f?w=500&q=80',
+  grocery: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500&q=80',
+  beauty: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80',
+  cosmetic: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&q=80',
+  fashion: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&q=80',
+  clothing: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500&q=80',
+  default: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=500&q=80',
 };
 
 function getCategoryFallback(product) {
@@ -63,7 +63,7 @@ function getFirstImage(product, parsedSizes) {
   if (product.images) {
     let imgs = product.images;
     if (typeof imgs === 'string') {
-      try { imgs = JSON.parse(imgs); } catch (e) {}
+      try { imgs = JSON.parse(imgs); } catch (e) { }
     }
     if (Array.isArray(imgs) && imgs.length > 0) {
       const img = imgs[0];
@@ -78,7 +78,7 @@ function getFirstImage(product, parsedSizes) {
       try {
         const arr = JSON.parse(url);
         if (Array.isArray(arr) && arr[0] && arr[0].startsWith('http')) return arr[0];
-      } catch (e) {}
+      } catch (e) { }
     }
     if (typeof url === 'string' && url.startsWith('http')) return url;
   }
@@ -100,7 +100,7 @@ export function ProductCard({ product, layout = 'grid' }) {
   try {
     if (typeof product.sizes === 'string') parsedSizes = JSON.parse(product.sizes);
     else if (Array.isArray(product.sizes)) parsedSizes = product.sizes;
-  } catch (e) {}
+  } catch (e) { }
 
   let defaultSize = { size: 'Standard', price: product.price || 0 };
 
@@ -213,7 +213,7 @@ export function ProductCard({ product, layout = 'grid' }) {
         <p className="text-gray-400 text-[10px] md:text-[11px] font-medium tracking-widest uppercase mb-1">
           {product.brand || product.category || 'KANCHI HERITAGE'}
         </p>
-        
+
         <h3 className="text-[15px] md:text-[17px] font-bold text-gray-900 line-clamp-2 leading-snug mb-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
           {product.name}
         </h3>

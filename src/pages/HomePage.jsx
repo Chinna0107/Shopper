@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, ShieldCheck, Truck, Award, Headset } from 'lucide-react';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
 import { AdBanner } from '../components/AdBanner';
@@ -13,13 +14,14 @@ import imgAarti from '../assets/story_aarti.png';
 
 export function HomePage() {
   const container = useRef(null);
+  const navigate = useNavigate();
   const { products, categories, loading } = useStoreData();
   const [banners, setBanners] = React.useState([]);
   const [vendors, setVendors] = React.useState([
-    { id: 'v1', business_name: 'Swabhivar Silks', store_image: 'https://images.unsplash.com/photo-1555529771-835f59bfc50c?w=500&q=80' },
+    { id: 'v1', business_name: 'Swabhivar Silks', store_image: 'https://vaarahisilks.com/cdn/shop/articles/Home_Banner_B_1080_x_1650_FHD_49daaf56-8dd9-4544-934c-f17ec4672e1c.jpg?v=1765869118' },
     { id: 'v2', business_name: 'Kavya Creations', store_image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&q=80' },
     { id: 'v3', business_name: 'The Loom Story', store_image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80' },
-    { id: 'v4', business_name: 'Ethnic Aura', store_image: 'https://images.unsplash.com/photo-1605901309584-818e25960b8f?w=500&q=80' },
+    { id: 'v4', business_name: 'Ethnic Aura', store_image: 'https://vaarahisilks.com/cdn/shop/articles/Home_Banner_B_1080_x_1650_FHD_49daaf56-8dd9-4544-934c-f17ec4672e1c.jpg?v=1765869118' },
   ]);
 
   React.useEffect(() => {
@@ -52,8 +54,24 @@ export function HomePage() {
     <div ref={container} className="bg-white min-h-screen pb-20">
       <Header variant="home" />
       
-      <div className="max-w-[1280px] mx-auto px-4 pt-6 mt-2">
-        {/* Search Bar */}
+      {/* Mobile Search Bar (Moved from Header) */}
+      <div className="md:hidden px-4 pt-4 pb-2 bg-white">
+        <div
+          className="relative flex items-center cursor-text"
+          onClick={() => navigate('/search')}
+        >
+          <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Search sarees, kurtis, brands..."
+            readOnly
+            className="w-full bg-white border border-gray-300 rounded-full py-3.5 pl-12 pr-4 text-[15px] font-medium text-gray-900 placeholder-gray-500 focus:outline-none transition-all shadow-sm cursor-text"
+          />
+        </div>
+      </div>
+      
+      <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1">
+        {/* Location Search Bar */}
         <Link to="/search" className="block bg-[#FFF8E7] border border-[#FDE1B9] rounded-full px-5 py-3.5 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-[#FFF4D4]">
           <svg className="w-5 h-5 text-[#88313A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
              <circle cx="12" cy="12" r="8" strokeWidth="2" />
@@ -64,19 +82,6 @@ export function HomePage() {
           </svg>
           <span className="text-[15px] font-medium text-[#88313A]">Search shops near your location</span>
         </Link>
-
-        {/* Wallet and Points Cards */}
-        <div className="flex gap-3 mb-6">
-          <div className="flex-1 bg-[#3EA361] rounded-[2rem] p-4 sm:p-5 flex flex-col justify-center shadow-sm relative overflow-hidden">
-             <span className="text-[10px] md:text-xs font-bold text-white/90 tracking-wider uppercase mb-0.5">WALLET</span>
-             <span className="text-2xl md:text-3xl font-serif font-bold text-white leading-none">₹1,240</span>
-          </div>
-          
-          <div className="flex-1 bg-[#9061DF] rounded-[2rem] p-4 sm:p-5 flex flex-col justify-center shadow-sm relative overflow-hidden">
-             <span className="text-[10px] md:text-xs font-bold text-white/90 tracking-wider uppercase mb-0.5">POINTS</span>
-             <span className="text-2xl md:text-3xl font-serif font-bold text-white leading-none">2,450</span>
-          </div>
-        </div>
       </div>
 
       {/* 1. Hero Banner Carousel */}
@@ -229,6 +234,38 @@ export function HomePage() {
             </div>
           </div>
 
+          {/* Features Highlights */}
+          <div className="flex items-center justify-between bg-white border border-gray-100 rounded-2xl p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+            <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
+              <ShieldCheck className="w-5 h-5 text-blue-500" strokeWidth={1.5} />
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Secure<br/>Payments</span>
+                <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">100% safe</span>
+              </div>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
+              <Truck className="w-5 h-5 text-orange-500" strokeWidth={1.5} />
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Fast<br/>Delivery</span>
+                <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">On-time</span>
+              </div>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
+              <Award className="w-5 h-5 text-blue-600" strokeWidth={1.5} />
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Best<br/>Quality</span>
+                <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">Top products</span>
+              </div>
+            </div>
+            <div className="flex flex-col items-center text-center gap-1.5 flex-1">
+              <Headset className="w-5 h-5 text-orange-600" strokeWidth={1.5} />
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">24/7<br/>Support</span>
+                <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">We're here</span>
+              </div>
+            </div>
+          </div>
+
           {/* Ad Block Below Prices (Sponsored Card) */}
           <Link to={banners.length > 0 ? (banners[0].link_url || "/category/all") : "/category/all"} className="block bg-[#FFFBF4] border border-[#F4E6D4] rounded-[2rem] p-4 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div className="flex items-center gap-2 mb-4">
@@ -331,7 +368,9 @@ export function HomePage() {
                 <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=80" alt="Wedding Collection" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Wedding Collection</h4>
-                  <p className="text-white/90 text-sm mt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Shop now <span>→</span></p>
+                  <div className="mt-3 inline-flex">
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                  </div>
                 </div>
               </Link>
 
@@ -340,7 +379,9 @@ export function HomePage() {
                 <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80" alt="Festival Collection" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Festival Collection</h4>
-                  <p className="text-white/90 text-sm mt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Shop now <span>→</span></p>
+                  <div className="mt-3 inline-flex">
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                  </div>
                 </div>
               </Link>
 
@@ -349,7 +390,9 @@ export function HomePage() {
                 <img src="https://images.unsplash.com/photo-1583391733958-d25e07fac04f?w=800&q=80" alt="Office Wear" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Office Wear</h4>
-                  <p className="text-white/90 text-sm mt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Shop now <span>→</span></p>
+                  <div className="mt-3 inline-flex">
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                  </div>
                 </div>
               </Link>
 
@@ -358,7 +401,9 @@ export function HomePage() {
                 <img src="https://images.unsplash.com/photo-1606902965551-dce093cda6e7?w=800&q=80" alt="Casual Wear" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Casual Wear</h4>
-                  <p className="text-white/90 text-sm mt-1 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Shop now <span>→</span></p>
+                  <div className="mt-3 inline-flex">
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                  </div>
                 </div>
               </Link>
             </div>
