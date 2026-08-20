@@ -68,7 +68,7 @@ export function AdminLayout({ children }) {
       <div className="md:hidden fixed top-0 left-0 right-0 bg-white border-b border-[#036e26]/10 px-4 py-3 flex items-center justify-between z-50">
         <div className="flex items-center gap-2">
           <img src={logo} alt="Swabhivar Shoppers" className="h-8 object-contain mix-blend-multiply" />
-          <span className="font-bold text-lg"><span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span> <span className="text-sm font-normal text-gray-500">Admin</span></span>
+          <span className="font-bold text-lg"><span className="text-[#fe6603]">Swabhivar</span> <span className="text-[#036e26]">Shoppers</span> <span className="text-sm font-normal text-gray-500">Admin</span></span>
         </div>
         <button onClick={() => setMobileOpen(!mobileOpen)} className="text-[#036e26]">
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,7 +88,7 @@ export function AdminLayout({ children }) {
           <div className="flex items-center gap-3">
             <img src={logo} alt="Swabhivar Shoppers" className="h-10 object-contain mix-blend-multiply" />
             <div>
-              <p className="font-bold text-xl tracking-tight leading-none"><span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span></p>
+              <p className="font-bold text-xl tracking-tight leading-none"><span className="text-[#fe6603]">Swabhivar</span> <span className="text-[#036e26]">Shoppers</span></p>
               <div className="flex items-center gap-1 mt-1">
                 <Shield className="w-3 h-3 text-[#036e26]" />
                 <p className="text-[#036e26] text-[10px] font-sans font-semibold">Admin Panel</p>

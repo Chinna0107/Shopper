@@ -291,58 +291,7 @@ export function CategoryListingPage() {
             </button>
           </div>
 
-          {!searchQuery && (
-            <div className="px-4 pt-2 pb-2 space-y-6 max-w-7xl mx-auto">
-              <div>
-                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">TYPES</p>
-                <div className="flex flex-wrap gap-2.5">
-                  {searchSuggestions.types.map(type => (
-                    <button key={type} onClick={() => {
-                      const newParams = Object.fromEntries(searchParams.entries());
-                      newParams.search = type;
-                      setSearchParams(newParams);
-                    }}
-                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <div>
-                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">PRICE</p>
-                <div className="flex flex-wrap gap-2.5">
-                  {[
-                    { id: 'under_1000', label: 'Under ₹1,000' },
-                    { id: '1000_2000', label: '₹1,000 - ₹2,000' },
-                    { id: '2000_5000', label: '₹2,000 - ₹5,000' },
-                    { id: 'above_5000', label: 'Above ₹5,000' },
-                  ].map(price => (
-                    <button key={price.id} onClick={() => handlePriceChange(price.id)}
-                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
-                      {price.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
 
-              <div>
-                <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">REGION · SAREES</p>
-                <div className="flex flex-wrap gap-2.5">
-                  {searchSuggestions.regions.map(region => (
-                    <button key={region} onClick={() => {
-                      const newParams = Object.fromEntries(searchParams.entries());
-                      newParams.search = region;
-                      setSearchParams(newParams);
-                    }}
-                      className="px-4 py-1.5 bg-white border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:border-[#8E112E] hover:text-[#8E112E] transition-colors shadow-sm">
-                      {region}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       ) : (
         <div className="bg-white mx-4 lg:mx-8 rounded-3xl mt-6 relative overflow-hidden shadow-sm border border-gray-100">
@@ -363,6 +312,60 @@ export function CategoryListingPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
         
+        {/* Search Suggestions Filters - Only visible on specific categories */}
+        {categoryId !== 'all' && !searchQuery && (
+          <div className="bg-white rounded-3xl p-5 mb-8 shadow-sm border border-gray-100 space-y-6">
+            <div>
+              <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">TYPES</p>
+              <div className="flex flex-wrap gap-2.5">
+                {searchSuggestions.types.map(type => (
+                  <button key={type} onClick={() => {
+                    const newParams = Object.fromEntries(searchParams.entries());
+                    newParams.search = type;
+                    setSearchParams(newParams);
+                  }}
+                    className="px-4 py-1.5 bg-gray-50 border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:bg-orange-50 hover:border-brand-orange hover:text-brand-orange transition-colors">
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div>
+              <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">PRICE</p>
+              <div className="flex flex-wrap gap-2.5">
+                {[
+                  { id: 'under_1000', label: 'Under ₹1,000' },
+                  { id: '1000_2000', label: '₹1,000 - ₹2,000' },
+                  { id: '2000_5000', label: '₹2,000 - ₹5,000' },
+                  { id: 'above_5000', label: 'Above ₹5,000' },
+                ].map(price => (
+                  <button key={price.id} onClick={() => handlePriceChange(price.id)}
+                    className={`px-4 py-1.5 border rounded-full text-[13px] font-medium transition-colors ${priceQuery === price.id ? 'bg-brand-orange border-brand-orange text-white' : 'bg-gray-50 border-gray-200 text-gray-700 hover:bg-orange-50 hover:border-brand-orange hover:text-brand-orange'}`}>
+                    {price.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">REGION · SAREES</p>
+              <div className="flex flex-wrap gap-2.5">
+                {searchSuggestions.regions.map(region => (
+                  <button key={region} onClick={() => {
+                    const newParams = Object.fromEntries(searchParams.entries());
+                    newParams.search = region;
+                    setSearchParams(newParams);
+                  }}
+                    className="px-4 py-1.5 bg-gray-50 border border-gray-200 rounded-full text-[13px] font-medium text-gray-700 hover:bg-orange-50 hover:border-brand-orange hover:text-brand-orange transition-colors">
+                    {region}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Categories Ribbon */}
         <div className="bg-white border-gray-100 rounded-3xl mb-8 px-4 py-6 overflow-x-auto hide-scrollbar shadow-sm">
           <div className="flex gap-6 md:gap-10 justify-start md:justify-center min-w-max mx-auto px-2">

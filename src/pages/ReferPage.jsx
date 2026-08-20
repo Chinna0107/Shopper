@@ -17,7 +17,7 @@ export function ReferPage() {
   const steps = [
     { title: "Share Code", desc: "Share your unique link or code with friends.", icon: Share2 },
     { title: "Friend Signs Up", desc: "They get a special discount on their first order.", icon: Users },
-    { title: "You Earn ₹501", desc: "Once they complete their order, you get ₹501 in your wallet.", icon: Wallet },
+    { title: "Your Earnings ", desc: "Once they complete their order, you get money in your wallet.", icon: Wallet },
   ];
 
   return (

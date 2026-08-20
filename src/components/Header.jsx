@@ -558,7 +558,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   </button>
                 ) : null}
                 <p className="text-white/20 text-[10px] text-center font-medium">
-                  © 2025 SWABHIVAR · Crafted with ♥
+                  © 2026 SWABHIVAR · Crafted with ♥
                 </p>
               </div>
             </motion.div>
