@@ -209,38 +209,40 @@ export function VendorOrdersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">My Orders</h1>
-        <p className="text-gray-500 mt-1">Fulfill orders containing your products.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">My Orders</h1>
+          <p className="text-gray-500 mt-1.5 font-medium">Fulfill orders containing your products.</p>
+        </div>
       </div>
 
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4">
+      <div className="bg-white p-5 rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 flex items-center gap-4 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)]">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input
             type="text"
             placeholder="Search by Order ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#fe6603]"
+            className="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#fe6603]/50 focus:border-[#fe6603] transition-all"
           />
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/80 overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-gray-50 border-b border-gray-200">
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-gradient-to-r from-gray-50 to-white border-b border-gray-100">
               <tr>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Order ID</th>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Date</th>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Your Items</th>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Your Revenue</th>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Overall Status</th>
-                <th className="px-6 py-4 font-semibold text-sm text-gray-900 text-right">Details</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Order ID</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Date</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Your Items</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Your Revenue</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Overall Status</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500 text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100/80">
               {loading ? (
                 <tr><td colSpan="6" className="px-6 py-12 text-center text-gray-500">Loading orders...</td></tr>
               ) : filteredOrders.length === 0 ? (
@@ -258,30 +260,32 @@ export function VendorOrdersPage() {
                   return (
                     <React.Fragment key={order.id}>
                       <tr 
-                        className="hover:bg-gray-50 transition-colors cursor-pointer group"
+                        className="hover:bg-gray-50/80 transition-all cursor-pointer group"
                         onClick={() => setExpanded(expanded === order.id ? null : order.id)}
                       >
-                        <td className="px-6 py-4">
-                          <div className="font-semibold text-gray-900 group-hover:text-[#fe6603] transition-colors">{order.order_number || order.id}</div>
+                        <td className="px-8 py-5">
+                          <div className="font-bold text-gray-900 group-hover:text-[#fe6603] transition-colors">{order.order_number || order.id}</div>
                         </td>
-                        <td className="px-6 py-4 text-gray-500">
+                        <td className="px-8 py-5 text-sm font-medium text-gray-500">
                           {new Date(order.created_at).toLocaleString()}
                         </td>
-                        <td className="px-6 py-4">
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        <td className="px-8 py-5">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#fe6603]/10 text-[#fe6603]">
                             {order.items?.length || 0} items
                           </span>
                         </td>
-                        <td className="px-6 py-4">
-                          <span className="font-bold text-gray-900">₹{parseFloat(order.total || 0).toLocaleString()}</span>
+                        <td className="px-8 py-5">
+                          <span className="font-extrabold text-gray-900 text-lg tracking-tight">₹{parseFloat(order.total || 0).toLocaleString()}</span>
                         </td>
-                        <td className="px-6 py-4">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium uppercase tracking-wider ${STATUS_COLORS[order.status?.toLowerCase() || 'pending']}`}>
+                        <td className="px-8 py-5">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${STATUS_COLORS[order.status?.toLowerCase() || 'pending']}`}>
                             {order.status || 'Pending'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-right">
-                          <ChevronDown className={`w-5 h-5 text-gray-400 inline transition-transform ${expanded === order.id ? "rotate-180" : ""}`} />
+                        <td className="px-8 py-5 text-right">
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center ml-auto group-hover:bg-[#fe6603]/10 group-hover:text-[#fe6603] transition-colors">
+                            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expanded === order.id ? "rotate-180 text-[#fe6603]" : "text-gray-400"}`} />
+                          </div>
                         </td>
                       </tr>
                       

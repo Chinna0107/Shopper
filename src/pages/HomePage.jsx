@@ -36,7 +36,7 @@ export function HomePage() {
       .then(d => { if (d.vendors && d.vendors.length > 0) setVendors(d.vendors); })
       .catch(e => console.error(e));
   }, []);
-  
+
   useGSAP(() => {
     if (!loading) {
       gsap.from('.animate-section', {
@@ -51,11 +51,11 @@ export function HomePage() {
   }, { scope: container, dependencies: [loading] });
 
   return (
-    <div ref={container} className="bg-white min-h-screen pb-20">
+    <div ref={container} className="bg-white min-h-screen pb-0">
       <Header variant="home" />
-      
+
       {/* Mobile Search Bar (Moved from Header) */}
-      <div className="md:hidden px-4 pt-4 pb-2 bg-white">
+      <div className="md:hidden px-4 pt-8 pb-2 bg-white">
         <div
           className="relative flex items-center cursor-text"
           onClick={() => navigate('/search')}
@@ -65,20 +65,20 @@ export function HomePage() {
             type="text"
             placeholder="Search sarees, kurtis, brands..."
             readOnly
-            className="w-full bg-white border border-gray-300 rounded-full py-3.5 pl-12 pr-4 text-[15px] font-medium text-gray-900 placeholder-gray-500 focus:outline-none transition-all shadow-sm cursor-text"
+            className="w-full bg-white border border-gray-300 rounded-full py-3.5 pl-14 pr-4 text-[15px] font-medium text-gray-900 placeholder-gray-500 focus:outline-none transition-all shadow-sm cursor-text"
           />
         </div>
       </div>
-      
+
       <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1">
         {/* Location Search Bar */}
         <Link to="/search" className="block bg-[#FFF8E7] border border-[#FDE1B9] rounded-full px-5 py-3.5 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-[#FFF4D4]">
           <svg className="w-5 h-5 text-[#88313A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <circle cx="12" cy="12" r="8" strokeWidth="2" />
-             <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
-             <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
-             <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
-             <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
+            <circle cx="12" cy="12" r="8" strokeWidth="2" />
+            <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
+            <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
+            <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
+            <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
           </svg>
           <span className="text-[15px] font-medium text-[#88313A]">Search shops near your location</span>
         </Link>
@@ -91,7 +91,7 @@ export function HomePage() {
             {banners.map((banner) => (
               <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[21/9] group border border-gray-100 shadow-sm">
                 <img src={banner.image_url} alt={banner.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
-                
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end px-6 py-8">
                   <div className="mb-2">
                     <span className="bg-black/40 backdrop-blur-md text-white/90 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">
@@ -104,7 +104,7 @@ export function HomePage() {
                   <p className="text-white/90 font-medium text-sm tracking-wide">
                     {banner.subtitle || 'Explore our latest collection'}
                   </p>
-                  
+
                   <div className="absolute bottom-6 right-6 flex gap-1.5 items-center">
                     <div className="w-4 h-1.5 rounded-full bg-white"></div>
                     <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
@@ -118,7 +118,7 @@ export function HomePage() {
           <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-2">
             <div className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[21/9] group border border-gray-100 shadow-sm">
               <img src={imgHeroBannerPremium} alt="Hero Banner" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
-              
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end px-6 py-8">
                 <div className="mb-2">
                   <span className="bg-black/40 backdrop-blur-md text-white/90 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-widest">
@@ -126,12 +126,12 @@ export function HomePage() {
                   </span>
                 </div>
                 <h2 className="text-white text-4xl sm:text-5xl font-serif font-bold mb-1 leading-tight tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
-                  Kanjeevaram<br/>Heirlooms
+                  Kanjeevaram<br />Heirlooms
                 </h2>
                 <p className="text-white/90 font-medium text-sm tracking-wide">
                   Up to 50% off
                 </p>
-                
+
                 <div className="absolute bottom-6 right-6 flex gap-1.5 items-center">
                   <div className="w-4 h-1.5 rounded-full bg-white"></div>
                   <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
@@ -156,10 +156,10 @@ export function HomePage() {
           {vendors.map((vendor, i) => (
             <Link key={vendor.id} to={`/store/${vendor.id}`} className="w-[160px] md:w-[200px] shrink-0 snap-start flex flex-col group bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100/50">
               <div className="w-full aspect-square relative overflow-hidden rounded-3xl">
-                <img 
-                  src={vendor.store_image || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80'} 
-                  alt={vendor.business_name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                <img
+                  src={vendor.store_image || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80'}
+                  alt={vendor.business_name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md text-white text-[10px] font-medium px-2.5 py-1 rounded-full">
                   {((i % 4) * 3 + 5)} items
@@ -200,10 +200,10 @@ export function HomePage() {
       </div>
 
       <div className="max-w-[1400px] mx-auto w-full px-4 md:px-6">
-        
+
         {/* Unified Transparent Block */}
         <div className="animate-section mb-12 flex flex-col gap-8 md:gap-10">
-          
+
           {/* Shop by Price */}
           <div className="pt-2">
             <div className="mb-4">
@@ -239,28 +239,28 @@ export function HomePage() {
             <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
               <ShieldCheck className="w-5 h-5 text-blue-500" strokeWidth={1.5} />
               <div className="flex flex-col">
-                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Secure<br/>Payments</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Secure<br />Payments</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">100% safe</span>
               </div>
             </div>
             <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
               <Truck className="w-5 h-5 text-orange-500" strokeWidth={1.5} />
               <div className="flex flex-col">
-                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Fast<br/>Delivery</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Fast<br />Delivery</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">On-time</span>
               </div>
             </div>
             <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
               <Award className="w-5 h-5 text-blue-600" strokeWidth={1.5} />
               <div className="flex flex-col">
-                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Best<br/>Quality</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Best<br />Quality</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">Top products</span>
               </div>
             </div>
             <div className="flex flex-col items-center text-center gap-1.5 flex-1">
               <Headset className="w-5 h-5 text-orange-600" strokeWidth={1.5} />
               <div className="flex flex-col">
-                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">24/7<br/>Support</span>
+                <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">24/7<br />Support</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">We're here</span>
               </div>
             </div>
@@ -274,16 +274,16 @@ export function HomePage() {
               </svg>
               <span className="text-[11px] font-bold text-[#7A1D25] tracking-widest uppercase">SWABHIVAR • SPONSORED</span>
             </div>
-            
+
             <div className="flex flex-col md:flex-row gap-5 md:gap-6 items-stretch">
               <div className="w-full md:w-56 h-56 rounded-3xl overflow-hidden shrink-0 border border-[#F4E6D4]/50">
-                <img 
-                  src={banners.length > 0 ? banners[0].image_url : imgAarti} 
-                  alt="Sponsored" 
+                <img
+                  src={banners.length > 0 ? banners[0].image_url : imgAarti}
+                  alt="Sponsored"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              
+
               <div className="flex flex-col justify-center flex-1 w-full py-2">
                 <p className="text-gray-500 text-[13px] font-medium tracking-wider uppercase mb-1">
                   SABYA COUTURE
@@ -294,7 +294,7 @@ export function HomePage() {
                 <p className="text-[#E87E15] font-medium text-sm md:text-base mb-6">
                   Flat ₹500 off • Free shipping
                 </p>
-                
+
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-2xl md:text-3xl font-extrabold text-[#7A1D25]">₹2,999</span>
                   <button className="bg-[#7A1D25] hover:bg-[#5C161C] text-white px-6 py-2.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2 transition-colors">
@@ -324,10 +324,10 @@ export function HomePage() {
 
           {/* Middle Advertisement Block */}
           <div className="rounded-[1.5rem] overflow-hidden bg-white shadow-sm border border-gray-100">
-            <AdBanner 
-              imageUrl={imgAarti} 
-              altText="Middle Ad" 
-              link="/category/all" 
+            <AdBanner
+              imageUrl={imgAarti}
+              altText="Middle Ad"
+              link="/category/all"
             />
           </div>
 
@@ -361,7 +361,7 @@ export function HomePage() {
               </svg>
               <h3 className="text-2xl font-bold text-gray-900 tracking-tight font-serif mb-0">Beautiful Collections</h3>
             </div>
-            
+
             <div className="grid grid-cols-2 gap-4">
               {/* Collection 1 */}
               <Link to="/collection/wedding" className="relative group overflow-hidden rounded-[2rem] aspect-[3/4] bg-gray-100 block">
@@ -451,14 +451,14 @@ export function HomePage() {
               </div>
             );
           })}
-          
+
           {/* Customer Reviews */}
-          <div className="mb-12 mt-8">
+          <div className="mb-2 mt-8">
             <div className="text-center mb-8">
               <h3 className="text-2xl md:text-3xl font-bold text-[#022A21] mb-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>What Our Customers Say</h3>
               <p className="text-gray-500">Trusted by thousands of happy shoppers.</p>
             </div>
-            
+
             <div className="flex gap-6 overflow-x-auto snap-x hide-scrollbar pb-4 px-2">
               {[
                 { name: "Priya Sharma", rating: 5, review: "Absolutely in love with the silk saree I bought! The quality is top-notch and the delivery was super fast." },
@@ -483,37 +483,37 @@ export function HomePage() {
           </div>
 
           {/* Bottom Features Block (Free Delivery, etc) */}
-          <div className="bg-white p-6 md:p-8 rounded-3xl mt-8 mb-4 shadow-sm border border-gray-100">
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 divide-x-0 md:divide-x divide-gray-100">
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
-                   <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">✈️</div>
-                   <div>
-                     <h4 className="text-gray-900 font-semibold">Free Delivery</h4>
-                     <p className="text-gray-500 text-xs md:text-sm">On orders over $50</p>
-                   </div>
+          <div className="bg-white py-6 px-4 md:p-8 rounded-2xl mt-0 mb-0 shadow-sm border border-gray-100">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 divide-x-0 md:divide-x divide-gray-100">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
+                <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center text-emerald-600 text-2xl border border-emerald-100">✈️</div>
+                <div>
+                  <h4 className="text-gray-900 font-semibold">Free Delivery</h4>
+                  <p className="text-gray-500 text-xs md:text-sm">On orders over $50</p>
                 </div>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
-                   <div className="w-12 h-12 rounded-full bg-[#022A21]/10 flex items-center justify-center text-[#022A21] text-2xl border border-[#022A21]/20">🔄</div>
-                   <div>
-                     <h4 className="text-gray-900 font-semibold">Easy Replacements</h4>
-                     <p className="text-gray-500 text-xs md:text-sm">30 days replacement policy</p>
-                   </div>
+              </div>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
+                <div className="w-12 h-12 rounded-full bg-[#022A21]/10 flex items-center justify-center text-[#022A21] text-2xl border border-[#022A21]/20">🔄</div>
+                <div>
+                  <h4 className="text-gray-900 font-semibold">Easy Replacements</h4>
+                  <p className="text-gray-500 text-xs md:text-sm">30 days replacement policy</p>
                 </div>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
-                   <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-500 text-2xl border border-green-100">🔒</div>
-                   <div>
-                     <h4 className="text-gray-900 font-semibold">Secure Payments</h4>
-                     <p className="text-gray-500 text-xs md:text-sm">100% secure checkout</p>
-                   </div>
+              </div>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
+                <div className="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center text-green-500 text-2xl border border-green-100">🔒</div>
+                <div>
+                  <h4 className="text-gray-900 font-semibold">Secure Payments</h4>
+                  <p className="text-gray-500 text-xs md:text-sm">100% secure checkout</p>
                 </div>
-                <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
-                   <div className="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500 text-2xl border border-yellow-100">🏆</div>
-                   <div>
-                     <h4 className="text-gray-900 font-semibold">Best Prices</h4>
-                     <p className="text-gray-500 text-xs md:text-sm">Guaranteed deals</p>
-                   </div>
+              </div>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
+                <div className="w-12 h-12 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500 text-2xl border border-yellow-100">🏆</div>
+                <div>
+                  <h4 className="text-gray-900 font-semibold">Best Prices</h4>
+                  <p className="text-gray-500 text-xs md:text-sm">Guaranteed deals</p>
                 </div>
-             </div>
+              </div>
+            </div>
           </div>
 
         </div>

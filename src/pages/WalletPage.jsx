@@ -39,17 +39,17 @@ export function WalletPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-700 to-purple-900 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+        {/* <div className="bg-gradient-to-br from-purple-700 to-purple-900 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10">
             <Gift className="w-24 h-24" />
           </div>
-          <p className="text-sm text-purple-200 font-medium tracking-wide uppercase mb-1">Reward Points</p>
-          <h2 className="text-4xl font-extrabold mb-4 font-serif">{points.toLocaleString()}</h2>
+          <p className="text-sm text-purple-200 font-medium tracking-wide uppercase mb-1">Reward Balance</p>
+          <h2 className="text-4xl font-extrabold mb-4 font-serif">₹{points.toLocaleString()}</h2>
           
           <div className="mt-6 pt-4 border-t border-white/10">
-            <p className="text-xs text-purple-200">100 points = ₹1. Earn more points by shopping and referring friends.</p>
+            <p className="text-xs text-purple-200">Earn more rewards by shopping and referring friends.</p>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">

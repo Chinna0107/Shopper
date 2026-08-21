@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
   Menu, Search, Heart, ShoppingCart, LogIn, Package, MapPin, LayoutDashboard, LogOut,
   Settings, Shield, ChevronDown, X, Tag, Grid3X3, Home, ShoppingBag, Zap,
-  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift, Wallet
+  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift, Wallet, Ticket
 } from 'lucide-react';
 
 
@@ -130,19 +130,24 @@ function OffersDropdown() {
             className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-brand-orange/10 transition-colors">
             <Tag className="w-4 h-4" /> View All Offers
           </button>
-          {offers.length > 0 && <div className="border-t border-[#054335] my-1" />}
-          {offers.slice(0, 6).map(offer => (
+          {offers.filter(o => o.offer_type === 'offer' || !o.code).length > 0 && <div className="border-t border-[#054335] my-1" />}
+          {offers.filter(o => o.offer_type === 'offer' || !o.code).slice(0, 6).map(offer => (
             <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setOpen(false); }}
               className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-brand-orange/10 transition-colors">
-              <span className="text-sm font-semibold text-gray-300 truncate">{offer.name || offer.code}</span>
+              <span className="text-sm font-semibold text-gray-300 truncate">{offer.name}</span>
               <span className="text-xs font-bold text-brand-orange ml-2 shrink-0">
                 {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
               </span>
             </button>
           ))}
-          {offers.length === 0 && (
+          {offers.filter(o => o.offer_type === 'offer' || !o.code).length === 0 && (
             <p className="px-4 py-3 text-xs text-gray-500">No active offers right now</p>
           )}
+          <div className="border-t border-[#054335] my-1" />
+          <button onClick={() => { navigate('/all-coupons'); setOpen(false); }}
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-brand-orange/10 transition-colors">
+            <Ticket className="w-4 h-4" /> All Coupons Available
+          </button>
         </div>
       )}
     </div>
@@ -243,6 +248,16 @@ export function Header({ variant = 'default', title, showShare = false }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileCatsOpen, setMobileCatsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // slide-out drawer for home header
+  const [mobileOffersOpen, setMobileOffersOpen] = useState(false);
+  const [offers, setOffers] = useState([]);
+  
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api'}/offers/active`)
+      .then(r => r.json())
+      .then(d => setOffers(d.offers || []))
+      .catch(() => { });
+  }, []);
+
   const categories = useStoreData(s => s.categories);
   const cartItems = useCartStore((state) => state.items);
   const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
@@ -365,7 +380,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               </div>
               <Link to="/refer" className="flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-yellow-500 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)] border border-yellow-300/30 animate-pulse hover:scale-105 transition-transform">
                 <Gift className="w-3 h-3 text-white" />
-                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer by A 501</span>
+                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer & Earn</span>
               </Link>
             </div>
 
@@ -487,27 +502,67 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {[
                   { icon: <Home className="w-4.5 h-4.5" />, label: 'Home', path: '/', color: 'text-white' },
                   { icon: <ShoppingBag className="w-4.5 h-4.5" />, label: 'Shop All', path: '/category/all', color: 'text-purple-400' },
-                  { icon: <Zap className="w-4.5 h-4.5 fill-current" />, label: 'Offers & Deals', path: '/offers', color: 'text-yellow-400' },
+                  { id: 'offers', icon: <Zap className="w-4.5 h-4.5 fill-current" />, label: 'Offers & Deals', color: 'text-yellow-400', isAccordion: true },
                   { icon: <Package className="w-4.5 h-4.5" />, label: 'My Orders', path: '/my-orders', color: 'text-blue-400', badge: null },
                   { icon: <Heart className="w-4.5 h-4.5" />, label: 'Wishlist', path: '/wishlist', color: 'text-red-400', badge: wishlistCount > 0 ? wishlistCount : null },
                   { icon: <ShoppingCart className="w-4.5 h-4.5" />, label: 'Cart', path: '/cart', color: 'text-green-400', badge: cartCount > 0 ? cartCount : null },
                   { icon: <MapPin className="w-4.5 h-4.5" />, label: 'My Addresses', path: token ? '/my-addresses' : '/login', color: 'text-indigo-400' },
                   { icon: <User className="w-4.5 h-4.5" />, label: 'My Profile', path: token ? '/profile' : '/login', color: 'text-brand-orange' },
                   { icon: <Gift className="w-4.5 h-4.5" />, label: 'Refer by A 501', path: '/refer', color: 'text-pink-400' },
-                ].map(item => (
-                  <button key={item.path}
-                    onClick={() => { navigate(item.path); setMenuOpen(false); }}
-                    className="w-full flex items-center gap-3.5 px-3 py-3 rounded-xl hover:bg-white/[0.06] transition-colors text-left group mb-0.5">
-                    <div className={`w-8 h-8 rounded-xl bg-white/[0.07] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors ${item.color}`}>
-                      {item.icon}
-                    </div>
-                    <span className="text-white/85 font-semibold text-[14px] group-hover:text-white transition-colors flex-1">{item.label}</span>
-                    {item.badge && (
-                      <span className="bg-brand-orange text-white text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{item.badge}</span>
-                    )}
-                    <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/40 transition-colors" />
-                  </button>
-                ))}
+                ].map(item => {
+                  if (item.isAccordion && item.id === 'offers') {
+                    return (
+                      <div key={item.id} className="mb-0.5">
+                        <button 
+                          onClick={() => setMobileOffersOpen(!mobileOffersOpen)}
+                          className="w-full flex items-center gap-3.5 px-3 py-3 rounded-xl hover:bg-white/[0.06] transition-colors text-left group">
+                          <div className={`w-8 h-8 rounded-xl bg-white/[0.07] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors ${item.color}`}>
+                            {item.icon}
+                          </div>
+                          <span className="text-white/85 font-semibold text-[14px] group-hover:text-white transition-colors flex-1">{item.label}</span>
+                          <ChevronDown className={`w-3.5 h-3.5 text-white/20 group-hover:text-white/40 transition-transform ${mobileOffersOpen ? 'rotate-180' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                          {mobileOffersOpen && (
+                            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                              <div className="ml-7 border-l border-white/10 pl-3 py-2 space-y-1 mt-1 mb-2">
+                                <button onClick={() => { navigate('/offers'); setMenuOpen(false); }} className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg hover:bg-white/5 text-left text-sm font-bold text-brand-orange transition-colors">
+                                  <Tag className="w-4 h-4" /> View All Offers
+                                </button>
+                                {offers.filter(o => o.offer_type === 'offer' || !o.code).slice(0, 6).map(offer => (
+                                  <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setMenuOpen(false); }} className="w-full flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/5 text-left transition-colors">
+                                    <span className="text-[13px] font-medium text-white/70 truncate">{offer.name}</span>
+                                    <span className="text-[11px] font-bold text-brand-orange ml-2 shrink-0">
+                                      {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
+                                    </span>
+                                  </button>
+                                ))}
+                                <button onClick={() => { navigate('/all-coupons'); setMenuOpen(false); }} className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg hover:bg-white/5 text-left text-sm font-bold text-yellow-400 transition-colors mt-2 border-t border-white/10 pt-3">
+                                  <Ticket className="w-4 h-4" /> All Coupons Available
+                                </button>
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <button key={item.path}
+                      onClick={() => { navigate(item.path); setMenuOpen(false); }}
+                      className="w-full flex items-center gap-3.5 px-3 py-3 rounded-xl hover:bg-white/[0.06] transition-colors text-left group mb-0.5">
+                      <div className={`w-8 h-8 rounded-xl bg-white/[0.07] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors ${item.color}`}>
+                        {item.icon}
+                      </div>
+                      <span className="text-white/85 font-semibold text-[14px] group-hover:text-white transition-colors flex-1">{item.label}</span>
+                      {item.badge && (
+                        <span className="bg-brand-orange text-white text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{item.badge}</span>
+                      )}
+                      <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/40 transition-colors" />
+                    </button>
+                  );
+                })}
 
                 {/* Categories */}
                 {categories.length > 0 && (

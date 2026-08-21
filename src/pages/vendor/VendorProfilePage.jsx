@@ -85,9 +85,11 @@ export function VendorProfilePage() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">Store Profile</h1>
-        <p className="text-gray-500 mt-1">View your store and subscription details.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Store Profile</h1>
+          <p className="text-gray-500 mt-1.5 font-medium">View your store and subscription details.</p>
+        </div>
       </div>
 
       {/* Expiry Banner */}
@@ -125,16 +127,19 @@ export function VendorProfilePage() {
       )}
 
       {/* Subscription Card */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <CreditCard className="w-5 h-5 text-[#fe6603]" />
-            <h2 className="font-bold text-gray-900">Subscription</h2>
+      <div className="bg-white rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-8 relative overflow-hidden group">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="flex items-center justify-between mb-8 relative z-10">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[12px] bg-orange-50 flex items-center justify-center text-[#fe6603] shadow-sm">
+              <CreditCard className="w-5 h-5" />
+            </div>
+            <h2 className="text-xl font-bold text-gray-900">Subscription</h2>
           </div>
           {!isExpired && (
             <button onClick={() => setShowPlans(!showPlans)}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#fe6603]/10 text-[#fe6603] rounded-xl text-xs font-semibold hover:bg-[#fe6603]/20 transition-colors">
-              <RefreshCw className="w-3.5 h-3.5" /> Renew / Upgrade
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
+              <RefreshCw className="w-4 h-4" /> Renew / Upgrade
             </button>
           )}
         </div>
@@ -147,9 +152,9 @@ export function VendorProfilePage() {
               { label: 'Expires On', value: vendor.subscription_expires_at ? new Date(vendor.subscription_expires_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—' },
               { label: 'Status', value: isExpired ? 'Expired' : days !== null ? `${days} days left` : 'Active' },
             ].map(item => (
-              <div key={item.label} className="bg-gray-50 rounded-xl p-3">
-                <p className="text-xs text-gray-400 mb-1">{item.label}</p>
-                <p className={`font-semibold text-sm ${item.label === 'Status' && isExpired ? 'text-red-500' : item.label === 'Status' && isExpiringSoon ? 'text-amber-600' : 'text-gray-900'}`}>
+              <div key={item.label} className="bg-gray-50/80 border border-gray-100 rounded-[16px] p-5">
+                <p className="text-xs font-bold text-gray-400 mb-1.5 uppercase tracking-wider">{item.label}</p>
+                <p className={`text-base font-extrabold ${item.label === 'Status' && isExpired ? 'text-red-500' : item.label === 'Status' && isExpiringSoon ? 'text-amber-600' : 'text-gray-900'}`}>
                   {item.value}
                 </p>
               </div>
@@ -208,52 +213,55 @@ export function VendorProfilePage() {
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="h-32 bg-gradient-to-r from-[#fe6603] to-[#ff8c42]" />
-        <div className="px-8 pb-8">
-          <div className="relative flex justify-between items-end -mt-12 mb-6">
-            <div className="w-24 h-24 bg-white rounded-2xl shadow-sm border-4 border-white flex items-center justify-center text-[#fe6603]">
-              <Store className="w-10 h-10" />
+      <div className="bg-white rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden relative group">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+        <div className="h-40 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] relative overflow-hidden">
+          <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
+        </div>
+        <div className="px-8 pb-10 relative z-10">
+          <div className="relative flex justify-between items-end -mt-16 mb-8">
+            <div className="w-32 h-32 bg-white rounded-[24px] shadow-lg border-4 border-white flex items-center justify-center text-[#fe6603]">
+              <Store className="w-14 h-14" />
             </div>
-            <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize border ${
+            <span className={`px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider border shadow-sm ${
               vendor.status === 'approved' ? 'bg-green-50 text-green-700 border-green-200' :
               vendor.status === 'pending' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' :
               'bg-red-50 text-red-700 border-red-200'
             }`}>{vendor.status} Status</span>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{vendor.store_name}</h2>
-              <p className="text-gray-500 text-sm">Joined {new Date(vendor.created_at).toLocaleDateString()}</p>
+              <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">{vendor.store_name}</h2>
+              <p className="text-gray-500 font-medium mt-1">Joined {new Date(vendor.created_at).toLocaleDateString()}</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-gray-100">
-              <div className="space-y-4">
-                <h3 className="font-semibold text-gray-900 mb-2">Owner Information</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-8 border-t border-gray-100/80">
+              <div className="space-y-5">
+                <h3 className="font-extrabold text-gray-900 text-lg mb-4">Owner Information</h3>
                 {[
-                  { icon: <User className="w-4 h-4 text-gray-400" />, label: 'Full Name', value: vendor.name },
-                  { icon: <Mail className="w-4 h-4 text-gray-400" />, label: 'Email Address', value: vendor.email },
-                  { icon: <Phone className="w-4 h-4 text-gray-400" />, label: 'Phone Number', value: vendor.phone },
+                  { icon: <User className="w-4 h-4 text-gray-500" />, label: 'Full Name', value: vendor.name },
+                  { icon: <Mail className="w-4 h-4 text-gray-500" />, label: 'Email Address', value: vendor.email },
+                  { icon: <Phone className="w-4 h-4 text-gray-500" />, label: 'Phone Number', value: vendor.phone },
                 ].map(item => (
-                  <div key={item.label} className="flex items-center gap-3 text-gray-600">
-                    <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">{item.icon}</div>
+                  <div key={item.label} className="flex items-center gap-4 text-gray-600 bg-gray-50/50 p-3 rounded-[16px] border border-gray-100">
+                    <div className="w-10 h-10 rounded-[12px] bg-white border border-gray-200 flex items-center justify-center shrink-0 shadow-sm">{item.icon}</div>
                     <div>
-                      <p className="text-xs text-gray-400">{item.label}</p>
-                      <p className="font-medium text-gray-900">{item.value}</p>
+                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{item.label}</p>
+                      <p className="font-bold text-gray-900">{item.value}</p>
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="space-y-4">
-                <h3 className="font-semibold text-gray-900 mb-2">Business Information</h3>
-                <div className="flex items-start gap-3 text-gray-600">
-                  <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-gray-400" />
+              <div className="space-y-5">
+                <h3 className="font-extrabold text-gray-900 text-lg mb-4">Business Information</h3>
+                <div className="flex items-start gap-4 text-gray-600 bg-gray-50/50 p-3 rounded-[16px] border border-gray-100">
+                  <div className="w-10 h-10 rounded-[12px] bg-white border border-gray-200 flex items-center justify-center shrink-0 shadow-sm">
+                    <MapPin className="w-4 h-4 text-gray-500" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-400">Store Address</p>
-                    <p className="font-medium text-gray-900 leading-snug mt-0.5">{vendor.address}</p>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Store Address</p>
+                    <p className="font-bold text-gray-900 leading-snug mt-0.5">{vendor.address}</p>
                   </div>
                 </div>
               </div>

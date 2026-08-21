@@ -69,7 +69,7 @@ export function AdminProductFormPage() {
   const [tagInput, setTagInput] = useState('');
 
   const [form, setForm] = useState({
-    name: '', sku: '', barcode: '', product_code: '', brand: '',
+    name: '', sku: '', barcode: '', product_code: '', brand: '', gender: 'Any',
     category: '', subcategory: '', product_type: 'Physical', condition: 'New',
     description: '', short_description: '',
     image_url: '', images: [], video_url: '', view_360_url: '',
@@ -118,6 +118,7 @@ export function AdminProductFormPage() {
         : (product.custom_attributes || {});
       setForm(prev => ({
         ...prev, ...product,
+        gender: product.gender || 'Any',
         images: Array.isArray(product.images) ? product.images : [],
         search_tags: attrs.search_tags || [],
         certificate_urls: attrs.certificate_urls || [],
@@ -239,7 +240,7 @@ export function AdminProductFormPage() {
       const body = {
         name: form.name,
         slug: form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-        sku: form.sku, barcode: form.barcode, brand: form.brand,
+        sku: form.sku, barcode: form.barcode, brand: form.brand, gender: form.gender,
         category: form.category, subcategory: form.subcategory,
         short_description: form.short_description, description: form.description,
         image_url: form.image_url || (form.images?.[0] || ''),
@@ -300,8 +301,14 @@ export function AdminProductFormPage() {
               <Field label="Barcode (Optional)"><Input value={form.barcode} onChange={e => set('barcode', e.target.value)} placeholder="EAN / UPC" /></Field>
               <Field label="Product Code"><Input value={form.product_code} onChange={e => set('product_code', e.target.value)} placeholder="Internal code" /></Field>
               <Field label="Brand"><Input value={form.brand} onChange={e => set('brand', e.target.value)} placeholder="e.g. Samsung" /></Field>
-              <Field label="Product Type"><Select value={form.product_type} onChange={e => set('product_type', e.target.value)}>{PRODUCT_TYPE_OPTS.map(t => <option key={t}>{t}</option>)}</Select></Field>
-              <Field label="Product Condition"><Select value={form.condition} onChange={e => set('condition', e.target.value)}>{CONDITION_OPTS.map(c => <option key={c}>{c}</option>)}</Select></Field>
+              <Field label="Gender">
+                <Select value={form.gender} onChange={e => set('gender', e.target.value)}>
+                  <option value="Any">Any</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
+                </Select>
+              </Field>
             </div>
           </Section>
           <Section title="Category">
@@ -360,12 +367,6 @@ export function AdminProductFormPage() {
             </div>
             {uploadingImages && <p className="text-xs text-[#036e26]">Uploading...</p>}
           </Section>
-          <Section title="Video & 360° View">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Product Video URL" hint="YouTube / Vimeo"><Input value={form.video_url} onChange={e => set('video_url', e.target.value)} placeholder="https://youtube.com/..." /></Field>
-              <Field label="360° View URL"><Input value={form.view_360_url} onChange={e => set('view_360_url', e.target.value)} placeholder="https://360viewer.com/..." /></Field>
-            </div>
-          </Section>
         </div>
       );
 
@@ -374,15 +375,7 @@ export function AdminProductFormPage() {
           <Section title="Pricing">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <Field label="Regular Price (₹)" required><Input type="number" min="0" value={form.price} onChange={e => set('price', e.target.value)} placeholder="0.00" /></Field>
-              <Field label="Sale Price (₹)"><Input type="number" min="0" value={form.sale_price} onChange={e => set('sale_price', e.target.value)} placeholder="0.00" /></Field>
               <Field label="MRP (₹)"><Input type="number" min="0" value={form.mrp} onChange={e => set('mrp', e.target.value)} placeholder="0.00" /></Field>
-              <Field label="Cost Price (₹)"><Input type="number" min="0" value={form.cost_price} onChange={e => set('cost_price', e.target.value)} placeholder="0.00" /></Field>
-              <Field label="GST %">
-                <Select value={form.gst_percent} onChange={e => set('gst_percent', e.target.value)}>
-                  <option value="">Select GST</option>
-                  {[0,3,5,12,18,28].map(v => <option key={v} value={v}>{v}%</option>)}
-                </Select>
-              </Field>
             </div>
           </Section>
           <Section title="Stock & Inventory">
@@ -390,8 +383,6 @@ export function AdminProductFormPage() {
               <Field label="Stock Quantity"><Input type="number" min="0" value={form.stock} onChange={e => set('stock', e.target.value)} placeholder="0" /></Field>
               <Field label="Stock Status"><Select value={form.stock_status} onChange={e => set('stock_status', e.target.value)}>{STOCK_STATUS_OPTS.map(s => <option key={s}>{s}</option>)}</Select></Field>
               <Field label="Low Stock Alert"><Input type="number" min="0" value={form.low_stock_alert} onChange={e => set('low_stock_alert', e.target.value)} placeholder="e.g. 5" /></Field>
-              <Field label="Min Order Qty"><Input type="number" min="1" value={form.min_order_qty} onChange={e => set('min_order_qty', e.target.value)} placeholder="1" /></Field>
-              <Field label="Max Order Qty"><Input type="number" min="1" value={form.max_order_qty} onChange={e => set('max_order_qty', e.target.value)} placeholder="No limit" /></Field>
             </div>
           </Section>
         </div>
@@ -408,16 +399,6 @@ export function AdminProductFormPage() {
               <Field label="Width (cm)"><Input value={form.width} onChange={e => set('width', e.target.value)} placeholder="cm" /></Field>
               <Field label="Height (cm)"><Input value={form.height} onChange={e => set('height', e.target.value)} placeholder="cm" /></Field>
             </div>
-          </Section>
-          <Section title="Delivery Options">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={form.cod_available} onChange={e => set('cod_available', e.target.checked)} className="w-4 h-4 rounded" />
-              <span className="text-sm font-semibold text-gray-800">Cash on Delivery (COD)</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={form.free_shipping} onChange={e => set('free_shipping', e.target.checked)} className="w-4 h-4 rounded" />
-              <span className="text-sm font-semibold text-gray-800">Free Shipping</span>
-            </label>
           </Section>
         </div>
       );

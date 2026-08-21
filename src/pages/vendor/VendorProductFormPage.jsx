@@ -36,7 +36,7 @@ function Field({ label, required, children, hint }) {
 function Input({ className = '', ...props }) {
   return (
     <input
-      className={`w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-colors ${className}`}
+      className={`w-full px-4 py-3 border border-gray-200 rounded-[12px] text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner ${className}`}
       {...props}
     />
   );
@@ -45,7 +45,7 @@ function Input({ className = '', ...props }) {
 function Textarea({ className = '', ...props }) {
   return (
     <textarea
-      className={`w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-colors resize-none ${className}`}
+      className={`w-full px-4 py-3 border border-gray-200 rounded-[12px] text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner resize-none ${className}`}
       {...props}
     />
   );
@@ -54,7 +54,7 @@ function Textarea({ className = '', ...props }) {
 function Select({ className = '', children, ...props }) {
   return (
     <select
-      className={`w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-colors ${className}`}
+      className={`w-full px-4 py-3 border border-gray-200 rounded-[12px] text-sm text-gray-900 bg-gray-50/50 hover:bg-white focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner ${className}`}
       {...props}
     >
       {children}
@@ -64,9 +64,9 @@ function Select({ className = '', children, ...props }) {
 
 function Section({ title, children }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5 sm:p-6 shadow-sm">
-      {title && <h3 className="text-sm font-bold text-gray-800 mb-4 pb-3 border-b border-gray-100">{title}</h3>}
-      <div className="space-y-4">{children}</div>
+    <div className="bg-white rounded-[24px] border border-gray-100 p-6 sm:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+      {title && <h3 className="text-base font-extrabold text-gray-900 mb-6 pb-4 border-b border-gray-100/80 tracking-tight">{title}</h3>}
+      <div className="space-y-5">{children}</div>
     </div>
   );
 }
@@ -86,7 +86,7 @@ export function VendorProductFormPage() {
 
   const [form, setForm] = useState({
     // Basic
-    name: '', sku: '', barcode: '', product_code: '', brand: '',
+    name: '', sku: '', barcode: '', product_code: '', brand: '', gender: 'Any',
     category: '', subcategory: '', product_type: 'Physical', condition: 'New',
     description: '', short_description: '',
     // Media
@@ -127,7 +127,18 @@ export function VendorProductFormPage() {
   const fetchCategories = async () => {
     const res = await fetch(`${BACKEND_URL}/vendor/categories`, { headers });
     const data = await res.json();
-    const cats = data.categories || [];
+    let cats = data.categories || [];
+
+    try {
+      const selRes = await fetch(`${BACKEND_URL}/vendor/categories/selected`, { headers });
+      const selData = await selRes.json();
+      if (selData.category_limit && selData.selected_categories) {
+        cats = cats.filter(c => selData.selected_categories.includes(c.name));
+      }
+    } catch (e) {
+      console.warn("Could not fetch selected categories");
+    }
+
     setCategories(cats);
     return cats;
   };
@@ -142,6 +153,7 @@ export function VendorProductFormPage() {
         : (product.custom_attributes || {});
       setForm(prev => ({
         ...prev, ...product,
+        gender: product.gender || 'Any',
         images: Array.isArray(product.images) ? product.images : [],
         search_tags: attrs.search_tags || [],
         certificate_urls: attrs.certificate_urls || [],
@@ -279,7 +291,7 @@ export function VendorProductFormPage() {
       const body = {
         name: form.name,
         slug: form.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
-        sku: form.sku, barcode: form.barcode, brand: form.brand,
+        sku: form.sku, barcode: form.barcode, brand: form.brand, gender: form.gender,
         category: form.category, subcategory: form.subcategory,
         short_description: form.short_description, description: form.description,
         image_url: form.image_url || (form.images?.[0] || ''),
@@ -356,14 +368,12 @@ export function VendorProductFormPage() {
                 <Field label="Brand">
                   <Input value={form.brand} onChange={e => set('brand', e.target.value)} placeholder="e.g. Samsung" />
                 </Field>
-                <Field label="Product Type">
-                  <Select value={form.product_type} onChange={e => set('product_type', e.target.value)}>
-                    {PRODUCT_TYPE_OPTS.map(t => <option key={t}>{t}</option>)}
-                  </Select>
-                </Field>
-                <Field label="Product Condition">
-                  <Select value={form.condition} onChange={e => set('condition', e.target.value)}>
-                    {CONDITION_OPTS.map(c => <option key={c}>{c}</option>)}
+                <Field label="Gender">
+                  <Select value={form.gender} onChange={e => set('gender', e.target.value)}>
+                    <option value="Any">Any</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Others">Others</option>
                   </Select>
                 </Field>
               </div>
@@ -371,7 +381,7 @@ export function VendorProductFormPage() {
 
             <Section title="Category">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Product Category" required>
+                <Field label="Product Category" required hint={categories.length === 0 ? "You haven't selected any categories yet. Please go to Platform Categories to select them." : ""}>
                   <Select value={form.category} onChange={e => handleCategoryChange(e.target.value)} required>
                     <option value="">Select Category</option>
                     {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
@@ -438,17 +448,6 @@ export function VendorProductFormPage() {
               </div>
               {uploadingImages && <p className="text-xs text-[#fe6603]">Uploading images...</p>}
             </Section>
-
-            <Section title="Video & 360° View">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Field label="Product Video URL" hint="YouTube or Vimeo link">
-                  <Input value={form.video_url} onChange={e => set('video_url', e.target.value)} placeholder="https://youtube.com/watch?v=..." />
-                </Field>
-                <Field label="360° Product View URL" hint="Link to 360° viewer or embed URL">
-                  <Input value={form.view_360_url} onChange={e => set('view_360_url', e.target.value)} placeholder="https://360viewer.com/..." />
-                </Field>
-              </div>
-            </Section>
           </div>
         );
 
@@ -460,20 +459,8 @@ export function VendorProductFormPage() {
                 <Field label="Regular Price (₹)" required>
                   <Input type="number" min="0" value={form.price} onChange={e => set('price', e.target.value)} placeholder="0.00" />
                 </Field>
-                <Field label="Sale Price (₹)" hint="Leave blank if no sale">
-                  <Input type="number" min="0" value={form.sale_price} onChange={e => set('sale_price', e.target.value)} placeholder="0.00" />
-                </Field>
                 <Field label="MRP (₹)" hint="Maximum Retail Price">
                   <Input type="number" min="0" value={form.mrp} onChange={e => set('mrp', e.target.value)} placeholder="0.00" />
-                </Field>
-                <Field label="Cost Price (₹)" hint="Your purchase/manufacturing cost">
-                  <Input type="number" min="0" value={form.cost_price} onChange={e => set('cost_price', e.target.value)} placeholder="0.00" />
-                </Field>
-                <Field label="GST %">
-                  <Select value={form.gst_percent} onChange={e => set('gst_percent', e.target.value)}>
-                    <option value="">Select GST</option>
-                    {[0, 3, 5, 12, 18, 28].map(v => <option key={v} value={v}>{v}%</option>)}
-                  </Select>
                 </Field>
               </div>
             </Section>
@@ -490,12 +477,6 @@ export function VendorProductFormPage() {
                 </Field>
                 <Field label="Low Stock Alert" hint="Alert when stock falls below this">
                   <Input type="number" min="0" value={form.low_stock_alert} onChange={e => set('low_stock_alert', e.target.value)} placeholder="e.g. 5" />
-                </Field>
-                <Field label="Minimum Order Quantity">
-                  <Input type="number" min="1" value={form.min_order_qty} onChange={e => set('min_order_qty', e.target.value)} placeholder="1" />
-                </Field>
-                <Field label="Maximum Order Quantity">
-                  <Input type="number" min="1" value={form.max_order_qty} onChange={e => set('max_order_qty', e.target.value)} placeholder="No limit" />
                 </Field>
               </div>
             </Section>
@@ -525,27 +506,6 @@ export function VendorProductFormPage() {
                 <Field label="Height (cm)">
                   <Input type="text" value={form.height} onChange={e => set('height', e.target.value)} placeholder="cm" />
                 </Field>
-              </div>
-            </Section>
-
-            <Section title="Delivery Options">
-              <div className="flex flex-col gap-3">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" checked={form.cod_available} onChange={e => set('cod_available', e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 text-[#fe6603] focus:ring-[#fe6603]" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">Cash on Delivery (COD)</p>
-                    <p className="text-xs text-gray-400">Allow customers to pay on delivery</p>
-                  </div>
-                </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input type="checkbox" checked={form.free_shipping} onChange={e => set('free_shipping', e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 text-[#fe6603] focus:ring-[#fe6603]" />
-                  <div>
-                    <p className="text-sm font-semibold text-gray-800">Free Shipping</p>
-                    <p className="text-xs text-gray-400">No shipping charge for this product</p>
-                  </div>
-                </label>
               </div>
             </Section>
           </div>
@@ -759,19 +719,19 @@ export function VendorProductFormPage() {
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div className="min-w-0">
-              <p className="text-xs text-gray-400">Vendor Portal</p>
-              <h1 className="text-base font-bold text-gray-900 truncate">
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-0.5">Vendor Portal</p>
+              <h1 className="text-xl font-extrabold text-gray-900 truncate tracking-tight">
                 {isEdit ? 'Edit Product' : 'Add New Product'}
               </h1>
             </div>
           </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <button onClick={() => handleSave('draft')} disabled={!!saving}
-              className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-200 transition-colors disabled:opacity-50">
+              className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-gray-50 border border-gray-200 text-gray-700 rounded-[12px] text-sm font-bold hover:bg-gray-100 transition-all disabled:opacity-50">
               <Save className="w-4 h-4" /> Save Draft
             </button>
             <button onClick={() => handleSave('publish')} disabled={!!saving}
-              className="flex items-center gap-2 px-4 py-2 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50 shadow-sm">
+              className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none">
               <Send className="w-4 h-4" />
               {saving === 'publish' ? 'Submitting...' : 'Submit for Approval'}
             </button>

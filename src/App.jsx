@@ -29,6 +29,7 @@ import { FAQPage } from './pages/FAQPage';
 import { CollectionPage } from './pages/CollectionPage';
 import { SearchPage } from './pages/SearchPage';
 import { OffersPage } from './pages/OffersPage';
+import { CouponsPage } from './pages/CouponsPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 import { TermsPage } from './pages/TermsPage';
 import { ReferPage } from './pages/ReferPage';
@@ -103,6 +104,7 @@ function AnimatedAppRoutes() {
         <Route path="/faqs" element={<PageTransition><FAQPage /></PageTransition>} />
         <Route path="/search" element={<PageTransition><SearchPage /></PageTransition>} />
         <Route path="/offers" element={<PageTransition><OffersPage /></PageTransition>} />
+        <Route path="/all-coupons" element={<PageTransition><CouponsPage /></PageTransition>} />
         <Route path="/refer" element={<PageTransition><ReferPage /></PageTransition>} />
         <Route path="/wallet" element={<PageTransition><WalletPage /></PageTransition>} />
         <Route path="/collection/:type" element={<PageTransition><CollectionPage /></PageTransition>} />

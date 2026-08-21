@@ -162,16 +162,18 @@ export function VendorSupportPage() {
     <div className="w-full max-w-5xl mx-auto">
       {showModal && <AddAgentModal onClose={() => setShowModal(false)} onAdd={handleAdd} />}
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Support</h1>
-        <p className="text-gray-400 text-xs mt-0.5">Manage your support team and view orders, products, categories</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Support</h1>
+          <p className="text-gray-500 mt-1.5 font-medium">Manage your support team and view orders, products, categories.</p>
+        </div>
       </div>
 
-      <div className="flex gap-2 mb-6 border-b border-gray-100 overflow-x-auto">
+      <div className="flex gap-2 mb-8 border-b border-gray-100 overflow-x-auto pb-1">
         {TABS.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-semibold border-b-2 transition-colors -mb-px whitespace-nowrap ${
-              tab === t.key ? "border-[#fe6603] text-[#fe6603]" : "border-transparent text-gray-400 hover:text-gray-700"
+            className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all -mb-[5px] whitespace-nowrap ${
+              tab === t.key ? "border-[#fe6603] text-[#fe6603]" : "border-transparent text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-t-xl"
             }`}>
             {t.icon} {t.label}
           </button>
@@ -185,17 +187,17 @@ export function VendorSupportPage() {
       ) : (
         <>
           {tab === "orders" && (
-            <div className="space-y-3">
+            <div className="space-y-4">
               {orders.length === 0 ? <p className="text-center text-gray-400 py-12">No orders found.</p>
                 : orders.map(order => (
-                  <div key={order.id} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center justify-between gap-4">
+                  <div key={order.id} className="bg-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-5 flex items-center justify-between gap-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-0.5 transition-all">
                     <div className="min-w-0">
-                      <p className="font-bold text-gray-900 text-sm">#{order.order_number || order.id}</p>
-                      <p className="text-gray-400 text-xs mt-0.5 truncate">{order.user_name || "Guest"} · {new Date(order.created_at).toLocaleDateString("en-IN")}</p>
+                      <p className="font-extrabold text-gray-900 text-base">#{order.order_number || order.id}</p>
+                      <p className="text-gray-500 font-medium text-sm mt-0.5 truncate">{order.user_name || "Guest"} · <span className="text-gray-400">{new Date(order.created_at).toLocaleDateString("en-IN")}</span></p>
                     </div>
-                    <div className="flex items-center gap-3 flex-shrink-0">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[order.status] || "bg-gray-100 text-gray-600"}`}>{order.status}</span>
-                      <span className="font-bold text-[#D4AF37] text-sm">₹{order.total}</span>
+                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                      <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider ${STATUS_COLORS[order.status] || "bg-gray-100 text-gray-600"}`}>{order.status}</span>
+                      <span className="font-extrabold text-[#D4AF37] text-lg">₹{order.total}</span>
                     </div>
                   </div>
                 ))}
@@ -203,14 +205,16 @@ export function VendorSupportPage() {
           )}
 
           {tab === "products" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {products.length === 0 ? <p className="text-center text-gray-400 py-12 col-span-full">No products found.</p>
                 : products.map(p => (
-                  <div key={p.id} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-3">
-                    {p.image_url && <img src={p.image_url} alt={p.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />}
+                  <div key={p.id} className="bg-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-4 flex items-center gap-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all">
+                    <div className="w-16 h-16 rounded-[12px] bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-100">
+                      {p.image_url ? <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" /> : <Package className="w-6 h-6 text-gray-300" />}
+                    </div>
                     <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{p.name}</p>
-                      <p className="text-gray-400 text-xs mt-0.5">₹{p.price}</p>
+                      <p className="font-bold text-gray-900 text-base truncate">{p.name}</p>
+                      <p className="text-[#fe6603] font-bold mt-1">₹{p.price}</p>
                     </div>
                   </div>
                 ))}
@@ -218,13 +222,15 @@ export function VendorSupportPage() {
           )}
 
           {tab === "categories" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {categories.length === 0 ? <p className="text-center text-gray-400 py-12 col-span-full">No categories found.</p>
                 : categories.map(c => (
-                  <div key={c.id} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-3">
-                    {c.image_url && <img src={c.image_url} alt={c.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />}
+                  <div key={c.id} className="bg-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-4 flex items-center gap-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all">
+                    <div className="w-14 h-14 rounded-[12px] bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0 border border-gray-100">
+                      {c.image_url ? <img src={c.image_url} alt={c.name} className="w-full h-full object-cover" /> : <Layers className="w-6 h-6 text-gray-300" />}
+                    </div>
                     <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{c.name}</p>
+                      <p className="font-bold text-gray-900 text-base truncate">{c.name}</p>
                     </div>
                   </div>
                 ))}
@@ -233,42 +239,44 @@ export function VendorSupportPage() {
 
           {tab === "team" && (
             <div>
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-sm text-gray-500">{agents.length} member{agents.length !== 1 ? "s" : ""}</p>
+              <div className="flex items-center justify-between mb-6">
+                <p className="text-sm font-bold text-gray-500">{agents.length} member{agents.length !== 1 ? "s" : ""}</p>
                 <button onClick={() => setShowModal(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors">
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
                   <Plus className="w-4 h-4" /> Add Member
                 </button>
               </div>
 
               {agents.length === 0 ? (
-                <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center">
-                  <Users className="w-10 h-10 text-gray-200 mx-auto mb-3" />
-                  <p className="text-gray-400 text-sm">No support members yet.</p>
+                <div className="bg-white rounded-[24px] border border-gray-100 p-16 text-center shadow-sm">
+                  <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-10 h-10 text-gray-300" />
+                  </div>
+                  <p className="text-gray-500 font-medium mb-4">No support members yet.</p>
                   <button onClick={() => setShowModal(true)}
-                    className="mt-4 px-5 py-2 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors">
+                    className="px-6 py-3 bg-[#fe6603] text-white rounded-xl text-sm font-bold hover:bg-[#e55c02] transition-colors">
                     Add First Member
                   </button>
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {agents.map(agent => (
-                    <div key={agent.id} className="bg-white rounded-2xl border border-gray-100 p-4 flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-[#fe6603]/10 flex items-center justify-center flex-shrink-0 font-bold text-[#fe6603] text-sm">
+                    <div key={agent.id} className="bg-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-5 flex items-center gap-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fe6603]/10 to-[#ff7b23]/10 flex items-center justify-center flex-shrink-0 font-extrabold text-[#fe6603] text-lg border border-[#fe6603]/20">
                         {agent.name?.[0]?.toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm">{agent.name}</p>
-                        <p className="text-gray-400 text-xs truncate">{agent.email}</p>
+                        <p className="font-extrabold text-gray-900 text-base">{agent.name}</p>
+                        <p className="text-gray-500 font-medium text-sm truncate">{agent.email}</p>
                       </div>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${agent.is_active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-500"}`}>
+                      <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider flex-shrink-0 ${agent.is_active ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
                         {agent.is_active ? "Active" : "Inactive"}
                       </span>
-                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#fe6603] transition-colors flex-shrink-0">
-                        {agent.is_active ? <ToggleRight className="w-5 h-5 text-[#fe6603]" /> : <ToggleLeft className="w-5 h-5" />}
+                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#fe6603] transition-colors p-2 hover:bg-orange-50 rounded-xl flex-shrink-0">
+                        {agent.is_active ? <ToggleRight className="w-6 h-6 text-[#fe6603]" /> : <ToggleLeft className="w-6 h-6" />}
                       </button>
-                      <button onClick={() => handleDelete(agent.id)} className="text-gray-300 hover:text-red-500 transition-colors flex-shrink-0">
-                        <Trash2 className="w-4 h-4" />
+                      <button onClick={() => handleDelete(agent.id)} className="text-gray-300 hover:text-red-600 transition-colors p-2 hover:bg-red-50 rounded-xl flex-shrink-0">
+                        <Trash2 className="w-5 h-5" />
                       </button>
                     </div>
                   ))}

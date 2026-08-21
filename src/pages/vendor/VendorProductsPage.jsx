@@ -89,15 +89,15 @@ export function VendorProductsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">My Products</h1>
-          <div className="flex items-center gap-3 mt-1.5">
-            <span className="text-sm font-semibold text-gray-600 bg-gray-100 px-2.5 py-0.5 rounded-lg border border-gray-200">
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">My Products</h1>
+          <div className="flex flex-wrap items-center gap-3 mt-2">
+            <span className="text-xs font-bold text-gray-700 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
               {products.length} Added
             </span>
             {subStats && (
-              <span className={`text-sm font-semibold px-2.5 py-0.5 rounded-lg border ${
+              <span className={`text-xs font-bold px-3 py-1 rounded-full border shadow-sm ${
                 subStats.isUnlimited 
                   ? 'text-green-700 bg-green-50 border-green-200' 
                   : subStats.remaining === 0 
@@ -109,27 +109,27 @@ export function VendorProductsPage() {
             )}
           </div>
         </div>
-        <div className="flex gap-3">
-          <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <div className="flex flex-col sm:flex-row gap-4 items-center w-full sm:w-auto">
+          <div className="relative w-full sm:w-64">
+            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Search products..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="pl-9 pr-4 py-2 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#fe6603]/20 w-full sm:w-56 text-sm transition-all"
+              className="pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#fe6603]/50 focus:border-[#fe6603] w-full text-sm font-medium shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all"
             />
           </div>
-          <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col items-end gap-1 w-full sm:w-auto">
             <button
               onClick={() => navigate('/vendor/products/new')}
               disabled={!canAddProduct}
               title={limitMessage}
-              className="bg-[#fe6603] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white px-5 py-3 rounded-[16px] text-sm font-bold hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-none"
             >
-              <Plus className="w-4 h-4" /> Add Product
+              <Plus className="w-5 h-5" /> Add Product
             </button>
-            {!canAddProduct && <span className="text-xs text-red-500 font-medium">{limitMessage}</span>}
+            {!canAddProduct && <span className="text-xs text-red-500 font-bold px-2">{limitMessage}</span>}
           </div>
         </div>
       </div>
@@ -142,56 +142,56 @@ export function VendorProductsPage() {
           const displayPrice = product.price || 0;
 
           return (
-            <div key={product.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow group flex flex-col h-full">
+            <div key={product.id} className="bg-white rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
               {/* Image */}
-              <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden">
+              <div className="aspect-[4/3] bg-gray-50/50 relative overflow-hidden">
                 {product.image_url ? (
-                  <img src={product.image_url} alt={product.name} className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500" />
+                  <img src={product.image_url} alt={product.name} className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-300">
+                  <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100/50">
                     <PackageSearch className="w-12 h-12" />
                   </div>
                 )}
                 {/* Category badge */}
-                <div className="absolute top-3 left-3">
-                  <span className="bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-lg text-[10px] font-semibold text-gray-600 shadow-sm border border-gray-100">
+                <div className="absolute top-4 left-4">
+                  <span className="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-[10px] font-bold text-gray-700 shadow-sm border border-gray-100/50 uppercase tracking-wider">
                     {product.category || 'No Category'}
                   </span>
                 </div>
                 {/* Status badge */}
-                <div className="absolute top-3 right-3">
-                  <span className={`flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold ${STATUS_CONFIG[status]?.cls || 'bg-gray-100 text-gray-600'}`}>
-                    <StatusIcon className="w-3 h-3" />
+                <div className="absolute top-4 right-4">
+                  <span className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase tracking-wider shadow-sm border border-white/50 backdrop-blur-md ${STATUS_CONFIG[status]?.cls || 'bg-white/90 text-gray-600'}`}>
+                    <StatusIcon className="w-3.5 h-3.5" />
                     {STATUS_CONFIG[status]?.label || status}
                   </span>
                 </div>
               </div>
 
               {/* Info */}
-              <div className="p-4 flex-1 flex flex-col gap-1">
-                <h3 className="font-bold text-gray-900 text-sm line-clamp-2">{product.name}</h3>
-                {product.brand && <p className="text-xs text-gray-400">{product.brand}</p>}
-                <div className="flex items-center justify-between mt-auto pt-2">
-                  <p className="text-base font-bold text-[#fe6603]">₹{displayPrice}</p>
+              <div className="p-5 flex-1 flex flex-col gap-2">
+                <h3 className="font-bold text-gray-900 text-base leading-snug line-clamp-2">{product.name}</h3>
+                {product.brand && <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{product.brand}</p>}
+                <div className="flex items-end justify-between mt-auto pt-4">
+                  <p className="text-xl font-extrabold text-[#fe6603] tracking-tight">₹{displayPrice}</p>
                   {product.stock != null && (
-                    <span className="text-xs text-gray-400">Stock: {product.stock}</span>
+                    <span className="text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-lg border border-gray-100">Stock: {product.stock}</span>
                   )}
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex gap-2">
+              <div className="px-5 py-4 bg-gray-50/50 border-t border-gray-100 flex gap-3">
                 <button
                   onClick={() => navigate(`/vendor/products/${product.id}/edit`)}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white border border-gray-200 rounded-[12px] hover:bg-gray-50 hover:border-gray-300 hover:text-[#fe6603] transition-all"
                 >
-                  <Edit2 className="w-3.5 h-3.5" /> Edit
+                  <Edit2 className="w-4 h-4" /> Edit
                 </button>
                 <button
                   onClick={() => handleDelete(product.id)}
-                  className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-medium text-red-600 bg-white border border-gray-200 rounded-xl hover:bg-red-50 hover:border-red-100 transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-red-500 bg-white border border-red-100 rounded-[12px] hover:bg-red-500 hover:text-white transition-all shadow-sm"
                 >
-                  <Trash2 className="w-3.5 h-3.5" /> Delete
+                  <Trash2 className="w-4 h-4" /> Delete
                 </button>
               </div>
             </div>

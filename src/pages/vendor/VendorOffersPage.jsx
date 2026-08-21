@@ -301,27 +301,27 @@ export function VendorOffersPage() {
           onSave={handleSave} onClose={() => setWizard(null)} />
       )}
 
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Offers & Coupons</h1>
-          <p className="text-gray-400 text-xs mt-0.5">Manage discounts and coupon codes for your store</p>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Offers & Coupons</h1>
+          <p className="text-gray-500 font-medium mt-1.5">Manage discounts and coupon codes for your store.</p>
         </div>
         <button onClick={() => setWizard({ type: tab === 'offers' ? 'offer' : 'coupon', initial: {} })}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors">
-          <Plus className="w-4 h-4" /> {tab === 'offers' ? 'New Offer' : 'New Coupon'}
+          className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[16px] text-sm font-bold shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all">
+          <Plus className="w-5 h-5" /> {tab === 'offers' ? 'New Offer' : 'New Coupon'}
         </button>
       </div>
 
       {/* tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit mb-6">
+      <div className="flex gap-1.5 bg-gray-100/80 p-1.5 rounded-[20px] w-fit mb-8 shadow-inner border border-gray-200/50">
         {[
-          { key: 'offers', label: 'Offers', icon: <Percent className="w-3.5 h-3.5" /> },
-          { key: 'coupons', label: 'Coupons', icon: <Ticket className="w-3.5 h-3.5" /> },
+          { key: 'offers', label: 'Offers', icon: <Percent className="w-4 h-4" /> },
+          { key: 'coupons', label: 'Coupons', icon: <Ticket className="w-4 h-4" /> },
         ].map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-all ${tab === t.key ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-[16px] text-sm font-bold transition-all duration-300 ${tab === t.key ? 'bg-white text-gray-900 shadow-[0_4px_12px_rgba(0,0,0,0.05)]' : 'text-gray-500 hover:text-gray-700 hover:bg-white/50'}`}>
             {t.icon} {t.label}
-            <span className={`ml-1 text-xs px-1.5 py-0.5 rounded-full ${tab === t.key ? 'bg-[#fe6603] text-white' : 'bg-gray-200 text-gray-500'}`}>
+            <span className={`ml-2 text-xs px-2 py-0.5 rounded-full shadow-sm ${tab === t.key ? 'bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white' : 'bg-gray-200/80 text-gray-500'}`}>
               {t.key === 'offers' ? offers.length : coupons.length}
             </span>
           </button>
@@ -352,45 +352,47 @@ export function VendorOffersPage() {
             const prdIds = parseIds(item.product_ids);
             const isOffer = tab === 'offers';
             return (
-              <div key={item.id} className="bg-white rounded-2xl border border-gray-100 p-5 relative">
+              <div key={item.id} className="bg-white rounded-[24px] border border-gray-100 p-6 relative shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
                 {!item.is_active && (
-                  <span className="absolute top-3 right-3 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-500">Inactive</span>
+                  <span className="absolute top-4 right-4 text-[10px] font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-red-100 text-red-600 shadow-sm uppercase">Inactive</span>
                 )}
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex items-center gap-1.5 bg-[#fe6603]/10 text-[#fe6603] px-3 py-1.5 rounded-lg text-sm font-bold tracking-wider">
-                    {isOffer ? <Percent className="w-3.5 h-3.5" /> : <Ticket className="w-3.5 h-3.5" />}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-2 bg-gradient-to-br from-[#fe6603]/10 to-[#ff7b23]/10 text-[#fe6603] px-3.5 py-2 rounded-xl text-sm font-bold tracking-wider border border-[#fe6603]/10 shadow-sm">
+                    {isOffer ? <Percent className="w-4 h-4" /> : <Ticket className="w-4 h-4" />}
                     {isOffer ? item.name : item.code}
                   </div>
                   {!isOffer && (
                     <button onClick={() => { navigator.clipboard.writeText(item.code); toast.success('Copied!'); }}
-                      className="ml-auto text-gray-300 hover:text-gray-500 transition-colors">
-                      <Copy className="w-3.5 h-3.5" />
+                      className="ml-auto text-gray-400 hover:text-[#fe6603] hover:bg-orange-50 p-2 rounded-xl transition-all shadow-sm border border-transparent hover:border-[#fe6603]/20">
+                      <Copy className="w-4 h-4" />
                     </button>
                   )}
                 </div>
-                <p className="text-2xl font-bold text-gray-900 mb-1">
-                  {item.discount_type === 'flat' ? `₹${item.discount_percent}` : `${item.discount_percent}%`} OFF
+                <p className="text-4xl font-extrabold text-gray-900 mb-2 tracking-tight">
+                  {item.discount_type === 'flat' ? `₹${item.discount_percent}` : `${item.discount_percent}%`} <span className="text-xl text-[#fe6603]">OFF</span>
                 </p>
-                <div className="text-xs text-gray-400 space-y-0.5 mb-4">
-                  <p>Applies to: <span className="text-gray-600 font-medium capitalize">
+                <div className="text-sm text-gray-500 space-y-1.5 mb-6">
+                  <p className="flex items-center gap-2"><span className="w-20 font-bold text-gray-400 uppercase text-[10px] tracking-wider">Applies to</span> <span className="font-semibold text-gray-800 capitalize">
                     {item.scope === 'all' ? 'All My Products' : item.scope === 'category' ? `${catIds.length} categor${catIds.length !== 1 ? 'ies' : 'y'}` : `${prdIds.length} product${prdIds.length !== 1 ? 's' : ''}`}
                   </span></p>
-                  {!isOffer && <p>Min {item.min_type === 'amount' ? `₹${item.min_value}` : `${item.min_value} qty`} · <span className="capitalize">{item.usage_type} use</span></p>}
-                  {item.expires_at && <p>Expires: {new Date(item.expires_at).toLocaleDateString('en-IN')}</p>}
+                  {!isOffer && <p className="flex items-center gap-2"><span className="w-20 font-bold text-gray-400 uppercase text-[10px] tracking-wider">Condition</span> <span className="font-semibold text-gray-800">Min {item.min_type === 'amount' ? `₹${item.min_value}` : `${item.min_value} qty`} · <span className="capitalize">{item.usage_type} use</span></span></p>}
+                  {item.expires_at && <p className="flex items-center gap-2"><span className="w-20 font-bold text-gray-400 uppercase text-[10px] tracking-wider">Expires</span> <span className="font-semibold text-gray-800">{new Date(item.expires_at).toLocaleDateString('en-IN')}</span></p>}
                 </div>
-                <div className="flex items-center gap-2 pt-3 border-t border-gray-50">
+                <div className="flex items-center gap-3 pt-5 border-t border-gray-100">
                   <button onClick={() => toggleActive(item, tab === 'offers' ? 'offer' : 'coupon')}
-                    className={`transition-colors ${item.is_active ? 'text-[#fe6603]' : 'text-gray-400 hover:text-[#fe6603]'}`}>
-                    {item.is_active ? <ToggleRight className="w-5 h-5" /> : <ToggleLeft className="w-5 h-5" />}
+                    className={`transition-colors p-1 ${item.is_active ? 'text-[#036e26] hover:text-[#024f1b]' : 'text-gray-300 hover:text-[#036e26]'}`}>
+                    {item.is_active ? <ToggleRight className="w-7 h-7" /> : <ToggleLeft className="w-7 h-7" />}
                   </button>
-                  <button onClick={() => setWizard({ type: tab === 'offers' ? 'offer' : 'coupon', initial: { ...item, category_ids: catIds, product_ids: prdIds } })}
-                    className="ml-auto text-gray-400 hover:text-[#fe6603] p-1.5 rounded-lg hover:bg-gray-50 transition-colors">
-                    <Edit2 className="w-4 h-4" />
-                  </button>
-                  <button onClick={() => handleDelete(item.id, tab === 'offers' ? 'offer' : 'coupon')}
-                    className="text-gray-300 hover:text-red-500 p-1.5 rounded-lg hover:bg-red-50 transition-colors">
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                  <div className="ml-auto flex gap-2">
+                    <button onClick={() => setWizard({ type: tab === 'offers' ? 'offer' : 'coupon', initial: { ...item, category_ids: catIds, product_ids: prdIds } })}
+                      className="text-gray-500 hover:text-[#fe6603] p-2 rounded-xl hover:bg-orange-50 border border-transparent hover:border-[#fe6603]/20 transition-all shadow-sm">
+                      <Edit2 className="w-4 h-4" />
+                    </button>
+                    <button onClick={() => handleDelete(item.id, tab === 'offers' ? 'offer' : 'coupon')}
+                      className="text-gray-400 hover:text-red-600 p-2 rounded-xl hover:bg-red-50 border border-transparent hover:border-red-100 transition-all shadow-sm">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               </div>
             );

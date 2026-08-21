@@ -4,14 +4,23 @@ import { Gift, Copy, Share2, CheckCircle2, Users, Wallet } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 export function ReferPage() {
-  const [copied, setCopied] = useState(false);
-  const referralCode = "SWABHI501";
+  const [copiedFriend, setCopiedFriend] = useState(false);
+  const [copiedStore, setCopiedStore] = useState(false);
+  const friendCode = "SWABHI501";
+  const storeCode = "STORE501";
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(referralCode);
-    setCopied(true);
-    toast.success("Referral code copied!");
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyFriend = () => {
+    navigator.clipboard.writeText(friendCode);
+    setCopiedFriend(true);
+    toast.success("Friend referral code copied!");
+    setTimeout(() => setCopiedFriend(false), 2000);
+  };
+
+  const handleCopyStore = () => {
+    navigator.clipboard.writeText(storeCode);
+    setCopiedStore(true);
+    toast.success("Store referral code copied!");
+    setTimeout(() => setCopiedStore(false), 2000);
   };
 
   const steps = [
@@ -40,15 +49,15 @@ export function ReferPage() {
       </div>
 
       <div className="max-w-2xl mx-auto px-4 -mt-10 relative z-20">
-        {/* Referral Code Card */}
+        {/* Friend Referral Code Card */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.1 }}
           className="bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
-          <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">Your Unique Referral Code</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">Refer to your friend</h2>
           <div className="flex flex-col md:flex-row items-center gap-4">
             <div className="flex-1 w-full bg-orange-50 border-2 border-dashed border-brand-orange/50 rounded-xl p-4 flex items-center justify-between">
-              <span className="text-2xl font-black text-brand-orange tracking-widest">{referralCode}</span>
-              <button onClick={handleCopy} className="p-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
-                {copied ? <CheckCircle2 className="w-6 h-6 text-green-500" /> : <Copy className="w-6 h-6 text-gray-500" />}
+              <span className="text-2xl font-black text-brand-orange tracking-widest">{friendCode}</span>
+              <button onClick={handleCopyFriend} className="p-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                {copiedFriend ? <CheckCircle2 className="w-6 h-6 text-green-500" /> : <Copy className="w-6 h-6 text-gray-500" />}
               </button>
             </div>
             <button className="w-full md:w-auto bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
@@ -56,6 +65,24 @@ export function ReferPage() {
             </button>
           </div>
         </motion.div>
+        
+        {/* Store Referral Code Card */}
+        <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.15 }}
+          className="mt-6 bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+          <h2 className="text-xl font-bold text-gray-800 mb-6 text-center">Refer to a new store</h2>
+          <div className="flex flex-col md:flex-row items-center gap-4">
+            <div className="flex-1 w-full bg-green-50 border-2 border-dashed border-[#054335]/50 rounded-xl p-4 flex items-center justify-between">
+              <span className="text-2xl font-black text-[#054335] tracking-widest">{storeCode}</span>
+              <button onClick={handleCopyStore} className="p-2 bg-white rounded-lg shadow-sm hover:bg-gray-50 transition-colors">
+                {copiedStore ? <CheckCircle2 className="w-6 h-6 text-green-500" /> : <Copy className="w-6 h-6 text-gray-500" />}
+              </button>
+            </div>
+            <button className="w-full md:w-auto bg-gradient-to-r from-[#054335] to-[#0a6c56] text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
+              <Share2 className="w-5 h-5" /> Share Link
+            </button>
+          </div>
+        </motion.div>
+        
 
         {/* How it works */}
         <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.2 }}
