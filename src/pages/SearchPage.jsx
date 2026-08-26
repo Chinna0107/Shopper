@@ -55,14 +55,14 @@ export function SearchPage() {
           <ArrowLeft className="w-5 h-5" />
         </button>
         <div className="flex-1 relative group">
-          <Search className="w-4 h-4 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors" />
+          <Search className="w-4 h-4 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-navy transition-colors" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search shop name, products, categories"
-            className="w-full bg-white border border-gray-200 rounded-full py-2.5 pl-11 pr-10 text-[15px] text-gray-900 focus:outline-none focus:ring-1 focus:border-brand-orange focus:shadow-sm transition-all placeholder-gray-400"
+            className="w-full bg-white border border-gray-200 rounded-full py-2.5 pl-11 pr-10 text-[15px] text-gray-900 focus:outline-none focus:ring-1 focus:border-brand-navy focus:shadow-sm transition-all placeholder-gray-400"
           />
           {query && (
             <button 

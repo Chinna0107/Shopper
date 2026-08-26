@@ -98,7 +98,7 @@ export function AdminVendorWalletsPage() {
             placeholder="Search vendors by store name..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#fe6603]"
+            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#012980]"
           />
         </div>
       </div>
@@ -133,7 +133,7 @@ export function AdminVendorWalletsPage() {
                     <button
                       onClick={() => openPayoutModal(vendor)}
                       disabled={balance <= 0}
-                      className="flex items-center gap-2 bg-[#fe6603] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center gap-2 bg-[#012980] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Send className="w-4 h-4" /> Payout
                     </button>
@@ -225,7 +225,7 @@ export function AdminVendorWalletsPage() {
                   step="0.01"
                   value={payoutAmount}
                   onChange={(e) => setPayoutAmount(e.target.value)}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#fe6603] focus:border-transparent" 
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#012980] focus:border-transparent" 
                 />
               </div>
               
@@ -240,7 +240,7 @@ export function AdminVendorWalletsPage() {
                 <button 
                   type="submit" 
                   disabled={payoutLoading}
-                  className="flex-1 bg-[#fe6603] text-white px-4 py-3 rounded-xl font-medium hover:bg-[#e55c00] disabled:opacity-50"
+                  className="flex-1 bg-[#012980] text-white px-4 py-3 rounded-xl font-medium hover:bg-[#e55c00] disabled:opacity-50"
                 >
                   {payoutLoading ? 'Processing...' : 'Confirm Payout'}
                 </button>

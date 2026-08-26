@@ -45,7 +45,7 @@ export function CouponsPage() {
     <div className="min-h-screen bg-transparent">
       <Header />
       <div className="flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-white/10 border-t-brand-orange rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-white/10 border-t-brand-navy rounded-full animate-spin" />
       </div>
     </div>
   );
@@ -55,10 +55,10 @@ export function CouponsPage() {
       <Header />
 
       {/* Hero */}
-      <div className="bg-[#022A21] px-6 py-12 md:py-16 text-center border-b border-[#054335] relative overflow-hidden">
+      <div className="bg-[#012980] px-6 py-12 md:py-16 text-center border-b border-[#001d5a] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/30 text-brand-orange shadow-[0_0_10px_rgba(254,102,3,0.2)] text-xs font-bold px-4 py-1.5 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-brand-navy/20 border border-brand-navy/30 text-brand-navy shadow-[0_0_10px_rgba(254,102,3,0.2)] text-xs font-bold px-4 py-1.5 rounded-full mb-4">
             <Tag className="w-3.5 h-3.5" /> EXCLUSIVE DEALS
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>All Coupons Available</h1>
@@ -72,7 +72,7 @@ export function CouponsPage() {
         {coupons.length > 0 && (
           <section>
             <div className="flex items-center gap-2 mb-6 px-2">
-              <Ticket className="w-6 h-6 text-brand-orange" />
+              <Ticket className="w-6 h-6 text-brand-navy" />
               <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>Coupon Codes</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -82,15 +82,15 @@ export function CouponsPage() {
                 return (
                   <motion.div key={c.id}
                     initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                    className={`bg-[#022A21] rounded-3xl border-2 p-6 relative overflow-hidden transition-all shadow-lg ${isHighlighted ? 'border-brand-orange shadow-[0_0_20px_rgba(254,102,3,0.3)]' : 'border-[#054335] hover:border-[#076655] hover:shadow-[0_10px_30px_rgba(2,42,33,0.2)]'}`}>
+                    className={`bg-[#012980] rounded-3xl border-2 p-6 relative overflow-hidden transition-all shadow-lg ${isHighlighted ? 'border-brand-navy shadow-[0_0_20px_rgba(254,102,3,0.3)]' : 'border-[#001d5a] hover:border-[#076655] hover:shadow-[0_10px_30px_rgba(2,42,33,0.2)]'}`}>
                     
                     {/* decorative circles */}
-                    <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-gray-50 rounded-full border-r-2 border-dashed border-[#054335]" />
-                    <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-gray-50 rounded-full border-l-2 border-dashed border-[#054335]" />
+                    <div className="absolute -left-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-gray-50 rounded-full border-r-2 border-dashed border-[#001d5a]" />
+                    <div className="absolute -right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-gray-50 rounded-full border-l-2 border-dashed border-[#001d5a]" />
 
                     <div className="flex items-start justify-between mb-5">
                       <div>
-                        <p className="text-3xl font-black text-brand-orange tracking-tight">{discountLabel(c)}</p>
+                        <p className="text-3xl font-black text-brand-navy tracking-tight">{discountLabel(c)}</p>
                         {restriction && <p className="text-xs text-gray-300 mt-1 font-medium">{restriction}</p>}
                       </div>
                       {c.usage === 'one_time' || c.usage_type === 'single'
@@ -99,10 +99,10 @@ export function CouponsPage() {
                       }
                     </div>
 
-                    <div className="flex items-center gap-3 bg-brand-orange/10 border border-dashed border-brand-orange/50 rounded-xl px-5 py-3">
+                    <div className="flex items-center gap-3 bg-brand-navy/10 border border-dashed border-brand-navy/50 rounded-xl px-5 py-3">
                       <span className="flex-1 font-bold tracking-widest text-white text-base">{c.code}</span>
                       <button onClick={() => handleCopy(c.code, c.id)}
-                        className="flex items-center gap-1.5 text-sm font-bold text-brand-orange hover:text-orange-400 transition-all bg-brand-orange/20 hover:bg-brand-orange/30 px-3 py-1.5 rounded-lg border border-brand-orange/20">
+                        className="flex items-center gap-1.5 text-sm font-bold text-brand-navy hover:text-blue-400 transition-all bg-brand-navy/20 hover:bg-brand-navy/30 px-3 py-1.5 rounded-lg border border-brand-navy/20">
                         {copied === c.id ? <><Check className="w-4 h-4" /> Copied</> : <><Copy className="w-4 h-4" /> Copy</>}
                       </button>
                     </div>
@@ -124,7 +124,7 @@ export function CouponsPage() {
             <Tag className="w-16 h-16 text-gray-200 mx-auto mb-4" />
             <p className="text-gray-500 mb-6 text-lg font-medium">No active coupons right now. Check back soon!</p>
             <button onClick={() => navigate('/')}
-              className="flex items-center justify-center gap-2 mx-auto px-6 py-3 bg-[#022A21] text-white rounded-xl text-sm font-bold shadow-md hover:bg-[#034032] transition-all hover:-translate-y-0.5 w-max">
+              className="flex items-center justify-center gap-2 mx-auto px-6 py-3 bg-[#012980] text-white rounded-xl text-sm font-bold shadow-md hover:bg-[#034032] transition-all hover:-translate-y-0.5 w-max">
               <ShoppingBag className="w-4 h-4" /> Shop Now
             </button>
           </div>

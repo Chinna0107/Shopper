@@ -72,15 +72,15 @@ export function HomePage() {
 
       <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1">
         {/* Location Search Bar */}
-        <Link to="/search" className="block bg-[#FFF8E7] border border-[#FDE1B9] rounded-full px-5 py-3.5 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-[#FFF4D4]">
-          <svg className="w-5 h-5 text-[#88313A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <Link to="/search" className="block bg-blue-50 border border-blue-100 rounded-full px-5 py-3.5 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-blue-100">
+          <svg className="w-5 h-5 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="8" strokeWidth="2" />
             <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
             <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
             <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
             <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <span className="text-[15px] font-medium text-[#88313A]">Search shops near your location</span>
+          <span className="text-[15px] font-medium text-brand-navy">Search shops near your location</span>
         </Link>
       </div>
 
@@ -150,7 +150,7 @@ export function HomePage() {
             <h3 className="text-2xl font-bold text-gray-900 tracking-tight font-serif mb-1">Shop by Store</h3>
             <p className="text-gray-500 text-sm">Buy directly from a shop</p>
           </div>
-          <Link to="/stores" className="text-[#88313A] hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
+          <Link to="/stores" className="text-brand-navy hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
         </div>
         <div className="flex gap-4 md:gap-6 overflow-x-auto hide-scrollbar pb-4 snap-x">
           {vendors.map((vendor, i) => (
@@ -180,20 +180,20 @@ export function HomePage() {
       <div className="animate-section z-30 mb-8 px-4 max-w-[1280px] mx-auto mt-4">
         <div className="flex justify-between items-end mb-4">
           <h3 className="text-2xl font-bold text-gray-900 tracking-tight font-serif">Shop by Category</h3>
-          <Link to="/category/all" className="text-[#88313A] hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
+          <Link to="/category/all" className="text-brand-navy hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
         </div>
         <div className="flex gap-4 md:gap-8 justify-start md:justify-center min-w-max mx-auto px-2 overflow-x-auto hide-scrollbar pb-2">
           {categories.slice(0, 10).map(cat => (
             <Link key={cat.id} to={`/category/${cat.id}`} className="flex flex-col items-center gap-3 group w-20 md:w-24">
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-3 border border-gray-100 shadow-sm transition-all duration-300 relative overflow-hidden group-hover:-translate-y-1 group-hover:border-brand-orange group-hover:shadow-md">
+              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white flex items-center justify-center p-3 border border-gray-100 shadow-sm transition-all duration-300 relative overflow-hidden group-hover:-translate-y-1 group-hover:border-brand-navy group-hover:shadow-md">
                 {cat.image_url ? (
                   <img src={cat.image_url} alt={cat.name} className="w-full h-full object-contain relative z-10 mix-blend-multiply" />
                 ) : (
                   <div className="w-full h-full bg-gray-100 rounded-full"></div>
                 )}
-                <div className="absolute inset-0 bg-brand-orange/0 group-hover:bg-brand-orange/5 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-brand-navy/0 group-hover:bg-brand-navy/5 transition-colors duration-300"></div>
               </div>
-              <span className="text-[12px] font-medium text-gray-700 text-center group-hover:text-brand-orange transition-colors leading-tight line-clamp-2">{cat.name}</span>
+              <span className="text-[12px] font-medium text-gray-700 text-center group-hover:text-brand-navy transition-colors leading-tight line-clamp-2">{cat.name}</span>
             </Link>
           ))}
         </div>
@@ -211,23 +211,23 @@ export function HomePage() {
               <p className="text-gray-500 text-sm">Find styles in your budget</p>
             </div>
             <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
-              <Link to="/category/all?price=under_1000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-[#FFFBF4] border border-[#F4E6D4] rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
-                <span className="text-[#7A1D25] text-xl font-bold mb-3">₹</span>
+              <Link to="/category/all?price=under_1000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-blue-50 border border-blue-100 rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
+                <span className="text-brand-navy text-xl font-bold mb-3">₹</span>
                 <span className="font-bold text-gray-900 text-base md:text-lg mb-1">Under ₹1,000</span>
                 <span className="text-gray-500 text-sm mt-auto flex items-center gap-1 group-hover:text-gray-900 transition-colors">Explore <span>→</span></span>
               </Link>
-              <Link to="/category/all?price=1000_2000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-[#FFFBF4] border border-[#F4E6D4] rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
-                <span className="text-[#7A1D25] text-xl font-bold mb-3">₹</span>
+              <Link to="/category/all?price=1000_2000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-blue-50 border border-blue-100 rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
+                <span className="text-brand-navy text-xl font-bold mb-3">₹</span>
                 <span className="font-bold text-gray-900 text-base md:text-lg mb-1">₹1,000 - ₹2,000</span>
                 <span className="text-gray-500 text-sm mt-auto flex items-center gap-1 group-hover:text-gray-900 transition-colors">Explore <span>→</span></span>
               </Link>
-              <Link to="/category/all?price=2000_5000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-[#FFFBF4] border border-[#F4E6D4] rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
-                <span className="text-[#7A1D25] text-xl font-bold mb-3">₹</span>
+              <Link to="/category/all?price=2000_5000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-blue-50 border border-blue-100 rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
+                <span className="text-brand-navy text-xl font-bold mb-3">₹</span>
                 <span className="font-bold text-gray-900 text-base md:text-lg mb-1">₹2,000 - ₹5,000</span>
                 <span className="text-gray-500 text-sm mt-auto flex items-center gap-1 group-hover:text-gray-900 transition-colors">Explore <span>→</span></span>
               </Link>
-              <Link to="/category/all?price=above_5000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-[#FFFBF4] border border-[#F4E6D4] rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
-                <span className="text-[#7A1D25] text-xl font-bold mb-3">₹</span>
+              <Link to="/category/all?price=above_5000" className="min-w-[160px] md:min-w-[180px] shrink-0 snap-start bg-blue-50 border border-blue-100 rounded-[1.5rem] p-5 flex flex-col items-start transition-all hover:shadow-[0_4px_15px_rgba(0,0,0,0.05)] group">
+                <span className="text-brand-navy text-xl font-bold mb-3">₹</span>
                 <span className="font-bold text-gray-900 text-base md:text-lg mb-1">Above ₹5,000</span>
                 <span className="text-gray-500 text-sm mt-auto flex items-center gap-1 group-hover:text-gray-900 transition-colors">Explore <span>→</span></span>
               </Link>
@@ -244,7 +244,7 @@ export function HomePage() {
               </div>
             </div>
             <div className="flex flex-col items-center text-center gap-1.5 flex-1 border-r border-gray-50 last:border-0">
-              <Truck className="w-5 h-5 text-orange-500" strokeWidth={1.5} />
+              <Truck className="w-5 h-5 text-blue-500" strokeWidth={1.5} />
               <div className="flex flex-col">
                 <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">Fast<br />Delivery</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">On-time</span>
@@ -258,7 +258,7 @@ export function HomePage() {
               </div>
             </div>
             <div className="flex flex-col items-center text-center gap-1.5 flex-1">
-              <Headset className="w-5 h-5 text-orange-600" strokeWidth={1.5} />
+              <Headset className="w-5 h-5 text-blue-600" strokeWidth={1.5} />
               <div className="flex flex-col">
                 <span className="text-[10px] md:text-xs font-bold text-gray-800 leading-tight">24/7<br />Support</span>
                 <span className="text-[9px] md:text-[10px] text-gray-400 mt-0.5">We're here</span>
@@ -268,7 +268,7 @@ export function HomePage() {
 
           {/* Ad Block Below Prices (Sponsored Card) */}
           {/* 
-          <Link to={banners.length > 0 ? (banners[0].link_url || "/category/all") : "/category/all"} className="block bg-[#FFFBF4] border border-[#F4E6D4] rounded-[2rem] p-4 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
+          <Link to={banners.length > 0 ? (banners[0].link_url || "/category/all") : "/category/all"} className="block bg-blue-50 border border-blue-100 rounded-[2rem] p-4 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div className="flex items-center gap-2 mb-4">
               <svg className="w-4 h-4 text-[#7A1D25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
@@ -298,7 +298,7 @@ export function HomePage() {
 
                 <div className="flex items-center justify-between mt-auto">
                   <span className="text-2xl md:text-3xl font-extrabold text-[#7A1D25]">₹2,999</span>
-                  <button className="bg-[#7A1D25] hover:bg-[#5C161C] text-white px-6 py-2.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2 transition-colors">
+                  <button className="bg-brand-navy hover:bg-blue-900 text-white px-6 py-2.5 rounded-full font-bold text-sm md:text-base flex items-center gap-2 transition-colors">
                     Shop Now <span>→</span>
                   </button>
                 </div>
@@ -311,8 +311,8 @@ export function HomePage() {
           {products.filter(p => p.is_bestseller).length > 0 && (
             <div>
               <div className="flex justify-between items-center px-4 py-4 mb-4 border-b border-gray-100 bg-white rounded-t-2xl shadow-sm">
-                <h3 className="text-xl md:text-2xl font-bold text-[#022A21] tracking-tight font-serif">Best Selling</h3>
-                <Link to="/collection/best-sellers" className="text-brand-orange hover:text-orange-700 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight font-serif">Best Selling</h3>
+                <Link to="/collection/best-sellers" className="text-brand-navy hover:text-blue-900 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
                 {products.filter(p => p.is_bestseller).slice(0, 6).map(product => (
@@ -345,7 +345,7 @@ export function HomePage() {
                   </svg>
                   <h3 className="text-2xl font-bold text-gray-900 tracking-tight font-serif mb-0">Trending Now</h3>
                 </div>
-                <Link to="/collection/trending" className="text-[#88313A] hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
+                <Link to="/collection/trending" className="text-brand-navy hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
               </div>
               <div className="flex overflow-x-auto gap-4 md:gap-6 hide-scrollbar pb-4 snap-x">
                 {products.filter(p => p.is_trending).slice(0, 8).map(product => (
@@ -373,7 +373,7 @@ export function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Wedding Collection</h4>
                   <div className="mt-3 inline-flex">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-navy text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-blue-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
                   </div>
                 </div>
               </Link>
@@ -384,18 +384,18 @@ export function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Festival Collection</h4>
                   <div className="mt-3 inline-flex">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-navy text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-blue-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
                   </div>
                 </div>
               </Link>
 
               {/* Collection 3 */}
               <Link to="/collection/office" className="relative group overflow-hidden rounded-[2rem] aspect-[3/4] bg-gray-100 block">
-                <img src="https://images.unsplash.com/photo-1583391733958-d25e07fac04f?w=800&q=80" alt="Office Wear" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80" alt="Office Wear" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Office Wear</h4>
                   <div className="mt-3 inline-flex">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-navy text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-blue-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
                   </div>
                 </div>
               </Link>
@@ -406,7 +406,7 @@ export function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 md:p-6">
                   <h4 className="text-white font-serif font-bold text-lg md:text-xl leading-tight">Casual Wear</h4>
                   <div className="mt-3 inline-flex">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-orange text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-orange-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
+                    <span className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-navy text-white text-[11px] font-black uppercase tracking-wider rounded-full shadow-lg group-hover:bg-blue-600 transition-all">Shop now <span className="group-hover:translate-x-1 transition-transform text-sm leading-none">→</span></span>
                   </div>
                 </div>
               </Link>
@@ -423,7 +423,7 @@ export function HomePage() {
                   </svg>
                   <h3 className="text-2xl font-bold text-gray-900 tracking-tight font-serif mb-0">Recommended for You</h3>
                 </div>
-                <Link to="/collection/recommended" className="text-[#88313A] hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
+                <Link to="/collection/recommended" className="text-brand-navy hover:text-red-900 text-sm font-medium transition-colors">See all {'>'}</Link>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-6">
                 {products.filter(p => !p.is_trending).slice(0, 6).map(product => (
@@ -442,8 +442,8 @@ export function HomePage() {
             return (
               <div key={cat.id}>
                 <div className="flex justify-between items-center px-2 py-4 mb-4 border-b border-gray-100">
-                  <h3 className="text-2xl md:text-3xl font-bold text-[#022A21] tracking-tight font-serif">{cat.name}</h3>
-                  <Link to={`/category/${cat.id}`} className="text-brand-orange hover:text-orange-700 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight font-serif">{cat.name}</h3>
+                  <Link to={`/category/${cat.id}`} className="text-brand-navy hover:text-blue-900 text-sm md:text-base font-semibold flex items-center gap-2 transition-colors">View All →</Link>
                 </div>
                 <div className="flex gap-4 md:gap-6 overflow-x-auto hide-scrollbar pb-4 snap-x">
                   {catProducts.slice(0, 8).map(product => (
@@ -459,7 +459,7 @@ export function HomePage() {
           {/* Customer Reviews */}
           <div className="mb-2 mt-8">
             <div className="text-center mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-[#022A21] mb-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>What Our Customers Say</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#012980] mb-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>What Our Customers Say</h3>
               <p className="text-gray-500">Trusted by thousands of happy shoppers.</p>
             </div>
 
@@ -472,7 +472,7 @@ export function HomePage() {
               ].map((rev, idx) => (
                 <div key={idx} className="w-[280px] shrink-0 snap-start bg-white p-6 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col justify-between">
                   <div>
-                    <div className="flex gap-1 mb-3 text-brand-orange text-lg">
+                    <div className="flex gap-1 mb-3 text-brand-navy text-lg">
                       {'★'.repeat(rev.rating)}{'☆'.repeat(5 - rev.rating)}
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed italic">"{rev.review}"</p>
@@ -497,7 +497,7 @@ export function HomePage() {
                 </div>
               </div>
               <div className="flex flex-col md:flex-row items-center md:items-start gap-4 px-4 text-center md:text-left">
-                <div className="w-12 h-12 rounded-full bg-[#022A21]/10 flex items-center justify-center text-[#022A21] text-2xl border border-[#022A21]/20">🔄</div>
+                <div className="w-12 h-12 rounded-full bg-brand-navy/10 flex items-center justify-center text-brand-navy text-2xl border border-brand-navy/20">🔄</div>
                 <div>
                   <h4 className="text-gray-900 font-semibold">Easy Replacements</h4>
                   <p className="text-gray-500 text-xs md:text-sm">30 days replacement policy</p>

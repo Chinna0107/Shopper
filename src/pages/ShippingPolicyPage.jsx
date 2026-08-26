@@ -8,7 +8,7 @@ export function ShippingPolicyPage() {
       <Header title="Shipping Policy" />
       
       {/* Top Banner */}
-      <div className="bg-[#022A21] text-white py-10 md:py-14 px-4 shadow-md">
+      <div className="bg-[#012980] text-white py-10 md:py-14 px-4 shadow-md">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 font-serif">Shipping Policy</h1>
           <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
@@ -22,8 +22,8 @@ export function ShippingPolicyPage() {
           
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <Clock className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Processing Time</h2>
+              <Clock className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Processing Time</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
               All orders are processed within 1-2 business days (excluding weekends and holidays) after receiving your order confirmation email. You will receive another notification when your order has shipped. 
@@ -33,8 +33,8 @@ export function ShippingPolicyPage() {
 
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <Truck className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Shipping Rates & Estimates</h2>
+              <Truck className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Shipping Rates & Estimates</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed mb-4">
               Shipping charges for your order will be calculated and displayed at checkout. We offer the following shipping options within India:
@@ -47,19 +47,19 @@ export function ShippingPolicyPage() {
 
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <MapPin className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Order Tracking</h2>
+              <MapPin className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Order Tracking</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
               When your order has shipped, you will receive an email notification from us which will include a tracking number you can use to check its status. Please allow 24 hours for the tracking information to become available.
-              You can also track your order directly from your <a href="/my-orders" className="text-brand-orange font-semibold hover:underline">My Orders</a> dashboard.
+              You can also track your order directly from your <a href="/my-orders" className="text-brand-navy font-semibold hover:underline">My Orders</a> dashboard.
             </p>
           </section>
 
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <ShieldCheck className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Damages</h2>
+              <ShieldCheck className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Damages</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
               SWABHIVAR SHOPPER takes utmost care with packaging but is not directly liable for products damaged or lost during shipping. If you received your order damaged, please contact our support team immediately so we can assist you with a replacement or claim.

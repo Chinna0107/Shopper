@@ -62,11 +62,11 @@ export function SplashScreen({ onComplete }) {
       className="fixed inset-0 z-[100] bg-white flex flex-col items-center justify-center w-full h-full overflow-hidden"
     >
       {/* Background Ambient Gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-orange-50/50 via-white to-white pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50/50 via-white to-white pointer-events-none" />
       
       <div className="relative flex flex-col items-center justify-center gap-6 z-10 w-full px-4">
         {/* Dynamic Center Glow */}
-        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-[400px] md:h-[400px] bg-brand-orange/15 rounded-full blur-[80px] pointer-events-none" />
+        <div ref={glowRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 md:w-[400px] md:h-[400px] bg-brand-navy/15 rounded-full blur-[80px] pointer-events-none" />
         
         {/* Logo */}
         <div ref={logo} className="relative w-full max-w-[240px] md:max-w-md flex justify-center z-10">
@@ -81,7 +81,7 @@ export function SplashScreen({ onComplete }) {
         <div className="overflow-hidden relative z-10 mt-2">
           <div ref={textRef}>
             <p className="text-[#0b162c] text-[11px] md:text-[14px] font-extrabold tracking-[0.25em] uppercase opacity-90 text-center">
-              Your Choice, <span className="text-brand-orange">From Anywhere.</span>
+              Your Choice, <span className="text-brand-navy">From Anywhere.</span>
             </p>
           </div>
         </div>

@@ -64,7 +64,7 @@ export function SupportLayout({ children }) {
         <div className="flex items-center gap-2">
           <img src={logo} alt="Swabhivar Shoppers" className="h-8 object-contain mix-blend-multiply" />
           <span className="font-bold text-lg">
-            <span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span>{' '}
+            <span className="text-[#012980]">Ind</span><span className="text-[#036e26]">basket</span>{' '}
             <span className="text-sm font-normal text-gray-500">Support</span>
           </span>
         </div>
@@ -86,7 +86,7 @@ export function SupportLayout({ children }) {
             <img src={logo} alt="Swabhivar Shoppers" className="h-10 object-contain mix-blend-multiply" />
             <div>
               <p className="font-bold text-xl tracking-tight leading-none">
-                <span className="text-[#fe6603]">Ind</span><span className="text-[#036e26]">basket</span>
+                <span className="text-[#012980]">Ind</span><span className="text-[#036e26]">basket</span>
               </p>
               <div className="flex items-center gap-1 mt-1">
                 <Headphones className="w-3 h-3 text-[#036e26]" />
@@ -100,7 +100,7 @@ export function SupportLayout({ children }) {
           <p className="font-sans font-semibold text-[#036e26] text-sm truncate">{agent.name}</p>
           <p className="text-[#036e26]/40 text-[10px] font-sans truncate">{agent.email}</p>
           {agent.scope === 'vendor' && (
-            <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#fe6603]/10 text-[#fe6603]">
+            <span className="inline-block mt-1 text-[9px] font-bold px-2 py-0.5 rounded-full bg-[#012980]/10 text-[#012980]">
               Vendor Support
             </span>
           )}

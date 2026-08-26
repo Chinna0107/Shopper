@@ -6,7 +6,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/a
 
 const EMPTY = { code: "", type: "fixed", value: "", restriction_type: "min_amount", restriction_value: "", usage: "multiple", expires_at: "", is_active: true };
 
-const inputCls = "w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#fe6603] focus:border-transparent";
+const inputCls = "w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#012980] focus:border-transparent";
 
 export function AdminCouponsPage() {
   const [coupons, setCoupons] = useState([]);
@@ -88,7 +88,7 @@ export function AdminCouponsPage() {
           <p className="text-gray-400 text-xs mt-0.5">Manage discount codes</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 bg-[#fe6603] hover:bg-[#e55c02] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
+          className="flex items-center gap-2 bg-[#012980] hover:bg-[#e55c02] text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors">
           <Plus className="w-4 h-4" /> Add Coupon
         </button>
       </div>
@@ -97,7 +97,7 @@ export function AdminCouponsPage() {
         <div className="bg-white rounded-2xl border border-gray-100 p-16 text-center">
           <Ticket className="w-12 h-12 text-gray-200 mx-auto mb-3" />
           <p className="text-gray-400 text-sm mb-4">No coupons yet.</p>
-          <button onClick={openAdd} className="px-5 py-2 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02]">
+          <button onClick={openAdd} className="px-5 py-2 bg-[#012980] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02]">
             Create First Coupon
           </button>
         </div>
@@ -198,14 +198,14 @@ export function AdminCouponsPage() {
                 </div>
               </div>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={form.is_active} onChange={e => set("is_active", e.target.checked)} className="w-4 h-4 rounded accent-[#fe6603]" />
+                <input type="checkbox" checked={form.is_active} onChange={e => set("is_active", e.target.checked)} className="w-4 h-4 rounded accent-[#012980]" />
                 <span className="text-sm font-medium text-gray-700">Active</span>
               </label>
             </div>
             <div className="border-t border-gray-100 px-6 py-4 flex gap-3">
               <button onClick={() => setModal(null)} className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50">Cancel</button>
               <button onClick={handleSave} disabled={saving || !form.code || !form.value}
-                className="flex-1 px-4 py-2.5 bg-[#fe6603] text-white hover:bg-[#e55c02] rounded-xl text-sm font-semibold flex justify-center items-center gap-2 disabled:opacity-50 transition-colors">
+                className="flex-1 px-4 py-2.5 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl text-sm font-semibold flex justify-center items-center gap-2 disabled:opacity-50 transition-colors">
                 {saving ? "Saving..." : <><Save className="w-4 h-4" /> {modal?.id ? "Update" : "Create"}</>}
               </button>
             </div>

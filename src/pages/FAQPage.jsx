@@ -34,7 +34,7 @@ export function FAQPage() {
       <Header title="FAQs" />
       
       {/* Top Banner */}
-      <div className="bg-[#022A21] text-white py-10 md:py-14 px-4 shadow-md">
+      <div className="bg-[#012980] text-white py-10 md:py-14 px-4 shadow-md">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 font-serif">Frequently Asked Questions</h1>
           <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
@@ -46,8 +46,8 @@ export function FAQPage() {
       <div className="max-w-3xl mx-auto px-4 py-8 md:py-12">
         <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-10">
           <div className="flex items-center gap-3 mb-8 pb-4 border-b border-gray-100">
-            <HelpCircle className="w-6 h-6 text-brand-orange" />
-            <h2 className="text-xl font-bold text-[#022A21] font-serif">Common Queries</h2>
+            <HelpCircle className="w-6 h-6 text-brand-navy" />
+            <h2 className="text-xl font-bold text-[#012980] font-serif">Common Queries</h2>
           </div>
 
           <div className="space-y-4">
@@ -56,16 +56,16 @@ export function FAQPage() {
                 key={index} 
                 className={cn(
                   "border rounded-xl overflow-hidden transition-all duration-200",
-                  openIndex === index ? "border-brand-orange shadow-md" : "border-gray-200 hover:border-gray-300"
+                  openIndex === index ? "border-brand-navy shadow-md" : "border-gray-200 hover:border-gray-300"
                 )}
               >
                 <button 
                   onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                   className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors text-left"
                 >
-                  <span className="font-bold text-[#022A21] text-sm pr-4">{faq.question}</span>
+                  <span className="font-bold text-[#012980] text-sm pr-4">{faq.question}</span>
                   {openIndex === index ? (
-                    <ChevronUp className="w-5 h-5 text-brand-orange shrink-0" />
+                    <ChevronUp className="w-5 h-5 text-brand-navy shrink-0" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-gray-400 shrink-0" />
                   )}

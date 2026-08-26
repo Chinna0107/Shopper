@@ -46,7 +46,7 @@ export function AdminCustomersPage() {
       <div className="relative mb-6">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
         <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search customers by name, email, or phone..."
-          className="w-full pl-9 pr-4 py-3 rounded-xl bg-white border border-gray-100 text-gray-900 text-sm focus:outline-none focus:border-brand-orange/30 shadow-sm" />
+          className="w-full pl-9 pr-4 py-3 rounded-xl bg-white border border-gray-100 text-gray-900 text-sm focus:outline-none focus:border-brand-navy/30 shadow-sm" />
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">

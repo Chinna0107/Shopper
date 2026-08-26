@@ -66,7 +66,7 @@ export function VendorProfilePage() {
           fetchProfile();
         },
         prefill: { name: vendor?.name, email: vendor?.email, contact: vendor?.phone },
-        theme: { color: '#fe6603' },
+        theme: { color: '#012980' },
       };
       new window.Razorpay(options).open();
     } catch (err) {
@@ -128,17 +128,17 @@ export function VendorProfilePage() {
 
       {/* Subscription Card */}
       <div className="bg-white rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-8 relative overflow-hidden group">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#012980]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
         <div className="flex items-center justify-between mb-8 relative z-10">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-[12px] bg-orange-50 flex items-center justify-center text-[#fe6603] shadow-sm">
+            <div className="w-10 h-10 rounded-[12px] bg-blue-50 flex items-center justify-center text-[#012980] shadow-sm">
               <CreditCard className="w-5 h-5" />
             </div>
             <h2 className="text-xl font-bold text-gray-900">Subscription</h2>
           </div>
           {!isExpired && (
             <button onClick={() => setShowPlans(!showPlans)}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
               <RefreshCw className="w-4 h-4" /> Renew / Upgrade
             </button>
           )}
@@ -164,7 +164,7 @@ export function VendorProfilePage() {
           <div className="text-center py-6">
             <p className="text-gray-400 text-sm mb-3">No active subscription found.</p>
             <button onClick={() => setShowPlans(true)}
-              className="px-5 py-2 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors">
+              className="px-5 py-2 bg-[#012980] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors">
               Subscribe Now
             </button>
           </div>
@@ -186,16 +186,16 @@ export function VendorProfilePage() {
 
                 return (
                   <button key={plan.id} type="button" onClick={() => setSelectedPlan(plan)}
-                    className={`relative p-5 rounded-2xl border-2 text-left transition-all flex flex-col ${selectedPlan?.id === plan.id ? 'border-[#fe6603] bg-[#fe6603]/5' : 'border-gray-200 hover:border-[#fe6603]/40'}`}>
-                    {selectedPlan?.id === plan.id && <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#fe6603]" />}
+                    className={`relative p-5 rounded-2xl border-2 text-left transition-all flex flex-col ${selectedPlan?.id === plan.id ? 'border-[#012980] bg-[#012980]/5' : 'border-gray-200 hover:border-[#012980]/40'}`}>
+                    {selectedPlan?.id === plan.id && <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#012980]" />}
                     <p className="font-bold text-gray-900 text-lg">{plan.name}</p>
-                    <p className="text-[#fe6603] font-extrabold text-2xl mt-1">₹{plan.price}</p>
+                    <p className="text-[#012980] font-extrabold text-2xl mt-1">₹{plan.price}</p>
                     <p className="text-gray-500 text-sm mt-0.5 mb-4">{plan.months} month{plan.months > 1 ? 's' : ''}</p>
                     
                     <ul className="space-y-2 mt-auto">
                       {featureList.map((f, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                          <CheckCircle2 className="w-4 h-4 text-[#fe6603] mt-0.5 flex-shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#012980] mt-0.5 flex-shrink-0" />
                           <span>{f.label}{f.value ? `: ${f.value}` : ''}</span>
                         </li>
                       ))}
@@ -205,7 +205,7 @@ export function VendorProfilePage() {
               })}
             </div>
             <button onClick={handleRenew} disabled={renewLoading || !selectedPlan}
-              className="w-full py-3 bg-[#fe6603] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">
+              className="w-full py-3 bg-[#012980] text-white rounded-xl text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">
               {renewLoading ? 'Opening payment...' : selectedPlan ? `Pay ₹${selectedPlan.price}` : 'Select a plan'}
             </button>
           </div>
@@ -214,13 +214,13 @@ export function VendorProfilePage() {
 
       {/* Profile Card */}
       <div className="bg-white rounded-[24px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 overflow-hidden relative group">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-        <div className="h-40 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#012980]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+        <div className="h-40 bg-gradient-to-r from-[#012980] to-[#ff7b23] relative overflow-hidden">
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
         </div>
         <div className="px-8 pb-10 relative z-10">
           <div className="relative flex justify-between items-end -mt-16 mb-8">
-            <div className="w-32 h-32 bg-white rounded-[24px] shadow-lg border-4 border-white flex items-center justify-center text-[#fe6603]">
+            <div className="w-32 h-32 bg-white rounded-[24px] shadow-lg border-4 border-white flex items-center justify-center text-[#012980]">
               <Store className="w-14 h-14" />
             </div>
             <span className={`px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider border shadow-sm ${

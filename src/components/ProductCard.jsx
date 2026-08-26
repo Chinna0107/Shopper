@@ -151,19 +151,19 @@ export function ProductCard({ product, layout = 'grid' }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="flex flex-col justify-center flex-grow pr-8">
-          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 leading-snug mb-1 group-hover:text-[#022A21] transition-colors">{product.name}</h3>
+          <h3 className="text-sm font-semibold text-gray-900 line-clamp-2 leading-snug mb-1 group-hover:text-[#012980] transition-colors">{product.name}</h3>
           <div className="flex items-center gap-1 mb-2">
-            <Star className="w-3.5 h-3.5 fill-brand-orange text-brand-orange" />
+            <Star className="w-3.5 h-3.5 fill-brand-navy text-brand-navy" />
             <span className="text-[10px] font-medium text-gray-600">4.5</span>
             <span className="text-[10px] text-gray-400 ml-1">(1,256)</span>
           </div>
           <div className="flex items-center justify-between mt-auto">
             <div className="flex items-center gap-2">
-              <span className="text-base font-bold text-brand-orange">₹{displayPrice?.toLocaleString('en-IN')}</span>
+              <span className="text-base font-bold text-brand-navy">₹{displayPrice?.toLocaleString('en-IN')}</span>
               <span className="text-xs text-gray-400 line-through">₹{Math.round(displayPrice * 1.4)?.toLocaleString('en-IN')}</span>
             </div>
             <button onClick={handleAddToCart}
-              className="bg-[#022A21] hover:bg-[#054335] transition-colors p-2.5 rounded-xl relative z-20 active:scale-95">
+              className="bg-brand-navy hover:bg-blue-900 transition-colors p-2.5 rounded-xl relative z-20 active:scale-95">
               <ShoppingCart className="w-4 h-4 text-white" strokeWidth={2} />
             </button>
           </div>
@@ -186,7 +186,7 @@ export function ProductCard({ product, layout = 'grid' }) {
       className="group flex flex-col rounded-[1.5rem] md:rounded-[2rem] overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] h-full relative bg-white border border-gray-100 pb-3">
 
       {/* Discount badge */}
-      <div className="absolute top-3 left-3 bg-[#7A1D25] text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full z-20 shadow-sm tracking-wide">
+      <div className="absolute top-3 left-3 bg-brand-navy text-white text-[10px] md:text-xs font-bold px-2.5 py-1 rounded-full z-20 shadow-sm tracking-wide">
         {(Math.round(((displayPrice * 1.4 - displayPrice) / (displayPrice * 1.4)) * 100))}% OFF
       </div>
 
@@ -228,8 +228,10 @@ export function ProductCard({ product, layout = 'grid' }) {
           <span className="text-[#9061DF] text-[10px] md:text-[11px] font-medium">+50 pts</span>
         </div>
 
-        <div className="mt-auto pt-1">
-          <p className="text-gray-500 text-[11px] md:text-xs">4-day replacements</p>
+        <div className="mt-auto pt-3">
+          <button onClick={handleAddToCart} className="w-full bg-brand-navy hover:bg-blue-900 text-white font-semibold py-2 rounded-xl text-xs md:text-sm transition-colors flex items-center justify-center gap-2">
+            <ShoppingCart className="w-4 h-4" /> Add to Cart
+          </button>
         </div>
       </div>
     </div>

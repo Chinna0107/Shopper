@@ -15,8 +15,8 @@ export function WalletPage() {
   return (
     <div className="min-h-screen bg-gray-50 pb-20 pt-4 px-4 md:px-8 max-w-[800px] mx-auto">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-full bg-orange-50 border border-brand-orange/20 flex items-center justify-center shadow-sm">
-          <Wallet className="w-6 h-6 text-brand-orange" />
+        <div className="w-12 h-12 rounded-full bg-blue-50 border border-brand-navy/20 flex items-center justify-center shadow-sm">
+          <Wallet className="w-6 h-6 text-brand-navy" />
         </div>
         <h1 className="text-3xl font-bold text-[#0b162c] font-serif" style={{ fontFamily: 'Georgia, serif' }}>My Wallet</h1>
       </div>
@@ -27,10 +27,10 @@ export function WalletPage() {
             <Wallet className="w-32 h-32" strokeWidth={1} />
           </div>
           <p className="text-sm text-gray-300 font-medium tracking-wider uppercase mb-1">Available Balance</p>
-          <h2 className="text-5xl font-extrabold mb-4 font-serif text-brand-orange" style={{ fontFamily: 'Georgia, serif' }}>₹{balance.toLocaleString()}</h2>
+          <h2 className="text-5xl font-extrabold mb-4 font-serif text-brand-navy" style={{ fontFamily: 'Georgia, serif' }}>₹{balance.toLocaleString()}</h2>
           
           <div className="flex gap-3 mt-6">
-            <button className="flex-1 bg-brand-orange hover:bg-orange-600 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-sm">
+            <button className="flex-1 bg-brand-navy hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-sm">
               Add Money
             </button>
             <button className="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
@@ -55,10 +55,10 @@ export function WalletPage() {
       <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
           <h3 className="text-xl font-bold text-[#0b162c] flex items-center gap-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
-            <span className="w-1.5 h-6 bg-brand-orange rounded-full inline-block shadow-sm"></span>
+            <span className="w-1.5 h-6 bg-brand-navy rounded-full inline-block shadow-sm"></span>
             Recent Transactions
           </h3>
-          <button className="text-sm font-bold text-brand-orange hover:text-orange-700 bg-orange-50 px-4 py-1.5 rounded-full transition-colors">View All</button>
+          <button className="text-sm font-bold text-brand-navy hover:text-blue-700 bg-blue-50 px-4 py-1.5 rounded-full transition-colors">View All</button>
         </div>
 
         <div className="space-y-4">

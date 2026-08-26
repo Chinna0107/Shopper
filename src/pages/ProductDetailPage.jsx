@@ -56,7 +56,7 @@ export function ProductDetailPage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <div className="flex flex-col items-center gap-4">
-          <div className="w-10 h-10 border-4 border-brand-orange/20 border-t-brand-orange rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-brand-navy/20 border-t-brand-navy rounded-full animate-spin" />
           <p className="text-gray-500 text-sm font-medium">Loading product...</p>
         </div>
       </div>
@@ -168,7 +168,7 @@ export function ProductDetailPage() {
             <div className="flex gap-3">
               <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }}
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-brand-orange text-brand-orange' : 'text-gray-800'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
+                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-brand-navy text-brand-navy' : 'text-gray-800'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
               </button>
               <button onClick={handleShare}
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
@@ -193,7 +193,7 @@ export function ProductDetailPage() {
           <div className="flex gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto hide-scrollbar">
             {productImages.map((img, i) => (
               <button key={i} onClick={() => { setMainImg(img); setImgError(false); }}
-                className={`w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-brand-orange' : 'border-transparent'}`}>
+                className={`w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-brand-navy' : 'border-transparent'}`}>
                 <img src={img} alt={`thumb-${i}`} className="w-full h-full object-cover" onError={(e) => { e.target.src = PLACEHOLDER; }} />
               </button>
             ))}
@@ -212,7 +212,7 @@ export function ProductDetailPage() {
               <div className="flex flex-col gap-2 w-[72px]">
                 {productImages.map((img, i) => (
                   <button key={i} onClick={() => setMainImg(img)}
-                    className={`w-16 h-16 rounded-xl border-2 p-1 flex-shrink-0 transition-all overflow-hidden ${mainImg === img ? 'border-brand-orange shadow-sm bg-orange-50' : 'border-gray-200 bg-white hover:border-brand-orange'}`}>
+                    className={`w-16 h-16 rounded-xl border-2 p-1 flex-shrink-0 transition-all overflow-hidden ${mainImg === img ? 'border-brand-navy shadow-sm bg-blue-50' : 'border-gray-200 bg-white hover:border-brand-navy'}`}>
                     <img src={img} alt={`thumb-${i}`} className="w-full h-full object-cover rounded-lg"
                       onError={(e) => { e.target.src = PLACEHOLDER; }} />
                   </button>
@@ -228,7 +228,7 @@ export function ProductDetailPage() {
                   <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
                 </button>
                 <button onClick={handleShare}
-                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-200 hover:scale-110 hover:border-brand-orange transition-all shadow-sm">
+                  className="w-10 h-10 bg-white rounded-full flex items-center justify-center border border-gray-200 hover:scale-110 hover:border-brand-navy transition-all shadow-sm">
                   <Share2 className="w-5 h-5 text-gray-500" strokeWidth={1.5} />
                 </button>
               </div>
@@ -246,11 +246,11 @@ export function ProductDetailPage() {
           {/* Desktop action buttons */}
           <div className="flex gap-3 mt-5">
             <button onClick={handleAddToCart}
-              className="flex-1 border-2 border-brand-orange text-brand-orange font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 hover:bg-orange-50 transition-all shadow-sm active:scale-95">
+              className="flex-1 border-2 border-brand-navy text-brand-navy font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 hover:bg-blue-50 transition-all shadow-sm active:scale-95">
               <ShoppingCart className="w-5 h-5" /> Add to Cart
             </button>
             <button onClick={handleBuyNow}
-              className="flex-[1.4] bg-gradient-to-r from-brand-orange to-yellow-400 text-white font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 shadow-md hover:shadow-[0_8px_25px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all active:scale-95">
+              className="flex-[1.4] bg-gradient-to-r from-brand-navy to-yellow-400 text-white font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 shadow-md hover:shadow-[0_8px_25px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all active:scale-95">
               <Zap className="w-5 h-5 fill-white" /> Buy Now
             </button>
           </div>
@@ -301,8 +301,8 @@ export function ProductDetailPage() {
                   <button key={idx}
                     onClick={() => { setSelectedVariantIdx(idx); setSelectedSizeIdx(0); }}
                     className={`px-4 py-2 rounded-xl border-2 transition-all text-sm font-semibold ${selectedVariantIdx === idx
-                      ? 'border-brand-orange text-brand-orange bg-orange-50'
-                      : 'border-gray-200 text-gray-600 hover:border-brand-orange/50'}`}>
+                      ? 'border-brand-navy text-brand-navy bg-blue-50'
+                      : 'border-gray-200 text-gray-600 hover:border-brand-navy/50'}`}>
                     {variant.color}
                   </button>
                 ))}
@@ -322,8 +322,8 @@ export function ProductDetailPage() {
                   <button key={idx}
                     onClick={() => setSelectedSizeIdx(idx)}
                     className={`px-4 py-2 rounded-xl border-2 transition-all text-sm font-semibold ${selectedSizeIdx === idx
-                      ? 'border-brand-orange text-brand-orange bg-orange-50'
-                      : 'border-gray-200 text-gray-600 hover:border-brand-orange/50'}`}>
+                      ? 'border-brand-navy text-brand-navy bg-blue-50'
+                      : 'border-gray-200 text-gray-600 hover:border-brand-navy/50'}`}>
                     {sizeObj.size}
                   </button>
                 ))}
@@ -336,10 +336,10 @@ export function ProductDetailPage() {
             <span className="text-sm font-bold text-gray-700 uppercase tracking-wide block mb-3">Quantity</span>
             <div className="flex items-center gap-3">
               <button onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                className="w-10 h-10 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-700 hover:border-brand-orange hover:text-brand-orange font-bold text-xl transition-all">−</button>
+                className="w-10 h-10 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-700 hover:border-brand-navy hover:text-brand-navy font-bold text-xl transition-all">−</button>
               <span className="text-lg font-bold text-gray-900 w-8 text-center">{quantity}</span>
               <button onClick={() => setQuantity(q => q + 1)}
-                className="w-10 h-10 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-700 hover:border-brand-orange hover:text-brand-orange font-bold text-xl transition-all">+</button>
+                className="w-10 h-10 rounded-xl border-2 border-gray-200 flex items-center justify-center text-gray-700 hover:border-brand-navy hover:text-brand-navy font-bold text-xl transition-all">+</button>
             </div>
           </div>
 
@@ -351,7 +351,7 @@ export function ProductDetailPage() {
               <input type="text" placeholder="Enter pincode to check delivery"
                 value={pincode} onChange={(e) => setPincode(e.target.value)}
                 className="flex-1 outline-none text-sm placeholder-gray-400 font-medium bg-transparent text-gray-900" maxLength={6} />
-              <button className="text-brand-orange font-bold text-sm hover:opacity-80 transition-opacity">Check</button>
+              <button className="text-brand-navy font-bold text-sm hover:opacity-80 transition-opacity">Check</button>
             </div>
             <p className="text-sm text-gray-700 font-medium">
               Delivery by <span className="font-bold text-gray-900">{deliveryDate}</span> &nbsp;|&nbsp;
@@ -378,7 +378,7 @@ export function ProductDetailPage() {
           {/* Description */}
           <div className="mb-6 pb-6 border-b border-gray-100">
             <h2 className="font-bold text-lg text-gray-900 mb-3 flex items-center gap-2" style={{ fontFamily: 'Georgia, serif' }}>
-              <span className="w-1 h-5 bg-brand-orange rounded-full inline-block" />
+              <span className="w-1 h-5 bg-brand-navy rounded-full inline-block" />
               Product Description
             </h2>
             {product.short_description && (
@@ -393,7 +393,7 @@ export function ProductDetailPage() {
           {groupedSpecs.length > 0 && (
             <div className="mb-4">
               <h2 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2" style={{ fontFamily: 'Georgia, serif' }}>
-                <span className="w-1 h-5 bg-brand-orange rounded-full inline-block" />
+                <span className="w-1 h-5 bg-brand-navy rounded-full inline-block" />
                 Specifications
               </h2>
               
@@ -409,7 +409,7 @@ export function ProductDetailPage() {
                           </span>
                           <span className="text-gray-900 font-semibold w-2/3 break-words">
                             {String(row.v).startsWith('http')
-                              ? <a href={row.v} target="_blank" rel="noreferrer" className="text-brand-orange hover:underline truncate block">View Document</a>
+                              ? <a href={row.v} target="_blank" rel="noreferrer" className="text-brand-navy hover:underline truncate block">View Document</a>
                               : row.v}
                           </span>
                         </div>
@@ -446,7 +446,7 @@ export function ProductDetailPage() {
           Add to Cart
         </button>
         <button onClick={handleBuyNow}
-          className="flex-1 bg-brand-orange text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-brand-orange/20">
+          className="flex-1 bg-brand-navy text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-brand-navy/20">
           Buy Now
         </button>
       </div>
@@ -474,7 +474,7 @@ export function ProductDetailPage() {
                 <div className="flex gap-2 overflow-x-auto hide-scrollbar max-w-full pb-2">
                   {productImages.map((img, i) => (
                     <button key={i} onClick={() => setMainImg(img)}
-                      className={`w-14 h-14 rounded-xl border-2 p-0.5 flex-shrink-0 overflow-hidden transition-all ${mainImg === img ? 'border-brand-orange' : 'border-white/20'}`}>
+                      className={`w-14 h-14 rounded-xl border-2 p-0.5 flex-shrink-0 overflow-hidden transition-all ${mainImg === img ? 'border-brand-navy' : 'border-white/20'}`}>
                       <img src={img} alt={`thumb-${i}`} className="w-full h-full object-cover rounded-lg"
                         onError={(e) => { e.target.src = PLACEHOLDER; }} />
                     </button>

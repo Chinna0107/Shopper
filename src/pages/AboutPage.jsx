@@ -8,19 +8,19 @@ const values = [
     icon: <ShieldCheck className="w-8 h-8 text-white" />,
     title: 'Authenticity Guaranteed',
     desc: 'Every product is sourced directly from trusted artisans and traditional manufacturers.',
-    color: 'from-brand-orange to-yellow-500'
+    color: 'from-brand-navy to-blue-500'
   },
   {
     icon: <Truck className="w-8 h-8 text-white" />,
     title: 'Careful Delivery',
     desc: 'Our optimized logistics network ensures your sacred items reach you safely.',
-    color: 'from-[#022A21] to-[#054335]'
+    color: 'from-[#012980] to-[#001d5a]'
   },
   {
     icon: <Headphones className="w-8 h-8 text-white" />,
     title: 'Dedicated Support',
     desc: 'Our team is always available to help you with any queries or concerns.',
-    color: 'from-brand-orange to-yellow-500'
+    color: 'from-brand-navy to-blue-500'
   }
 ];
 
@@ -36,7 +36,7 @@ export function AboutPage() {
           alt="About Us Hero" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#022A21]/90 via-[#022A21]/70 to-transparent flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#012980]/90 via-[#012980]/70 to-transparent flex items-center">
           <div className="max-w-[1400px] w-full mx-auto px-6 md:px-16">
             <motion.div 
               initial={{ opacity: 0, x: -50 }}
@@ -45,7 +45,7 @@ export function AboutPage() {
               className="max-w-2xl"
             >
               <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight font-serif">
-                Redefining Your <br/><span className="text-brand-orange">Spiritual Journey</span>
+                Redefining Your <br/><span className="text-brand-navy">Spiritual Journey</span>
               </h1>
               <p className="text-gray-200 text-lg md:text-xl font-medium">
                 Discover a world of premium traditional products and sacred essentials. Welcome to SWABHIVAR.
@@ -66,14 +66,14 @@ export function AboutPage() {
             transition={{ duration: 0.6 }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-orange/10 border border-brand-orange/30 rounded-full text-brand-orange font-bold text-sm tracking-wider uppercase mb-2">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-navy/10 border border-brand-navy/30 rounded-full text-brand-navy font-bold text-sm tracking-wider uppercase mb-2">
               <Target className="w-4 h-4" /> Our Vision
             </div>
-            <h2 className="text-3xl md:text-5xl font-extrabold text-[#022A21] leading-tight tracking-tight font-serif">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-[#012980] leading-tight tracking-tight font-serif">
               Purity & Trust <br/>at our core.
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed">
-              Welcome to <strong className="text-[#022A21] font-extrabold">SWABHIVAR SHOPPER</strong>. Our journey began with a simple yet powerful vision: to bridge the gap between authentic traditional products and seamless convenience.
+              Welcome to <strong className="text-[#012980] font-extrabold">SWABHIVAR SHOPPER</strong>. Our journey began with a simple yet powerful vision: to bridge the gap between authentic traditional products and seamless convenience.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
               We understand that trust is the foundation of a great spiritual experience. That's why we meticulously source our products from top artisans. Whether it's puja essentials, festive decor, or traditional wear, we ensure that every item meets the highest standards of purity.
@@ -81,11 +81,11 @@ export function AboutPage() {
             
             <div className="grid grid-cols-2 gap-6 pt-8 border-t border-gray-200">
               <div>
-                <h4 className="text-4xl font-extrabold text-brand-orange mb-2">100k+</h4>
+                <h4 className="text-4xl font-extrabold text-brand-navy mb-2">100k+</h4>
                 <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Happy Devotees</p>
               </div>
               <div>
-                <h4 className="text-4xl font-extrabold text-brand-orange mb-2">1,000+</h4>
+                <h4 className="text-4xl font-extrabold text-brand-navy mb-2">1,000+</h4>
                 <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Sacred Items</p>
               </div>
             </div>
@@ -104,9 +104,9 @@ export function AboutPage() {
                 alt="Our Story" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#022A21] via-[#022A21]/50 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#012980] via-[#012980]/50 to-transparent"></div>
               <div className="absolute bottom-8 left-8 right-8 text-white z-10">
-                <HeartHandshake className="w-12 h-12 mb-4 text-brand-orange" />
+                <HeartHandshake className="w-12 h-12 mb-4 text-brand-navy" />
                 <h3 className="text-2xl font-bold mb-2 font-serif">Built for you</h3>
                 <p className="text-gray-200">We are not just selling products; we are building lasting spiritual connections.</p>
               </div>
@@ -116,7 +116,7 @@ export function AboutPage() {
 
         {/* Our Core Values */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-[#022A21] mb-4 font-serif">The SWABHIVAR Promise</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold text-[#012980] mb-4 font-serif">The SWABHIVAR Promise</h2>
           <p className="text-lg text-gray-600">We hold ourselves to the highest standards of purity to ensure your complete satisfaction.</p>
         </div>
 
@@ -128,12 +128,12 @@ export function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="bg-white rounded-3xl p-8 border border-gray-100 hover:border-brand-orange hover:shadow-xl shadow-md transition-all duration-300 group"
+              className="bg-white rounded-3xl p-8 border border-gray-100 hover:border-brand-navy hover:shadow-xl shadow-md transition-all duration-300 group"
             >
               <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${val.color} flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300`}>
                 {val.icon}
               </div>
-              <h3 className="text-xl font-bold text-[#022A21] mb-3 font-serif">{val.title}</h3>
+              <h3 className="text-xl font-bold text-[#012980] mb-3 font-serif">{val.title}</h3>
               <p className="text-gray-600 leading-relaxed">{val.desc}</p>
             </motion.div>
           ))}

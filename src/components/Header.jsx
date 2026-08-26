@@ -41,7 +41,7 @@ function AvatarDropdown({ user, onLogout }) {
   return (
     <div ref={ref} className="relative">
       <button onClick={() => setOpen(!open)} className="flex items-center gap-1.5 group">
-        <div className="w-8 h-8 rounded-full bg-brand-orange text-white text-xs font-bold flex items-center justify-center shadow-sm ring-2 ring-orange-200 group-hover:ring-orange-400 transition-all">
+        <div className="w-8 h-8 rounded-full bg-brand-navy text-white text-xs font-bold flex items-center justify-center shadow-sm ring-2 ring-blue-200 group-hover:ring-blue-400 transition-all">
           {initials}
         </div>
         <ChevronDown className={`w-3 h-3 text-gray-500 transition-transform hidden md:block ${open ? 'rotate-180' : ''}`} />
@@ -54,7 +54,7 @@ function AvatarDropdown({ user, onLogout }) {
           </div>
           {items.map(({ icon: Icon, label, path }) => (
             <button key={path} onClick={() => { navigate(path); setOpen(false); }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-brand-orange transition-colors text-left">
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-brand-navy transition-colors text-left">
               <Icon className="w-4 h-4 shrink-0" />
               {label}
             </button>
@@ -82,19 +82,19 @@ function CategoriesDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
         Categories <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
         <div className="absolute top-full left-0 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
           <button onClick={() => { navigate('/category/all'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-navy hover:bg-blue-50 transition-colors">
             <Grid3X3 className="w-4 h-4" /> All Categories
           </button>
           <div className="border-t border-gray-100 my-1" />
           {categories.map(cat => (
             <button key={cat.id} onClick={() => { navigate(`/category/${cat.id}`); setOpen(false); }}
-              className="w-full flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-brand-orange transition-colors">
+              className="w-full flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-blue-50 hover:text-brand-navy transition-colors">
               {cat.name}
             </button>
           ))}
@@ -121,21 +121,21 @@ function OffersDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
         Offers <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
         <div className="absolute top-full left-0 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
           <button onClick={() => { navigate('/offers'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-navy hover:bg-blue-50 transition-colors">
             <Tag className="w-4 h-4" /> View All Offers
           </button>
           {offers.filter(o => o.offer_type === 'offer' || !o.code).length > 0 && <div className="border-t border-gray-100 my-1" />}
           {offers.filter(o => o.offer_type === 'offer' || !o.code).slice(0, 6).map(offer => (
             <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setOpen(false); }}
-              className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-orange-50 transition-colors">
+              className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-blue-50 transition-colors">
               <span className="text-sm font-semibold text-gray-700 truncate">{offer.name}</span>
-              <span className="text-xs font-bold text-brand-orange ml-2 shrink-0">
+              <span className="text-xs font-bold text-brand-navy ml-2 shrink-0">
                 {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
               </span>
             </button>
@@ -145,7 +145,7 @@ function OffersDropdown() {
           )}
           <div className="border-t border-gray-100 my-1" />
           <button onClick={() => { navigate('/all-coupons'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-navy hover:bg-blue-50 transition-colors">
             <Ticket className="w-4 h-4" /> All Coupons Available
           </button>
         </div>
@@ -163,23 +163,23 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
 
           {/* Navigation Links */}
           <nav className="flex-1 hidden lg:flex items-center justify-start gap-8">
-            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
+            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Home
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
+            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               About
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
+            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Contact
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
+            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Orders
-              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
+              <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
           </nav>
 
@@ -191,35 +191,35 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
           {/* Right Action Icons & Search */}
           <div className="flex-1 flex items-center justify-end gap-5 lg:gap-8">
             <div className="relative hidden xl:block w-[260px] group">
-              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors z-10" />
+              <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-navy transition-colors z-10" />
               <input type="text" placeholder="Search products..."
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
                 }}
-                className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:border-brand-orange/50 transition-all"
+                className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy/50 transition-all"
               />
             </div>
 
             <div className="flex items-center gap-4 lg:gap-5">
-              <div className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-orange/40 hover:-translate-y-1 group">
-                <Wallet className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+              <div className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
+                <Wallet className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 <span className="text-gray-900 text-sm font-bold">₹1,240</span>
               </div>
 
-              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
-                <Heart className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
+                <Heart className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white">
+                  <span className="absolute -top-1.5 -right-1.5 bg-brand-navy text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white">
                     {wishlistCount}
                   </span>
                 )}
               </Link>
 
-              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
-                <ShoppingCart className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
+                <ShoppingCart className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white animate-pulse">
+                  <span className="absolute -top-1.5 -right-1.5 bg-brand-navy text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white animate-pulse">
                     {cartCount}
                   </span>
                 )}
@@ -305,7 +305,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
               className="fixed top-0 left-0 w-[280px] h-full bg-white border-r border-gray-100 z-[101] shadow-xl flex flex-col">
 
-              <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-orange-50/50">
+              <div className="p-4 flex items-center justify-between border-b border-gray-100 bg-blue-50/50">
                 <div className="flex items-center gap-3">
                   <img src={logo} alt="Logo" className="h-24 w-auto max-w-[240px] object-contain" />
                 </div>
@@ -320,9 +320,9 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {/* Categories accordion */}
                 <motion.div variants={itemVariants}>
                   <button onClick={() => setMobileCatsOpen(o => !o)}
-                    className="w-full flex items-center justify-between text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-orange transition-all">
+                    className="w-full flex items-center justify-between text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-navy transition-all">
                     Categories
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180 text-brand-orange' : ''}`} />
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileCatsOpen ? 'rotate-180 text-brand-navy' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {mobileCatsOpen && (
@@ -331,7 +331,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                         transition={{ duration: 0.2 }} className="overflow-hidden">
                         <div className="ml-5 border-l-2 border-gray-100 pl-4 py-2 space-y-1 mt-1 mb-2">
                           <Link to="/category/all" onClick={() => setMobileMenuOpen(false)}
-                            className="block text-sm font-extrabold text-brand-orange py-2.5 px-3 rounded-lg hover:bg-orange-50 transition-colors">
+                            className="block text-sm font-extrabold text-brand-navy py-2.5 px-3 rounded-lg hover:bg-blue-50 transition-colors">
                             All Categories
                           </Link>
                           {categories.map(cat => (
@@ -349,7 +349,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {navLinks.map(link => (
                   <motion.div key={link.name} variants={itemVariants}>
                     <Link to={link.path} onClick={() => setMobileMenuOpen(false)}
-                      className="block text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-orange transition-all">
+                      className="block text-gray-900 font-bold text-base py-3 px-4 rounded-xl hover:bg-gray-50 hover:text-brand-navy transition-all">
                       {link.name}
                     </Link>
                   </motion.div>
@@ -375,7 +375,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
           <div className="w-full bg-[#0b162c]">
             <div className="flex items-center justify-between px-4 py-2.5 max-w-lg mx-auto">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-brand-orange" />
+                <MapPin className="w-3.5 h-3.5 text-brand-navy" />
                 <span className="text-[12px] text-white font-medium">Deliver to Hyderabad 500081</span>
               </div>
               <Link to="/refer" className="flex items-center gap-1.5 bg-[#f36b21] px-3 py-1 rounded-md shadow-sm">
@@ -402,7 +402,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               <div className="flex items-center gap-2 sm:gap-2.5 px-3 py-3 shrink-0 z-10 relative">
                 {/* Wallet */}
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border border-white/20 rounded-full">
-                  <Wallet className="w-4 h-4 text-brand-orange" strokeWidth={2} />
+                  <Wallet className="w-4 h-4 text-brand-navy" strokeWidth={2} />
                   <span className="text-white text-xs sm:text-sm font-bold">₹1,240</span>
                 </div>
 
@@ -413,7 +413,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 >
                   <ShoppingCart className="w-4 h-4 text-white" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-orange rounded-full text-white text-[9px] font-black flex items-center justify-center">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-navy rounded-full text-white text-[9px] font-black flex items-center justify-center">
                       {cartCount > 9 ? '9+' : cartCount}
                     </span>
                   )}
@@ -451,7 +451,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               style={{ boxShadow: '-8px 0 40px rgba(0,0,0,0.5)' }}
             >
               {/* Top green accent bar */}
-              <div className="h-1 w-full bg-gradient-to-r from-[#022A21] via-brand-orange to-yellow-400" />
+              <div className="h-1 w-full bg-gradient-to-r from-[#012980] via-brand-navy to-yellow-400" />
 
               {/* Header */}
               <div className="flex items-center justify-between px-5 pt-8 pb-5 border-b border-white/[0.07]">
@@ -459,7 +459,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   <p className="text-white font-extrabold text-xl tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
                     SWABHIVAR
                   </p>
-                  <p className="text-brand-orange text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5">
+                  <p className="text-brand-navy text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5">
                     Your Choice, From Anywhere.
                   </p>
                 </div>
@@ -473,7 +473,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
               <div className="px-5 py-4 border-b border-white/[0.07]">
                 {token && user ? (
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-orange to-yellow-400 flex items-center justify-center shadow-lg shadow-brand-orange/30">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-navy to-yellow-400 flex items-center justify-center shadow-lg shadow-brand-navy/30">
                       <span className="text-white font-black text-lg">{user.name?.[0]?.toUpperCase() || 'U'}</span>
                     </div>
                     <div className="flex-1 min-w-0">
@@ -488,7 +488,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 ) : (
                   <div className="flex gap-2">
                     <button onClick={() => { navigate('/login'); setMenuOpen(false); }}
-                      className="flex-1 bg-gradient-to-r from-brand-orange to-yellow-400 text-white font-bold py-2.5 rounded-xl text-sm shadow-md hover:shadow-brand-orange/40 hover:opacity-90 transition-all">
+                      className="flex-1 bg-gradient-to-r from-brand-navy to-yellow-400 text-white font-bold py-2.5 rounded-xl text-sm shadow-md hover:shadow-brand-navy/40 hover:opacity-90 transition-all">
                       Login
                     </button>
                     <button onClick={() => { navigate('/signup'); setMenuOpen(false); }}
@@ -512,7 +512,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   { icon: <Heart className="w-4.5 h-4.5" />, label: 'Wishlist', path: '/wishlist', color: 'text-red-400', badge: wishlistCount > 0 ? wishlistCount : null },
                   { icon: <ShoppingCart className="w-4.5 h-4.5" />, label: 'Cart', path: '/cart', color: 'text-green-400', badge: cartCount > 0 ? cartCount : null },
                   { icon: <MapPin className="w-4.5 h-4.5" />, label: 'My Addresses', path: token ? '/my-addresses' : '/login', color: 'text-indigo-400' },
-                  { icon: <User className="w-4.5 h-4.5" />, label: 'My Profile', path: token ? '/profile' : '/login', color: 'text-brand-orange' },
+                  { icon: <User className="w-4.5 h-4.5" />, label: 'My Profile', path: token ? '/profile' : '/login', color: 'text-brand-navy' },
                   { icon: <Gift className="w-4.5 h-4.5" />, label: 'Refer by A 501', path: '/refer', color: 'text-pink-400' },
                 ].map(item => {
                   if (item.isAccordion && item.id === 'offers') {
@@ -531,13 +531,13 @@ export function Header({ variant = 'default', title, showShare = false }) {
                           {mobileOffersOpen && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                               <div className="ml-7 border-l border-white/10 pl-3 py-2 space-y-1 mt-1 mb-2">
-                                <button onClick={() => { navigate('/offers'); setMenuOpen(false); }} className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg hover:bg-white/5 text-left text-sm font-bold text-brand-orange transition-colors">
+                                <button onClick={() => { navigate('/offers'); setMenuOpen(false); }} className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg hover:bg-white/5 text-left text-sm font-bold text-brand-navy transition-colors">
                                   <Tag className="w-4 h-4" /> View All Offers
                                 </button>
                                 {offers.filter(o => o.offer_type === 'offer' || !o.code).slice(0, 6).map(offer => (
                                   <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setMenuOpen(false); }} className="w-full flex items-center justify-between py-2 px-3 rounded-lg hover:bg-white/5 text-left transition-colors">
                                     <span className="text-[13px] font-medium text-white/70 truncate">{offer.name}</span>
-                                    <span className="text-[11px] font-bold text-brand-orange ml-2 shrink-0">
+                                    <span className="text-[11px] font-bold text-brand-navy ml-2 shrink-0">
                                       {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
                                     </span>
                                   </button>
@@ -562,7 +562,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                       </div>
                       <span className="text-white/85 font-semibold text-[14px] group-hover:text-white transition-colors flex-1">{item.label}</span>
                       {item.badge && (
-                        <span className="bg-brand-orange text-white text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{item.badge}</span>
+                        <span className="bg-brand-navy text-white text-[10px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{item.badge}</span>
                       )}
                       <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/40 transition-colors" />
                     </button>
@@ -578,7 +578,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                         onClick={() => { navigate(`/category/${cat.slug || cat.id}`); setMenuOpen(false); }}
                         className="w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.06] transition-colors text-left group mb-0.5">
                         <div className="w-8 h-8 rounded-xl bg-white/[0.07] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors">
-                          <Tag className="w-4 h-4 text-brand-orange/70" />
+                          <Tag className="w-4 h-4 text-brand-navy/70" />
                         </div>
                         <span className="text-white/70 font-medium text-[14px] group-hover:text-white transition-colors flex-1">{cat.name}</span>
                         <ChevronRight className="w-3.5 h-3.5 text-white/15 group-hover:text-white/35 transition-colors" />

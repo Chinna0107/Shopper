@@ -30,7 +30,7 @@ export function OffersPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="flex items-center justify-center py-32">
-        <div className="w-8 h-8 border-4 border-gray-200 border-t-brand-orange rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-gray-200 border-t-brand-navy rounded-full animate-spin" />
       </div>
     </div>
   );
@@ -40,10 +40,10 @@ export function OffersPage() {
       <Header />
 
       {/* Hero */}
-      <div className="bg-[#022A21] px-6 py-12 md:py-16 text-center border-b border-[#054335] relative overflow-hidden">
+      <div className="bg-[#012980] px-6 py-12 md:py-16 text-center border-b border-[#001d5a] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:24px_24px]"></div>
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/30 text-brand-orange shadow-[0_0_10px_rgba(254,102,3,0.2)] text-xs font-bold px-4 py-1.5 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 bg-brand-navy/20 border border-brand-navy/30 text-brand-navy shadow-[0_0_10px_rgba(254,102,3,0.2)] text-xs font-bold px-4 py-1.5 rounded-full mb-4">
             <Zap className="w-3.5 h-3.5 fill-current" /> EXCLUSIVE DEALS
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>Offers & Deals</h1>
@@ -57,7 +57,7 @@ export function OffersPage() {
         {productOffers.length > 0 && (
           <section>
             <div className="flex items-center gap-2 mb-6 px-2">
-              <Tag className="w-6 h-6 text-brand-orange" />
+              <Tag className="w-6 h-6 text-brand-navy" />
               <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>Active Offers</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -66,9 +66,9 @@ export function OffersPage() {
                 return (
                   <motion.div key={o.id}
                     initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-                    className={`bg-white rounded-3xl border p-6 relative overflow-hidden transition-all shadow-sm ${isHighlighted ? 'border-brand-orange shadow-[0_0_20px_rgba(254,102,3,0.15)] ring-1 ring-brand-orange' : 'border-gray-100 hover:border-gray-200 hover:shadow-md'}`}>
+                    className={`bg-white rounded-3xl border p-6 relative overflow-hidden transition-all shadow-sm ${isHighlighted ? 'border-brand-navy shadow-[0_0_20px_rgba(254,102,3,0.15)] ring-1 ring-brand-navy' : 'border-gray-100 hover:border-gray-200 hover:shadow-md'}`}>
                     
-                    <p className="text-3xl font-black text-[#022A21] tracking-tight mb-2">{discountLabel(o)}</p>
+                    <p className="text-3xl font-black text-[#012980] tracking-tight mb-2">{discountLabel(o)}</p>
                     <p className="text-lg font-bold text-gray-900 mb-1.5">{o.name}</p>
                     <p className="text-sm text-gray-500 capitalize font-medium">
                       {o.scope === 'all' ? 'On all products' : o.scope === 'category' ? 'On selected categories' : 'On selected products'}
@@ -93,7 +93,7 @@ export function OffersPage() {
             <Tag className="w-16 h-16 text-gray-200 mx-auto mb-4" />
             <p className="text-gray-500 mb-6 text-lg font-medium">No active offers right now. Check back soon!</p>
             <button onClick={() => navigate('/')}
-              className="flex items-center justify-center gap-2 mx-auto px-6 py-3 bg-[#022A21] text-white rounded-xl text-sm font-bold shadow-md hover:bg-[#034032] transition-all hover:-translate-y-0.5 w-max">
+              className="flex items-center justify-center gap-2 mx-auto px-6 py-3 bg-[#012980] text-white rounded-xl text-sm font-bold shadow-md hover:bg-[#034032] transition-all hover:-translate-y-0.5 w-max">
               <ShoppingBag className="w-4 h-4" /> Shop Now
             </button>
           </div>

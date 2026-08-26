@@ -35,7 +35,7 @@ export function SupportDashboardPage() {
   const STAT_CARDS = [
     { label: "Total Orders", value: stats.orders, icon: <ShoppingBag className="w-5 h-5" />, color: "text-blue-600 bg-blue-50" },
     { label: "Total Products", value: stats.products, icon: <Package className="w-5 h-5" />, color: "text-[#036e26] bg-[#036e26]/10" },
-    { label: "Categories", value: stats.categories, icon: <Layers className="w-5 h-5" />, color: "text-[#fe6603] bg-[#fe6603]/10" },
+    { label: "Categories", value: stats.categories, icon: <Layers className="w-5 h-5" />, color: "text-[#012980] bg-[#012980]/10" },
   ];
 
   if (loading) return (

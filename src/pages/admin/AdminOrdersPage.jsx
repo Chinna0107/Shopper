@@ -173,7 +173,7 @@ export function AdminOrdersPage() {
                   <tr>
                       <td>
                           <div style="font-size: 9pt; color: #555555; margin-top: 8px; line-height: 1.5;">
-                              <strong style="font-size: 20px;"><span style="color: #fe6603;">Ind</span><span style="color: #036e26;">basket</span></strong><br>
+                              <strong style="font-size: 20px;"><span style="color: #012980;">Ind</span><span style="color: #036e26;">basket</span></strong><br>
                               1-1-738, Vinayaka temple road<br>
                               Phone: +91 90326 75205 | Email: swabhivarshoppers@gmail.com<br>
                           </div>
@@ -195,7 +195,7 @@ export function AdminOrdersPage() {
                   <td class="from-box">
                       <div class="section-heading">From Address</div>
                       <div class="address-box">
-                          <strong><span style="color: #fe6603;">Ind</span><span style="color: #036e26;">basket</span></strong><br>
+                          <strong><span style="color: #012980;">Ind</span><span style="color: #036e26;">basket</span></strong><br>
                           1-1-738, Vinayaka temple road,<br>
                           Koratla, Telangana, India<br>
                           <strong>Phone:</strong> +91 90326 75205
@@ -320,7 +320,7 @@ export function AdminOrdersPage() {
 <body>
 <div class="box">
   <div class="hdr">
-    <div class="brand"><span style="color: #fe6603;">Ind</span><span style="color: #036e26;">basket</span></div>
+    <div class="brand"><span style="color: #012980;">Ind</span><span style="color: #036e26;">basket</span></div>
     <div class="oid">#${order.order_number || order.id}</div>
   </div>
   <div class="sec">
@@ -378,8 +378,8 @@ export function AdminOrdersPage() {
           <button key={s} onClick={() => setStatusFilter(s)}
             className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold capitalize transition-colors ${
               statusFilter === s
-                ? "bg-[#fe6603] text-white hover:bg-[#e55c02] shadow-sm"
-                : "bg-white border border-gray-200 text-gray-900/60 hover:border-brand-orange/40"
+                ? "bg-[#012980] text-white hover:bg-[#e55c02] shadow-sm"
+                : "bg-white border border-gray-200 text-gray-900/60 hover:border-brand-navy/40"
             }`}>
             {s === "all" ? `All (${orders.length})` : `${s} (${orders.filter(o => o.status === s).length})`}
           </button>
@@ -424,7 +424,7 @@ export function AdminOrdersPage() {
               </div>
 
               {expanded === order.id && (
-                <div className="border-t border-brand-orange/5 p-3 sm:p-4 lg:p-5 space-y-4">
+                <div className="border-t border-brand-navy/5 p-3 sm:p-4 lg:p-5 space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">Update Status</p>
@@ -461,9 +461,9 @@ export function AdminOrdersPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-brand-orange/5">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-brand-navy/5">
                     <button onClick={() => printLabel(order)}
-                      className="flex items-center justify-center gap-1.5 bg-[#fe6603] text-white hover:bg-[#e55c02] px-3 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/80 transition-colors">
+                      className="flex items-center justify-center gap-1.5 bg-[#012980] text-white hover:bg-[#e55c02] px-3 py-2.5 rounded-xl text-xs font-semibold hover:bg-white/80 transition-colors">
                       <Printer className="w-3.5 h-3.5 flex-shrink-0" />
                       <span className="truncate">Print Label</span>
                     </button>

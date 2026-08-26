@@ -77,7 +77,7 @@ export function AdminReportsPage() {
             { title: "Customer Database", desc: "Download registered users and their details", type: "customers" },
             { title: "Coupon Usage", desc: "Download history of used discount codes", type: "coupons" }
           ].map((report, i) => (
-            <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-white border border-brand-orange/5">
+            <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-white border border-brand-navy/5">
               <div>
                 <p className="font-bold text-gray-900">{report.title}</p>
                 <p className="text-xs text-gray-500">{report.desc}</p>

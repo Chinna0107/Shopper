@@ -9,7 +9,7 @@ export function ReturnsPolicyPage() {
       <Header title="Returns & Exchanges" />
       
       {/* Top Banner */}
-      <div className="bg-[#022A21] text-white py-10 md:py-14 px-4 shadow-md">
+      <div className="bg-[#012980] text-white py-10 md:py-14 px-4 shadow-md">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-3xl md:text-4xl font-extrabold mb-4 font-serif">Returns & Exchanges</h1>
           <p className="text-sm md:text-base text-gray-200 max-w-2xl mx-auto">
@@ -23,8 +23,8 @@ export function ReturnsPolicyPage() {
           
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <RefreshCcw className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Return Window</h2>
+              <RefreshCcw className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Return Window</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
               We offer a 7-day return policy for most items. If 7 days have gone by since your purchase was delivered, unfortunately, we cannot offer you a refund or exchange. To be eligible for a return, your item must be unused, unsealed, and in the exact same condition that you received it. It must also be in the original packaging.
@@ -33,8 +33,8 @@ export function ReturnsPolicyPage() {
 
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <ShieldAlert className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Non-Returnable Items</h2>
+              <ShieldAlert className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Non-Returnable Items</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed mb-4">
               Several types of goods are exempt from being returned due to hygiene, safety, and brand policies:
@@ -48,8 +48,8 @@ export function ReturnsPolicyPage() {
 
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <CreditCard className="w-6 h-6 text-brand-orange" />
-              <h2 className="text-xl font-bold text-[#022A21] font-serif">Refunds</h2>
+              <CreditCard className="w-6 h-6 text-brand-navy" />
+              <h2 className="text-xl font-bold text-[#012980] font-serif">Refunds</h2>
             </div>
             <p className="text-gray-600 text-sm leading-relaxed">
               Once your return is received and inspected, we will send you an email to notify you that we have received your returned item. We will also notify you of the approval or rejection of your refund.
@@ -57,10 +57,10 @@ export function ReturnsPolicyPage() {
             </p>
           </section>
 
-          <div className="mt-10 p-6 bg-orange-50/50 border border-brand-orange/20 rounded-2xl text-center shadow-sm">
-            <h3 className="text-lg font-bold text-[#022A21] mb-2 font-serif">Ready to initiate a return?</h3>
+          <div className="mt-10 p-6 bg-blue-50/50 border border-brand-navy/20 rounded-2xl text-center shadow-sm">
+            <h3 className="text-lg font-bold text-[#012980] mb-2 font-serif">Ready to initiate a return?</h3>
             <p className="text-sm text-gray-600 mb-4">Reach out to our support team and we'll guide you through the process.</p>
-            <Link to="/contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold py-2.5 px-6 rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
+            <Link to="/contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-navy to-blue-500 text-white font-bold py-2.5 px-6 rounded-xl hover:-translate-y-0.5 hover:shadow-lg transition-all">
               <HelpCircle className="w-4 h-4" />
               Contact Support
             </Link>

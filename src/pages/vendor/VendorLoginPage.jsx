@@ -119,7 +119,7 @@ export function VendorLoginPage() {
             <img src={logo} alt="Swabhivar Shoppers" className="h-12 mx-auto mix-blend-multiply" />
           </Link>
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Store className="w-6 h-6 text-[#fe6603]" />
+            <Store className="w-6 h-6 text-[#012980]" />
             <h1 className="text-3xl font-bold text-gray-900">
               {step === 'login' ? 'Vendor Portal' : step === 'forgot_reset' ? 'Create New Password' : 'Reset Password'}
             </h1>
@@ -133,11 +133,11 @@ export function VendorLoginPage() {
         </div>
 
         <div className="bg-white rounded-[32px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#012980]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
           {step !== 'login' && (
             <button 
               onClick={() => { setStep('login'); clearForm(); }}
-              className="absolute top-6 left-6 text-gray-400 hover:text-[#fe6603] transition-colors flex items-center gap-1 text-sm font-medium"
+              className="absolute top-6 left-6 text-gray-400 hover:text-[#012980] transition-colors flex items-center gap-1 text-sm font-medium"
             >
               <ArrowLeft className="w-4 h-4" /> Back
             </button>
@@ -153,7 +153,7 @@ export function VendorLoginPage() {
                   </div>
                   <input
                     type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                    className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                     placeholder="vendor@example.com"
                   />
                 </div>
@@ -167,7 +167,7 @@ export function VendorLoginPage() {
                   </div>
                   <input
                     type={showPassword ? 'text' : 'password'} required value={password} onChange={(e) => setPassword(e.target.value)}
-                    className="block w-full pl-12 pr-12 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                    className="block w-full pl-12 pr-12 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                     placeholder="••••••••"
                   />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -178,15 +178,15 @@ export function VendorLoginPage() {
 
               <div className="flex items-center justify-between">
                 <label className="flex items-center gap-2 cursor-pointer">
-                  <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-[#fe6603] focus:ring-[#fe6603]" />
+                  <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-[#012980] focus:ring-[#012980]" />
                   <span className="text-sm text-gray-600">Remember me</span>
                 </label>
-                <button type="button" onClick={() => { setStep('forgot_email'); clearForm(); }} className="text-sm font-medium text-[#fe6603] hover:text-[#e55c00]">
+                <button type="button" onClick={() => { setStep('forgot_email'); clearForm(); }} className="text-sm font-medium text-[#012980] hover:text-[#e55c00]">
                   Forgot password?
                 </button>
               </div>
 
-              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white py-4 rounded-[16px] font-bold text-lg hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none mt-2">
+              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white py-4 rounded-[16px] font-bold text-lg hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none mt-2">
                 {loading ? 'Signing in...' : 'Sign In'} {!loading && <ArrowRight className="w-5 h-5" />}
               </button>
             </form>
@@ -202,12 +202,12 @@ export function VendorLoginPage() {
                   </div>
                   <input
                     type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent transition-all"
+                    className="block w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#012980] focus:border-transparent transition-all"
                     placeholder="Enter your registered email"
                   />
                 </div>
               </div>
-              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#fe6603] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
                 {loading ? 'Sending OTP...' : 'Send OTP'}
               </button>
             </form>
@@ -219,12 +219,12 @@ export function VendorLoginPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">Enter OTP</label>
                 <input
                   type="text" required maxLength={6} value={otp} onChange={(e) => setOtp(e.target.value)}
-                  className="block w-full text-center tracking-widest text-lg font-bold py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent transition-all"
+                  className="block w-full text-center tracking-widest text-lg font-bold py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#012980] focus:border-transparent transition-all"
                   placeholder="6-digit OTP"
                 />
                 <p className="text-xs text-gray-500 mt-2 text-center">Sent to {email}</p>
               </div>
-              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#fe6603] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
                 {loading ? 'Verifying...' : 'Verify OTP'}
               </button>
             </form>
@@ -240,7 +240,7 @@ export function VendorLoginPage() {
                   </div>
                   <input
                     type={showNewPassword ? 'text' : 'password'} required minLength={6} value={newPassword} onChange={(e) => setNewPassword(e.target.value)}
-                    className="block w-full pl-11 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent transition-all"
+                    className="block w-full pl-11 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#012980] focus:border-transparent transition-all"
                     placeholder="New password"
                   />
                   <button type="button" onClick={() => setShowNewPassword(!showNewPassword)} className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -257,7 +257,7 @@ export function VendorLoginPage() {
                   </div>
                   <input
                     type={showConfirmPassword ? 'text' : 'password'} required minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full pl-11 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#fe6603] focus:border-transparent transition-all"
+                    className="block w-full pl-11 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#012980] focus:border-transparent transition-all"
                     placeholder="Confirm password"
                   />
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 pr-4 flex items-center">
@@ -266,7 +266,7 @@ export function VendorLoginPage() {
                 </div>
               </div>
 
-              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#fe6603] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+              <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
                 {loading ? 'Resetting...' : 'Reset Password'}
               </button>
             </form>
@@ -275,7 +275,7 @@ export function VendorLoginPage() {
           {step === 'login' && (
             <p className="mt-8 text-center text-gray-600">
               Want to become a vendor?{' '}
-              <Link to="/vendor-signup" className="text-[#fe6603] font-medium hover:underline">
+              <Link to="/vendor-signup" className="text-[#012980] font-medium hover:underline">
                 Apply Now
               </Link>
             </p>

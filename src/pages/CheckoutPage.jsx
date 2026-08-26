@@ -261,7 +261,7 @@ export function CheckoutPage() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Login Option */}
-                  <div className="bg-orange-50/50 p-6 rounded-3xl shadow-sm border border-brand-orange/30 flex flex-col justify-between hover:border-brand-orange hover:shadow-md transition-all">
+                  <div className="bg-blue-50/50 p-6 rounded-3xl shadow-sm border border-brand-navy/30 flex flex-col justify-between hover:border-brand-navy hover:shadow-md transition-all">
                     <div>
                       <h3 className="font-bold text-xl text-[#0b162c] mb-3 font-serif" style={{ fontFamily: 'Georgia, serif' }}>Login / Sign Up</h3>
                       <p className="text-[15px] text-gray-600 mb-8 leading-relaxed">Access your saved addresses, track orders easily, and get exclusive offers.</p>
@@ -294,14 +294,14 @@ export function CheckoutPage() {
             {step === 2 && (
           <div className="space-y-4 max-w-3xl mx-auto">
             <h2 className="text-xl font-bold text-[#0b162c] flex items-center gap-3 mb-8 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
-              <div className="w-10 h-10 rounded-full bg-brand-orange/10 border border-brand-orange/30 shadow-sm flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-brand-orange" />
+              <div className="w-10 h-10 rounded-full bg-brand-navy/10 border border-brand-navy/30 shadow-sm flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-brand-navy" />
               </div>
               Delivery Address
             </h2>
             
             <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-orange/10 to-transparent rounded-bl-full pointer-events-none opacity-50 blur-xl"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-brand-navy/10 to-transparent rounded-bl-full pointer-events-none opacity-50 blur-xl"></div>
               <div className="space-y-6">
                 <div>
                   <label className="text-xs font-bold text-gray-600 uppercase tracking-wider mb-2 block">Full Name</label>
@@ -343,8 +343,8 @@ export function CheckoutPage() {
         {step === 3 && (
           <div className="space-y-4 max-w-3xl mx-auto">
             <h2 className="text-xl font-bold text-[#0b162c] flex items-center gap-3 mb-8 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
-              <div className="w-10 h-10 rounded-full bg-brand-orange/10 border border-brand-orange/30 shadow-sm flex items-center justify-center">
-                <CreditCard className="w-5 h-5 text-brand-orange" />
+              <div className="w-10 h-10 rounded-full bg-brand-navy/10 border border-brand-navy/30 shadow-sm flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-brand-navy" />
               </div>
               Payment Method
             </h2>
@@ -352,9 +352,9 @@ export function CheckoutPage() {
             <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
               <div className="space-y-4">
                 {/* Online Payment */}
-                <label className={`flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'razorpay' ? 'border-brand-orange bg-orange-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
-                  <div className="w-10 h-10 rounded-xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center mr-4 shrink-0 shadow-sm">
-                    <CreditCard className="w-5 h-5 text-brand-orange" />
+                <label className={`flex items-center p-5 rounded-2xl border-2 cursor-pointer transition-all ${paymentMethod === 'razorpay' ? 'border-brand-navy bg-blue-50/50 shadow-sm' : 'border-gray-200 hover:border-gray-300 bg-white'}`}>
+                  <div className="w-10 h-10 rounded-xl bg-brand-navy/10 border border-brand-navy/20 flex items-center justify-center mr-4 shrink-0 shadow-sm">
+                    <CreditCard className="w-5 h-5 text-brand-navy" />
                   </div>
                   <div className="flex-1" onClick={() => setPaymentMethod('razorpay')}>
                     <span className="text-lg font-bold text-gray-900 block">Online Payment</span>
@@ -366,7 +366,7 @@ export function CheckoutPage() {
                     value="razorpay"
                     checked={paymentMethod === 'razorpay'}
                     onChange={() => setPaymentMethod('razorpay')}
-                    className="w-5 h-5 accent-brand-orange bg-transparent border-gray-200"
+                    className="w-5 h-5 accent-brand-navy bg-transparent border-gray-200"
                   />
                 </label>
 
@@ -441,7 +441,7 @@ export function CheckoutPage() {
                 )}
                 <div className="flex justify-between font-extrabold text-gray-900 text-xl">
                   <span>Grand Total</span>
-                  <span className="text-brand-orange">₹{grandTotal.toFixed(2)}</span>
+                  <span className="text-brand-navy">₹{grandTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -455,7 +455,7 @@ export function CheckoutPage() {
               ) : step === 2 ? (
                 <button 
                   onClick={handleProceedToPayment}
-                  className="w-full bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:shadow-brand-orange/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
+                  className="w-full bg-gradient-to-r from-brand-navy to-blue-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:shadow-brand-navy/30 hover:-translate-y-1 transition-all flex items-center justify-center gap-2"
                 >
                   Proceed to Payment
                 </button>
@@ -467,7 +467,7 @@ export function CheckoutPage() {
                     isPlacingOrder ? 'opacity-70 cursor-not-allowed shadow-none bg-gray-100 border border-gray-200 text-gray-500' :
                     paymentMethod === 'cod'
                       ? 'bg-green-600 hover:bg-green-500 shadow-md hover:-translate-y-1'
-                      : 'bg-gradient-to-r from-brand-orange to-yellow-500 shadow-lg hover:shadow-brand-orange/30 hover:-translate-y-1'
+                      : 'bg-gradient-to-r from-brand-navy to-blue-500 shadow-lg hover:shadow-brand-navy/30 hover:-translate-y-1'
                   }`}
                 >
                   {isPlacingOrder ? (
@@ -523,7 +523,7 @@ export function CheckoutPage() {
           ) : step === 2 ? (
             <button 
               onClick={handleProceedToPayment}
-              className="w-full bg-gradient-to-r from-brand-orange to-yellow-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-2 hover:shadow-brand-orange/30"
+              className="w-full bg-gradient-to-r from-brand-navy to-blue-500 text-white font-bold text-base rounded-xl py-4 shadow-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-2 hover:shadow-brand-navy/30"
             >
               Proceed to Payment
               <span className="w-1.5 h-1.5 bg-white rounded-full mx-1 opacity-50" />
@@ -537,7 +537,7 @@ export function CheckoutPage() {
                 isPlacingOrder ? 'opacity-70 cursor-not-allowed shadow-none bg-gray-100 border border-gray-200 text-gray-500' :
                 paymentMethod === 'cod'
                   ? 'bg-green-600 shadow-md hover:-translate-y-1'
-                  : 'bg-gradient-to-r from-brand-orange to-yellow-500 shadow-lg hover:-translate-y-1 hover:shadow-brand-orange/30'
+                  : 'bg-gradient-to-r from-brand-navy to-blue-500 shadow-lg hover:-translate-y-1 hover:shadow-brand-navy/30'
               }`}
             >
               {isPlacingOrder ? (
@@ -565,8 +565,8 @@ export function CheckoutPage() {
       {isPlacingOrder && (
         <div ref={overlayRef} className="fixed inset-0 z-[100] bg-[#020617]/90 backdrop-blur-md flex flex-col items-center justify-center w-full h-full">
           <div className="flex flex-col items-center gap-5">
-            <div ref={iconRef} className="w-24 h-24 bg-brand-orange/20 border-2 border-brand-orange rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,123,0,0.5)]">
-              <CheckCircle className="w-12 h-12 text-brand-orange" strokeWidth={2.5} />
+            <div ref={iconRef} className="w-24 h-24 bg-brand-navy/20 border-2 border-brand-navy rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,123,0,0.5)]">
+              <CheckCircle className="w-12 h-12 text-brand-navy" strokeWidth={2.5} />
             </div>
             <h2 ref={textRef} className="text-3xl font-extrabold text-white glow-text tracking-tight">Order Confirmed!</h2>
             <p className="text-sm text-brand-text-muted animate-pulse">Redirecting to tracking...</p>

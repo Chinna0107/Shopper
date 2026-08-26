@@ -79,7 +79,7 @@ function ProductDetailModal({ product, onClose, onApprove, onReject }) {
                     <div key={key} className="bg-gray-50 rounded-lg px-3 py-2 overflow-hidden text-ellipsis">
                       <p className="text-[10px] text-gray-400 uppercase">{key.replace(/_/g, ' ')}</p>
                       {isUrl ? (
-                        <a href={String(val)} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-brand-orange hover:underline truncate block">
+                        <a href={String(val)} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-brand-navy hover:underline truncate block">
                           View Document
                         </a>
                       ) : (

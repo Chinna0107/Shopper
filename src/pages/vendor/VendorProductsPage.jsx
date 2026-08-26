@@ -82,7 +82,7 @@ export function VendorProductsPage() {
 
   if (loading) return (
     <div className="flex items-center justify-center h-64">
-      <div className="w-8 h-8 border-4 border-gray-200 border-t-[#fe6603] rounded-full animate-spin" />
+      <div className="w-8 h-8 border-4 border-gray-200 border-t-[#012980] rounded-full animate-spin" />
     </div>
   );
 
@@ -117,7 +117,7 @@ export function VendorProductsPage() {
               placeholder="Search products..."
               value={searchTerm}
               onChange={e => setSearchTerm(e.target.value)}
-              className="pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#fe6603]/50 focus:border-[#fe6603] w-full text-sm font-medium shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all"
+              className="pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-[16px] focus:outline-none focus:ring-2 focus:ring-[#012980]/50 focus:border-[#012980] w-full text-sm font-medium shadow-[0_4px_20px_rgb(0,0,0,0.03)] transition-all"
             />
           </div>
           <div className="flex flex-col items-end gap-1 w-full sm:w-auto">
@@ -125,7 +125,7 @@ export function VendorProductsPage() {
               onClick={() => navigate('/vendor/products/new')}
               disabled={!canAddProduct}
               title={limitMessage}
-              className="w-full sm:w-auto bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white px-5 py-3 rounded-[16px] text-sm font-bold hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-none"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white px-5 py-3 rounded-[16px] text-sm font-bold hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none disabled:hover:shadow-none"
             >
               <Plus className="w-5 h-5" /> Add Product
             </button>
@@ -172,7 +172,7 @@ export function VendorProductsPage() {
                 <h3 className="font-bold text-gray-900 text-base leading-snug line-clamp-2">{product.name}</h3>
                 {product.brand && <p className="text-xs font-bold text-gray-400 uppercase tracking-wider">{product.brand}</p>}
                 <div className="flex items-end justify-between mt-auto pt-4">
-                  <p className="text-xl font-extrabold text-[#fe6603] tracking-tight">₹{displayPrice}</p>
+                  <p className="text-xl font-extrabold text-[#012980] tracking-tight">₹{displayPrice}</p>
                   {product.stock != null && (
                     <span className="text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-lg border border-gray-100">Stock: {product.stock}</span>
                   )}
@@ -183,7 +183,7 @@ export function VendorProductsPage() {
               <div className="px-5 py-4 bg-gray-50/50 border-t border-gray-100 flex gap-3">
                 <button
                   onClick={() => navigate(`/vendor/products/${product.id}/edit`)}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white border border-gray-200 rounded-[12px] hover:bg-gray-50 hover:border-gray-300 hover:text-[#fe6603] transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-gray-700 bg-white border border-gray-200 rounded-[12px] hover:bg-gray-50 hover:border-gray-300 hover:text-[#012980] transition-all"
                 >
                   <Edit2 className="w-4 h-4" /> Edit
                 </button>
@@ -210,7 +210,7 @@ export function VendorProductsPage() {
           </p>
           {!searchTerm && canAddProduct && (
             <button onClick={() => navigate('/vendor/products/new')}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#fe6603] text-white font-semibold rounded-xl hover:bg-[#e55c02] transition-colors">
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[#012980] text-white font-semibold rounded-xl hover:bg-[#e55c02] transition-colors">
               <Plus className="w-4 h-4" /> Add Your First Product
             </button>
           )}

@@ -84,7 +84,7 @@ export function BottomNav() {
             to={tab.path}
             className="flex flex-col items-center justify-center h-full gap-1 transition-all duration-300 relative flex-1"
           >
-            <div className={`w-[60px] h-[34px] flex items-center justify-center rounded-full transition-all duration-300 ease-out ${tab.active ? 'bg-[#88313A] shadow-sm shadow-[#88313A]/20 scale-105' : 'bg-transparent'}`}>
+            <div className={`w-[60px] h-[34px] flex items-center justify-center rounded-full transition-all duration-300 ease-out ${tab.active ? 'bg-brand-navy shadow-sm shadow-brand-navy/20 scale-105' : 'bg-transparent'}`}>
               {tab.badge > 0 && (
                 <span className="absolute top-1 right-2 min-w-[16px] h-4 bg-[#E57E25] text-white text-[9px] font-bold rounded-full flex items-center justify-center px-1 shadow-sm z-10 border-[1.5px] border-white">
                   {tab.badge > 9 ? '9+' : tab.badge}
@@ -94,7 +94,7 @@ export function BottomNav() {
                 {tab.icon(tab.active)}
               </div>
             </div>
-            <span className={`text-[10px] font-medium tracking-wide transition-colors duration-300 ${tab.active ? 'text-[#88313A]' : 'text-gray-400'}`}>
+            <span className={`text-[10px] font-medium tracking-wide transition-colors duration-300 ${tab.active ? 'text-brand-navy' : 'text-gray-400'}`}>
               {tab.name}
             </span>
           </NavLink>

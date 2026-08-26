@@ -71,7 +71,7 @@ export function AdminDashboardPage() {
             <div className="inline-block min-w-full align-middle px-3 sm:px-0">
               <table className="w-full text-sm min-w-[480px]">
                 <thead>
-                  <tr className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider border-b border-brand-orange/5">
+                  <tr className="text-gray-500 text-[10px] sm:text-xs uppercase tracking-wider border-b border-brand-navy/5">
                     <th className="text-left py-3 pr-2 sm:pr-4">Order</th>
                     <th className="text-left py-3 pr-2 sm:pr-4">Customer</th>
                     <th className="text-left py-3 pr-2 sm:pr-4">Total</th>

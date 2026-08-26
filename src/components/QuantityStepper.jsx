@@ -14,7 +14,7 @@ export function QuantityStepper({ quantity, onIncrease, onDecrease, className })
       <span className="text-sm font-semibold w-4 text-center">{quantity}</span>
       <button 
         onClick={onIncrease}
-        className="w-6 h-6 flex items-center justify-center rounded-full bg-brand-cream text-brand-maroon hover:bg-orange-100 transition-colors"
+        className="w-6 h-6 flex items-center justify-center rounded-full bg-brand-cream text-brand-maroon hover:bg-blue-100 transition-colors"
       >
         <Plus className="w-4 h-4" />
       </button>

@@ -39,7 +39,7 @@ export function VendorWalletPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Balance Card */}
-        <div className="bg-gradient-to-br from-[#fe6603] to-[#e55c02] p-8 rounded-[24px] text-white shadow-[0_8px_30px_rgba(254,102,3,0.3)] relative overflow-hidden group transition-all duration-300 hover:shadow-[0_12px_40px_rgba(254,102,3,0.4)] hover:-translate-y-1">
+        <div className="bg-gradient-to-br from-[#012980] to-[#e55c02] p-8 rounded-[24px] text-white shadow-[0_8px_30px_rgba(254,102,3,0.3)] relative overflow-hidden group transition-all duration-300 hover:shadow-[0_12px_40px_rgba(254,102,3,0.4)] hover:-translate-y-1">
           <div className="absolute top-0 right-0 w-48 h-48 bg-white opacity-10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-6">

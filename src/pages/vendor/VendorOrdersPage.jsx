@@ -224,7 +224,7 @@ export function VendorOrdersPage() {
             placeholder="Search by Order ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#fe6603]/50 focus:border-[#fe6603] transition-all"
+            className="w-full pl-12 pr-4 py-3 bg-gray-50/50 border border-gray-200 rounded-xl text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-[#012980]/50 focus:border-[#012980] transition-all"
           />
         </div>
       </div>
@@ -264,13 +264,13 @@ export function VendorOrdersPage() {
                         onClick={() => setExpanded(expanded === order.id ? null : order.id)}
                       >
                         <td className="px-8 py-5">
-                          <div className="font-bold text-gray-900 group-hover:text-[#fe6603] transition-colors">{order.order_number || order.id}</div>
+                          <div className="font-bold text-gray-900 group-hover:text-[#012980] transition-colors">{order.order_number || order.id}</div>
                         </td>
                         <td className="px-8 py-5 text-sm font-medium text-gray-500">
                           {new Date(order.created_at).toLocaleString()}
                         </td>
                         <td className="px-8 py-5">
-                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#fe6603]/10 text-[#fe6603]">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#012980]/10 text-[#012980]">
                             {order.items?.length || 0} items
                           </span>
                         </td>
@@ -283,8 +283,8 @@ export function VendorOrdersPage() {
                           </span>
                         </td>
                         <td className="px-8 py-5 text-right">
-                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center ml-auto group-hover:bg-[#fe6603]/10 group-hover:text-[#fe6603] transition-colors">
-                            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expanded === order.id ? "rotate-180 text-[#fe6603]" : "text-gray-400"}`} />
+                          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center ml-auto group-hover:bg-[#012980]/10 group-hover:text-[#012980] transition-colors">
+                            <ChevronDown className={`w-5 h-5 transition-transform duration-300 ${expanded === order.id ? "rotate-180 text-[#012980]" : "text-gray-400"}`} />
                           </div>
                         </td>
                       </tr>
@@ -340,7 +340,7 @@ export function VendorOrdersPage() {
                                             </div>
                                           </div>
                                           <div className="text-right shrink-0">
-                                            <p className="font-bold text-brand-orange">₹{((item.variant?.price || item.product?.price || 0) * item.qty).toLocaleString()}</p>
+                                            <p className="font-bold text-brand-navy">₹{((item.variant?.price || item.product?.price || 0) * item.qty).toLocaleString()}</p>
                                           </div>
                                         </div>
                                       ))}

@@ -78,14 +78,14 @@ export function AdminVendorRequestsPage() {
             placeholder="Search requests by store, name, or email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#fe6603]"
+            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#012980]"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="w-8 h-8 border-4 border-[#fe6603] border-t-transparent rounded-full animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-[#012980] border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : filteredRequests.length === 0 ? (
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
@@ -99,7 +99,7 @@ export function AdminVendorRequestsPage() {
             <div key={request.id} className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-[#fe6603]">
+                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-[#012980]">
                     <Store className="w-6 h-6" />
                   </div>
                   <div>

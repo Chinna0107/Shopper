@@ -60,7 +60,7 @@ export function VendorSignupPage() {
           toast.success('Payment successful!');
         },
         prefill: { name: `${formData.firstName} ${formData.lastName}`, email: formData.email, contact: formData.phone },
-        theme: { color: '#fe6603' },
+        theme: { color: '#012980' },
       };
       const rzp = new window.Razorpay(options);
       rzp.on('payment.failed', () => { setError('Payment failed. Please try again.'); });
@@ -133,14 +133,14 @@ export function VendorSignupPage() {
             <img src={logo} alt="Swabhivar Shoppers" className="h-12 mx-auto mix-blend-multiply" />
           </Link>
           <div className="flex items-center justify-center gap-2 mb-2">
-            <Store className="w-6 h-6 text-[#fe6603]" />
+            <Store className="w-6 h-6 text-[#012980]" />
             <h1 className="text-3xl font-bold text-gray-900">Become a Vendor</h1>
           </div>
           <p className="text-gray-500">Apply to sell your products on Swabhivar Shoppers</p>
         </div>
 
         <div className="bg-white rounded-[32px] p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#fe6603]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#012980]/5 to-transparent rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none"></div>
           <div className="relative z-10">
           {/* Progress */}
           <div className="flex items-center justify-center mb-8 gap-1">
@@ -150,10 +150,10 @@ export function VendorSignupPage() {
               return (
                 <React.Fragment key={n}>
                   <div className="flex flex-col items-center gap-1">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${active ? 'bg-[#fe6603] text-white' : 'bg-gray-100 text-gray-400'}`}>{n}</div>
-                    <span className={`text-[10px] font-medium ${active ? 'text-[#fe6603]' : 'text-gray-400'}`}>{label}</span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${active ? 'bg-[#012980] text-white' : 'bg-gray-100 text-gray-400'}`}>{n}</div>
+                    <span className={`text-[10px] font-medium ${active ? 'text-[#012980]' : 'text-gray-400'}`}>{label}</span>
                   </div>
-                  {i < STEP_LABELS.length - 1 && <div className={`w-8 sm:w-12 h-1 rounded-full mb-4 transition-colors ${step > n ? 'bg-[#fe6603]' : 'bg-gray-100'}`} />}
+                  {i < STEP_LABELS.length - 1 && <div className={`w-8 sm:w-12 h-1 rounded-full mb-4 transition-colors ${step > n ? 'bg-[#012980]' : 'bg-gray-100'}`} />}
                 </React.Fragment>
               );
             })}
@@ -172,7 +172,7 @@ export function VendorSignupPage() {
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                         <input type="text" name={f} value={formData[f]} onChange={handleChange} required
-                          className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                          className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                           placeholder={f === 'firstName' ? 'John' : 'Doe'} />
                       </div>
                     </div>
@@ -183,7 +183,7 @@ export function VendorSignupPage() {
                   <div className="relative">
                     <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input type="email" name="email" value={formData.email} onChange={handleChange} required
-                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="vendor@example.com" />
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export function VendorSignupPage() {
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required
-                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="+91 98765 43210" />
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export function VendorSignupPage() {
                   <div className="relative">
                     <Lock className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required
-                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="••••••••" />
                   </div>
                 </div>
@@ -216,14 +216,14 @@ export function VendorSignupPage() {
                   <div className="relative">
                     <Store className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input type="text" name="storeName" value={formData.storeName} onChange={handleChange} required
-                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="My Awesome Store" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Address</label>
                   <textarea name="storeAddress" value={formData.storeAddress} onChange={handleChange} required rows={3}
-                    className="block w-full p-4 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner resize-none"
+                    className="block w-full p-4 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner resize-none"
                     placeholder="Enter complete business address" />
                 </div>
               </div>
@@ -233,7 +233,7 @@ export function VendorSignupPage() {
             {step === 3 && (
               <div className="space-y-4">
                 <div className="text-center mb-2">
-                  <CreditCard className="w-10 h-10 text-[#fe6603] mx-auto mb-2" />
+                  <CreditCard className="w-10 h-10 text-[#012980] mx-auto mb-2" />
                   <h2 className="text-lg font-bold text-gray-900">Choose a Subscription Plan</h2>
                   <p className="text-gray-500 text-sm">Select a plan to activate your vendor account</p>
                 </div>
@@ -260,20 +260,20 @@ export function VendorSignupPage() {
                           onClick={() => { setSelectedPlan(plan); setPaymentDone(false); setPaymentId(''); }}
                           className={`relative p-5 rounded-[20px] border-2 text-left transition-all flex flex-col group ${
                             selectedPlan?.id === plan.id
-                              ? 'border-[#fe6603] bg-gradient-to-br from-[#fe6603]/5 to-transparent shadow-[0_8px_20px_rgba(254,102,3,0.1)]'
-                              : 'border-gray-100 hover:border-[#fe6603]/30 bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1'
+                              ? 'border-[#012980] bg-gradient-to-br from-[#012980]/5 to-transparent shadow-[0_8px_20px_rgba(254,102,3,0.1)]'
+                              : 'border-gray-100 hover:border-[#012980]/30 bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-1'
                           }`}>
                           {selectedPlan?.id === plan.id && (
-                            <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#fe6603]" />
+                            <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#012980]" />
                           )}
                           <p className="font-bold text-gray-900 text-lg">{plan.name}</p>
-                          <p className="text-[#fe6603] font-extrabold text-2xl mt-1">₹{plan.price}</p>
+                          <p className="text-[#012980] font-extrabold text-2xl mt-1">₹{plan.price}</p>
                           <p className="text-gray-500 text-sm mt-0.5 mb-4">{plan.months} month{plan.months > 1 ? 's' : ''} access</p>
                           
                           <ul className="space-y-2 mt-auto">
                             {featureList.map((f, i) => (
                               <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                                <CheckCircle2 className="w-4 h-4 text-[#fe6603] mt-0.5 flex-shrink-0" />
+                                <CheckCircle2 className="w-4 h-4 text-[#012980] mt-0.5 flex-shrink-0" />
                                 <span>{f.label}{f.value ? `: ${f.value}` : ''}</span>
                               </li>
                             ))}
@@ -306,12 +306,12 @@ export function VendorSignupPage() {
             {/* Step 4 — OTP */}
             {step === 4 && (
               <div className="space-y-4 text-center">
-                <ShieldCheck className="w-16 h-16 text-[#fe6603] mx-auto mb-4" />
+                <ShieldCheck className="w-16 h-16 text-[#012980] mx-auto mb-4" />
                 <h2 className="text-xl font-bold text-gray-900">Verify Your Email</h2>
                 <p className="text-gray-500 text-sm">We've sent a 6-digit OTP to <strong>{formData.email}</strong></p>
                 <div className="pt-4 max-w-xs mx-auto">
                   <input type="text" name="otp" value={formData.otp} onChange={handleChange} required maxLength={6}
-                    className="block w-full text-center tracking-[0.5em] font-bold text-2xl py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#fe6603]/30 focus:border-[#fe6603] transition-all shadow-inner"
+                    className="block w-full text-center tracking-[0.5em] font-bold text-2xl py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                     placeholder="------" />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export function VendorSignupPage() {
                 </button>
               )}
               <button type="submit" disabled={loading || (step === 3 && !paymentDone)}
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white py-4 rounded-[16px] font-bold text-lg hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none">
+                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white py-4 rounded-[16px] font-bold text-lg hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none">
                 {loading ? 'Processing...' : step === 1 ? 'Continue' : step === 2 ? 'Continue' : step === 3 ? 'Send OTP' : 'Verify & Submit'}
                 {!loading && <ArrowRight className="w-5 h-5" />}
               </button>
@@ -341,7 +341,7 @@ export function VendorSignupPage() {
           {step < 4 && (
             <p className="mt-8 text-center text-gray-600">
               Already have a vendor account?{' '}
-              <Link to="/vendor-login" className="text-[#fe6603] font-medium hover:underline">Sign In</Link>
+              <Link to="/vendor-login" className="text-[#012980] font-medium hover:underline">Sign In</Link>
             </p>
           )}
           </div>

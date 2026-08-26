@@ -27,7 +27,7 @@ export function StorePage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#f9f9f9]">
-        <div className="w-8 h-8 border-4 border-brand-orange/20 border-t-brand-orange rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-brand-navy/20 border-t-brand-navy rounded-full animate-spin" />
       </div>
     );
   }
@@ -52,7 +52,7 @@ export function StorePage() {
             </div>
             <div className="text-white pb-1 flex-1">
               <div className="flex items-center gap-2 mb-1">
-                <span className="bg-brand-orange text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Premium Vendor</span>
+                <span className="bg-brand-navy text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Premium Vendor</span>
                 <div className="flex items-center gap-1 bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full">
                   <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
                   <span className="text-xs font-bold">{storeInfo.rating}</span>
@@ -99,7 +99,7 @@ export function StorePage() {
       <div className="max-w-7xl mx-auto px-4 mt-8">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-xl md:text-2xl font-bold text-[#0b162c] font-serif flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-brand-orange rounded-full inline-block shadow-sm"></span>
+            <span className="w-1.5 h-6 bg-brand-navy rounded-full inline-block shadow-sm"></span>
             Products from {storeInfo.name.split(' ')[0]}
           </h2>
         </div>

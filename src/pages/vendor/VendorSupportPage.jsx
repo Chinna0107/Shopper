@@ -75,7 +75,7 @@ function AddAgentModal({ onClose, onAdd, accent }) {
                 <label key={page.path} className="flex items-center gap-2 cursor-pointer text-sm text-gray-700">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300 text-[#fe6603] focus:ring-[#fe6603]"
+                    className="rounded border-gray-300 text-[#012980] focus:ring-[#012980]"
                     checked={form.access_pages.includes(page.path)}
                     onChange={(e) => {
                       if (e.target.checked) {
@@ -92,7 +92,7 @@ function AddAgentModal({ onClose, onAdd, accent }) {
           </div>
 
           <button type="submit" disabled={loading}
-            className="w-full py-3 rounded-xl bg-[#fe6603] text-white text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">
+            className="w-full py-3 rounded-xl bg-[#012980] text-white text-sm font-semibold hover:bg-[#e55c02] transition-colors disabled:opacity-50">
             {loading ? "Adding..." : "Add Member"}
           </button>
         </form>
@@ -173,7 +173,7 @@ export function VendorSupportPage() {
         {TABS.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`flex items-center gap-2 px-5 py-3 text-sm font-bold border-b-2 transition-all -mb-[5px] whitespace-nowrap ${
-              tab === t.key ? "border-[#fe6603] text-[#fe6603]" : "border-transparent text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-t-xl"
+              tab === t.key ? "border-[#012980] text-[#012980]" : "border-transparent text-gray-400 hover:text-gray-700 hover:bg-gray-50 rounded-t-xl"
             }`}>
             {t.icon} {t.label}
           </button>
@@ -182,7 +182,7 @@ export function VendorSupportPage() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-4 border-gray-200 border-t-[#fe6603] rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-gray-200 border-t-[#012980] rounded-full animate-spin" />
         </div>
       ) : (
         <>
@@ -214,7 +214,7 @@ export function VendorSupportPage() {
                     </div>
                     <div className="min-w-0">
                       <p className="font-bold text-gray-900 text-base truncate">{p.name}</p>
-                      <p className="text-[#fe6603] font-bold mt-1">₹{p.price}</p>
+                      <p className="text-[#012980] font-bold mt-1">₹{p.price}</p>
                     </div>
                   </div>
                 ))}
@@ -242,7 +242,7 @@ export function VendorSupportPage() {
               <div className="flex items-center justify-between mb-6">
                 <p className="text-sm font-bold text-gray-500">{agents.length} member{agents.length !== 1 ? "s" : ""}</p>
                 <button onClick={() => setShowModal(true)}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
+                  className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold shadow-[0_4px_12px_rgba(254,102,3,0.3)] hover:shadow-[0_6px_16px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all">
                   <Plus className="w-4 h-4" /> Add Member
                 </button>
               </div>
@@ -254,7 +254,7 @@ export function VendorSupportPage() {
                   </div>
                   <p className="text-gray-500 font-medium mb-4">No support members yet.</p>
                   <button onClick={() => setShowModal(true)}
-                    className="px-6 py-3 bg-[#fe6603] text-white rounded-xl text-sm font-bold hover:bg-[#e55c02] transition-colors">
+                    className="px-6 py-3 bg-[#012980] text-white rounded-xl text-sm font-bold hover:bg-[#e55c02] transition-colors">
                     Add First Member
                   </button>
                 </div>
@@ -262,7 +262,7 @@ export function VendorSupportPage() {
                 <div className="space-y-4">
                   {agents.map(agent => (
                     <div key={agent.id} className="bg-white rounded-[20px] shadow-[0_4px_20px_rgb(0,0,0,0.03)] border border-gray-100 p-5 flex items-center gap-4 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#fe6603]/10 to-[#ff7b23]/10 flex items-center justify-center flex-shrink-0 font-extrabold text-[#fe6603] text-lg border border-[#fe6603]/20">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#012980]/10 to-[#ff7b23]/10 flex items-center justify-center flex-shrink-0 font-extrabold text-[#012980] text-lg border border-[#012980]/20">
                         {agent.name?.[0]?.toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -272,8 +272,8 @@ export function VendorSupportPage() {
                       <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider flex-shrink-0 ${agent.is_active ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
                         {agent.is_active ? "Active" : "Inactive"}
                       </span>
-                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#fe6603] transition-colors p-2 hover:bg-orange-50 rounded-xl flex-shrink-0">
-                        {agent.is_active ? <ToggleRight className="w-6 h-6 text-[#fe6603]" /> : <ToggleLeft className="w-6 h-6" />}
+                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#012980] transition-colors p-2 hover:bg-blue-50 rounded-xl flex-shrink-0">
+                        {agent.is_active ? <ToggleRight className="w-6 h-6 text-[#012980]" /> : <ToggleLeft className="w-6 h-6" />}
                       </button>
                       <button onClick={() => handleDelete(agent.id)} className="text-gray-300 hover:text-red-600 transition-colors p-2 hover:bg-red-50 rounded-xl flex-shrink-0">
                         <Trash2 className="w-5 h-5" />

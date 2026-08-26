@@ -100,7 +100,7 @@ export function MyOrdersPage() {
                   <tr>
                       <td>
                           <div style="font-size: 9pt; color: #555555; margin-top: 8px; line-height: 1.5;">
-                              <strong style="font-size: 20px;"><span className="text-[#fe6603]">Ind</span><span className="text-brand-orange">basket</span></strong><br>
+                              <strong style="font-size: 20px;"><span className="text-[#012980]">Ind</span><span className="text-brand-navy">basket</span></strong><br>
                               1-1-738, Vinayaka temple road<br>
                               Phone: +91 90326 75205 | Email: swabhivarshoppers@gmail.com<br>
                           </div>
@@ -122,7 +122,7 @@ export function MyOrdersPage() {
                   <td class="from-box">
                       <div class="section-heading">From Address</div>
                       <div class="address-box">
-                          <strong><span className="text-[#fe6603]">Ind</span><span className="text-brand-orange">basket</span></strong><br>
+                          <strong><span className="text-[#012980]">Ind</span><span className="text-brand-navy">basket</span></strong><br>
                           1-1-738, Vinayaka temple road,<br>
                           Koratla, Telangana, India<br>
                           <strong>Phone:</strong> +91 90326 75205
@@ -208,18 +208,18 @@ export function MyOrdersPage() {
 
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-2xl font-serif font-bold text-[#022A21]">Order History</h2>
-          <span className="text-sm font-semibold text-[#022A21] bg-orange-50/50 px-3 py-1 rounded-full border border-brand-orange/20">{orders.length} Orders</span>
+          <h2 className="text-2xl font-serif font-bold text-[#012980]">Order History</h2>
+          <span className="text-sm font-semibold text-[#012980] bg-blue-50/50 px-3 py-1 rounded-full border border-brand-navy/20">{orders.length} Orders</span>
         </div>
 
         {orders.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 gap-4 bg-white rounded-3xl border border-gray-100 shadow-sm">
-            <div className="w-24 h-24 bg-orange-50 rounded-full flex items-center justify-center">
-              <ShoppingBag className="w-12 h-12 text-brand-orange" />
+            <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center">
+              <ShoppingBag className="w-12 h-12 text-brand-navy" />
             </div>
-            <p className="text-[#022A21] font-bold text-lg font-serif">No orders yet</p>
+            <p className="text-[#012980] font-bold text-lg font-serif">No orders yet</p>
             <p className="text-sm text-gray-500 text-center max-w-sm">Looks like you haven't made your first order. Explore our spiritual collection today!</p>
-            <Link to="/" className="mt-4 bg-gradient-to-r from-brand-orange to-yellow-500 text-white text-sm font-bold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5">
+            <Link to="/" className="mt-4 bg-gradient-to-r from-brand-navy to-blue-500 text-white text-sm font-bold px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5">
               Start Shopping
             </Link>
           </div>
@@ -228,9 +228,9 @@ export function MyOrdersPage() {
             const stepIdx = STATUS_STEPS.indexOf(order.status);
             return (
               <div key={order.id} className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-4 border-b border-[#054335] bg-[#022A21]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-6 py-4 border-b border-[#001d5a] bg-[#012980]">
                   <div>
-                    <p className="text-sm font-bold text-brand-orange font-serif">Order #{order.order_number || order.id}</p>
+                    <p className="text-sm font-bold text-brand-navy font-serif">Order #{order.order_number || order.id}</p>
                     <p className="text-xs text-gray-300 mt-1">
                       Placed on {new Date(order.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                     </p>
@@ -256,19 +256,19 @@ export function MyOrdersPage() {
                         {STATUS_STEPS.map((step, i) => (
                           <div key={step} className="flex flex-col items-center flex-1 relative">
                             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border-2 transition-all z-10 ${
-                              i <= stepIdx ? 'bg-[#022A21] border-[#022A21] text-white shadow-md' : 'bg-white border-gray-200 text-gray-400'
+                              i <= stepIdx ? 'bg-[#012980] border-[#012980] text-white shadow-md' : 'bg-white border-gray-200 text-gray-400'
                             }`}>
                               {i < stepIdx ? '✓' : i + 1}
                             </div>
                             {i < STATUS_STEPS.length - 1 && (
-                              <div className={`absolute top-4 left-1/2 w-full h-0.5 -z-0 ${i < stepIdx ? 'bg-[#022A21]' : 'bg-gray-200'}`} />
+                              <div className={`absolute top-4 left-1/2 w-full h-0.5 -z-0 ${i < stepIdx ? 'bg-[#012980]' : 'bg-gray-200'}`} />
                             )}
                           </div>
                         ))}
                       </div>
                       <div className="flex items-center mt-2">
                         {STATUS_STEPS.map((step, i) => (
-                          <span key={step} className={`text-[10px] sm:text-xs font-bold capitalize flex-1 text-center ${i <= stepIdx ? 'text-[#022A21]' : 'text-gray-400'}`}>
+                          <span key={step} className={`text-[10px] sm:text-xs font-bold capitalize flex-1 text-center ${i <= stepIdx ? 'text-[#012980]' : 'text-gray-400'}`}>
                             {step}
                           </span>
                         ))}
@@ -290,7 +290,7 @@ export function MyOrdersPage() {
                           )}
                         </div>
                         <div className="flex-1 min-w-0 pt-1">
-                          <p className="text-sm font-bold text-[#022A21] line-clamp-1 font-serif">{item.name || item.product?.name || 'Product'}</p>
+                          <p className="text-sm font-bold text-[#012980] line-clamp-1 font-serif">{item.name || item.product?.name || 'Product'}</p>
                           <div className="flex items-center gap-3 mt-1.5">
                             <span className="text-xs text-gray-600 bg-white px-2 py-0.5 rounded-md border border-gray-200">Qty: {item.qty || 1}</span>
                             {(item.size || item.variant?.size) && (
@@ -298,20 +298,20 @@ export function MyOrdersPage() {
                             )}
                           </div>
                         </div>
-                        <p className="text-sm font-bold text-[#022A21] pt-1">₹{Number(item.price || item.variant?.price || item.product?.price || 0).toLocaleString('en-IN')}</p>
+                        <p className="text-sm font-bold text-[#012980] pt-1">₹{Number(item.price || item.variant?.price || item.product?.price || 0).toLocaleString('en-IN')}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Footer Actions */}
-                <div className="flex flex-col sm:flex-row items-center justify-end gap-3 px-6 py-4 bg-orange-50/50 border-t border-brand-orange/20">
+                <div className="flex flex-col sm:flex-row items-center justify-end gap-3 px-6 py-4 bg-blue-50/50 border-t border-brand-navy/20">
                   <button onClick={() => openInvoice(order)}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-brand-orange border border-brand-orange/30 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-orange-50 transition-colors shadow-sm">
-                    <FileText className="w-4 h-4 text-brand-orange" /> Download Invoice
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-brand-navy border border-brand-navy/30 px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-blue-50 transition-colors shadow-sm">
+                    <FileText className="w-4 h-4 text-brand-navy" /> Download Invoice
                   </button>
                   <button onClick={() => handleReorder(order)}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#022A21] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#033429] transition-colors shadow-sm">
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#012980] text-white px-5 py-2.5 rounded-xl text-sm font-bold hover:bg-[#033429] transition-colors shadow-sm">
                     <RefreshCw className="w-4 h-4" /> Reorder Items
                   </button>
                 </div>

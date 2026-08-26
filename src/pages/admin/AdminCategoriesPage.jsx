@@ -181,7 +181,7 @@ export function AdminCategoriesPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {categories.map((cat, index) => (
           <motion.div key={cat.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }} className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex flex-col">
-            <div className="bg-white border-b border-brand-orange/5 p-4 flex items-center justify-between">
+            <div className="bg-white border-b border-brand-navy/5 p-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-white border border-gray-100 overflow-hidden flex items-center justify-center text-gray-900">
                   {cat.image_url ? (
@@ -378,7 +378,7 @@ export function AdminCategoriesPage() {
             
             <div className="border-t border-gray-100 px-6 py-4 flex gap-3 shrink-0 bg-white">
               <button onClick={() => setEditCategory(null)} className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-xl font-semibold hover:bg-white/70">Cancel</button>
-              <button onClick={handleSave} disabled={saving || uploading || !formData.name} className="flex-1 px-4 py-2 bg-[#fe6603] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2 disabled:opacity-50 hover:bg-[#004012] transition-colors">
+              <button onClick={handleSave} disabled={saving || uploading || !formData.name} className="flex-1 px-4 py-2 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2 disabled:opacity-50 hover:bg-[#004012] transition-colors">
                 {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}
               </button>
             </div>

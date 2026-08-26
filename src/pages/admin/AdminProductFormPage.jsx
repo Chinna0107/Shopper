@@ -547,7 +547,7 @@ export function AdminProductFormPage() {
               <label className="flex items-center gap-3 p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
                 <input type="checkbox" checked={form.is_offer} onChange={e => set('is_offer', e.target.checked)} className="w-4 h-4 rounded" />
                 <div>
-                  <p className="text-sm font-semibold text-gray-800 flex items-center gap-1"><Tag className="w-3.5 h-3.5 text-[#fe6603]" /> Special Offer</p>
+                  <p className="text-sm font-semibold text-gray-800 flex items-center gap-1"><Tag className="w-3.5 h-3.5 text-[#012980]" /> Special Offer</p>
                   <p className="text-xs text-gray-400">Shows in Offers section</p>
                 </div>
               </label>

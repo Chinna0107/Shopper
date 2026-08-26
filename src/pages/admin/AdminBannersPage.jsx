@@ -179,7 +179,7 @@ export function AdminBannersPage() {
                     </button>
                   </div>
                 ) : (
-                  <label className="w-full flex flex-col items-center justify-center px-4 py-8 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-brand-orange/40 transition-colors">
+                  <label className="w-full flex flex-col items-center justify-center px-4 py-8 bg-white border-2 border-dashed border-gray-200 rounded-xl cursor-pointer hover:border-brand-navy/40 transition-colors">
                     <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
                     <Upload className="w-8 h-8 text-gray-900/30 mb-2" />
                     <span className="text-sm font-semibold text-gray-700">{uploading ? "Uploading..." : "Click to upload image"}</span>
@@ -199,7 +199,7 @@ export function AdminBannersPage() {
             </div>
             <div className="border-t border-gray-100 px-6 py-4 flex gap-3">
               <button onClick={() => setEditBanner(null)} className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-xl font-semibold">Cancel</button>
-              <button onClick={handleSave} disabled={saving} className="flex-1 px-4 py-2 bg-[#fe6603] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2">
+              <button onClick={handleSave} disabled={saving} className="flex-1 px-4 py-2 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2">
                 {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}
               </button>
             </div>

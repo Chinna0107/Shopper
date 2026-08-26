@@ -99,9 +99,9 @@ export function VendorCategoriesPage() {
         </div>
         
         {categoryLimit && (
-          <div className="bg-gradient-to-r from-orange-50 to-orange-100/50 border border-orange-200 px-5 py-3 rounded-[16px] flex items-center gap-3 shadow-sm">
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100/50 border border-blue-200 px-5 py-3 rounded-[16px] flex items-center gap-3 shadow-sm">
             <span className="text-sm font-bold text-gray-600 uppercase tracking-wider">Plan Limit:</span>
-            <span className="font-extrabold text-[#fe6603] text-lg">{categoryLimit} Categories</span>
+            <span className="font-extrabold text-[#012980] text-lg">{categoryLimit} Categories</span>
           </div>
         )}
       </div>
@@ -123,18 +123,18 @@ export function VendorCategoriesPage() {
                   <div 
                     key={category.id} 
                     onClick={() => handleToggleCategory(category.name)}
-                    className={`relative p-5 border rounded-[20px] transition-all group overflow-hidden ${isLocked ? 'cursor-default opacity-80' : 'cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1'} ${isSelected ? 'border-[#fe6603] bg-gradient-to-br from-orange-50 to-white shadow-[0_4px_20px_rgba(254,102,3,0.1)]' : 'border-gray-100 hover:border-[#fe6603]/30 bg-white'}`}
+                    className={`relative p-5 border rounded-[20px] transition-all group overflow-hidden ${isLocked ? 'cursor-default opacity-80' : 'cursor-pointer hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1'} ${isSelected ? 'border-[#012980] bg-gradient-to-br from-blue-50 to-white shadow-[0_4px_20px_rgba(254,102,3,0.1)]' : 'border-gray-100 hover:border-[#012980]/30 bg-white'}`}
                   >
                     {isSelected && (
-                      <div className="absolute top-4 right-4 bg-[#fe6603] text-white rounded-full p-1 shadow-md z-10">
+                      <div className="absolute top-4 right-4 bg-[#012980] text-white rounded-full p-1 shadow-md z-10">
                         <CheckCircle2 className="w-4 h-4" />
                       </div>
                     )}
-                    <div className="relative w-full h-32 mb-4 rounded-[12px] overflow-hidden bg-gray-50 border border-gray-100 group-hover:border-[#fe6603]/20 transition-colors">
+                    <div className="relative w-full h-32 mb-4 rounded-[12px] overflow-hidden bg-gray-50 border border-gray-100 group-hover:border-[#012980]/20 transition-colors">
                       <img src={category.image_url || '/placeholder.png'} alt={category.name} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </div>
-                    <h3 className={`font-extrabold text-center text-base tracking-tight ${isSelected ? 'text-[#fe6603]' : 'text-gray-900 group-hover:text-[#fe6603] transition-colors'}`}>{category.name}</h3>
+                    <h3 className={`font-extrabold text-center text-base tracking-tight ${isSelected ? 'text-[#012980]' : 'text-gray-900 group-hover:text-[#012980] transition-colors'}`}>{category.name}</h3>
                   </div>
                 );
               })}
@@ -149,7 +149,7 @@ export function VendorCategoriesPage() {
                 <button 
                   onClick={handleSave} 
                   disabled={saving || selectedCategories.length === 0}
-                  className="px-8 py-3.5 bg-gradient-to-r from-[#fe6603] to-[#ff7b23] text-white font-bold rounded-[16px] text-sm hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none"
+                  className="px-8 py-3.5 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white font-bold rounded-[16px] text-sm hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none"
                 >
                   {saving ? 'Saving...' : 'Save Category Selection'}
                 </button>

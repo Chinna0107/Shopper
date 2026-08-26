@@ -68,10 +68,10 @@ export function SignupPage() {
       <div className="relative flex flex-col items-center pt-12 pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full border border-white/[0.06]" />
-          <div className="absolute bottom-8 left-[-40px] w-48 h-48 rounded-full border border-brand-orange/[0.08]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-orange/[0.06] rounded-full blur-3xl" />
+          <div className="absolute bottom-8 left-[-40px] w-48 h-48 rounded-full border border-brand-navy/[0.08]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] bg-brand-navy/[0.06] rounded-full blur-3xl" />
           {[...Array(8)].map((_, i) => (
-            <div key={i} className="absolute w-1 h-1 rounded-full bg-brand-orange/25"
+            <div key={i} className="absolute w-1 h-1 rounded-full bg-brand-navy/25"
               style={{ top: `${8 + i * 11}%`, left: `${5 + i * 12}%` }} />
           ))}
         </div>
@@ -96,21 +96,21 @@ export function SignupPage() {
               <div className="w-[100px] h-[100px] rounded-[1.75rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5">
                 <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-gradient-to-br from-brand-orange to-yellow-500 rounded-full border-[3px] border-white flex items-center justify-center shadow-md">
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-gradient-to-br from-brand-navy to-blue-500 rounded-full border-[3px] border-white flex items-center justify-center shadow-md">
                 <span className="text-white text-[10px] font-black">✦</span>
               </div>
             </div>
             <h1 className="text-[#0b162c] text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
               SWABHIVAR
             </h1>
-            <p className="text-brand-orange text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5">Your Choice, From Anywhere.</p>
+            <p className="text-brand-navy text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5">Your Choice, From Anywhere.</p>
 
             {step === 'form' && (
               <div className="mt-5 space-y-2">
                 {perks.map(p => (
                   <div key={p} className="flex items-center gap-2.5">
-                    <div className="w-4 h-4 rounded-full bg-brand-orange/20 border border-brand-orange/40 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="w-3 h-3 text-brand-orange" />
+                    <div className="w-4 h-4 rounded-full bg-brand-navy/20 border border-brand-navy/40 flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-3 h-3 text-brand-navy" />
                     </div>
                     <span className="text-gray-600 text-[12px] font-medium">{p}</span>
                   </div>
@@ -120,8 +120,8 @@ export function SignupPage() {
 
             {step === 'otp' && (
               <div className="mt-5 text-center">
-                <div className="w-14 h-14 rounded-full bg-brand-orange/15 border-2 border-brand-orange/30 flex items-center justify-center mx-auto mb-3">
-                  <ShieldCheck className="w-7 h-7 text-brand-orange" />
+                <div className="w-14 h-14 rounded-full bg-brand-navy/15 border-2 border-brand-navy/30 flex items-center justify-center mx-auto mb-3">
+                  <ShieldCheck className="w-7 h-7 text-brand-navy" />
                 </div>
                 <p className="text-gray-500 text-xs font-medium">OTP sent to</p>
                 <p className="text-[#0b162c] font-bold text-sm mt-0.5">{form.email}</p>
@@ -160,13 +160,13 @@ export function SignupPage() {
                   <input name="password" type={showPass ? 'text' : 'password'} value={form.password}
                     onChange={handleChange} required minLength={6} placeholder="Password (min. 6 characters)" className={inputClass + ' pr-12'} />
                   <button type="button" onClick={() => setShowPass(!showPass)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-orange transition-colors">
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-brand-navy transition-colors">
                     {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
 
                 <button type="submit" disabled={loading}
-                  className="w-full bg-gradient-to-r from-brand-orange to-yellow-400 text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(254,102,3,0.4)] hover:shadow-[0_8px_30px_rgba(254,102,3,0.5)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-1">
+                  className="w-full bg-gradient-to-r from-brand-navy to-yellow-400 text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(254,102,3,0.4)] hover:shadow-[0_8px_30px_rgba(254,102,3,0.5)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-1">
                   {loading ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Sending OTP...</> : 'Continue →'}
                 </button>
               </form>
@@ -217,7 +217,7 @@ export function SignupPage() {
                       onChange={(e) => handleOtpChange(e.target.value, idx)}
                       onKeyDown={(e) => handleOtpKeyDown(e, idx)}
                       className={`flex-1 h-14 text-center text-xl font-extrabold rounded-2xl border-2 focus:outline-none transition-all
-                        ${digit ? 'border-brand-orange text-brand-orange shadow-[0_0_0_4px_rgba(254,102,3,0.12)]' : 'border-gray-200 bg-gray-50 text-[#0b162c] focus:border-[#0b162c] focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,22,44,0.08)]'}`}
+                        ${digit ? 'border-brand-navy text-brand-navy shadow-[0_0_0_4px_rgba(254,102,3,0.12)]' : 'border-gray-200 bg-gray-50 text-[#0b162c] focus:border-[#0b162c] focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,22,44,0.08)]'}`}
                       style={digit ? { background: 'rgba(254,102,3,0.06)' } : {}}
                     />
                   ))}

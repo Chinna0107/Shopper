@@ -43,8 +43,8 @@ export function VendorDashboardPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="group bg-white p-6 rounded-[24px] shadow-sm border border-gray-100/50 flex items-center gap-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
-          <div className="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-[#fe6603]/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="w-16 h-16 bg-gradient-to-br from-[#fe6603] to-[#e55c02] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#fe6603]/30 flex-shrink-0">
+          <div className="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-[#012980]/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="w-16 h-16 bg-gradient-to-br from-[#012980] to-[#e55c02] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#012980]/30 flex-shrink-0">
             <IndianRupee className="w-8 h-8" />
           </div>
           <div className="z-10">
@@ -91,7 +91,7 @@ export function VendorDashboardPage() {
             </div>
             <h3 className="text-xl font-bold text-gray-900">Recent Orders</h3>
           </div>
-          <button onClick={() => navigate('/vendor/orders')} className="text-sm font-bold text-[#fe6603] hover:text-[#e55c02] transition-colors flex items-center gap-1 group">
+          <button onClick={() => navigate('/vendor/orders')} className="text-sm font-bold text-[#012980] hover:text-[#e55c02] transition-colors flex items-center gap-1 group">
             View All <span className="group-hover:translate-x-1 transition-transform">→</span>
           </button>
         </div>

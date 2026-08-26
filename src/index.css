@@ -10,12 +10,9 @@
   --color-brand-text: #1f2937; /* Dark gray for text */
   --color-brand-text-muted: #6b7280; /* Medium gray for muted text */
   
-  /* Legacy colors */
-  --color-brand-maroon: #036e26;
-  --color-brand-gold: #C69C6D;
-  --color-brand-cream: #FDFBF7;
-  --color-brand-cream-light: #FFFFFF;
-  --color-brand-green: #045e1a;
+  /* New Theme Colors */
+  --color-brand-navy: #012980;
+  --color-gray-900: #012980;
 }
 
 @layer utilities {

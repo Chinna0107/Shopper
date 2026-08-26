@@ -330,7 +330,7 @@ export function AdminOffersPage() {
       </div>
 
       {/* description banner */}
-      <div className={`rounded-xl p-4 mb-5 text-sm flex items-start gap-3 ${tab === 'offers' ? 'bg-green-50 text-green-800' : 'bg-orange-50 text-orange-800'}`}>
+      <div className={`rounded-xl p-4 mb-5 text-sm flex items-start gap-3 ${tab === 'offers' ? 'bg-green-50 text-green-800' : 'bg-blue-50 text-blue-800'}`}>
         {tab === 'offers'
           ? <><Percent className="w-4 h-4 mt-0.5 flex-shrink-0" /><span><strong>Offers</strong> are automatic discounts applied directly to product prices — customers see the reduced price without entering any code.</span></>
           : <><Ticket className="w-4 h-4 mt-0.5 flex-shrink-0" /><span><strong>Coupons</strong> are codes you generate and share with customers — they enter the code at checkout to get the discount.</span></>
