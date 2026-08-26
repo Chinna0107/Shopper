@@ -50,10 +50,24 @@ export function CartPage() {
     if (!coupon) return 0;
     const type = coupon.type || coupon.discount_type;
     const val = Number(coupon.value || coupon.discount_value || coupon.discount_percent || 0);
-    if (type === 'percentage' || type === 'percent') {
-      return Math.round((subtotal * val) / 100);
+
+    let applicableSubtotal = subtotal;
+
+    if (coupon.source === 'vendor' && coupon.vendor_id) {
+       applicableSubtotal = items.reduce((acc, item) => {
+         if (item.product?.vendor_id === coupon.vendor_id) {
+            return acc + (item.variant?.price || item.product.price || 0) * item.qty;
+         }
+         return acc;
+       }, 0);
     }
-    return val;
+    
+    if (applicableSubtotal === 0) return 0;
+
+    if (type === 'percentage' || type === 'percent') {
+      return Math.round((applicableSubtotal * val) / 100);
+    }
+    return Math.min(val, applicableSubtotal);
   })();
 
   const grandTotal = Math.max(0, subtotal - discount) + (subtotal > 0 ? deliveryCharge : 0);
@@ -64,10 +78,18 @@ export function CartPage() {
     setCouponError('');
     setCoupon(null);
     try {
+      const payload = {
+        code: couponCode.trim().toUpperCase(),
+        items: items.map(i => ({
+           vendor_id: i.product?.vendor_id,
+           price: i.variant?.price || i.product.price || 0,
+           quantity: i.qty
+        }))
+      };
       const res = await fetch(`${BACKEND_URL}/general/coupon/verify`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: couponCode.trim().toUpperCase(), subtotal, qty: totalQty }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Invalid coupon');
@@ -90,7 +112,7 @@ export function CartPage() {
           <div className="w-24 h-24 bg-brand-orange/10 rounded-full flex items-center justify-center mb-6 border border-brand-orange/20">
             <ShoppingCart className="w-12 h-12 text-brand-orange" strokeWidth={1.5} />
           </div>
-          <h2 className="text-xl font-bold text-[#022A21] mb-2 tracking-tight font-serif">Your cart is empty</h2>
+          <h2 className="text-xl font-bold text-[#0b162c] mb-2 tracking-tight font-serif" style={{ fontFamily: 'Georgia, serif' }}>Your cart is empty</h2>
           <p className="text-gray-500 mb-8 text-center text-sm">Looks like you haven't added anything to your cart yet. Discover our latest premium collections.</p>
           <button 
             onClick={() => navigate('/')} 
@@ -104,11 +126,11 @@ export function CartPage() {
           {/* Step Indicator */}
           <div className="flex justify-between items-center mb-4 px-2 max-w-lg mx-auto">
             <div className="flex flex-col items-center">
-              <div className="w-8 h-8 rounded-full bg-[#022A21] text-white flex items-center justify-center text-sm font-bold shadow-md">1</div>
-              <span className="text-[11px] text-[#022A21] font-bold mt-2">Cart</span>
+              <div className="w-8 h-8 rounded-full bg-[#0b162c] text-white flex items-center justify-center text-sm font-bold shadow-md">1</div>
+              <span className="text-[11px] text-[#0b162c] font-bold mt-2">Cart</span>
             </div>
             <div className="h-[2px] bg-gray-200 flex-1 mx-4 relative overflow-hidden">
-               <div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-[#022A21] to-transparent opacity-50"></div>
+               <div className="absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-[#0b162c] to-transparent opacity-50"></div>
             </div>
             <div className="flex flex-col items-center opacity-50">
               <div className="w-8 h-8 rounded-full bg-gray-100 border border-gray-200 text-gray-500 flex items-center justify-center text-sm font-bold">2</div>
@@ -153,7 +175,7 @@ export function CartPage() {
                   </div>
                   
                   <div className="flex items-end justify-between mt-4">
-                    <div className="font-extrabold text-xl text-[#022A21]">₹{item.variant?.price || item.product.price}</div>
+                    <div className="font-extrabold text-xl text-[#0b162c]">₹{item.variant?.price || item.product.price}</div>
                     
                     <div className="flex items-center w-28 bg-gray-50 border border-gray-200 rounded-lg p-1">
                       <button 
@@ -162,7 +184,7 @@ export function CartPage() {
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="flex-1 text-center text-[13px] font-bold text-[#022A21]">{item.qty}</span>
+                      <span className="flex-1 text-center text-[13px] font-bold text-[#0b162c]">{item.qty}</span>
                       <button 
                         onClick={() => updateQuantity(item.product.id, item.variant, item.qty + 1)}
                         className="w-8 h-8 flex items-center justify-center text-gray-600 hover:bg-brand-orange/10 hover:text-brand-orange rounded-md transition-colors"
@@ -179,16 +201,16 @@ export function CartPage() {
               {/* Coupon */}
               <div className="animate-cart-summary bg-white rounded-2xl border border-gray-100 p-6 shadow-xl">
                 <div className="flex items-center gap-2 mb-4">
-                  <Tag className="w-5 h-5 text-[#022A21]" />
-                  <span className="text-base font-bold text-[#022A21] font-serif">Apply Coupon</span>
+                  <Tag className="w-5 h-5 text-[#0b162c]" />
+                  <span className="text-base font-bold text-[#0b162c] font-serif" style={{ fontFamily: 'Georgia, serif' }}>Apply Coupon</span>
                 </div>
                 {coupon ? (
                   <div className="flex items-center justify-between bg-green-500/10 border border-green-500/30 rounded-xl px-4 py-3">
                     <div className="flex items-center gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[#022A21]" />
+                      <CheckCircle2 className="w-5 h-5 text-[#0b162c]" />
                       <div>
-                        <p className="text-sm font-bold text-[#022A21]">{coupon.code}</p>
-                        <p className="text-xs text-[#022A21]/80">You save ₹{discount}</p>
+                        <p className="text-sm font-bold text-[#0b162c]">{coupon.code}</p>
+                        <p className="text-xs text-[#0b162c]/80">You save ₹{discount}</p>
                       </div>
                     </div>
                     <button onClick={handleRemoveCoupon} className="text-gray-400 hover:text-red-400 transition-colors">
@@ -204,10 +226,10 @@ export function CartPage() {
                         onChange={e => { setCouponCode(e.target.value.toUpperCase()); setCouponError(''); }}
                         onKeyDown={e => e.key === 'Enter' && handleApplyCoupon()}
                         placeholder="Enter coupon code"
-                        className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#022A21] font-medium focus:outline-none focus:border-brand-orange transition-all placeholder-gray-400 focus:bg-white"
+                        className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0b162c] font-medium focus:outline-none focus:border-brand-orange transition-all placeholder-gray-400 focus:bg-white"
                       />
                       <button onClick={handleApplyCoupon} disabled={couponLoading || !couponCode.trim()}
-                        className="bg-[#022A21] text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-[#033429] shadow-md transition-all disabled:opacity-50">
+                        className="bg-[#0b162c] text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-[#15284b] shadow-md transition-all disabled:opacity-50">
                         {couponLoading ? '...' : 'APPLY'}
                       </button>
                     </div>
@@ -222,7 +244,7 @@ export function CartPage() {
 
           {/* Bill Details */}
           <div className="animate-cart-summary bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
-            <h3 className="font-bold text-[#022A21] mb-5 pb-4 border-b border-gray-100 text-lg flex items-center gap-2 font-serif">
+            <h3 className="font-bold text-[#0b162c] mb-5 pb-4 border-b border-gray-100 text-lg flex items-center gap-2 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
               <span className="w-1.5 h-5 bg-brand-orange rounded-full inline-block"></span>
               Price Details
             </h3>
@@ -233,7 +255,7 @@ export function CartPage() {
               </div>
               <div className="flex justify-between text-[15px] text-gray-600">
                 <span>Delivery Charges</span>
-                <span className="font-medium text-[#022A21]">
+                <span className="font-medium text-[#0b162c]">
                   {deliveryCharge > 0 ? `₹${deliveryCharge.toFixed(2)}` : 'FREE'}
                 </span>
               </div>
@@ -243,14 +265,14 @@ export function CartPage() {
                   <span>- ₹{discount.toFixed(2)}</span>
                 </div>
               )}
-                <div className="flex justify-between font-extrabold text-[#022A21] text-xl pt-5 mt-4 border-t border-dashed border-gray-200">
+                <div className="flex justify-between font-extrabold text-[#0b162c] text-xl pt-5 mt-4 border-t border-dashed border-gray-200">
                   <span>Grand Total</span>
                   <span className="text-brand-orange">₹{grandTotal.toFixed(2)}</span>
                 </div>
                 
                 <button 
                   onClick={handleCheckout}
-                  className="hidden lg:flex w-full mt-8 bg-[#88313A] hover:bg-[#7A1D25] text-white font-bold text-base rounded-2xl py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all items-center justify-center gap-2"
+                  className="hidden lg:flex w-full mt-8 bg-gradient-to-r from-brand-orange to-yellow-500 hover:shadow-brand-orange/30 text-white font-bold text-base rounded-2xl py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all items-center justify-center gap-2"
                 >
                   Proceed to Checkout
                 </button>
@@ -271,7 +293,7 @@ export function CartPage() {
             </div>
             <button 
               onClick={handleCheckout}
-              className="flex-1 sm:max-w-md bg-[#88313A] hover:bg-[#7A1D25] text-white font-bold text-[15px] rounded-full py-4 shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
+              className="flex-1 sm:max-w-md bg-gradient-to-r from-brand-orange to-yellow-500 hover:shadow-brand-orange/30 text-white font-bold text-[15px] rounded-full py-4 shadow-md hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2"
             >
               Proceed to Checkout
               <span className="w-1 h-1 bg-white/50 rounded-full mx-1" />

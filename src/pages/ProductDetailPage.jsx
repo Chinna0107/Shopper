@@ -70,7 +70,7 @@ export function ProductDetailPage() {
           <Package className="w-10 h-10 text-gray-400" />
         </div>
         <p className="text-lg font-bold text-gray-700">Product not found</p>
-        <button onClick={() => navigate('/')} className="bg-[#022A21] text-white px-6 py-3 rounded-2xl font-semibold hover:bg-[#054335] transition-all shadow-md">
+        <button onClick={() => navigate('/')} className="bg-[#0b162c] text-white px-6 py-3 rounded-2xl font-semibold hover:bg-[#1a2d52] transition-all shadow-md">
           Go Home
         </button>
       </div>
@@ -108,6 +108,45 @@ export function ProductDetailPage() {
 
   const deliveryDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric' });
 
+  // Prepare all available specs
+  const allSpecs = {
+    ...(product.brand && { Brand: product.brand }),
+    ...(product.sku && { SKU: product.sku }),
+    ...(product.gender && product.gender !== 'Any' && { Gender: product.gender }),
+    ...(product.category && { Category: product.category }),
+    ...(currentVariant?.color && { Color: currentVariant.color }),
+    ...customAttrs
+  };
+
+  const hiddenKeys = ['seo_title', 'seo_keywords', 'meta_description', 'search_tags', 'delivery_cod'];
+
+  const specGroups = [
+    { title: "Basic Information", keys: ['Brand', 'SKU', 'Gender', 'Category', 'Color', 'product_code', 'condition', 'product_type'] },
+    { title: "Physical Attributes", keys: ['weight', 'shipping_weight', 'length', 'width', 'height', 'material'] },
+    { title: "Policies & Delivery", keys: ['warranty_period', 'return_policy', 'replacement_policy', 'shipping_charge', 'free_shipping', 'cod_available', 'available_cities', 'pickup_location', 'warehouse'] },
+    { title: "Manufacturing Details", keys: ['manufacturer_name', 'country_of_origin', 'hsn_code', 'gst_number'] },
+    { title: "Documents & Resources", keys: ['user_manual_url', 'brochure_url', 'certificate_urls'] },
+    { title: "Vendor Contact", keys: ['contact_number', 'whatsapp_number', 'vendor_email'] }
+  ];
+
+  const groupedSpecs = specGroups.map(group => {
+    const items = [];
+    group.keys.forEach(k => {
+      if (allSpecs[k]) {
+        items.push({ k, v: allSpecs[k] });
+        delete allSpecs[k];
+      }
+    });
+    return { ...group, items };
+  }).filter(g => g.items.length > 0);
+
+  const remainingItems = Object.entries(allSpecs)
+    .filter(([k, v]) => !hiddenKeys.includes(k) && v !== '' && v !== null && v !== undefined)
+    .map(([k, v]) => ({ k, v }));
+
+  if (remainingItems.length > 0) {
+    groupedSpecs.push({ title: "Other Details", items: remainingItems });
+  }
   const PLACEHOLDER = 'https://placehold.co/400x400/f5f5f5/999?text=No+Image';
 
   return (
@@ -129,7 +168,7 @@ export function ProductDetailPage() {
             <div className="flex gap-3">
               <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }}
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-[#88313A] text-[#88313A]' : 'text-gray-800'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
+                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-brand-orange text-brand-orange' : 'text-gray-800'}`} strokeWidth={isWishlisted ? 0 : 1.5} />
               </button>
               <button onClick={handleShare}
                 className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
@@ -154,7 +193,7 @@ export function ProductDetailPage() {
           <div className="flex gap-2 px-4 py-3 bg-white border-b border-gray-100 overflow-x-auto hide-scrollbar">
             {productImages.map((img, i) => (
               <button key={i} onClick={() => { setMainImg(img); setImgError(false); }}
-                className={`w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-[#88313A]' : 'border-transparent'}`}>
+                className={`w-16 h-16 rounded-xl flex-shrink-0 overflow-hidden border-2 transition-all ${mainImg === img ? 'border-brand-orange' : 'border-transparent'}`}>
                 <img src={img} alt={`thumb-${i}`} className="w-full h-full object-cover" onError={(e) => { e.target.src = PLACEHOLDER; }} />
               </button>
             ))}
@@ -163,7 +202,7 @@ export function ProductDetailPage() {
       </div>
 
       {/* ── MAIN CONTENT ── */}
-      <div className="max-w-[1400px] mx-auto md:px-8 lg:px-12 md:mt-6 md:grid md:grid-cols-[45%_55%] md:gap-8 lg:gap-12">
+      <div className="max-w-[1400px] mx-auto md:px-8 lg:px-12 md:pt-20 md:pb-16 md:grid md:grid-cols-[45%_55%] md:gap-8 lg:gap-12">
 
         {/* ── DESKTOP LEFT: Images ── */}
         <div className="hidden md:block">
@@ -307,7 +346,7 @@ export function ProductDetailPage() {
           {/* Delivery */}
           <div className="mb-5 pb-5 border-b border-gray-100">
             <span className="text-sm font-bold text-gray-700 uppercase tracking-wide block mb-3">Delivery</span>
-            <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-3 focus-within:border-[#022A21] transition-colors">
+            <div className="flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 mb-3 focus-within:border-[#0b162c] transition-colors">
               <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
               <input type="text" placeholder="Enter pincode to check delivery"
                 value={pincode} onChange={(e) => setPincode(e.target.value)}
@@ -325,9 +364,9 @@ export function ProductDetailPage() {
           {/* Trust badges */}
           <div className="grid grid-cols-3 gap-3 mb-6 pb-6 border-b border-gray-100">
             {[
-              { icon: <Truck className="w-5 h-5 text-[#022A21]" />, label: 'Free Delivery' },
-              { icon: <ShieldCheck className="w-5 h-5 text-[#022A21]" />, label: '100% Genuine' },
-              { icon: <RefreshCcw className="w-5 h-5 text-[#022A21]" />, label: 'Easy Returns' },
+              { icon: <Truck className="w-5 h-5 text-[#0b162c]" />, label: 'Free Delivery' },
+              { icon: <ShieldCheck className="w-5 h-5 text-[#0b162c]" />, label: '100% Genuine' },
+              { icon: <RefreshCcw className="w-5 h-5 text-[#0b162c]" />, label: 'Easy Returns' },
             ].map(b => (
               <div key={b.label} className="flex flex-col items-center gap-1.5 bg-gray-50 rounded-2xl p-3 text-center border border-gray-100">
                 {b.icon}
@@ -342,31 +381,40 @@ export function ProductDetailPage() {
               <span className="w-1 h-5 bg-brand-orange rounded-full inline-block" />
               Product Description
             </h2>
-            <p className="text-[14px] text-gray-600 leading-relaxed">
+            {product.short_description && (
+              <p className="text-[15px] font-semibold text-gray-800 mb-2 leading-snug">{product.short_description}</p>
+            )}
+            <p className="text-[14px] text-gray-600 leading-relaxed whitespace-pre-line">
               {product.description || 'Experience the perfect blend of tradition and quality. This product is carefully crafted to meet your daily needs while maintaining an authentic feel. Suitable for all occasions and built to last.'}
             </p>
           </div>
 
           {/* Specs */}
-          {(product.category || currentVariant?.color || Object.keys(customAttrs).length > 0) && (
+          {groupedSpecs.length > 0 && (
             <div className="mb-4">
-              <h2 className="font-bold text-lg text-gray-900 mb-3 flex items-center gap-2" style={{ fontFamily: 'Georgia, serif' }}>
+              <h2 className="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2" style={{ fontFamily: 'Georgia, serif' }}>
                 <span className="w-1 h-5 bg-brand-orange rounded-full inline-block" />
                 Specifications
               </h2>
-              <div className="rounded-2xl overflow-hidden border border-gray-100">
-                {[
-                  product.category && { k: 'Category', v: product.category },
-                  currentVariant?.color && { k: 'Color', v: currentVariant.color },
-                  ...Object.entries(customAttrs).map(([k, v]) => ({ k: k.replace(/_/g, ' '), v })),
-                ].filter(Boolean).map((row, i) => (
-                  <div key={row.k} className={`flex gap-4 px-4 py-3 text-sm ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
-                    <span className="text-gray-500 w-32 shrink-0 capitalize font-medium">{row.k}</span>
-                    <span className="text-gray-900 font-semibold">
-                      {String(row.v).startsWith('http')
-                        ? <a href={row.v} target="_blank" rel="noreferrer" className="text-brand-orange hover:underline">View</a>
-                        : row.v}
-                    </span>
+              
+              <div className="flex flex-col gap-6">
+                {groupedSpecs.map((group, gIdx) => (
+                  <div key={gIdx}>
+                    <h3 className="text-sm font-bold text-gray-700 uppercase tracking-wide mb-2 pl-1">{group.title}</h3>
+                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                      {group.items.map((row, i) => (
+                        <div key={row.k} className={`flex gap-4 px-4 py-3 text-sm ${i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}>
+                          <span className="text-gray-500 w-1/3 shrink-0 capitalize font-medium">
+                            {row.k.replace(/_/g, ' ')}
+                          </span>
+                          <span className="text-gray-900 font-semibold w-2/3 break-words">
+                            {String(row.v).startsWith('http')
+                              ? <a href={row.v} target="_blank" rel="noreferrer" className="text-brand-orange hover:underline truncate block">View Document</a>
+                              : row.v}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -394,11 +442,11 @@ export function ProductDetailPage() {
       {/* ── MOBILE sticky action bar ── */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex gap-3 px-4 py-3 z-[60]">
         <button onClick={handleAddToCart}
-          className="flex-1 bg-white text-[#88313A] border border-[#88313A] font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform">
+          className="flex-1 bg-white text-[#0b162c] border border-[#0b162c] font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform">
           Add to Cart
         </button>
         <button onClick={handleBuyNow}
-          className="flex-1 bg-[#88313A] text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-[#88313A]/20">
+          className="flex-1 bg-brand-orange text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-brand-orange/20">
           Buy Now
         </button>
       </div>

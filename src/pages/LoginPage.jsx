@@ -82,7 +82,7 @@ export function LoginPage() {
 
   const displayError = localError || (step === 'login' && error);
 
-  const inputClass = "w-full border-2 border-gray-100 rounded-2xl px-4 py-3.5 pl-11 text-[15px] text-gray-900 focus:outline-none focus:border-[#022A21] focus:bg-white transition-all bg-gray-50 placeholder-gray-400 font-medium";
+  const inputClass = "w-full border-2 border-gray-100 rounded-2xl px-4 py-3.5 pl-11 text-[15px] text-gray-900 focus:outline-none focus:border-[#0b162c] focus:bg-white transition-all bg-gray-50 placeholder-gray-400 font-medium";
 
   const stepMeta = {
     login: { emoji: '👋', title: 'Welcome Back', sub: 'Sign in to your SWABHIVAR account' },
@@ -93,10 +93,10 @@ export function LoginPage() {
   const meta = stepMeta[step];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#022A21' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#0b162c' }}>
 
       {/* ── GREEN HERO ── */}
-      <div className="relative flex flex-col items-center pt-14 pb-24 px-6 overflow-hidden">
+      <div className="relative flex flex-col items-center pt-14 pb-20 px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full border border-white/[0.05]" />
           <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full border border-white/[0.07]" />
@@ -114,34 +114,38 @@ export function LoginPage() {
         </button>
 
         <div className="relative z-10 flex flex-col items-center">
-          <div className="relative mb-4">
-            <div className="w-[90px] h-[90px] rounded-[1.75rem] bg-white/[0.08] border border-white/[0.14] flex items-center justify-center shadow-[0_16px_48px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.12)]">
-              <img src={logo} alt="SWABHIVAR" className="h-14 w-14 object-contain drop-shadow-2xl" />
-            </div>
-            <div className="absolute -bottom-1.5 -right-1.5 w-7 h-7 bg-gradient-to-br from-brand-orange to-yellow-400 rounded-full border-[3px] border-[#022A21] flex items-center justify-center shadow-lg">
-              <ShieldCheck className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
-            </div>
-          </div>
-          <h1 className="text-white text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.18em' }}>SWABHIVAR</h1>
-          <p className="text-brand-orange text-[10px] font-bold tracking-[0.28em] uppercase mt-1">Your Choice, From Anywhere.</p>
-          <div className="flex items-center gap-5 mt-5">
-            {['10K+ Members', '100% Secure', 'Free Replacements'].map(t => (
-              <div key={t} className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-orange/70" />
-                <span className="text-white/50 text-[10px] font-medium">{t}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
       {/* ── WHITE CARD ── */}
-      <div className="flex-1 bg-white rounded-t-[2.5rem] -mt-12 relative z-10 px-5 pt-8 pb-10 shadow-[0_-24px_60px_rgba(0,0,0,0.3)]">
+      <div className="flex-1 bg-white rounded-t-[2.5rem] -mt-10 relative z-10 px-5 pt-0 pb-10 shadow-[0_-24px_60px_rgba(0,0,0,0.3)]">
         <div className="max-w-sm mx-auto">
-          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mb-6" />
+          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-2" />
+
+          <div className="flex flex-col items-center mb-8 text-center">
+            {/* Logo Floating Overlap */}
+            <div className="relative -mt-12 mb-4">
+              <div className="w-[100px] h-[100px] rounded-[1.75rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5">
+                <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-gradient-to-br from-brand-orange to-yellow-400 rounded-full border-[3px] border-white flex items-center justify-center shadow-md">
+                <ShieldCheck className="w-4 h-4 text-white" strokeWidth={2.5} />
+              </div>
+            </div>
+            <h1 className="text-[#0b162c] text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.18em' }}>SWABHIVAR</h1>
+            <p className="text-brand-orange text-[10px] font-bold tracking-[0.28em] uppercase mt-1">Your Choice, From Anywhere.</p>
+            <div className="flex items-center justify-center gap-4 md:gap-5 mt-5">
+              {['10K+ Members', '100% Secure', 'Free Returns'].map(t => (
+                <div key={t} className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange/70" />
+                  <span className="text-gray-500 text-[9px] md:text-[10px] font-medium">{t}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
           <div className="mb-6">
-            <h2 className="text-2xl font-extrabold text-[#022A21]" style={{ fontFamily: 'Georgia, serif' }}>
+            <h2 className="text-2xl font-extrabold text-[#0b162c]" style={{ fontFamily: 'Georgia, serif' }}>
               {meta.title} {meta.emoji}
             </h2>
             <p className="text-[13px] text-gray-500 mt-1.5">{meta.sub}</p>
@@ -179,7 +183,7 @@ export function LoginPage() {
                   <button type="button" onClick={() => { setStep('forgot_email'); clearMessages(); }} className="text-[13px] font-semibold text-brand-orange hover:underline underline-offset-2">Forgot Password?</button>
                 </div>
                 <button type="submit" disabled={loading}
-                  className="w-full bg-gradient-to-r from-[#022A21] to-[#054335] text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(2,42,33,0.3)] hover:shadow-[0_8px_30px_rgba(2,42,33,0.45)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-1">
+                  className="w-full bg-gradient-to-r from-[#0b162c] to-[#1a2d52] text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(11,22,44,0.3)] hover:shadow-[0_8px_30px_rgba(11,22,44,0.45)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-1">
                   {loading ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Logging in...</> : 'Login Securely →'}
                 </button>
               </form>
@@ -248,7 +252,7 @@ export function LoginPage() {
                 </div>
               ))}
               <button type="submit" disabled={loading}
-                className="w-full bg-gradient-to-r from-[#022A21] to-[#054335] text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(2,42,33,0.3)] hover:shadow-[0_8px_30px_rgba(2,42,33,0.45)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
+                className="w-full bg-gradient-to-r from-[#0b162c] to-[#1a2d52] text-white font-bold py-4 rounded-2xl text-[15px] shadow-[0_4px_20px_rgba(11,22,44,0.3)] hover:shadow-[0_8px_30px_rgba(11,22,44,0.45)] hover:-translate-y-0.5 active:scale-[0.98] transition-all disabled:opacity-60 flex items-center justify-center gap-2 mt-2">
                 {loading ? <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Resetting...</> : 'Reset Password →'}
               </button>
             </form>

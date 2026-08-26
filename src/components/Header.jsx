@@ -82,19 +82,19 @@ function CategoriesDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
         Categories <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full left-0 w-56 bg-[#022A21] rounded-2xl shadow-xl border border-[#054335] py-2 z-[100]">
+        <div className="absolute top-full left-0 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
           <button onClick={() => { navigate('/category/all'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-brand-orange/10 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
             <Grid3X3 className="w-4 h-4" /> All Categories
           </button>
-          <div className="border-t border-[#054335] my-1" />
+          <div className="border-t border-gray-100 my-1" />
           {categories.map(cat => (
             <button key={cat.id} onClick={() => { navigate(`/category/${cat.id}`); setOpen(false); }}
-              className="w-full flex items-center px-4 py-2.5 text-sm font-medium text-gray-300 hover:bg-brand-orange/10 hover:text-brand-orange transition-colors">
+              className="w-full flex items-center px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-orange-50 hover:text-brand-orange transition-colors">
               {cat.name}
             </button>
           ))}
@@ -121,20 +121,20 @@ function OffersDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-colors">
+      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-colors">
         Offers <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="absolute top-full left-0 w-64 bg-[#022A21] rounded-2xl shadow-xl border border-[#054335] py-2 z-[100]">
+        <div className="absolute top-full left-0 w-64 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[100]">
           <button onClick={() => { navigate('/offers'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-brand-orange/10 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
             <Tag className="w-4 h-4" /> View All Offers
           </button>
-          {offers.filter(o => o.offer_type === 'offer' || !o.code).length > 0 && <div className="border-t border-[#054335] my-1" />}
+          {offers.filter(o => o.offer_type === 'offer' || !o.code).length > 0 && <div className="border-t border-gray-100 my-1" />}
           {offers.filter(o => o.offer_type === 'offer' || !o.code).slice(0, 6).map(offer => (
             <button key={offer.id} onClick={() => { navigate(`/offers?id=${offer.id}`); setOpen(false); }}
-              className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-brand-orange/10 transition-colors">
-              <span className="text-sm font-semibold text-gray-300 truncate">{offer.name}</span>
+              className="w-full flex items-center justify-between px-4 py-2.5 hover:bg-orange-50 transition-colors">
+              <span className="text-sm font-semibold text-gray-700 truncate">{offer.name}</span>
               <span className="text-xs font-bold text-brand-orange ml-2 shrink-0">
                 {offer.discount_type === 'flat' ? `₹${offer.discount_percent}` : `${offer.discount_percent}%`} OFF
               </span>
@@ -143,9 +143,9 @@ function OffersDropdown() {
           {offers.filter(o => o.offer_type === 'offer' || !o.code).length === 0 && (
             <p className="px-4 py-3 text-xs text-gray-500">No active offers right now</p>
           )}
-          <div className="border-t border-[#054335] my-1" />
+          <div className="border-t border-gray-100 my-1" />
           <button onClick={() => { navigate('/all-coupons'); setOpen(false); }}
-            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-brand-orange/10 transition-colors">
+            className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-brand-orange hover:bg-orange-50 transition-colors">
             <Ticket className="w-4 h-4" /> All Coupons Available
           </button>
         </div>
@@ -158,26 +158,26 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
   return (
     <>
       <div className="h-[90px] lg:h-[110px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] border-b border-[#054335] shadow-sm px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
+      <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
           {/* Navigation Links */}
           <nav className="flex-1 hidden lg:flex items-center justify-start gap-8">
-            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-all relative group">
+            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
               Home
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-all relative group">
+            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
               About
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-all relative group">
+            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
               Contact
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-300 hover:text-brand-orange transition-all relative group">
+            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-orange transition-all relative group">
               Orders
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-orange group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
@@ -185,7 +185,7 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
 
           {/* Centered Logo */}
           <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative -ml-2 md:-ml-8 lg:-ml-16">
-            <img src={logo} alt="Logo" className="relative z-10 h-20 md:h-28 lg:h-32 w-auto max-w-[320px] lg:max-w-[400px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-md" />
+            <img src={logo} alt="Logo" className="relative z-10 h-24 md:h-32 lg:h-40 w-auto max-w-[320px] lg:max-w-[450px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-md" />
           </Link>
 
           {/* Right Action Icons & Search */}
@@ -197,18 +197,18 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                   if (e.key === 'Enter' && e.target.value.trim())
                     window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
                 }}
-                className="w-full bg-[#054335] hover:bg-[#075c47] border border-[#065A46] rounded-full py-2.5 pl-11 pr-4 text-sm text-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:border-brand-orange/50 transition-all"
+                className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-orange focus:border-brand-orange/50 transition-all"
               />
             </div>
 
             <div className="flex items-center gap-4 lg:gap-5">
-              <div className="flex items-center gap-2 px-3.5 py-2 bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] transition-all cursor-pointer hover:border-brand-orange/40 hover:-translate-y-1 group">
-                <Wallet className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
-                <span className="text-white text-sm font-bold">₹1,240</span>
+              <div className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-orange/40 hover:-translate-y-1 group">
+                <Wallet className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+                <span className="text-gray-900 text-sm font-bold">₹1,240</span>
               </div>
 
-              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
-                <Heart className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
+                <Heart className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white">
                     {wishlistCount}
@@ -216,10 +216,10 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                 )}
               </Link>
 
-              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-[#054335] hover:bg-[#075c47] rounded-full border border-[#065A46] hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
-                <ShoppingCart className="w-5 h-5 text-gray-300 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
+              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-orange/40 hover:-translate-y-1 transition-all group">
+                <ShoppingCart className="w-5 h-5 text-gray-600 group-hover:text-brand-orange transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-[#022A21] animate-pulse">
+                  <span className="absolute -top-1.5 -right-1.5 bg-brand-orange text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white animate-pulse">
                     {cartCount}
                   </span>
                 )}
@@ -369,44 +369,51 @@ export function Header({ variant = 'default', title, showShare = false }) {
           )}
         </AnimatePresence>
 
-        <div className="h-[95px]" />
-        <header className="fixed top-0 left-0 z-50 w-full bg-[#022A21] px-4 py-2 shadow-sm border-b border-[#054335]">
-          <div className="w-full max-w-lg mx-auto">
-            {/* Location & Refer row */}
-            <div className="flex items-center justify-between mb-1.5">
+        <div className="h-[105px]" />
+        <header className="fixed top-0 left-0 z-50 w-full bg-white shadow-sm flex flex-col">
+          {/* Top Row: Location & Refer */}
+          <div className="w-full bg-[#0b162c]">
+            <div className="flex items-center justify-between px-4 py-2.5 max-w-lg mx-auto">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-brand-orange fill-brand-orange/20" />
-                <span className="text-[11px] text-gray-300 font-medium">Deliver to Hyderabad 500081</span>
+                <MapPin className="w-3.5 h-3.5 text-brand-orange" />
+                <span className="text-[12px] text-white font-medium">Deliver to Hyderabad 500081</span>
               </div>
-              <Link to="/refer" className="flex items-center gap-1.5 bg-gradient-to-r from-brand-orange to-yellow-500 px-2.5 py-0.5 rounded-full shadow-[0_0_8px_rgba(255,165,0,0.4)] border border-yellow-300/30 animate-pulse hover:scale-105 transition-transform">
+              <Link to="/refer" className="flex items-center gap-1.5 bg-[#f36b21] px-3 py-1 rounded-md shadow-sm">
                 <Gift className="w-3 h-3 text-white" />
-                <span className="text-[10px] text-white font-extrabold tracking-wide drop-shadow-sm">Refer & Earn</span>
+                <span className="text-[11px] text-white font-bold tracking-wide">Refer & Earn</span>
               </Link>
             </div>
+          </div>
 
-            {/* Title and Actions row */}
-            <div className="flex items-center justify-between mb-2 mt-1">
-              <div className="flex-1 -ml-2">
+          {/* Logo and Actions Row */}
+          <div className="w-full relative bg-white">
+            <div className="max-w-lg mx-auto flex items-center justify-between relative">
+              {/* Dark extension for actions (rounded bottom-left) */}
+              <div className="absolute top-0 right-0 w-[65%] h-full bg-[#0b162c] rounded-bl-[2.5rem] z-0"></div>
+              
+              {/* Logo Area */}
+              <div className="flex-1 pl-3 pr-6 py-2 z-10 relative">
                 <Link to="/">
-                  <img src={logo} alt="Logo" className="h-14 md:h-16 w-auto max-w-[240px] object-contain filter drop-shadow-lg" />
+                  <img src={logo} alt="Logo" className="h-16 sm:h-20 w-auto object-contain filter drop-shadow-sm" />
                 </Link>
               </div>
 
-              <div className="flex items-center gap-3">
+              {/* Actions Area */}
+              <div className="flex items-center gap-2 sm:gap-2.5 px-3 py-3 shrink-0 z-10 relative">
                 {/* Wallet */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#054335] rounded-full border border-[#065A46]">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border border-white/20 rounded-full">
                   <Wallet className="w-4 h-4 text-brand-orange" strokeWidth={2} />
-                  <span className="text-white text-xs font-bold">₹1,240</span>
+                  <span className="text-white text-xs sm:text-sm font-bold">₹1,240</span>
                 </div>
 
                 {/* Cart icon */}
                 <button
                   onClick={() => navigate('/cart')}
-                  className="relative p-2 rounded-full border border-[#065A46] bg-[#054335] hover:bg-[#076655] transition-colors"
+                  className="relative p-2 rounded-full border border-white/20 hover:bg-white/5 transition-colors"
                 >
-                  <ShoppingCart className="w-5 h-5 text-white" />
+                  <ShoppingCart className="w-4 h-4 text-white" />
                   {cartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-brand-orange rounded-full text-white text-[10px] font-black flex items-center justify-center border-2 border-[#022A21]">
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-orange rounded-full text-white text-[9px] font-black flex items-center justify-center">
                       {cartCount > 9 ? '9+' : cartCount}
                     </span>
                   )}
@@ -415,14 +422,12 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {/* Menu button */}
                 <button
                   onClick={() => setMenuOpen(true)}
-                  className="relative p-2 rounded-full border border-[#065A46] bg-[#054335] hover:bg-[#076655] transition-colors"
+                  className="relative p-2 rounded-full border border-white/20 hover:bg-white/5 transition-colors"
                 >
-                  <Menu className="w-5 h-5 text-white" />
+                  <Menu className="w-4 h-4 text-white" />
                 </button>
               </div>
-
             </div>
-
           </div>
         </header>
       </div>

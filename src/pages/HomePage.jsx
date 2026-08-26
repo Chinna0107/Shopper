@@ -267,6 +267,7 @@ export function HomePage() {
           </div>
 
           {/* Ad Block Below Prices (Sponsored Card) */}
+          {/* 
           <Link to={banners.length > 0 ? (banners[0].link_url || "/category/all") : "/category/all"} className="block bg-[#FFFBF4] border border-[#F4E6D4] rounded-[2rem] p-4 md:p-6 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all group">
             <div className="flex items-center gap-2 mb-4">
               <svg className="w-4 h-4 text-[#7A1D25]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -304,6 +305,7 @@ export function HomePage() {
               </div>
             </div>
           </Link>
+          */}
 
           {/* Best Sellers */}
           {products.filter(p => p.is_bestseller).length > 0 && (
@@ -323,6 +325,7 @@ export function HomePage() {
           )}
 
           {/* Middle Advertisement Block */}
+          {/*
           <div className="rounded-[1.5rem] overflow-hidden bg-white shadow-sm border border-gray-100">
             <AdBanner
               imageUrl={imgAarti}
@@ -330,6 +333,7 @@ export function HomePage() {
               link="/category/all"
             />
           </div>
+          */}
 
           {/* Trending */}
           {products.filter(p => p.is_trending).length > 0 && (

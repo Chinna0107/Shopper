@@ -10,6 +10,11 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/a
 function ProductDetailModal({ product, onClose, onApprove, onReject }) {
   const [rejecting, setRejecting] = useState(false);
   const images = Array.isArray(product.images) ? product.images : [];
+  
+  let customAttrs = product.custom_attributes || {};
+  if (typeof customAttrs === 'string') {
+    try { customAttrs = JSON.parse(customAttrs); } catch(e) {}
+  }
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -62,18 +67,27 @@ function ProductDetailModal({ product, onClose, onApprove, onReject }) {
             </div>
           )}
 
-          {product.custom_attributes && Object.keys(product.custom_attributes).length > 0 && (
+          {customAttrs && Object.keys(customAttrs).length > 0 && (
             <div>
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Tag className="w-3.5 h-3.5" /> Attributes
               </p>
               <div className="grid grid-cols-2 gap-2">
-                {Object.entries(product.custom_attributes).map(([key, val]) => (
-                  <div key={key} className="bg-gray-50 rounded-lg px-3 py-2">
-                    <p className="text-[10px] text-gray-400 uppercase">{key}</p>
-                    <p className="text-xs font-semibold text-gray-700">{String(val)}</p>
-                  </div>
-                ))}
+                {Object.entries(customAttrs).map(([key, val]) => {
+                  const isUrl = String(val).startsWith('http');
+                  return (
+                    <div key={key} className="bg-gray-50 rounded-lg px-3 py-2 overflow-hidden text-ellipsis">
+                      <p className="text-[10px] text-gray-400 uppercase">{key.replace(/_/g, ' ')}</p>
+                      {isUrl ? (
+                        <a href={String(val)} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-brand-orange hover:underline truncate block">
+                          View Document
+                        </a>
+                      ) : (
+                        <p className="text-xs font-semibold text-gray-700 truncate">{String(val)}</p>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

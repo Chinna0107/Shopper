@@ -17,13 +17,13 @@ export function CategoryListingPage() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  
+
   const [layout, setLayout] = useState('grid');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [sortBy, setSortBy] = useState('featured'); // featured, price_asc, price_desc
   const { products, categories, loading } = useStoreData();
   const [banners, setBanners] = useState([]);
-  
+
   useEffect(() => {
     const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
     fetch(`${url}/general/banners?type=category_page_banner`)
@@ -31,21 +31,21 @@ export function CategoryListingPage() {
       .then(d => { if (d.banners) setBanners(d.banners); })
       .catch(e => console.error(e));
   }, []);
-  
+
   const modelQuery = searchParams.get('model');
   const searchQuery = searchParams.get('search');
   const priceQuery = searchParams.get('price');
-  
+
   // Prevent body scroll when mobile filter is open
   useEffect(() => {
     if (showMobileFilters) document.body.style.overflow = 'hidden';
     else document.body.style.overflow = 'unset';
     return () => { document.body.style.overflow = 'unset'; };
   }, [showMobileFilters]);
-  
+
   let categoryName = modelQuery ? `${modelQuery} Products` : 'All Products';
   let bannerImg = imgAarti;
-  
+
   if (categoryId !== 'all') {
     const cat = categories.find(c => c.id.toString() === categoryId);
     if (cat) {
@@ -62,7 +62,7 @@ export function CategoryListingPage() {
       let parsedSizes = [];
       if (typeof p.sizes === 'string') parsedSizes = JSON.parse(p.sizes);
       else if (Array.isArray(p.sizes)) parsedSizes = p.sizes;
-      
+
       if (parsedSizes?.length > 0) {
         if (Array.isArray(parsedSizes[0].sizes) && parsedSizes[0].sizes.length > 0) {
           price = parsedSizes[0].sizes[0].price || price;
@@ -70,7 +70,7 @@ export function CategoryListingPage() {
           price = parsedSizes[0].price || price;
         }
       }
-    } catch (e) {}
+    } catch (e) { }
     return Number(price);
   };
 
@@ -81,7 +81,7 @@ export function CategoryListingPage() {
       const cat = categories.find(c => c.id.toString() === categoryId);
       matchCat = cat ? p.category === cat.name : false;
     }
-    
+
     let matchModel = true;
     if (modelQuery) {
       matchModel = p.model === modelQuery;
@@ -90,8 +90,8 @@ export function CategoryListingPage() {
     let matchSearch = true;
     if (searchQuery) {
       const lowerSearch = searchQuery.toLowerCase();
-      matchSearch = p.name.toLowerCase().includes(lowerSearch) || 
-                    (p.description && p.description.toLowerCase().includes(lowerSearch));
+      matchSearch = p.name.toLowerCase().includes(lowerSearch) ||
+        (p.description && p.description.toLowerCase().includes(lowerSearch));
     }
 
     let matchPrice = true;
@@ -165,7 +165,7 @@ export function CategoryListingPage() {
         <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Categories</h3>
         <ul className="space-y-1.5">
           <li>
-            <button 
+            <button
               onClick={() => handleCategoryChange('all')}
               className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all border ${categoryId === 'all' ? 'bg-orange-50/50 border-brand-orange text-brand-orange font-bold shadow-sm' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-200'}`}
             >
@@ -174,7 +174,7 @@ export function CategoryListingPage() {
           </li>
           {categories.map(cat => (
             <li key={cat.id}>
-              <button 
+              <button
                 onClick={() => handleCategoryChange(cat.id.toString())}
                 className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all border ${categoryId === cat.id.toString() ? 'bg-orange-50/50 border-brand-orange text-brand-orange font-bold shadow-sm' : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:border-gray-200'}`}
               >
@@ -254,11 +254,11 @@ export function CategoryListingPage() {
   return (
     <div className="bg-transparent min-h-screen pb-20">
       <Header title={categoryName} showShare={true} />
-      
+
       {/* Category Banner or Search UI */}
       {categoryId === 'all' ? (
-        <div className="bg-[#FFFDF9] shadow-sm border-b border-gray-100 pb-6">
-          <div className="px-4 py-4 flex items-center gap-3 bg-[#FFFDF9] max-w-7xl mx-auto">
+        <div className="pt-6 pb-2 relative z-10 px-4">
+          <div className="flex items-center gap-3 max-w-7xl mx-auto">
             <div className="flex-1 relative group">
               <Search className="w-4 h-4 text-gray-500 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-orange transition-colors" />
               <input
@@ -274,7 +274,7 @@ export function CategoryListingPage() {
                 className="w-full bg-white border border-gray-200 rounded-full py-2.5 pl-11 pr-10 text-[15px] text-gray-900 focus:outline-none focus:ring-1 focus:border-brand-orange focus:shadow-sm transition-all placeholder-gray-400"
               />
               {searchQuery && (
-                <button 
+                <button
                   onClick={() => {
                     const newParams = Object.fromEntries(searchParams.entries());
                     delete newParams.search;
@@ -286,8 +286,8 @@ export function CategoryListingPage() {
                 </button>
               )}
             </div>
-            <button onClick={() => setShowMobileFilters(true)} className="w-10 h-10 bg-[#8E112E] rounded-full flex items-center justify-center text-white shadow-sm hover:bg-[#720e25] transition-colors shrink-0">
-              <SlidersHorizontal className="w-4 h-4" />
+            <button onClick={() => setShowMobileFilters(true)} className="w-11 h-11 bg-[#0b162c] rounded-2xl flex items-center justify-center text-white shadow-md hover:bg-[#15284b] hover:-translate-y-0.5 transition-all shrink-0">
+              <SlidersHorizontal className="w-5 h-5" />
             </button>
           </div>
 
@@ -311,7 +311,7 @@ export function CategoryListingPage() {
       )}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10">
-        
+
         {/* Search Suggestions Filters - Only visible on specific categories */}
         {categoryId !== 'all' && !searchQuery && (
           <div className="bg-white rounded-3xl p-5 mb-8 shadow-sm border border-gray-100 space-y-6">
@@ -330,7 +330,7 @@ export function CategoryListingPage() {
                 ))}
               </div>
             </div>
-            
+
             <div>
               <p className="text-[11px] font-bold text-gray-500 tracking-wider mb-3">PRICE</p>
               <div className="flex flex-wrap gap-2.5">
@@ -367,11 +367,11 @@ export function CategoryListingPage() {
         )}
 
         {/* Categories Ribbon */}
-        <div className="bg-white border-gray-100 rounded-3xl mb-8 px-4 py-6 overflow-x-auto hide-scrollbar shadow-sm">
+        <div className="bg-white border-gray-100 rounded-3xl -mt-2 lg:-mt-1 mb-8 px-4 py-6 overflow-x-auto hide-scrollbar shadow-sm">
           <div className="flex gap-6 md:gap-10 justify-start md:justify-center min-w-max mx-auto px-2">
             <Link to="/category/all" className="flex flex-col items-center gap-3 group">
               <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center border overflow-hidden transition-all ${categoryId === 'all' ? 'border-brand-orange border-2 shadow-sm bg-orange-50/50' : 'border-gray-200 bg-white group-hover:border-brand-orange group-hover:shadow-sm'}`}>
-                <div className={`w-full h-full flex items-center justify-center font-extrabold text-sm text-center leading-tight ${categoryId === 'all' ? 'text-brand-orange' : 'text-gray-600 group-hover:text-brand-orange'}`}>All<br/>Products</div>
+                <div className={`w-full h-full flex items-center justify-center font-extrabold text-sm text-center leading-tight ${categoryId === 'all' ? 'text-brand-orange' : 'text-gray-600 group-hover:text-brand-orange'}`}>All<br />Products</div>
               </div>
               <span className={`text-[13px] md:text-sm font-bold text-center transition-colors ${categoryId === 'all' ? 'text-brand-orange' : 'text-gray-600 group-hover:text-gray-900'}`}>All Products</span>
             </Link>
@@ -392,24 +392,24 @@ export function CategoryListingPage() {
 
         {/* Ad Block */}
         {banners.length > 0 ? (
-          <AdBanner 
-            imageUrl={banners[0].image_url} 
-            altText={banners[0].title || "Category Special Ad"} 
+          <AdBanner
+            imageUrl={banners[0].image_url}
+            altText={banners[0].title || "Category Special Ad"}
             link={banners[0].link_url || "/category/all"}
           />
         ) : (
-          <AdBanner 
-            imageUrl={imgMeditation} 
-            altText="Category Special Ad" 
+          <AdBanner
+            imageUrl={imgMeditation}
+            altText="Category Special Ad"
           />
         )}
 
         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 bg-white p-4 md:p-5 rounded-2xl shadow-sm border border-gray-100 gap-4">
           <div className="flex items-center justify-between w-full sm:w-auto gap-4">
             <span className="text-sm font-extrabold text-[#022A21] bg-orange-50/50 border border-brand-orange/30 px-4 py-2 rounded-xl">{filteredProducts.length} Items</span>
-            
+
             {/* Mobile Filter Trigger */}
-            <button 
+            <button
               onClick={() => setShowMobileFilters(true)}
               className="lg:hidden flex items-center gap-2 text-sm font-bold text-white bg-[#022A21] px-5 py-2 rounded-xl shadow-md"
             >
@@ -444,15 +444,15 @@ export function CategoryListingPage() {
                     {isAdSlot && (
                       <div className="col-span-full">
                         {banners.length > 1 ? (
-                          <AdBanner 
-                            imageUrl={banners[1 % banners.length].image_url} 
-                            altText={banners[1 % banners.length].title || "In-Feed Ad"} 
+                          <AdBanner
+                            imageUrl={banners[1 % banners.length].image_url}
+                            altText={banners[1 % banners.length].title || "In-Feed Ad"}
                             link={banners[1 % banners.length].link_url || "/category/all"}
                           />
                         ) : (
-                          <AdBanner 
-                            imageUrl={imgAarti} 
-                            altText="In-Feed Ad" 
+                          <AdBanner
+                            imageUrl={imgAarti}
+                            altText="In-Feed Ad"
                           />
                         )}
                       </div>
@@ -460,7 +460,7 @@ export function CategoryListingPage() {
                   </React.Fragment>
                 );
               })}
-              
+
               {filteredProducts.length === 0 && (
                 <div className="col-span-full py-24 text-center flex flex-col items-center bg-white rounded-3xl shadow-sm border border-gray-100">
                   <div className="w-20 h-20 bg-gray-50 border border-gray-100 rounded-full flex items-center justify-center mb-6">
@@ -479,21 +479,21 @@ export function CategoryListingPage() {
 
         {/* Bottom Ad Block */}
         {banners.length > 2 ? (
-          <AdBanner 
-            imageUrl={banners[2 % banners.length].image_url} 
-            altText={banners[2 % banners.length].title || "Category Bottom Ad"} 
+          <AdBanner
+            imageUrl={banners[2 % banners.length].image_url}
+            altText={banners[2 % banners.length].title || "Category Bottom Ad"}
             link={banners[2 % banners.length].link_url || "/category/all"}
           />
         ) : banners.length > 0 ? (
-          <AdBanner 
-            imageUrl={banners[0].image_url} 
-            altText={banners[0].title || "Category Bottom Ad"} 
+          <AdBanner
+            imageUrl={banners[0].image_url}
+            altText={banners[0].title || "Category Bottom Ad"}
             link={banners[0].link_url || "/category/all"}
           />
         ) : (
-          <AdBanner 
-            imageUrl={imgAarti} 
-            altText="Category Bottom Ad" 
+          <AdBanner
+            imageUrl={imgAarti}
+            altText="Category Bottom Ad"
           />
         )}
       </div>
@@ -511,19 +511,19 @@ export function CategoryListingPage() {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            
+
             <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
               <FilterSidebarContent />
             </div>
-            
+
             <div className="p-6 border-t border-gray-100 bg-gray-50 flex gap-4">
-              <button 
+              <button
                 onClick={() => { handleCategoryChange('all'); setSortBy('featured'); setShowMobileFilters(false); }}
                 className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 hover:bg-gray-100 font-bold rounded-xl transition-all bg-white"
               >
                 Reset
               </button>
-              <button 
+              <button
                 onClick={() => setShowMobileFilters(false)}
                 className="flex-[2] px-4 py-3 bg-[#022A21] text-white font-bold rounded-xl shadow-md hover:bg-[#033429]"
               >

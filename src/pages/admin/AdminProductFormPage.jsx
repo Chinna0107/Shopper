@@ -72,7 +72,6 @@ export function AdminProductFormPage() {
     name: '', sku: '', barcode: '', product_code: '', brand: '', gender: 'Any',
     category: '', subcategory: '', product_type: 'Physical', condition: 'New',
     description: '', short_description: '',
-    image_url: '', images: [], video_url: '', view_360_url: '',
     price: '', mrp: '', sale_price: '', cost_price: '', gst_percent: '',
     stock: '', stock_status: 'In Stock', min_order_qty: 1, max_order_qty: '',
     low_stock_alert: '', cod_available: true,
@@ -122,8 +121,6 @@ export function AdminProductFormPage() {
         images: Array.isArray(product.images) ? product.images : [],
         search_tags: attrs.search_tags || [],
         certificate_urls: attrs.certificate_urls || [],
-        video_url: attrs.video_url || '',
-        view_360_url: attrs.view_360_url || '',
         user_manual_url: attrs.user_manual_url || '',
         brochure_url: attrs.brochure_url || '',
         pickup_location: attrs.pickup_location || '',
@@ -223,7 +220,6 @@ export function AdminProductFormPage() {
     try {
       const extraAttrs = {
         ...form.custom_attributes,
-        video_url: form.video_url, view_360_url: form.view_360_url,
         user_manual_url: form.user_manual_url, brochure_url: form.brochure_url,
         certificate_urls: form.certificate_urls, pickup_location: form.pickup_location,
         warehouse: form.warehouse, available_cities: form.available_cities,
