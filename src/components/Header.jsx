@@ -3,7 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import {
   Menu, Search, Heart, ShoppingCart, LogIn, Package, MapPin, LayoutDashboard, LogOut,
   Settings, Shield, ChevronDown, X, Tag, Grid3X3, Home, ShoppingBag, Zap,
-  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift, Wallet, Ticket
+  User, Phone, Info, Lock, FileText, ChevronRight, Star, Gift, Wallet, Ticket, HelpCircle, RefreshCcw
 } from 'lucide-react';
 
 
@@ -202,10 +202,10 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
             </div>
 
             <div className="flex items-center gap-4 lg:gap-5">
-              <div className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
-                <Wallet className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
+              <Link to="/wallet" className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
+                <Wallet className="w-5 h-5 text-[#f36b21] group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 <span className="text-gray-900 text-sm font-bold">₹1,240</span>
-              </div>
+              </Link>
 
               <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
                 <Heart className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
@@ -378,7 +378,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 <MapPin className="w-3.5 h-3.5 text-brand-navy" />
                 <span className="text-[12px] text-white font-medium">Deliver to Hyderabad 500081</span>
               </div>
-              <Link to="/refer" className="flex items-center gap-1.5 bg-[#f36b21] px-3 py-1 rounded-md shadow-sm">
+              <Link to="/refer" className="flex items-center gap-1.5 bg-[#f36b21] px-3 py-1 rounded-md shadow-sm animate-pulse">
                 <Gift className="w-3 h-3 text-white" />
                 <span className="text-[11px] text-white font-bold tracking-wide">Refer & Earn</span>
               </Link>
@@ -401,10 +401,10 @@ export function Header({ variant = 'default', title, showShare = false }) {
               {/* Actions Area */}
               <div className="flex items-center gap-2 sm:gap-2.5 px-3 py-3 shrink-0 z-10 relative">
                 {/* Wallet */}
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border border-white/20 rounded-full">
-                  <Wallet className="w-4 h-4 text-brand-navy" strokeWidth={2} />
+                <Link to="/wallet" className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border border-white/20 rounded-full hover:bg-white/5 transition-colors">
+                  <Wallet className="w-4 h-4 text-[#f36b21]" strokeWidth={2} />
                   <span className="text-white text-xs sm:text-sm font-bold">₹1,240</span>
-                </div>
+                </Link>
 
                 {/* Cart icon */}
                 <button
@@ -459,7 +459,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   <p className="text-white font-extrabold text-xl tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
                     SWABHIVAR
                   </p>
-                  <p className="text-brand-navy text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5">
+                  <p className="text-[#f36b21] text-[9px] font-bold tracking-[0.22em] uppercase mt-0.5">
                     Your Choice, From Anywhere.
                   </p>
                 </div>
@@ -578,7 +578,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                         onClick={() => { navigate(`/category/${cat.slug || cat.id}`); setMenuOpen(false); }}
                         className="w-full flex items-center gap-3.5 px-3 py-2.5 rounded-xl hover:bg-white/[0.06] transition-colors text-left group mb-0.5">
                         <div className="w-8 h-8 rounded-xl bg-white/[0.07] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors">
-                          <Tag className="w-4 h-4 text-brand-navy/70" />
+                          <Tag className="w-4 h-4 text-white/70" />
                         </div>
                         <span className="text-white/70 font-medium text-[14px] group-hover:text-white transition-colors flex-1">{cat.name}</span>
                         <ChevronRight className="w-3.5 h-3.5 text-white/15 group-hover:text-white/35 transition-colors" />
@@ -592,8 +592,10 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {[
                   { icon: <Info className="w-4 h-4" />, label: 'About Us', path: '/about' },
                   { icon: <Phone className="w-4 h-4" />, label: 'Contact Us', path: '/contact' },
+                  { icon: <HelpCircle className="w-4 h-4" />, label: 'FAQs', path: '/faqs' },
                   { icon: <Lock className="w-4 h-4" />, label: 'Privacy Policy', path: '/privacy-policy' },
                   { icon: <FileText className="w-4 h-4" />, label: 'Terms & Conditions', path: '/terms' },
+                  { icon: <RefreshCcw className="w-4 h-4" />, label: 'Returns Policy', path: '/returns-policy' },
                 ].map(item => (
                   <button key={item.path}
                     onClick={() => { navigate(item.path); setMenuOpen(false); }}

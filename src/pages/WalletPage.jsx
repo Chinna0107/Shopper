@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Wallet, ArrowUpRight, ArrowDownLeft, Clock, CreditCard, Gift, ShieldCheck } from 'lucide-react';
 
 export function WalletPage() {
+  const navigate = useNavigate();
   const balance = 1240;
   const points = 2450;
 
@@ -22,19 +25,16 @@ export function WalletPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        <div className="bg-gradient-to-br from-[#0b162c] to-[#15284b] rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 opacity-5">
-            <Wallet className="w-32 h-32" strokeWidth={1} />
+        <div className="bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-3xl p-6 md:p-8 text-gray-900 shadow-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-4 opacity-20">
+            <Wallet className="w-32 h-32 text-yellow-700" strokeWidth={1} />
           </div>
-          <p className="text-sm text-gray-300 font-medium tracking-wider uppercase mb-1">Available Balance</p>
-          <h2 className="text-5xl font-extrabold mb-4 font-serif text-brand-navy" style={{ fontFamily: 'Georgia, serif' }}>₹{balance.toLocaleString()}</h2>
+          <p className="text-sm text-yellow-900/80 font-bold tracking-wider uppercase mb-1">Available Balance</p>
+          <h2 className="text-5xl font-extrabold mb-4 font-serif text-[#0b162c]" style={{ fontFamily: 'Georgia, serif' }}>₹{balance.toLocaleString()}</h2>
           
           <div className="flex gap-3 mt-6">
-            <button className="flex-1 bg-brand-navy hover:bg-blue-600 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-sm">
-              Add Money
-            </button>
-            <button className="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-2.5 rounded-xl text-sm transition-all">
-              Send to Bank
+            <button onClick={() => { toast.success('Redeem Swabhivar wallet amount by shopping'); navigate('/category/all'); }} className="flex-1 bg-[#0b162c] hover:bg-blue-900 text-white font-bold py-3 rounded-xl text-sm transition-all shadow-md">
+              Redeem
             </button>
           </div>
         </div>

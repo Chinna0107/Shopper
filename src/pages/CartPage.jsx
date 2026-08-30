@@ -226,10 +226,10 @@ export function CartPage() {
                         onChange={e => { setCouponCode(e.target.value.toUpperCase()); setCouponError(''); }}
                         onKeyDown={e => e.key === 'Enter' && handleApplyCoupon()}
                         placeholder="Enter coupon code"
-                        className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0b162c] font-medium focus:outline-none focus:border-brand-navy transition-all placeholder-gray-400 focus:bg-white"
+                        className="flex-1 min-w-0 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0b162c] font-medium focus:outline-none focus:border-brand-navy transition-all placeholder-gray-400 focus:bg-white"
                       />
                       <button onClick={handleApplyCoupon} disabled={couponLoading || !couponCode.trim()}
-                        className="bg-[#0b162c] text-white font-bold text-sm px-6 py-3 rounded-xl hover:bg-[#15284b] shadow-md transition-all disabled:opacity-50">
+                        className="shrink-0 bg-[#0b162c] text-white font-bold text-sm px-4 sm:px-6 py-3 rounded-xl hover:bg-[#15284b] shadow-md transition-all disabled:opacity-50">
                         {couponLoading ? '...' : 'APPLY'}
                       </button>
                     </div>
