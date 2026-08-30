@@ -17,6 +17,7 @@ export function HomePage() {
   const navigate = useNavigate();
   const { products, categories, loading } = useStoreData();
   const [banners, setBanners] = React.useState([]);
+  const [bestsellerAds, setBestsellerAds] = React.useState([]);
   const [vendors, setVendors] = React.useState([
     { id: 'v1', business_name: 'Swabhivar Silks', store_image: 'https://vaarahisilks.com/cdn/shop/articles/Home_Banner_B_1080_x_1650_FHD_49daaf56-8dd9-4544-934c-f17ec4672e1c.jpg?v=1765869118' },
     { id: 'v2', business_name: 'Kavya Creations', store_image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&q=80' },
@@ -34,6 +35,11 @@ export function HomePage() {
     fetch(`${url}/general/vendors`)
       .then(r => r.json())
       .then(d => { if (d.vendors && d.vendors.length > 0) setVendors(d.vendors); })
+      .catch(e => console.error(e));
+
+    fetch(`${url}/advertisements?type=bestseller_category&is_active=true`)
+      .then(r => r.json())
+      .then(d => { if (d.advertisements) setBestsellerAds(d.advertisements); })
       .catch(e => console.error(e));
   }, []);
 
@@ -70,17 +76,18 @@ export function HomePage() {
         </div>
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1">
+      <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1 md:mt-4 md:mb-2">
         {/* Location Search Bar */}
-        <Link to="/search" className="block bg-blue-50 border border-blue-100 rounded-full px-5 py-3.5 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-blue-100">
-          <svg className="w-5 h-5 text-brand-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <Link to="/search" className="block w-full md:w-[600px] md:mx-auto bg-blue-50 border border-blue-100 rounded-full px-5 py-3.5 md:py-4 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-blue-100 md:shadow-sm md:hover:shadow-md group">
+          <svg className="w-5 h-5 md:w-6 md:h-6 text-brand-navy group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="8" strokeWidth="2" />
             <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
             <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
             <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
             <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <span className="text-[15px] font-medium text-brand-navy">Search shops near your location</span>
+          <span className="text-[15px] md:text-base font-semibold text-brand-navy">Search shops near your location</span>
+          <span className="ml-auto bg-brand-navy text-white text-xs font-bold px-3 py-1.5 rounded-full hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">Find now &rarr;</span>
         </Link>
       </div>
 
@@ -225,38 +232,66 @@ export function HomePage() {
             </div>
             <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
               
-              {categories.slice(0, 4).map((cat, index) => {
-                const priceBracket = [
-                  { label: "Under ₹1,000", param: "under_1000" },
-                  { label: "Under ₹2,000", param: "1000_2000" },
-                  { label: "Under ₹3,000", param: "2000_5000" },
-                  { label: "Under ₹5,000", param: "2000_5000" }
-                ][index] || { label: "Under ₹5,000", param: "above_5000" };
-                
-                const fallbackImages = [imgHeroBannerPremium, imgAarti, imgHeroBanner, imgHeroBannerPremium];
-                
-                return (
-                  <Link key={cat.id || index} to={`/category/${cat.id}?price=${priceBracket.param}`} className="w-[160px] md:w-[180px] shrink-0 snap-start bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col group hover:shadow-lg transition-shadow">
-                    <div className="py-3 text-center bg-white z-10 relative border-b border-gray-100">
-                      <h4 className="font-bold text-gray-900 text-[14px] md:text-[15px] truncate px-2">{cat.name}</h4>
-                    </div>
-                    <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
-                      <img 
-                        src={cat.image_url || fallbackImages[index]} 
-                        alt={cat.name} 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
-                        onError={(e) => { e.target.src = fallbackImages[index]; e.target.onerror = null; }} 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/90 via-[#0b162c]/20 to-transparent flex flex-col justify-end p-4">
-                        <span className="text-white font-extrabold text-base md:text-lg text-center drop-shadow-md tracking-wide">{priceBracket.label}</span>
+              {bestsellerAds.length > 0 ? (
+                bestsellerAds.map((ad, index) => {
+                  const fallbackImages = [imgHeroBannerPremium, imgAarti, imgHeroBanner, imgHeroBannerPremium];
+                  
+                  return (
+                    <Link key={ad.id} to={ad.link_url || '#'} className="w-[160px] md:w-[180px] shrink-0 snap-start bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col group hover:shadow-lg transition-shadow">
+                      <div className="py-3 text-center bg-white z-10 relative border-b border-gray-100">
+                        <h4 className="font-bold text-gray-900 text-[14px] md:text-[15px] truncate px-2">{ad.title || "Category"}</h4>
                       </div>
-                    </div>
-                    <div className="py-2.5 flex items-center justify-center bg-white z-10 relative border-t border-gray-100">
-                      <span className="text-[10px] font-bold text-[#f36b21] uppercase tracking-wider">& More</span>
-                    </div>
-                  </Link>
-                );
-              })}
+                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
+                        <img 
+                          src={ad.image_url || fallbackImages[index % 4]} 
+                          alt={ad.title} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
+                          onError={(e) => { e.target.src = fallbackImages[index % 4]; e.target.onerror = null; }} 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/90 via-[#0b162c]/20 to-transparent flex flex-col justify-end p-4">
+                          <span className="text-white font-extrabold text-base md:text-lg text-center drop-shadow-md tracking-wide">{ad.target_id || "VIEW DEALS"}</span>
+                        </div>
+                      </div>
+                      <div className="py-2.5 flex items-center justify-center bg-white z-10 relative border-t border-gray-100">
+                        <span className="text-[10px] font-bold text-[#f36b21] uppercase tracking-wider">& More</span>
+                      </div>
+                    </Link>
+                  );
+                })
+              ) : (
+                categories.slice(0, 4).map((cat, index) => {
+                  const priceBracket = [
+                    { label: "Under ₹1,000", param: "under_1000" },
+                    { label: "Under ₹2,000", param: "1000_2000" },
+                    { label: "Under ₹3,000", param: "2000_5000" },
+                    { label: "Under ₹5,000", param: "2000_5000" }
+                  ][index] || { label: "Under ₹5,000", param: "above_5000" };
+                  
+                  const fallbackImages = [imgHeroBannerPremium, imgAarti, imgHeroBanner, imgHeroBannerPremium];
+                  
+                  return (
+                    <Link key={cat.id || index} to={`/category/${cat.id}?price=${priceBracket.param}`} className="w-[160px] md:w-[180px] shrink-0 snap-start bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col group hover:shadow-lg transition-shadow">
+                      <div className="py-3 text-center bg-white z-10 relative border-b border-gray-100">
+                        <h4 className="font-bold text-gray-900 text-[14px] md:text-[15px] truncate px-2">{cat.name}</h4>
+                      </div>
+                      <div className="relative aspect-[3/4] w-full overflow-hidden bg-gray-50">
+                        <img 
+                          src={cat.image_url || fallbackImages[index]} 
+                          alt={cat.name} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 mix-blend-multiply" 
+                          onError={(e) => { e.target.src = fallbackImages[index]; e.target.onerror = null; }} 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b162c]/90 via-[#0b162c]/20 to-transparent flex flex-col justify-end p-4">
+                          <span className="text-white font-extrabold text-base md:text-lg text-center drop-shadow-md tracking-wide">{priceBracket.label}</span>
+                        </div>
+                      </div>
+                      <div className="py-2.5 flex items-center justify-center bg-white z-10 relative border-t border-gray-100">
+                        <span className="text-[10px] font-bold text-[#f36b21] uppercase tracking-wider">& More</span>
+                      </div>
+                    </Link>
+                  );
+                })
+              )}
 
             </div>
           </div>

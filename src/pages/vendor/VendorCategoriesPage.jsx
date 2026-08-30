@@ -149,8 +149,11 @@ export function VendorCategoriesPage() {
                 <button 
                   onClick={handleSave} 
                   disabled={saving || selectedCategories.length === 0}
-                  className="px-8 py-3.5 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white font-bold rounded-[16px] text-sm hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none"
+                  className="px-8 py-3.5 flex items-center justify-center gap-2 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white font-bold rounded-[16px] text-sm hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none"
                 >
+                  {saving ? (
+                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                  ) : null}
                   {saving ? 'Saving...' : 'Save Category Selection'}
                 </button>
               )}

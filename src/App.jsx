@@ -56,6 +56,7 @@ import { AdminSubscriptionsPage } from './pages/admin/AdminSubscriptionsPage';
 import { AdminOffersPage } from './pages/admin/AdminOffersPage';
 import { AdminAdvertisementsPage } from './pages/admin/AdminAdvertisementsPage';
 import { AdminProductRequestsPage } from './pages/admin/AdminProductRequestsPage';
+import { AdminReferralPayoutsPage } from './pages/admin/AdminReferralPayoutsPage';
 
 import { SupportLayout } from './components/support/SupportLayout';
 import { SupportLoginPage } from './pages/support/SupportLoginPage';
@@ -171,6 +172,7 @@ function App() {
                   <Route path="offers" element={<AdminOffersPage />} />
                   <Route path="advertisements" element={<AdminAdvertisementsPage />} />
                   <Route path="product-requests" element={<AdminProductRequestsPage />} />
+                  <Route path="payouts" element={<AdminReferralPayoutsPage />} />
                 </Routes>
               </AdminLayout>
             } />

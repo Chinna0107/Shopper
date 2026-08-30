@@ -379,7 +379,12 @@ export function AdminCategoriesPage() {
             <div className="border-t border-gray-100 px-6 py-4 flex gap-3 shrink-0 bg-white">
               <button onClick={() => setEditCategory(null)} className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-xl font-semibold hover:bg-white/70">Cancel</button>
               <button onClick={handleSave} disabled={saving || uploading || !formData.name} className="flex-1 px-4 py-2 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2 disabled:opacity-50 hover:bg-[#004012] transition-colors">
-                {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}
+                {saving ? (
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                {saving ? "Saving..." : "Save"}
               </button>
             </div>
           </motion.div>

@@ -187,6 +187,7 @@ export function VendorLoginPage() {
               </div>
 
               <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white py-4 rounded-[16px] font-bold text-lg hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none mt-2">
+                {loading ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
                 {loading ? 'Signing in...' : 'Sign In'} {!loading && <ArrowRight className="w-5 h-5" />}
               </button>
             </form>
@@ -208,6 +209,7 @@ export function VendorLoginPage() {
                 </div>
               </div>
               <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+                {loading ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
                 {loading ? 'Sending OTP...' : 'Send OTP'}
               </button>
             </form>
@@ -225,6 +227,7 @@ export function VendorLoginPage() {
                 <p className="text-xs text-gray-500 mt-2 text-center">Sent to {email}</p>
               </div>
               <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+                {loading ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
                 {loading ? 'Verifying...' : 'Verify OTP'}
               </button>
             </form>
@@ -267,6 +270,7 @@ export function VendorLoginPage() {
               </div>
 
               <button type="submit" disabled={loading} className="w-full flex items-center justify-center gap-2 bg-[#012980] text-white py-3.5 rounded-xl font-medium hover:bg-[#e55c00] transition-colors disabled:opacity-50">
+                {loading ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
                 {loading ? 'Resetting...' : 'Reset Password'}
               </button>
             </form>

@@ -206,7 +206,12 @@ export function AdminCouponsPage() {
               <button onClick={() => setModal(null)} className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50">Cancel</button>
               <button onClick={handleSave} disabled={saving || !form.code || !form.value}
                 className="flex-1 px-4 py-2.5 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl text-sm font-semibold flex justify-center items-center gap-2 disabled:opacity-50 transition-colors">
-                {saving ? "Saving..." : <><Save className="w-4 h-4" /> {modal?.id ? "Update" : "Create"}</>}
+                {saving ? (
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                {saving ? "Saving..." : modal?.id ? "Update" : "Create"}
               </button>
             </div>
           </div>

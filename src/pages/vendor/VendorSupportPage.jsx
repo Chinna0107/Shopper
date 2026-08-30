@@ -108,6 +108,7 @@ export function VendorSupportPage() {
   const [categories, setCategories] = useState([]);
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [processingId, setProcessingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const token = localStorage.getItem("vendor_token");
@@ -144,18 +145,28 @@ export function VendorSupportPage() {
   };
 
   const handleToggle = async (id) => {
-    const res = await fetch(`${BACKEND_URL}/vendor/support-agents/${id}/toggle`, { method: "PUT", headers });
-    const data = await res.json();
-    if (!res.ok) return toast.error(data.error);
-    setAgents(prev => prev.map(a => a.id === id ? { ...a, is_active: data.agent.is_active } : a));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/vendor/support-agents/${id}/toggle`, { method: "PUT", headers });
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.error);
+      setAgents(prev => prev.map(a => a.id === id ? { ...a, is_active: data.agent.is_active } : a));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this support member?")) return;
-    const res = await fetch(`${BACKEND_URL}/vendor/support-agents/${id}`, { method: "DELETE", headers });
-    if (!res.ok) return toast.error("Failed to delete");
-    toast.success("Member removed");
-    setAgents(prev => prev.filter(a => a.id !== id));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/vendor/support-agents/${id}`, { method: "DELETE", headers });
+      if (!res.ok) return toast.error("Failed to delete");
+      toast.success("Member removed");
+      setAgents(prev => prev.filter(a => a.id !== id));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   return (
@@ -272,12 +283,12 @@ export function VendorSupportPage() {
                       <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider flex-shrink-0 ${agent.is_active ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-600 border border-red-200"}`}>
                         {agent.is_active ? "Active" : "Inactive"}
                       </span>
-                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#012980] transition-colors p-2 hover:bg-blue-50 rounded-xl flex-shrink-0">
-                        {agent.is_active ? <ToggleRight className="w-6 h-6 text-[#012980]" /> : <ToggleLeft className="w-6 h-6" />}
-                      </button>
-                      <button onClick={() => handleDelete(agent.id)} className="text-gray-300 hover:text-red-600 transition-colors p-2 hover:bg-red-50 rounded-xl flex-shrink-0">
-                        <Trash2 className="w-5 h-5" />
-                      </button>
+                        <button onClick={() => handleToggle(agent.id)} disabled={processingId === agent.id} className="text-gray-400 hover:text-[#012980] transition-colors flex-shrink-0 disabled:opacity-50" title="Toggle active">
+                          {processingId === agent.id ? <div className="w-5 h-5 border-2 border-[#012980]/20 border-t-[#012980] rounded-full animate-spin" /> : (agent.is_active ? <ToggleRight className="w-5 h-5 text-[#012980]" /> : <ToggleLeft className="w-5 h-5" />)}
+                        </button>
+                        <button onClick={() => handleDelete(agent.id)} disabled={processingId === agent.id} className="text-gray-300 hover:text-red-500 transition-colors flex-shrink-0 disabled:opacity-50">
+                          {processingId === agent.id ? <div className="w-4 h-4 border-2 border-red-500/20 border-t-red-500 rounded-full animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                        </button>
                     </div>
                   ))}
                 </div>

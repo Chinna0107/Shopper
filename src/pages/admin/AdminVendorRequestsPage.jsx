@@ -7,6 +7,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/a
 export function AdminVendorRequestsPage() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [processingId, setProcessingId] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   const fetchRequests = async () => {
@@ -32,6 +33,7 @@ export function AdminVendorRequestsPage() {
   }, []);
 
   const handleUpdateStatus = async (id, newStatus) => {
+    setProcessingId(id);
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`${BACKEND_URL}/admin/vendors/${id}/status`, {
@@ -52,6 +54,8 @@ export function AdminVendorRequestsPage() {
       }
     } catch (error) {
       toast.error('Failed to update vendor status');
+    } finally {
+      setProcessingId(null);
     }
   };
 
@@ -134,15 +138,19 @@ export function AdminVendorRequestsPage() {
               <div className="flex gap-3 pt-4 border-t border-gray-100">
                 <button
                   onClick={() => handleUpdateStatus(request.id, 'rejected')}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors font-medium"
+                  disabled={processingId === request.id}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors font-medium disabled:opacity-50"
                 >
-                  <XCircle className="w-5 h-5" /> Reject
+                  {processingId === request.id ? <div className="w-5 h-5 border-2 border-red-600/20 border-t-red-600 rounded-full animate-spin" /> : <XCircle className="w-5 h-5" />}
+                  {processingId === request.id ? 'Processing...' : 'Reject'}
                 </button>
                 <button
                   onClick={() => handleUpdateStatus(request.id, 'approved')}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium"
+                  disabled={processingId === request.id}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium disabled:opacity-50"
                 >
-                  <CheckCircle className="w-5 h-5" /> Approve
+                  {processingId === request.id ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : <CheckCircle className="w-5 h-5" />}
+                  {processingId === request.id ? 'Processing...' : 'Approve'}
                 </button>
               </div>
             </div>

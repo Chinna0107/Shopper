@@ -116,7 +116,7 @@ export function AdminBannersPage() {
           <p className="text-gray-400 text-xs mt-0.5">Manage homepage banners</p>
         </div>
         <button onClick={handleAdd}
-          className="flex items-center gap-2 bg-white hover:bg-[#004012] text-white px-4 py-2.5 rounded-xl font-semibold transition-colors">
+          className="flex items-center gap-2 bg-[#012980] hover:bg-[#e55c02] text-white px-4 py-2.5 rounded-xl font-semibold transition-colors">
           <Plus className="w-4 h-4" /> Add Banner
         </button>
       </div>
@@ -199,8 +199,13 @@ export function AdminBannersPage() {
             </div>
             <div className="border-t border-gray-100 px-6 py-4 flex gap-3">
               <button onClick={() => setEditBanner(null)} className="flex-1 px-4 py-2 bg-white text-gray-900 rounded-xl font-semibold">Cancel</button>
-              <button onClick={handleSave} disabled={saving} className="flex-1 px-4 py-2 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2">
-                {saving ? "Saving..." : <><Save className="w-4 h-4" /> Save</>}
+              <button onClick={handleSave} disabled={saving} className="flex-1 px-4 py-2 bg-[#012980] text-white hover:bg-[#e55c02] rounded-xl font-semibold flex justify-center items-center gap-2 disabled:opacity-50">
+                {saving ? (
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                {saving ? "Saving..." : "Save"}
               </button>
             </div>
           </div>

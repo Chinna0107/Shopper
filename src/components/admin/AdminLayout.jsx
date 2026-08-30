@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store, HeadphonesIcon, CreditCard, Percent, Megaphone, ClipboardList } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, BarChart3, LogOut, Shield, Users, Menu, X, ImageIcon, Tag, Layers, UserPlus, UserCircle, Wallet, Store, HeadphonesIcon, CreditCard, Percent, Megaphone, ClipboardList, Banknote } from "lucide-react";
 import logo from '../../assets/logo.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -14,6 +14,7 @@ const NAV = [
   { href: "/admin/banners", label: "Banners", icon: <ImageIcon className="w-4 h-4" /> },
   { href: "/admin/coupons", label: "Coupons", icon: <Tag className="w-4 h-4" /> },
   { href: "/admin/reports", label: "Reports", icon: <BarChart3 className="w-4 h-4" /> },
+  { href: "/admin/payouts", label: "Payouts", icon: <Banknote className="w-4 h-4" /> },
   { href: "/admin/vendor-requests", label: "Vendor Requests", icon: <UserPlus className="w-4 h-4" /> },
   { href: "/admin/vendor-profiles", label: "Vendor Profiles", icon: <UserCircle className="w-4 h-4" /> },
   { href: "/admin/vendor-products", label: "Vendor Products", icon: <Store className="w-4 h-4" /> },

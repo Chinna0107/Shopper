@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Megaphone, Target, Search, X, Image as ImageIcon, Video, CheckCircle } from 'lucide-react';
 import { toast } from 'react-toastify';
+import { useStoreData } from '../../store/useStoreData';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 
@@ -8,6 +9,7 @@ const AD_TYPES = [
   { value: 'homepage_top_banner', label: 'Homepage Top Banner', group: 'Banners' },
   { value: 'homepage_slider_banner', label: 'Homepage Slider Banner', group: 'Banners' },
   { value: 'category_page_banner', label: 'Category Page Banner', group: 'Banners' },
+  { value: 'bestseller_category', label: 'Bestseller Category (Budget Deals)', group: 'Spotlights' },
   { value: 'featured_vendor', label: 'Featured Vendor', group: 'Spotlights' },
   { value: 'featured_product', label: 'Featured Product', group: 'Spotlights' },
   { value: 'search_priority', label: 'Search Priority', group: 'Boosts' },
@@ -25,6 +27,10 @@ export function AdminAdvertisementsPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAd, setEditingAd] = useState(null);
+  const { products, categories, fetchData: fetchStoreData } = useStoreData();
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [filterCategory, setFilterCategory] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   
   const [formData, setFormData] = useState({
     type: 'homepage_top_banner',
@@ -39,6 +45,7 @@ export function AdminAdvertisementsPage() {
   });
 
   const [uploading, setUploading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
@@ -57,6 +64,7 @@ export function AdminAdvertisementsPage() {
 
   useEffect(() => {
     fetchAds();
+    fetchStoreData();
   }, []);
 
   const formatLocalDateTime = (dateStr) => {
@@ -81,6 +89,18 @@ export function AdminAdvertisementsPage() {
         valid_from: formatLocalDateTime(ad.valid_from),
         valid_until: formatLocalDateTime(ad.valid_until),
       });
+
+      if (ad.type === 'bestseller_category' && ad.link_url) {
+        try {
+          const url = new URL(ad.link_url, 'http://localhost');
+          const productsParam = url.searchParams.get('products');
+          setSelectedProducts(productsParam ? productsParam.split(',') : []);
+        } catch (e) {
+          setSelectedProducts([]);
+        }
+      } else {
+        setSelectedProducts([]);
+      }
     } else {
       setEditingAd(null);
       setFormData({
@@ -94,7 +114,10 @@ export function AdminAdvertisementsPage() {
         valid_from: '',
         valid_until: '',
       });
+      setSelectedProducts([]);
     }
+    setFilterCategory('');
+    setSearchQuery('');
     setIsModalOpen(true);
   };
 
@@ -124,15 +147,25 @@ export function AdminAdvertisementsPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     try {
       const url = editingAd 
         ? `${BACKEND_URL}/advertisements/${editingAd.id}` 
         : `${BACKEND_URL}/advertisements`;
       const method = editingAd ? 'PUT' : 'POST';
 
+      let finalLinkUrl = formData.link_url;
+      if (formData.type === 'bestseller_category') {
+        const productQuery = selectedProducts.length > 0 ? `products=${selectedProducts.join(',')}` : '';
+        const titleQuery = formData.title ? `title=${encodeURIComponent(formData.title)}` : '';
+        const queryParams = [productQuery, titleQuery].filter(Boolean).join('&');
+        finalLinkUrl = queryParams ? `/collection/custom-deal?${queryParams}` : `/collection/custom-deal`;
+      }
+
       const payload = {
         ...formData,
-        target_id: formData.target_id ? parseInt(formData.target_id, 10) : null,
+        link_url: finalLinkUrl,
+        target_id: formData.target_id || null,
         valid_from: formData.valid_from || null,
         valid_until: formData.valid_until || null
       };
@@ -151,6 +184,8 @@ export function AdminAdvertisementsPage() {
       fetchAds();
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -380,6 +415,94 @@ export function AdminAdvertisementsPage() {
                 </div>
               )}
 
+              {formData.type === 'bestseller_category' && (
+                <div className="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-5 space-y-5">
+                  <div>
+                    <div className="flex justify-between items-center mb-2">
+                      <label className="block text-sm font-bold text-gray-900">Upload Category Image</label>
+                      <span className="text-xs font-semibold text-blue-600 bg-blue-100 px-2 py-1 rounded">Recommended: 400 × 500 px</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      {formData.image_url && (
+                        <div className="w-24 h-32 bg-white border border-gray-200 rounded-xl overflow-hidden shrink-0">
+                          <img src={formData.image_url} alt="Preview" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <label className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-white border border-gray-200 border-dashed rounded-xl cursor-pointer hover:bg-gray-50 hover:border-gray-300 transition-colors">
+                          <ImageIcon className="w-5 h-5 text-gray-400" />
+                          <span className="text-sm font-semibold text-gray-600">{uploading ? 'Uploading...' : 'Choose Image File'}</span>
+                          <input type="file" className="hidden" accept="image/*" onChange={e => handleUpload(e, 'image_url')} />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <h4 className="font-bold text-gray-900 text-sm border-t border-indigo-100 pt-4 mt-2">Select Products for this Deal</h4>
+                  
+                  {/* Filter Section */}
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <select 
+                      value={filterCategory}
+                      onChange={e => setFilterCategory(e.target.value)}
+                      className="px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-indigo-500 min-w-[160px]"
+                    >
+                      <option value="">All Categories</option>
+                      {categories.map(c => (
+                        <option key={c.id} value={c.name}>{c.name}</option>
+                      ))}
+                    </select>
+                    <div className="relative flex-1">
+                      <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                      <input 
+                        type="text" 
+                        value={searchQuery}
+                        onChange={e => setSearchQuery(e.target.value)}
+                        placeholder="Search products by name..." 
+                        className="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+                    {products
+                      .filter(p => !filterCategory || p.category === filterCategory)
+                      .filter(p => !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                      .map(p => {
+                      const isSelected = selectedProducts.includes(p.id.toString());
+                      return (
+                        <div key={p.id} 
+                          onClick={() => {
+                            if (isSelected) {
+                              setSelectedProducts(prev => prev.filter(id => id !== p.id.toString()));
+                            } else {
+                              setSelectedProducts(prev => [...prev, p.id.toString()]);
+                            }
+                          }}
+                          className={`flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${isSelected ? 'bg-indigo-100 border-indigo-300' : 'bg-white border-gray-200 hover:border-indigo-200'}`}>
+                          <div className={`w-5 h-5 rounded flex items-center justify-center shrink-0 border ${isSelected ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-gray-300 bg-white'}`}>
+                            {isSelected && <CheckCircle className="w-3.5 h-3.5" />}
+                          </div>
+                          <img src={p.images?.[0] || 'https://via.placeholder.com/40'} alt="" className="w-10 h-10 rounded-lg object-cover bg-gray-100 shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-bold text-gray-900 line-clamp-2 leading-tight">{p.name}</div>
+                            <div className="text-xs text-indigo-700 font-bold mt-1">₹{p.price?.toLocaleString()}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-gray-900 mb-2">Badge Text (e.g. Under ₹1,000)</label>
+                    <input type="text" required
+                      value={formData.target_id} 
+                      onChange={e => setFormData({...formData, target_id: e.target.value})}
+                      placeholder="Under ₹1,000"
+                      className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-gray-900 focus:ring-2 focus:ring-[#036e26] focus:border-transparent" />
+                  </div>
+                </div>
+              )}
+
               <div className="bg-gray-50 rounded-2xl border border-gray-100 p-5 space-y-5">
                 <div className="flex items-center justify-between">
                   <div>
@@ -417,14 +540,18 @@ export function AdminAdvertisementsPage() {
             </form>
 
             <div className="px-6 py-4 border-t border-gray-100 bg-gray-50 flex justify-end gap-3 rounded-b-3xl">
-              <button type="button" onClick={() => setIsModalOpen(false)}
-                className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 rounded-xl transition-colors">
+              <button type="button" onClick={() => setIsModalOpen(false)} disabled={isSaving}
+                className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 rounded-xl transition-colors disabled:opacity-50">
                 Cancel
               </button>
-              <button type="button" onClick={handleSubmit} disabled={uploading}
+              <button type="button" onClick={handleSubmit} disabled={uploading || isSaving}
                 className="px-6 py-2.5 text-sm font-bold text-white bg-[#036e26] hover:bg-[#025a1f] rounded-xl transition-colors shadow-sm shadow-[#036e26]/20 disabled:opacity-50 flex items-center gap-2">
-                <CheckCircle className="w-4 h-4" />
-                {editingAd ? 'Save Changes' : 'Publish Promotion'}
+                {isSaving ? (
+                  <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <CheckCircle className="w-4 h-4" />
+                )}
+                {isSaving ? 'Saving...' : (editingAd ? 'Save Changes' : 'Publish Promotion')}
               </button>
             </div>
           </div>

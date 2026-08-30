@@ -157,7 +157,7 @@ function OffersDropdown() {
 function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout }) {
   return (
     <>
-      <div className="h-[90px] lg:h-[110px] hidden md:block" />
+      <div className="h-[150px] lg:h-[180px] hidden md:block" />
       <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 

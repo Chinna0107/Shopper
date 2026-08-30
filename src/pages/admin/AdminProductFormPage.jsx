@@ -577,7 +577,11 @@ export function AdminProductFormPage() {
           </div>
           <button onClick={handleSave} disabled={saving}
             className="flex items-center gap-2 px-5 py-2 bg-[#036e26] text-white rounded-xl text-sm font-semibold hover:bg-[#02561d] transition-colors disabled:opacity-50 shadow-sm">
-            <Save className="w-4 h-4" />
+            {saving ? (
+              <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+            ) : (
+              <Save className="w-4 h-4" />
+            )}
             {saving ? 'Saving...' : (isEdit ? 'Save Changes' : 'Create Product')}
           </button>
         </div>

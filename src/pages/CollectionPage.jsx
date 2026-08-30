@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
 import { useStoreData } from '../store/useStoreData';
@@ -7,6 +7,7 @@ import { ArrowLeft, PackageOpen } from 'lucide-react';
 
 export function CollectionPage() {
   const { type } = useParams();
+  const [searchParams] = useSearchParams();
   const { products, loading } = useStoreData();
 
   // Determine filtering logic and titles based on collection type
@@ -26,6 +27,11 @@ export function CollectionPage() {
     title = 'Top Picks For You';
     subtitle = 'Specially curated products with great offers just for you.';
     filteredProducts = products.filter(p => p.is_offer);
+  } else if (type === 'custom-deal') {
+    title = searchParams.get('title') || 'Exclusive Deal';
+    subtitle = searchParams.get('subtitle') || 'Special handpicked products just for you.';
+    const selectedIds = searchParams.get('products') ? searchParams.get('products').split(',') : [];
+    filteredProducts = products.filter(p => selectedIds.includes(p.id.toString()));
   } else {
     title = 'Collection Not Found';
     filteredProducts = [];

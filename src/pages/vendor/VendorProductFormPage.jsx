@@ -728,11 +728,20 @@ export function VendorProductFormPage() {
           <div className="flex items-center gap-3 flex-shrink-0">
             <button onClick={() => handleSave('draft')} disabled={!!saving}
               className="hidden sm:flex items-center gap-2 px-5 py-2.5 bg-gray-50 border border-gray-200 text-gray-700 rounded-[12px] text-sm font-bold hover:bg-gray-100 transition-all disabled:opacity-50">
-              <Save className="w-4 h-4" /> Save Draft
+              {saving === 'draft' ? (
+                <div className="w-4 h-4 border-2 border-gray-400 border-t-gray-700 rounded-full animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              {saving === 'draft' ? 'Saving...' : 'Save Draft'}
             </button>
             <button onClick={() => handleSave('publish')} disabled={!!saving}
               className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#012980] to-[#ff7b23] text-white rounded-[12px] text-sm font-bold hover:shadow-[0_8px_20px_rgba(254,102,3,0.3)] hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:hover:transform-none disabled:hover:shadow-none">
-              <Send className="w-4 h-4" />
+              {saving === 'publish' ? (
+                <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+              ) : (
+                <Send className="w-4 h-4" />
+              )}
               {saving === 'publish' ? 'Submitting...' : 'Submit for Approval'}
             </button>
           </div>
@@ -760,7 +769,12 @@ export function VendorProductFormPage() {
               <div className="mt-3 pt-3 border-t border-gray-100">
                 <button onClick={() => handleSave('draft')} disabled={!!saving}
                   className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-gray-50 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-100 transition-colors disabled:opacity-50">
-                  <Save className="w-3.5 h-3.5" /> Save Draft
+                  {saving === 'draft' ? (
+                    <div className="w-3.5 h-3.5 border-2 border-gray-400 border-t-gray-700 rounded-full animate-spin" />
+                  ) : (
+                    <Save className="w-3.5 h-3.5" />
+                  )}
+                  {saving === 'draft' ? 'Saving...' : 'Save Draft'}
                 </button>
               </div>
             </div>

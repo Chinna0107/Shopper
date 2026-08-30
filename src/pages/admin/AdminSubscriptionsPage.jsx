@@ -15,6 +15,7 @@ export function AdminSubscriptionsPage() {
   const [loading, setLoading] = useState(true);
   const [editingPlan, setEditingPlan] = useState(null);
   const [newPlan, setNewPlan] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
@@ -37,7 +38,7 @@ export function AdminSubscriptionsPage() {
   const handleSavePlan = async (e) => {
     e.preventDefault();
     if (!editingPlan) return;
-
+    setSaving(true);
     try {
       const res = await fetch(`${BACKEND_URL}/subscriptions/admin/plans/${editingPlan.id}`, {
         method: 'PUT',
@@ -56,6 +57,8 @@ export function AdminSubscriptionsPage() {
       toast.success('Plan updated successfully');
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -65,7 +68,7 @@ export function AdminSubscriptionsPage() {
     if (!newPlan.name || !newPlan.price || !newPlan.months) {
       return toast.error("Name, Price and Months are required fields.");
     }
-
+    setSaving(true);
     try {
       const res = await fetch(`${BACKEND_URL}/subscriptions/admin/plans`, {
         method: 'POST',
@@ -86,6 +89,8 @@ export function AdminSubscriptionsPage() {
       toast.success('Plan created successfully');
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -349,9 +354,10 @@ export function AdminSubscriptionsPage() {
                 className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 hover:bg-gray-50 rounded-xl transition-colors">
                 Cancel
               </button>
-              <button type="button" onClick={handleSavePlan}
-                className="px-6 py-2.5 text-sm font-bold text-white bg-[#036e26] hover:bg-[#025a1f] rounded-xl transition-colors shadow-sm shadow-[#036e26]/20">
-                Save Changes
+              <button type="button" onClick={handleSavePlan} disabled={saving}
+                className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-[#036e26] hover:bg-[#025a1f] rounded-xl transition-colors shadow-sm shadow-[#036e26]/20 disabled:opacity-50">
+                {saving ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
+                {saving ? 'Saving...' : 'Save Changes'}
               </button>
             </div>
 
@@ -470,9 +476,10 @@ export function AdminSubscriptionsPage() {
                 className="px-5 py-2.5 text-sm font-bold text-gray-600 hover:text-gray-900 bg-white border border-gray-200 hover:bg-gray-50 rounded-xl transition-colors">
                 Cancel
               </button>
-              <button type="button" onClick={handleAddPlan}
-                className="px-6 py-2.5 text-sm font-bold text-white bg-[#036e26] hover:bg-[#025a1f] rounded-xl transition-colors shadow-sm shadow-[#036e26]/20">
-                Create Plan
+              <button type="button" onClick={handleAddPlan} disabled={saving}
+                className="flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-white bg-[#036e26] hover:bg-[#025a1f] rounded-xl transition-colors shadow-sm shadow-[#036e26]/20 disabled:opacity-50">
+                {saving ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
+                {saving ? 'Creating...' : 'Create Plan'}
               </button>
             </div>
 

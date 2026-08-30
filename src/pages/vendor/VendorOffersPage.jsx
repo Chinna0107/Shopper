@@ -211,7 +211,8 @@ function Wizard({ type, initial, categories, products, onSave, onClose }) {
             </button>
           ) : (
             <button onClick={handleSave} disabled={saving}
-              className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-[#012980] text-white hover:bg-[#e55c02] transition-colors disabled:opacity-50">
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold bg-[#012980] text-white hover:bg-[#e55c02] transition-colors disabled:opacity-50">
+              {saving ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" /> : null}
               {saving ? 'Saving...' : initial?.id ? `Update ${type === 'offer' ? 'Offer' : 'Coupon'}` : `Create ${type === 'offer' ? 'Offer' : 'Coupon'}`}
             </button>
           )}

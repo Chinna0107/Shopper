@@ -118,6 +118,7 @@ export function AdminSupportPage() {
   const [categories, setCategories] = useState([]);
   const [agents, setAgents] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [processingId, setProcessingId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const token = localStorage.getItem("token");
@@ -155,18 +156,28 @@ export function AdminSupportPage() {
   };
 
   const handleToggle = async (id) => {
-    const res = await fetch(`${BACKEND_URL}/admin/support-agents/${id}/toggle`, { method: "PUT", headers });
-    const data = await res.json();
-    if (!res.ok) return toast.error(data.error);
-    setAgents(prev => prev.map(a => a.id === id ? { ...a, is_active: data.agent.is_active } : a));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/admin/support-agents/${id}/toggle`, { method: "PUT", headers });
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.error);
+      setAgents(prev => prev.map(a => a.id === id ? { ...a, is_active: data.agent.is_active } : a));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   const handleDelete = async (id) => {
     if (!confirm("Delete this support member?")) return;
-    const res = await fetch(`${BACKEND_URL}/admin/support-agents/${id}`, { method: "DELETE", headers });
-    if (!res.ok) return toast.error("Failed to delete");
-    toast.success("Member removed");
-    setAgents(prev => prev.filter(a => a.id !== id));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/admin/support-agents/${id}`, { method: "DELETE", headers });
+      if (!res.ok) return toast.error("Failed to delete");
+      toast.success("Member removed");
+      setAgents(prev => prev.filter(a => a.id !== id));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   return (
@@ -275,11 +286,11 @@ export function AdminSupportPage() {
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ${agent.is_active ? "bg-green-100 text-green-700" : "bg-red-100 text-red-500"}`}>
                         {agent.is_active ? "Active" : "Inactive"}
                       </span>
-                      <button onClick={() => handleToggle(agent.id)} className="text-gray-400 hover:text-[#036e26] transition-colors flex-shrink-0" title="Toggle active">
-                        {agent.is_active ? <ToggleRight className="w-5 h-5 text-[#036e26]" /> : <ToggleLeft className="w-5 h-5" />}
+                      <button onClick={() => handleToggle(agent.id)} disabled={processingId === agent.id} className="text-gray-400 hover:text-[#036e26] transition-colors flex-shrink-0 disabled:opacity-50" title="Toggle active">
+                        {processingId === agent.id ? <div className="w-5 h-5 border-2 border-[#036e26]/20 border-t-[#036e26] rounded-full animate-spin" /> : (agent.is_active ? <ToggleRight className="w-5 h-5 text-[#036e26]" /> : <ToggleLeft className="w-5 h-5" />)}
                       </button>
-                      <button onClick={() => handleDelete(agent.id)} className="text-gray-300 hover:text-red-500 transition-colors flex-shrink-0">
-                        <Trash2 className="w-4 h-4" />
+                      <button onClick={() => handleDelete(agent.id)} disabled={processingId === agent.id} className="text-gray-300 hover:text-red-500 transition-colors flex-shrink-0 disabled:opacity-50">
+                        {processingId === agent.id ? <div className="w-4 h-4 border-2 border-red-500/20 border-t-red-500 rounded-full animate-spin" /> : <Trash2 className="w-4 h-4" />}
                       </button>
                     </div>
                   ))}

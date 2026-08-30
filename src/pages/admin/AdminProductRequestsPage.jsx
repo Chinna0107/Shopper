@@ -128,6 +128,7 @@ function ProductDetailModal({ product, onClose, onApprove, onReject }) {
 export function AdminProductRequestsPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [processingId, setProcessingId] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
@@ -146,23 +147,33 @@ export function AdminProductRequestsPage() {
   useEffect(() => { fetchRequests(); }, []);
 
   const handleApprove = async (id) => {
-    const res = await fetch(`${BACKEND_URL}/admin/product-requests/${id}/approve`, { method: "PUT", headers });
-    const data = await res.json();
-    if (!res.ok) return toast.error(data.error || "Failed to approve");
-    toast.success("✅ Product approved and published!");
-    setProducts(prev => prev.filter(p => p.id !== id));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/admin/product-requests/${id}/approve`, { method: "PUT", headers });
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.error || "Failed to approve");
+      toast.success("✅ Product approved and published!");
+      setProducts(prev => prev.filter(p => p.id !== id));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   const handleReject = async (id) => {
-    const res = await fetch(`${BACKEND_URL}/admin/product-requests/${id}/reject`, {
-      method: "PUT",
-      headers: { ...headers, "Content-Type": "application/json" },
-      body: JSON.stringify({}),
-    });
-    const data = await res.json();
-    if (!res.ok) return toast.error(data.error || "Failed to reject");
-    toast.info("Product rejected.");
-    setProducts(prev => prev.filter(p => p.id !== id));
+    setProcessingId(id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/admin/product-requests/${id}/reject`, {
+        method: "PUT",
+        headers: { ...headers, "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      const data = await res.json();
+      if (!res.ok) return toast.error(data.error || "Failed to reject");
+      toast.info("Product rejected.");
+      setProducts(prev => prev.filter(p => p.id !== id));
+    } finally {
+      setProcessingId(null);
+    }
   };
 
   const filtered = products.filter(p =>
@@ -278,17 +289,19 @@ export function AdminProductRequestsPage() {
                 </button>
                 <button
                   onClick={() => handleReject(product.id)}
+                  disabled={processingId === product.id}
                   title="Reject"
-                  className="p-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-colors"
+                  className="p-2 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 transition-colors disabled:opacity-50"
                 >
                   <XCircle className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleApprove(product.id)}
+                  disabled={processingId === product.id}
                   title="Approve"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#036e26] text-white text-xs font-semibold hover:bg-[#025a1f] transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[#036e26] text-white text-xs font-semibold hover:bg-[#025a1f] transition-colors disabled:opacity-50"
                 >
-                  <CheckCircle className="w-3.5 h-3.5" /> Approve
+                  <CheckCircle className="w-3.5 h-3.5" /> {processingId === product.id ? "Processing..." : "Approve"}
                 </button>
               </div>
             </div>
