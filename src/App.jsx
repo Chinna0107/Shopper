@@ -77,6 +77,8 @@ import { VendorProfilePage } from './pages/vendor/VendorProfilePage';
 import { VendorSupportPage } from './pages/vendor/VendorSupportPage';
 import { VendorOffersPage } from './pages/vendor/VendorOffersPage';
 import { VendorProductFormPage } from './pages/vendor/VendorProductFormPage';
+import { VendorReferralPage } from './pages/vendor/VendorReferralPage';
+import { VendorRevenuePage } from './pages/vendor/VendorRevenuePage';
 
 function PageTransition({ children }) {
   return (
@@ -220,6 +222,8 @@ function App() {
                   <Route path="profile" element={<VendorProfilePage />} />
                   <Route path="support" element={<VendorSupportPage />} />
                   <Route path="offers" element={<VendorOffersPage />} />
+                  <Route path="referrals" element={<VendorReferralPage />} />
+                  <Route path="revenue" element={<VendorRevenuePage />} />
                 </Routes>
               </VendorLayout>
             } />

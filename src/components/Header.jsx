@@ -82,7 +82,7 @@ function CategoriesDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
+      <button className="flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
         Categories <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
@@ -121,7 +121,7 @@ function OffersDropdown() {
     <div ref={ref} className="relative py-4 -my-4"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}>
-      <button className="flex items-center gap-1 text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
+      <button className="flex items-center gap-1 text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-colors">
         Offers <ChevronDown className={`w-3.5 h-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
@@ -162,22 +162,22 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
         <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
 
           {/* Navigation Links */}
-          <nav className="flex-1 hidden lg:flex items-center justify-start gap-8">
-            <Link to="/" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+          <nav className="flex-1 hidden lg:flex items-center justify-start gap-4 xl:gap-6">
+            <Link to="/" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Home
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/about" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               About
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/contact" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/contact" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Contact
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/my-orders" className="text-[14px] lg:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/my-orders" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Orders
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
@@ -201,7 +201,12 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
               />
             </div>
 
-            <div className="flex items-center gap-4 lg:gap-5">
+            <div className="flex items-center gap-3 lg:gap-5">
+              <Link to="/refer" className="hidden lg:flex items-center gap-2 px-3 py-2 bg-[#f36b21]/10 hover:bg-[#f36b21]/20 rounded-full border border-[#f36b21]/20 transition-all cursor-pointer hover:-translate-y-1 group">
+                <Gift className="w-4 h-4 text-[#f36b21]" />
+                <span className="text-[#f36b21] text-xs xl:text-sm font-bold">Refer & Earn</span>
+              </Link>
+
               <Link to="/wallet" className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
                 <Wallet className="w-5 h-5 text-[#f36b21] group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 <span className="text-gray-900 text-sm font-bold">₹1,240</span>

@@ -93,10 +93,10 @@ export function LoginPage() {
   const meta = stepMeta[step];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0b162c' }}>
+    <div className="min-h-screen flex flex-col lg:flex-row" style={{ background: '#0b162c' }}>
 
-      {/* ── GREEN HERO ── */}
-      <div className="relative flex flex-col items-center pt-14 pb-20 px-6 overflow-hidden">
+      {/* ── LEFT / TOP HERO ── */}
+      <div className="relative flex flex-col items-center justify-center pt-14 pb-24 lg:py-12 px-6 overflow-hidden lg:w-1/2 lg:min-h-screen">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full border border-white/[0.05]" />
           <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full border border-white/[0.07]" />
@@ -113,32 +113,51 @@ export function LoginPage() {
           <ArrowLeft className="w-3.5 h-3.5" /> {step !== 'login' ? 'Back' : 'Home'}
         </button>
 
-        <div className="relative z-10 flex flex-col items-center">
+        <div className="relative z-10 flex-col items-center text-center lg:mt-0 hidden lg:flex">
+          <div className="relative mb-6 lg:mb-8">
+            <div className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px] rounded-[1.75rem] lg:rounded-[2.5rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5 lg:p-4">
+              <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
+            </div>
+            <div className="absolute -bottom-1 -right-1 lg:-bottom-2 lg:-right-2 w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-brand-navy to-yellow-400 rounded-full border-[3px] border-[#0b162c] flex items-center justify-center shadow-md">
+              <ShieldCheck className="w-4 h-4 lg:w-5 lg:h-5 text-[#0b162c]" strokeWidth={2.5} />
+            </div>
+          </div>
+          <h1 className="text-white text-[22px] lg:text-[32px] font-extrabold tracking-widest drop-shadow-md" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
+            SWABHIVAR
+          </h1>
+          <p className="text-white/80 text-[10px] lg:text-[12px] font-bold tracking-[0.25em] uppercase mt-1 lg:mt-2">Your Choice, From Anywhere.</p>
+
+          <div className="mt-8 space-y-3 hidden lg:block text-left">
+            {['10K+ Members', '100% Secure', 'Free Returns'].map(t => (
+              <div key={t} className="flex items-center gap-3">
+                <div className="w-5 h-5 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                </div>
+                <span className="text-white/90 text-[14px] font-medium">{t}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* ── WHITE CARD ── */}
-      <div className="flex-1 bg-white rounded-t-[2.5rem] -mt-10 relative z-10 px-5 pt-0 pb-10 shadow-[0_-24px_60px_rgba(0,0,0,0.3)]">
-        <div className="max-w-sm mx-auto">
-          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-2" />
+      <div className="flex-1 bg-white rounded-t-[2.5rem] lg:rounded-none lg:rounded-l-[3rem] -mt-10 lg:mt-0 relative z-10 px-5 pt-2 lg:pt-10 pb-10 shadow-[0_-20px_60px_rgba(0,0,0,0.25)] lg:shadow-[-20px_0_60px_rgba(0,0,0,0.25)] flex flex-col justify-center lg:w-1/2">
+        <div className="max-w-sm mx-auto w-full">
+          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-2 mb-6 lg:hidden" />
 
-          <div className="flex flex-col items-center mb-8 text-center">
-            {/* Logo Floating Overlap */}
-            <div className="relative -mt-12 mb-4">
-              <div className="w-[100px] h-[100px] rounded-[1.75rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5">
+          {/* Mobile only branding overlap */}
+          <div className="flex flex-col items-center mb-6 text-center lg:hidden -mt-16">
+            <div className="relative mb-3">
+              <div className="w-[80px] h-[80px] rounded-[1.25rem] bg-white border border-gray-100 flex items-center justify-center shadow-lg p-2">
                 <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-gradient-to-br from-brand-navy to-yellow-400 rounded-full border-[3px] border-white flex items-center justify-center shadow-md">
-                <ShieldCheck className="w-4 h-4 text-white" strokeWidth={2.5} />
-              </div>
             </div>
-            <h1 className="text-[#0b162c] text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.18em' }}>SWABHIVAR</h1>
-            <p className="text-brand-navy text-[10px] font-bold tracking-[0.28em] uppercase mt-1">Your Choice, From Anywhere.</p>
-            <div className="flex items-center justify-center gap-4 md:gap-5 mt-5">
+            
+            <div className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1">
               {['10K+ Members', '100% Secure', 'Free Returns'].map(t => (
                 <div key={t} className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-navy/70" />
-                  <span className="text-gray-500 text-[9px] md:text-[10px] font-medium">{t}</span>
+                  <ShieldCheck className="w-3 h-3 text-brand-navy" />
+                  <span className="text-gray-600 text-[10px] font-medium">{t}</span>
                 </div>
               ))}
             </div>

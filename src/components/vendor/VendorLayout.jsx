@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { LayoutDashboard, ShoppingBag, Package, LogOut, Store, Menu, X, Wallet, UserCircle, Layers, HeadphonesIcon, Tag } from "lucide-react";
+import { LayoutDashboard, ShoppingBag, Package, LogOut, Store, Menu, X, Wallet, UserCircle, Layers, HeadphonesIcon, Tag, Users, IndianRupee } from "lucide-react";
 import logo from '../../assets/logo.png';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -11,10 +11,12 @@ const NAV = [
   { href: "/vendor/products", label: "Products", icon: <Package className="w-4 h-4" /> },
   { href: "/vendor/categories", label: "Categories", icon: <Layers className="w-4 h-4" /> },
   { href: "/vendor/wallet", label: "Virtual Wallet", icon: <Wallet className="w-4 h-4" /> },
+  { href: "/vendor/revenue", label: "Revenue", icon: <IndianRupee className="w-4 h-4" /> },
     { href: "/vendor/offers", label: "Offers", icon: <Tag className="w-4 h-4" /> },
+  { href: "/vendor/referrals", label: "Refer & Earn", icon: <Users className="w-4 h-4" /> },
   { href: "/vendor/profile", label: "Profile", icon: <UserCircle className="w-4 h-4" /> },
 
-  // { href: "/vendor/support", label: "Support", icon: <HeadphonesIcon className="w-4 h-4" /> },
+  { href: "/vendor/support", label: "Support", icon: <HeadphonesIcon className="w-4 h-4" /> },
   // { href: "/vendor/offers", label: "Offers", icon: <Tag className="w-4 h-4" /> },
 ];
 

@@ -12,10 +12,10 @@ export const useAuthStore = create((set, get) => ({
   loading: false,
   error: null,
 
-  signup: async (name, email, phone, password) => {
+  signup: async (name, email, phone, password, referralCode = '') => {
     set({ loading: true, error: null });
     try {
-      await api.post('/auth/signup', { name, email, phone, password });
+      await api.post('/auth/signup', { name, email, phone, password, referral_code: referralCode });
       set({ loading: false });
       return { success: true };
     } catch (err) {
@@ -136,6 +136,15 @@ export const useAuthStore = create((set, get) => ({
   logout: () => {
     localStorage.removeItem('token');
     set({ user: null, token: null, addresses: [], orders: [] });
+  },
+
+  checkReferralCode: async (code) => {
+    try {
+      const { data } = await api.get(`/auth/referrer-info?code=${code}`);
+      return { valid: true, name: data.name };
+    } catch {
+      return { valid: false };
+    }
   },
 
   isLoggedIn: () => !!get().token,

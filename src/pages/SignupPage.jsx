@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, ArrowLeft, Mail, Lock, User, Phone, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, Mail, Lock, User, Phone, ShieldCheck, CheckCircle2, Tag } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import logo from '../assets/logo.png';
 
@@ -22,16 +22,38 @@ export function SignupPage() {
 
   const [step, setStep] = useState('form');
   const [showPass, setShowPass] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', password: '', referralCode: '' });
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [localError, setLocalError] = useState('');
+  const [referrer, setReferrer] = useState(null);
   const otpRefs = useRef([]);
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
+  useEffect(() => {
+    const code = form.referralCode?.trim();
+    if (!code) {
+      setReferrer(null);
+      return;
+    }
+    
+    if (code.length < 3) return;
+
+    setReferrer({ status: 'checking' });
+    const timer = setTimeout(async () => {
+      const res = await useAuthStore.getState().checkReferralCode(code);
+      if (res.valid) {
+        setReferrer({ status: 'valid', name: res.name });
+      } else {
+        setReferrer({ status: 'invalid' });
+      }
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [form.referralCode]);
+
   const handleSignup = async (e) => {
     e.preventDefault(); setLocalError('');
-    const res = await signup(form.name, form.email, form.phone, form.password);
+    const res = await signup(form.name, form.email, form.phone, form.password, form.referralCode);
     if (res.success) setStep('otp');
     else setLocalError(res.error);
   };
@@ -62,10 +84,10 @@ export function SignupPage() {
   const perks = ['Premium ethnic wear', 'Exclusive festive offers', 'Free replacements & exchanges'];
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#0b162c' }}>
+    <div className="min-h-screen flex flex-col lg:flex-row" style={{ background: '#0b162c' }}>
 
-      {/* ── GREEN HERO ── */}
-      <div className="relative flex flex-col items-center pt-12 pb-20 px-6 overflow-hidden">
+      {/* ── LEFT / TOP HERO ── */}
+      <div className="relative flex flex-col items-center justify-center pt-12 pb-24 lg:py-12 px-6 overflow-hidden lg:w-1/2 lg:min-h-screen">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute -top-16 -right-16 w-56 h-56 rounded-full border border-white/[0.06]" />
           <div className="absolute bottom-8 left-[-40px] w-48 h-48 rounded-full border border-brand-navy/[0.08]" />
@@ -81,53 +103,61 @@ export function SignupPage() {
           <ArrowLeft className="w-3.5 h-3.5" /> Login
         </button>
 
-        <div className="relative z-10 flex flex-col items-center">
+        <div className="relative z-10 flex-col items-center text-center lg:mt-0 hidden lg:flex">
+          <div className="relative mb-6 lg:mb-8">
+            <div className="w-[100px] h-[100px] lg:w-[140px] lg:h-[140px] rounded-[1.75rem] lg:rounded-[2.5rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5 lg:p-4">
+              <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
+            </div>
+            <div className="absolute -bottom-1 -right-1 lg:-bottom-2 lg:-right-2 w-8 h-8 lg:w-10 lg:h-10 bg-gradient-to-br from-brand-navy to-blue-500 rounded-full border-[3px] border-[#0b162c] flex items-center justify-center shadow-md">
+              <span className="text-white text-[10px] lg:text-[14px] font-black">✦</span>
+            </div>
+          </div>
+          <h1 className="text-white text-[22px] lg:text-[32px] font-extrabold tracking-widest drop-shadow-md" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
+            SWABHIVAR
+          </h1>
+          <p className="text-white/80 text-[10px] lg:text-[12px] font-bold tracking-[0.25em] uppercase mt-1 lg:mt-2">Your Choice, From Anywhere.</p>
+
+          {step === 'form' && (
+            <div className="mt-8 space-y-3 hidden lg:block text-left">
+              {perks.map(p => (
+                <div key={p} className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <span className="text-white/90 text-[14px] font-medium">{p}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
       {/* ── FORM CARD ── */}
-      <div className="flex-1 bg-white rounded-t-[2.5rem] -mt-10 relative z-10 px-5 pt-0 pb-10 shadow-[0_-20px_60px_rgba(0,0,0,0.25)]">
-        <div className="max-w-sm mx-auto">
-          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-4 mb-2" />
+      <div className="flex-1 bg-white rounded-t-[2.5rem] lg:rounded-none lg:rounded-l-[3rem] -mt-10 lg:mt-0 relative z-10 px-5 pt-2 lg:pt-10 pb-10 shadow-[0_-20px_60px_rgba(0,0,0,0.25)] lg:shadow-[-20px_0_60px_rgba(0,0,0,0.25)] flex flex-col justify-center lg:w-1/2">
+        <div className="max-w-sm mx-auto w-full">
+          <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-2 mb-6 lg:hidden" />
 
-          <div className="flex flex-col items-center mb-8 text-center">
-            {/* Logo Floating Overlap */}
-            <div className="relative -mt-12 mb-4">
-              <div className="w-[100px] h-[100px] rounded-[1.75rem] bg-white border border-gray-100 flex items-center justify-center shadow-xl p-2.5">
+          {/* Mobile only branding overlap */}
+          <div className="flex flex-col items-center mb-6 text-center lg:hidden -mt-16">
+            <div className="relative mb-3">
+              <div className="w-[80px] h-[80px] rounded-[1.25rem] bg-white border border-gray-100 flex items-center justify-center shadow-lg p-2">
                 <img src={logo} alt="SWABHIVAR" className="h-full w-full object-contain" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-gradient-to-br from-brand-navy to-blue-500 rounded-full border-[3px] border-white flex items-center justify-center shadow-md">
-                <span className="text-white text-[10px] font-black">✦</span>
-              </div>
             </div>
-            <h1 className="text-[#0b162c] text-[22px] font-extrabold tracking-widest" style={{ fontFamily: 'Georgia, serif', letterSpacing: '0.15em' }}>
-              SWABHIVAR
-            </h1>
-            <p className="text-brand-navy text-[10px] font-bold tracking-[0.25em] uppercase mt-0.5">Your Choice, From Anywhere.</p>
-
+            
             {step === 'form' && (
-              <div className="mt-5 space-y-2">
+              <div className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1">
                 {perks.map(p => (
-                  <div key={p} className="flex items-center gap-2.5">
-                    <div className="w-4 h-4 rounded-full bg-brand-navy/20 border border-brand-navy/40 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="w-3 h-3 text-brand-navy" />
-                    </div>
-                    <span className="text-gray-600 text-[12px] font-medium">{p}</span>
+                  <div key={p} className="flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3 h-3 text-brand-navy" />
+                    <span className="text-gray-600 text-[10px] font-medium">{p}</span>
                   </div>
                 ))}
               </div>
             )}
-
-            {step === 'otp' && (
-              <div className="mt-5 text-center">
-                <div className="w-14 h-14 rounded-full bg-brand-navy/15 border-2 border-brand-navy/30 flex items-center justify-center mx-auto mb-3">
-                  <ShieldCheck className="w-7 h-7 text-brand-navy" />
-                </div>
-                <p className="text-gray-500 text-xs font-medium">OTP sent to</p>
-                <p className="text-[#0b162c] font-bold text-sm mt-0.5">{form.email}</p>
-              </div>
-            )}
           </div>
+
+
 
           {step === 'form' ? (
             <>
@@ -145,14 +175,32 @@ export function SignupPage() {
 
               <form onSubmit={handleSignup} className="space-y-3.5">
                 {[
-                  { icon: <User className="w-4 h-4 text-gray-400" />, name: 'name', type: 'text', placeholder: 'Full name' },
-                  { icon: <Mail className="w-4 h-4 text-gray-400" />, name: 'email', type: 'email', placeholder: 'Email address' },
-                  { icon: <Phone className="w-4 h-4 text-gray-400" />, name: 'phone', type: 'tel', placeholder: 'Phone number (+91...)' },
+                  { icon: <User className="w-4 h-4 text-gray-400" />, name: 'name', type: 'text', placeholder: 'Full name', required: true },
+                  { icon: <Mail className="w-4 h-4 text-gray-400" />, name: 'email', type: 'email', placeholder: 'Email address', required: true },
+                  { icon: <Phone className="w-4 h-4 text-gray-400" />, name: 'phone', type: 'tel', placeholder: 'Phone number (+91...)', required: true },
+                  { icon: <Tag className="w-4 h-4 text-gray-400" />, name: 'referralCode', type: 'text', placeholder: 'Referral Code (Optional)', required: false },
                 ].map(f => (
                   <div key={f.name} className="relative">
-                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">{f.icon}</span>
-                    <input name={f.name} type={f.type} value={form[f.name]} onChange={handleChange}
-                      required placeholder={f.placeholder} className={inputClass} />
+                    <div className="relative">
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none">{f.icon}</span>
+                      <input name={f.name} type={f.type} value={form[f.name]} onChange={handleChange}
+                        required={f.required} placeholder={f.placeholder} className={inputClass} />
+                    </div>
+                    {f.name === 'referralCode' && referrer?.status === 'valid' && (
+                      <div className="mt-1.5 ml-2 flex items-center gap-1.5 text-green-600 text-[12px] font-semibold animate-in fade-in slide-in-from-top-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" /> Referred by: {referrer.name}
+                      </div>
+                    )}
+                    {f.name === 'referralCode' && referrer?.status === 'invalid' && (
+                      <div className="mt-1.5 ml-2 text-red-500 text-[12px] font-medium animate-in fade-in slide-in-from-top-1">
+                        Invalid referral code
+                      </div>
+                    )}
+                    {f.name === 'referralCode' && referrer?.status === 'checking' && (
+                      <div className="mt-1.5 ml-2 flex items-center gap-1.5 text-gray-500 text-[12px] font-medium">
+                        <span className="w-3.5 h-3.5 border-2 border-gray-200 border-t-gray-500 rounded-full animate-spin" /> Checking...
+                      </div>
+                    )}
                   </div>
                 ))}
                 <div className="relative">
@@ -195,9 +243,13 @@ export function SignupPage() {
             </>
           ) : (
             <>
-              <div className="mb-7">
-                <h2 className="text-2xl font-extrabold text-[#0b162c]" style={{ fontFamily: 'Georgia, serif' }}>Verify Email 📧</h2>
-                <p className="text-[13px] text-gray-500 mt-1.5">Enter the 6-digit code sent to your inbox</p>
+              <div className="mb-8 text-center">
+                <div className="w-16 h-16 rounded-full bg-brand-navy/5 border border-brand-navy/10 flex items-center justify-center mx-auto mb-5">
+                  <ShieldCheck className="w-8 h-8 text-brand-navy" />
+                </div>
+                <h2 className="text-2xl font-extrabold text-[#0b162c]" style={{ fontFamily: 'Georgia, serif' }}>Verify Email</h2>
+                <p className="text-[13px] text-gray-500 mt-2">We've sent a 6-digit code to</p>
+                <p className="text-[#0b162c] font-bold text-[14px] mt-0.5">{form.email}</p>
               </div>
 
               {displayError && (
@@ -208,7 +260,7 @@ export function SignupPage() {
               )}
 
               <form onSubmit={handleVerify} className="space-y-6">
-                <div className="flex justify-between gap-2">
+                <div className="flex justify-between gap-2 max-w-xs mx-auto">
                   {otp.map((digit, idx) => (
                     <input
                       key={idx}
@@ -216,9 +268,8 @@ export function SignupPage() {
                       type="text" inputMode="numeric" maxLength={1} value={digit}
                       onChange={(e) => handleOtpChange(e.target.value, idx)}
                       onKeyDown={(e) => handleOtpKeyDown(e, idx)}
-                      className={`flex-1 h-14 text-center text-xl font-extrabold rounded-2xl border-2 focus:outline-none transition-all
-                        ${digit ? 'border-brand-navy text-brand-navy shadow-[0_0_0_4px_rgba(254,102,3,0.12)]' : 'border-gray-200 bg-gray-50 text-[#0b162c] focus:border-[#0b162c] focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,22,44,0.08)]'}`}
-                      style={digit ? { background: 'rgba(254,102,3,0.06)' } : {}}
+                      className={`w-12 h-14 text-center text-xl font-extrabold rounded-2xl border-2 focus:outline-none transition-all
+                        ${digit ? 'border-brand-navy text-brand-navy shadow-[0_0_0_4px_rgba(254,102,3,0.12)] bg-[#0b162c]/5' : 'border-gray-200 bg-gray-50 text-[#0b162c] focus:border-[#0b162c] focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,22,44,0.08)]'}`}
                     />
                   ))}
                 </div>
@@ -229,7 +280,7 @@ export function SignupPage() {
                 </button>
 
                 <button type="button" onClick={() => { setStep('form'); setOtp(['','','','','','']); }}
-                  className="flex items-center justify-center gap-1 w-full text-[13px] text-gray-400 hover:text-[#0b162c] font-medium transition-colors pt-1">
+                  className="flex items-center justify-center gap-1 w-full text-[13px] text-gray-400 hover:text-[#0b162c] font-medium transition-colors pt-2">
                   <ArrowLeft className="w-3.5 h-3.5" /> Change my details
                 </button>
               </form>

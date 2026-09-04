@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wallet, IndianRupee, Landmark, ArrowUpRight, ArrowDownLeft, Clock } from 'lucide-react';
+import { Wallet, IndianRupee, Landmark, ArrowUpRight, ArrowDownLeft, Clock, Users } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -7,6 +7,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/a
 export function VendorWalletPage() {
   const [vendor, setVendor] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [referrals, setReferrals] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,11 +16,13 @@ export function VendorWalletPage() {
 
     const fetchWallet = fetch(`${BACKEND_URL}/vendorAuth/me`, { headers }).then(r => r.json());
     const fetchTxns = fetch(`${BACKEND_URL}/vendor/transactions`, { headers }).then(r => r.json());
+    const fetchReferrals = fetch(`${BACKEND_URL}/vendor/referrals`, { headers }).then(r => r.json()).catch(() => ({ referrals: [] }));
 
-    Promise.all([fetchWallet, fetchTxns])
-      .then(([walletData, txnData]) => {
+    Promise.all([fetchWallet, fetchTxns, fetchReferrals])
+      .then(([walletData, txnData, refData]) => {
         if (walletData.vendor) setVendor(walletData.vendor);
         setTransactions(txnData.transactions || []);
+        setReferrals(refData.referrals || []);
       })
       .catch(() => toast.error('Failed to load wallet data'))
       .finally(() => setLoading(false));
@@ -127,6 +130,50 @@ export function VendorWalletPage() {
                   </p>
                   <p className="text-xs font-semibold text-gray-400 mt-1 uppercase tracking-wider">
                     {new Date(txn.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Referred Users */}
+      <div className="bg-white rounded-[24px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/80 overflow-hidden mt-8">
+        <div className="px-8 py-6 border-b border-gray-100 flex items-center gap-3 bg-gradient-to-b from-gray-50/50 to-white">
+          <div className="p-2 bg-gray-100 rounded-lg">
+            <Users className="w-5 h-5 text-gray-600" />
+          </div>
+          <h3 className="text-xl font-bold text-gray-900">Referred Users & Earnings</h3>
+        </div>
+
+        {loading ? (
+          <div className="p-8 text-center text-gray-400">Loading...</div>
+        ) : referrals.length === 0 ? (
+          <div className="p-8 text-center text-gray-400">
+            <Users className="w-12 h-12 mx-auto mb-3 text-gray-200" />
+            <p className="text-gray-500 font-medium">No referrals yet</p>
+            <p className="text-sm text-gray-400 mt-1">Share your referral code to start earning rewards.</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-50">
+            {referrals.map((ref, i) => (
+              <div key={i} className="px-8 py-5 flex items-center justify-between hover:bg-gray-50/80 transition-all duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm bg-blue-50 border border-blue-100 text-[#012980]">
+                    <Users className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900 text-base mb-1">{ref.name}</p>
+                    <p className="text-sm font-medium text-gray-500">{ref.email}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    {ref.status || 'Active'}
+                  </span>
+                  <p className="text-xs font-semibold text-gray-400 mt-2 uppercase tracking-wider">
+                    Joined {new Date(ref.created_at).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                   </p>
                 </div>
               </div>

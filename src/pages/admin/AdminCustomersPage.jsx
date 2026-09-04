@@ -8,6 +8,9 @@ export function AdminCustomersPage() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customerDetails, setCustomerDetails] = useState(null);
+  const [detailsLoading, setDetailsLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -20,6 +23,27 @@ export function AdminCustomersPage() {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  const handleCustomerClick = async (customer) => {
+    setSelectedCustomer(customer);
+    setDetailsLoading(true);
+    setCustomerDetails(null);
+    try {
+      const token = localStorage.getItem("token");
+      // Fallback to customer object if endpoint fails, but try fetching detailed data
+      const res = await fetch(`${BACKEND_URL}/admin/users/${customer.id}`, { headers: { Authorization: `Bearer ${token}` } });
+      if (res.ok) {
+        const data = await res.json();
+        setCustomerDetails(data);
+      } else {
+        setCustomerDetails({ ...customer, fallback: true });
+      }
+    } catch (e) {
+      setCustomerDetails({ ...customer, fallback: true });
+    } finally {
+      setDetailsLoading(false);
+    }
+  };
 
   const filtered = customers.filter(c => 
     !search || 
@@ -63,7 +87,8 @@ export function AdminCustomersPage() {
             <tbody className="divide-y divide-[#036e26]/5">
               {filtered.map((customer, i) => (
                 <motion.tr key={customer.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.02 }}
-                  className="hover:bg-gray-500 transition-colors">
+                  onClick={() => handleCustomerClick(customer)}
+                  className="hover:bg-gray-50 transition-colors cursor-pointer">
                   <td className="py-4 px-4 sm:px-6">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-900 font-bold">
@@ -119,6 +144,87 @@ export function AdminCustomersPage() {
           </table>
         </div>
       </div>
+
+      {/* Customer Details Modal */}
+      {selectedCustomer && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-xl relative">
+            <button onClick={() => setSelectedCustomer(null)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-900">
+              ✕
+            </button>
+            <div className="p-6">
+              <h2 className="text-xl font-bold mb-4">Customer Details</h2>
+              {detailsLoading ? (
+                <div className="flex justify-center py-10">
+                  <div className="w-8 h-8 border-4 border-gray-200 border-t-[#036e26] rounded-full animate-spin" />
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* Basic Info */}
+                  <div className="bg-gray-50 p-4 rounded-xl flex gap-4 items-center">
+                    <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-2xl font-bold text-gray-600">
+                      {(selectedCustomer.name || "U")[0].toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-gray-900">{selectedCustomer.name}</h3>
+                      <p className="text-sm text-gray-500">{selectedCustomer.email}</p>
+                      <p className="text-sm text-gray-500">{selectedCustomer.phone}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div className="bg-gray-50 p-4 rounded-xl text-center">
+                      <p className="text-xs text-gray-500 mb-1">Status</p>
+                      <p className="font-semibold text-sm">{selectedCustomer.is_verified ? "Verified" : "Unverified"}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-xl text-center">
+                      <p className="text-xs text-gray-500 mb-1">Rating</p>
+                      <p className="font-semibold text-sm">{customerDetails?.rating || "N/A"}</p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-xl text-center">
+                      <p className="text-xs text-gray-500 mb-1">Referred By</p>
+                      <p className="font-semibold text-sm truncate" title={customerDetails?.referred_by || "None"}>
+                        {customerDetails?.referred_by || "None"}
+                      </p>
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-xl text-center">
+                      <p className="text-xs text-gray-500 mb-1">Referral Earnings</p>
+                      <p className="font-semibold text-sm text-green-600">₹{customerDetails?.referral_earnings || "0"}</p>
+                    </div>
+                  </div>
+
+                  {/* Order History */}
+                  <div>
+                    <h3 className="font-bold text-gray-900 mb-3">Order History</h3>
+                    <div className="bg-gray-50 rounded-xl p-4">
+                      {customerDetails?.orders && customerDetails.orders.length > 0 ? (
+                        <div className="space-y-3">
+                          {customerDetails.orders.map((order, idx) => (
+                            <div key={idx} className="flex justify-between items-center text-sm border-b border-gray-200 pb-2 last:border-0 last:pb-0">
+                              <div>
+                                <p className="font-medium">Order #{order.id}</p>
+                                <p className="text-xs text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-medium">₹{order.total}</p>
+                                <p className="text-xs text-gray-500">{order.status}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-500 text-center py-4">No orders found.</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
     </div>
   );
 }

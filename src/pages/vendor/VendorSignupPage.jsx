@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Phone, Store, ArrowRight, ShieldCheck, CheckCircle2, CreditCard } from 'lucide-react';
+import { Mail, Lock, User, Phone, Store, ArrowRight, ShieldCheck, CheckCircle2, CreditCard, Tag } from 'lucide-react';
 import { toast } from 'react-toastify';
 import logo from '../../assets/logo.png';
 
@@ -21,7 +21,7 @@ export function VendorSignupPage() {
 
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', phone: '',
-    password: '', storeName: '', storeAddress: '', otp: ''
+    password: '', storeName: '', storeAddress: '', otp: '', referralCode: ''
   });
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export function VendorSignupPage() {
           email: formData.email, phone: formData.phone,
           password: formData.password,
           store_name: formData.storeName, address: formData.storeAddress,
-          plan_id: selectedPlan.id, payment_id: paymentId,
+          plan_id: selectedPlan.id, payment_id: paymentId, referral_code: formData.referralCode,
         };
         const res = await fetch(`${BACKEND_URL}/vendorAuth/signup`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -203,6 +203,15 @@ export function VendorSignupPage() {
                     <input type="password" name="password" value={formData.password} onChange={handleChange} required
                       className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="••••••••" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Referral Code (Optional)</label>
+                  <div className="relative">
+                    <Tag className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                    <input type="text" name="referralCode" value={formData.referralCode} onChange={handleChange}
+                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
+                      placeholder="Enter referral code" />
                   </div>
                 </div>
               </div>
