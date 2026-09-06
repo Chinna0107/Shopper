@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Heart, ShoppingCart, Star, Share2 } from 'lucide-react';
+import { Heart, ShoppingCart, Star, Share2, CheckCircle2 } from 'lucide-react';
 import { useWishlistStore } from '../store/useWishlistStore';
 import { useCartStore } from '../store/useCartStore';
+import { useAuthStore } from '../store/useAuthStore';
+import { toast } from 'react-toastify';
 
 // Category-based image fallback — high quality Unsplash images per category keyword
 const CATEGORY_IMAGES = {
@@ -91,10 +93,12 @@ function getFirstImage(product, parsedSizes) {
 export function ProductCard({ product, layout = 'grid' }) {
   const navigate = useNavigate();
   const { toggleWishlist, items: wishlistItems } = useWishlistStore();
-  const { addToCart } = useCartStore();
+  const { addToCart, items: cartItems } = useCartStore();
+  const { token } = useAuthStore();
   const [imgErr, setImgErr] = useState(false);
 
   const isWishlisted = wishlistItems.includes(product.id);
+  const isAdded = cartItems?.some(item => item.product.id === product.id);
 
   let parsedSizes = [];
   try {
@@ -135,6 +139,11 @@ export function ProductCard({ product, layout = 'grid' }) {
 
   const handleAddToCart = (e) => {
     e.preventDefault(); e.stopPropagation();
+    if (!token) {
+      toast.error("Please login to add items to your cart", { icon: "🔒" });
+      navigate('/login');
+      return;
+    }
     addToCart(product, defaultSize);
   };
 
@@ -162,9 +171,9 @@ export function ProductCard({ product, layout = 'grid' }) {
               <span className="text-base font-bold text-brand-navy">₹{displayPrice?.toLocaleString('en-IN')}</span>
               <span className="text-xs text-gray-400 line-through">₹{Math.round(displayPrice * 1.4)?.toLocaleString('en-IN')}</span>
             </div>
-            <button onClick={handleAddToCart}
-              className="bg-brand-navy hover:bg-blue-900 transition-colors p-2.5 rounded-xl relative z-20 active:scale-95">
-              <ShoppingCart className="w-4 h-4 text-white" strokeWidth={2} />
+            <button onClick={isAdded ? (e) => { e.preventDefault(); e.stopPropagation(); navigate('/cart'); } : handleAddToCart}
+              className={`${isAdded ? 'bg-green-600 hover:bg-green-700' : 'bg-brand-navy hover:bg-blue-900'} transition-colors p-2.5 rounded-xl relative z-20 active:scale-95`}>
+              {isAdded ? <CheckCircle2 className="w-4 h-4 text-white" /> : <ShoppingCart className="w-4 h-4 text-white" strokeWidth={2} />}
             </button>
           </div>
         </div>
@@ -229,8 +238,23 @@ export function ProductCard({ product, layout = 'grid' }) {
         </div>
 
         <div className="mt-auto pt-3">
-          <button onClick={handleAddToCart} className="w-full bg-brand-navy hover:bg-blue-900 text-white font-semibold py-2 rounded-xl text-xs md:text-sm transition-colors flex items-center justify-center gap-2">
-            <ShoppingCart className="w-4 h-4" /> Add to Cart
+          <button 
+            onClick={isAdded ? (e) => { e.preventDefault(); e.stopPropagation(); navigate('/cart'); } : handleAddToCart} 
+            className={`w-full font-semibold py-2 rounded-xl text-xs md:text-sm transition-colors flex items-center justify-center gap-2 ${
+              isAdded 
+                ? 'bg-green-600 hover:bg-green-700 text-white' 
+                : 'bg-brand-navy hover:bg-blue-900 text-white'
+            }`}
+          >
+            {isAdded ? (
+              <>
+                <CheckCircle2 className="w-4 h-4" /> Added
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="w-4 h-4" /> Add to Cart
+              </>
+            )}
           </button>
         </div>
       </div>

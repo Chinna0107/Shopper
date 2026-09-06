@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Share2, Heart, ShoppingCart, Star, MapPin, Zap, X, ChevronLeft, Truck, RefreshCcw, ShieldCheck, Package } from 'lucide-react';
+import { Share2, Heart, ShoppingCart, Star, MapPin, Zap, X, ChevronLeft, Truck, RefreshCcw, ShieldCheck, Package, CheckCircle2 } from 'lucide-react';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
 import { useCartStore } from '../store/useCartStore';
 import { useWishlistStore } from '../store/useWishlistStore';
 import { useStoreData } from '../store/useStoreData';
+import { useAuthStore } from '../store/useAuthStore';
+import { toast } from 'react-toastify';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export function ProductDetailPage() {
@@ -13,8 +15,9 @@ export function ProductDetailPage() {
   const navigate = useNavigate();
   const { products, loading } = useStoreData();
   const product = products.find(p => p.id.toString() === id);
-  const { addToCart } = useCartStore();
+  const { addToCart, items: cartItems } = useCartStore();
   const { toggleWishlist, items: wishlistItems } = useWishlistStore();
+  const { token } = useAuthStore();
 
   const [selectedVariantIdx, setSelectedVariantIdx] = useState(0);
   const [selectedSizeIdx, setSelectedSizeIdx] = useState(0);
@@ -42,6 +45,13 @@ export function ProductDetailPage() {
   const productImages = (currentVariant?.images?.length > 0)
     ? currentVariant.images
     : (product ? (product.images?.length > 0 ? product.images : (product.image_url ? [product.image_url] : [])) : []);
+
+  const variantWithColor = { ...selectedSizeObj, color: parsedSizes[selectedVariantIdx]?.color || '' };
+  const isAdded = cartItems?.some(item => 
+    item.product.id === product?.id && 
+    item.variant?.size === variantWithColor.size && 
+    item.variant?.color === variantWithColor.color
+  );
 
   const [mainImg, setMainImg] = useState(null);
 
@@ -78,11 +88,21 @@ export function ProductDetailPage() {
   }
 
   const handleAddToCart = () => {
+    if (!token) {
+      toast.error("Please login to add items to your cart", { icon: "🔒" });
+      navigate('/login');
+      return;
+    }
     const variantWithColor = { ...selectedSizeObj, color: parsedSizes[selectedVariantIdx]?.color || '' };
     addToCart(product, variantWithColor, quantity);
   };
 
   const handleBuyNow = () => {
+    if (!token) {
+      toast.error("Please login to purchase items", { icon: "🔒" });
+      navigate('/login');
+      return;
+    }
     const variantWithColor = { ...selectedSizeObj, color: parsedSizes[selectedVariantIdx]?.color || '' };
     addToCart(product, variantWithColor, quantity);
     navigate('/cart');
@@ -245,9 +265,23 @@ export function ProductDetailPage() {
 
           {/* Desktop action buttons */}
           <div className="flex gap-3 mt-5">
-            <button onClick={handleAddToCart}
-              className="flex-1 border-2 border-brand-navy text-brand-navy font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 hover:bg-blue-50 transition-all shadow-sm active:scale-95">
-              <ShoppingCart className="w-5 h-5" /> Add to Cart
+            <button 
+              onClick={isAdded ? () => navigate('/cart') : handleAddToCart}
+              className={`flex-1 border-2 font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95 ${
+                isAdded
+                  ? 'border-green-600 bg-green-50 text-green-700 hover:bg-green-100'
+                  : 'border-brand-navy text-brand-navy hover:bg-blue-50'
+              }`}
+            >
+              {isAdded ? (
+                <>
+                  <CheckCircle2 className="w-5 h-5" /> Added to Cart
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="w-5 h-5" /> Add to Cart
+                </>
+              )}
             </button>
             <button onClick={handleBuyNow}
               className="flex-[1.4] bg-gradient-to-r from-brand-navy to-yellow-400 text-white font-bold py-4 rounded-2xl text-[15px] flex items-center justify-center gap-2 shadow-md hover:shadow-[0_8px_25px_rgba(254,102,3,0.4)] hover:-translate-y-0.5 transition-all active:scale-95">
@@ -440,15 +474,24 @@ export function ProductDetailPage() {
       )}
 
       {/* ── MOBILE sticky action bar ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 flex gap-3 px-4 py-3 z-[60]">
-        <button onClick={handleAddToCart}
-          className="flex-1 bg-white text-[#0b162c] border border-[#0b162c] font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform">
-          Add to Cart
-        </button>
-        <button onClick={handleBuyNow}
+      <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-100 p-4 md:hidden z-40 pb-safe shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+        <div className="flex gap-3 max-w-[1400px] mx-auto">
+          <button 
+            onClick={isAdded ? () => navigate('/cart') : handleAddToCart}
+            className={`flex-1 border-2 font-bold py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 transition-all ${
+              isAdded
+                ? 'border-green-600 bg-green-50 text-green-700'
+                : 'border-brand-navy text-brand-navy'
+            }`}
+          >
+            {isAdded ? <CheckCircle2 className="w-4 h-4" /> : <ShoppingCart className="w-4 h-4" />}
+            {isAdded ? 'Added' : 'Add to Cart'}
+          </button>
+          <button onClick={handleBuyNow}
           className="flex-1 bg-brand-navy text-white font-semibold py-3.5 rounded-full text-[15px] active:scale-95 transition-transform shadow-md shadow-brand-navy/20">
           Buy Now
         </button>
+      </div>
       </div>
 
       {/* ── Image Zoom Modal ── */}

@@ -1,82 +1,82 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 import { useToastStore } from './useToastStore';
+import api from '../utils/api';
 
 export const useCartStore = create(
-  persist(
-    (set, get) => ({
-      items: [],
-      deliveryCharge: 1,
-      
-      addToCart: (product, variant, qty = 1) => {
-        set((state) => {
-          const existingItemIndex = state.items.findIndex(
-            (i) => i.product.id === product.id && i.variant === variant
-          );
-
-          if (existingItemIndex > -1) {
-            const newItems = [...state.items];
-            newItems[existingItemIndex].qty += qty;
-            return { items: newItems };
-          }
-          
-          return { items: [...state.items, { product, variant, qty }] };
-        });
-        useToastStore.getState().showToast(`Added ${product.name} to cart!`);
-      },
-      
-      removeFromCart: (productId, variant) => set((state) => ({
-        items: state.items.filter(item => !(item.product.id === productId && item.variant === variant))
-      })),
-      
-      updateQuantity: (productId, variant, qty) => set((state) => {
-        if (qty <= 0) {
-          return {
-            items: state.items.filter(item => !(item.product.id === productId && item.variant === variant))
-          };
-        }
-        
-        return {
-          items: state.items.map(item => 
-            (item.product.id === productId && item.variant === variant) 
-              ? { ...item, qty } 
-              : item
-          )
-        };
-      }),
-
-      clearCart: () => set({ items: [] }),
-
-      getSubtotal: () => {
-        return get().items.reduce((sum, item) => {
-          const price = item.variant?.price || item.product.price || 0;
-          return sum + (price * item.qty);
-        }, 0);
-      },
-
-      getTotalSavings: () => {
-        return get().items.reduce((sum, item) => {
-          const originalPrice = item.variant?.originalPrice || item.product.originalPrice;
-          const currentPrice = item.variant?.price || item.product.price;
-          if (originalPrice && originalPrice > currentPrice) {
-            return sum + ((originalPrice - currentPrice) * item.qty);
-          }
-          return sum;
-        }, 0);
-      },
-
-      getTotal: () => {
-        const subtotal = get().getSubtotal();
-        return subtotal > 0 ? subtotal + get().deliveryCharge : 0;
+  (set, get) => ({
+    items: [],
+    deliveryCharge: 1,
+    
+    // Fetch cart from backend
+    fetchCart: async () => {
+      try {
+        const res = await api.get('/general/cart');
+        set({ items: res.data });
+      } catch (err) {
+        console.error("Failed to fetch cart:", err);
       }
-    }),
-    {
-      name: 'pooja-cart-storage',
-      merge: (persistedState, currentState) => ({
-        ...currentState,
-        ...persistedState,
-        deliveryCharge: 1
-      })
+    },
+
+    addToCart: async (product, variant, qty = 1) => {
+      try {
+        await api.post('/general/cart', { product_id: product.id, variant, qty });
+        await get().fetchCart();
+        useToastStore.getState().showToast(`Added ${product.name} to cart!`);
+      } catch (err) {
+        console.error("Add to cart failed:", err);
+        useToastStore.getState().showToast(`Failed to add ${product.name} to cart.`, 'error');
+      }
+    },
+    
+    removeFromCart: async (productId, variant) => {
+      try {
+        await api.delete('/general/cart', { data: { product_id: productId, variant } });
+        await get().fetchCart();
+      } catch (err) {
+        console.error("Remove from cart failed:", err);
+      }
+    },
+    
+    updateQuantity: async (productId, variant, qty) => {
+      try {
+        await api.put('/general/cart', { product_id: productId, variant, qty });
+        await get().fetchCart();
+      } catch (err) {
+        console.error("Update quantity failed:", err);
+      }
+    },
+
+    clearCart: async () => {
+      try {
+        await api.delete('/general/cart/clear');
+        set({ items: [] });
+      } catch (err) {
+        console.error("Clear cart failed:", err);
+      }
+    },
+    
+    // Clear local state when user logs out
+    clearLocalCart: () => {
+      set({ items: [] });
+    },
+
+    getSubtotal: () => {
+      return get().items.reduce((sum, item) => {
+        const itemPrice = item.variant?.price || item.product.price || 0;
+        return sum + (Number(itemPrice) * item.qty);
+      }, 0);
+    },
+
+    getTotal: () => {
+      return get().getSubtotal() + get().deliveryCharge;
+    },
+
+    getDiscount: () => {
+      return get().items.reduce((sum, item) => {
+        const itemPrice = item.variant?.price || item.product.price || 0;
+        const itemMrp = item.variant?.mrp || item.product.mrp || itemPrice;
+        return sum + ((Number(itemMrp) - Number(itemPrice)) * item.qty);
+      }, 0);
     }
-  )
+  })
 );

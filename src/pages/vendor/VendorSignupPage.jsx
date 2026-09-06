@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, Phone, Store, ArrowRight, ShieldCheck, CheckCircle2, CreditCard, Tag } from 'lucide-react';
 import { toast } from 'react-toastify';
 import logo from '../../assets/logo.png';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 
@@ -19,10 +20,34 @@ export function VendorSignupPage() {
   const [paymentDone, setPaymentDone] = useState(false);
   const [paymentId, setPaymentId] = useState('');
 
+  const [storeImage, setStoreImage] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', phone: '',
     password: '', storeName: '', storeAddress: '', otp: '', referralCode: ''
   });
+
+  const [referrer, setReferrer] = useState({ status: 'idle', name: '' });
+
+  useEffect(() => {
+    const code = formData.referralCode;
+    if (!code) {
+      setReferrer({ status: 'idle', name: '' });
+      return;
+    }
+    if (code.length < 3) return;
+
+    setReferrer({ status: 'checking', name: '' });
+    const timer = setTimeout(async () => {
+      const res = await useAuthStore.getState().checkReferralCode(code);
+      if (res.valid) {
+        setReferrer({ status: 'valid', name: res.name });
+      } else {
+        setReferrer({ status: 'invalid', name: '' });
+      }
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [formData.referralCode]);
 
   useEffect(() => {
     fetch(`${BACKEND_URL}/subscriptions/plans`)
@@ -90,7 +115,7 @@ export function VendorSignupPage() {
           email: formData.email, phone: formData.phone,
           password: formData.password,
           store_name: formData.storeName, address: formData.storeAddress,
-          plan_id: selectedPlan.id, payment_id: paymentId, referral_code: formData.referralCode,
+          plan_id: selectedPlan.id, payment_id: paymentId, referral_code: formData.referralCode, store_image: storeImage,
         };
         const res = await fetch(`${BACKEND_URL}/vendorAuth/signup`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
@@ -210,9 +235,25 @@ export function VendorSignupPage() {
                   <div className="relative">
                     <Tag className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input type="text" name="referralCode" value={formData.referralCode} onChange={handleChange}
-                      className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
+                      className={`block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border ${referrer.status === 'invalid' ? 'border-red-300 focus:border-red-500 focus:ring-red-500/20' : referrer.status === 'valid' ? 'border-green-300 focus:border-green-500 focus:ring-green-500/20' : 'border-gray-200 focus:border-[#012980] focus:ring-[#012980]/30'} rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 transition-all shadow-inner`}
                       placeholder="Enter referral code" />
+                    {referrer.status === 'checking' && (
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 border-2 border-[#012980]/30 border-t-[#012980] rounded-full animate-spin" />
+                    )}
+                    {referrer.status === 'valid' && (
+                      <CheckCircle2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-green-500" />
+                    )}
                   </div>
+                  {referrer.status === 'valid' && (
+                    <p className="mt-1.5 text-xs font-medium text-green-600 flex items-center gap-1">
+                      Referred by {referrer.name}
+                    </p>
+                  )}
+                  {referrer.status === 'invalid' && (
+                    <p className="mt-1.5 text-xs font-medium text-red-500">
+                      Invalid referral code
+                    </p>
+                  )}
                 </div>
               </div>
             )}
@@ -227,6 +268,33 @@ export function VendorSignupPage() {
                     <input type="text" name="storeName" value={formData.storeName} onChange={handleChange} required
                       className="block w-full pl-12 pr-4 py-3.5 bg-gray-50/50 border border-gray-200 rounded-[16px] text-gray-900 focus:bg-white focus:ring-2 focus:ring-[#012980]/30 focus:border-[#012980] transition-all shadow-inner"
                       placeholder="My Awesome Store" />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Image Cover</label>
+                  <div className="relative">
+                    {storeImage ? (
+                      <div className="relative w-full h-32 rounded-xl overflow-hidden border border-gray-200">
+                        <img src={storeImage} alt="Store Cover" className="w-full h-full object-cover" />
+                        <button type="button" onClick={() => setStoreImage('')} className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md">
+                          <XCircle className="w-5 h-5 text-red-500" />
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="w-full h-32 rounded-[16px] border-2 border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center hover:bg-gray-100 transition-colors relative">
+                        <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploadingImage} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                        {uploadingImage ? (
+                           <div className="w-6 h-6 border-2 border-[#012980]/30 border-t-[#012980] rounded-full animate-spin"></div>
+                        ) : (
+                           <>
+                             <div className="w-10 h-10 rounded-full bg-[#012980]/5 flex items-center justify-center mb-2">
+                               <Store className="w-5 h-5 text-[#012980]" />
+                             </div>
+                             <span className="text-sm font-medium text-gray-500">Click to upload store image</span>
+                           </>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div>

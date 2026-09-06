@@ -155,65 +155,84 @@ function OffersDropdown() {
 }
 
 function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout }) {
+  const { products } = useStoreData();
+  const [productQuery, setProductQuery] = useState('');
+  
+  const productResults = productQuery ? products.filter(p => p.name.toLowerCase().includes(productQuery.toLowerCase()) || p.category.toLowerCase().includes(productQuery.toLowerCase())).slice(0, 5) : [];
+
   return (
     <>
-      <div className="h-[150px] lg:h-[180px] hidden md:block" />
-      <header className="fixed top-0 left-0 z-50 w-full bg-white border-b border-gray-100 shadow-sm px-6 md:px-10 lg:px-12 py-2 hidden md:block transition-all duration-300">
-        <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between gap-4">
+      <div className="h-[90px] lg:h-[100px] hidden lg:block" />
+      <header className="fixed top-0 left-0 z-[100] w-full bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm px-6 md:px-10 lg:px-12 py-3 hidden lg:block transition-all duration-300">
+        <div className="w-full max-w-[1600px] mx-auto flex items-center justify-between relative min-h-[60px] xl:min-h-[70px]">
 
           {/* Navigation Links */}
           <nav className="flex-1 hidden lg:flex items-center justify-start gap-4 xl:gap-6">
-            <Link to="/" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/" className="text-[13px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Home
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
             <CategoriesDropdown />
             <OffersDropdown />
-            <Link to="/about" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/about" className="text-[13px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               About
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/contact" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/contact" className="text-[13px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Contact
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
-            <Link to="/my-orders" className="text-[13px] lg:text-[14px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
+            <Link to="/my-orders" className="text-[13px] xl:text-[15px] font-bold text-gray-700 hover:text-brand-navy transition-all relative group">
               Orders
               <span className="absolute -bottom-1.5 left-1/2 w-0 h-0.5 bg-brand-navy group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out"></span>
             </Link>
           </nav>
 
           {/* Centered Logo */}
-          <Link to="/" className="shrink-0 flex items-center justify-center mx-4 group lg:mx-0 relative -ml-2 md:-ml-8 lg:-ml-16">
-            <img src={logo} alt="Logo" className="relative z-10 h-24 md:h-32 lg:h-40 w-auto max-w-[320px] lg:max-w-[450px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-md" />
-          </Link>
+          <div className="flex justify-center shrink-0 z-10 px-4">
+            <Link to="/" className="flex items-center justify-center group">
+              <img src={logo} alt="Logo" className="h-16 xl:h-20 w-auto max-w-[200px] xl:max-w-[260px] object-contain transition-all duration-500 group-hover:scale-105 filter drop-shadow-sm" />
+            </Link>
+          </div>
 
           {/* Right Action Icons & Search */}
-          <div className="flex-1 flex items-center justify-end gap-5 lg:gap-8">
-            <div className="relative hidden xl:block w-[260px] group">
+          <div className="flex-1 flex items-center justify-end gap-3 xl:gap-5">
+            <div className="relative hidden xl:block w-[240px] group">
               <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 group-focus-within:text-brand-navy transition-colors z-10" />
               <input type="text" placeholder="Search products..."
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && e.target.value.trim())
-                    window.location.href = `/category/all?search=${encodeURIComponent(e.target.value.trim())}`;
-                }}
+                value={productQuery}
+                onChange={(e) => setProductQuery(e.target.value)}
                 className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full py-2.5 pl-11 pr-4 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-brand-navy focus:border-brand-navy/50 transition-all"
               />
+              {productQuery && (
+                <div className="absolute top-full right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-[70] max-h-[60vh] overflow-y-auto w-[300px]">
+                   {productResults.map(p => (
+                      <Link onClick={() => setProductQuery('')} to={`/product/${p.id}`} key={p.id} className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl transition-colors border-b border-gray-50 last:border-0 text-left">
+                        <img src={p.image_url || p.images?.[0]} className="w-10 h-10 object-cover rounded-lg shrink-0" />
+                        <div>
+                          <h4 className="font-bold text-sm text-gray-900 line-clamp-1">{p.name}</h4>
+                          <p className="text-xs text-gray-500">₹{p.price}</p>
+                        </div>
+                      </Link>
+                   ))}
+                   {productResults.length === 0 && <div className="p-4 text-center text-sm text-gray-500">No products found</div>}
+                </div>
+              )}
             </div>
 
-            <div className="flex items-center gap-3 lg:gap-5">
-              <Link to="/refer" className="hidden lg:flex items-center gap-2 px-3 py-2 bg-[#f36b21]/10 hover:bg-[#f36b21]/20 rounded-full border border-[#f36b21]/20 transition-all cursor-pointer hover:-translate-y-1 group">
+            <div className="flex items-center gap-2 xl:gap-3">
+              <Link to="/refer" className="hidden lg:flex items-center gap-2 px-2.5 xl:px-3 py-1.5 xl:py-2 bg-[#f36b21]/10 hover:bg-[#f36b21]/20 rounded-full border border-[#f36b21]/20 transition-all cursor-pointer hover:-translate-y-1 group">
                 <Gift className="w-4 h-4 text-[#f36b21]" />
-                <span className="text-[#f36b21] text-xs xl:text-sm font-bold">Refer & Earn</span>
+                <span className="text-[#f36b21] hidden xl:block text-xs xl:text-sm font-bold">Refer & Earn</span>
               </Link>
 
-              <Link to="/wallet" className="flex items-center gap-2 px-3.5 py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
-                <Wallet className="w-5 h-5 text-[#f36b21] group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
-                <span className="text-gray-900 text-sm font-bold">₹1,240</span>
+              <Link to="/wallet" className="flex items-center gap-2 px-3 xl:px-3.5 py-1.5 xl:py-2 bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 transition-all cursor-pointer hover:border-brand-navy/40 hover:-translate-y-1 group">
+                <Wallet className="w-4 h-4 xl:w-5 xl:h-5 text-[#f36b21] group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
+                <span className="text-gray-900 text-xs xl:text-sm font-bold">₹{user?.wallet_balance || 0}</span>
               </Link>
 
-              <Link to="/wishlist" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
-                <Heart className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
+              <Link to="/wishlist" className="relative p-2 xl:p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
+                <Heart className="w-4 h-4 xl:w-5 xl:h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-brand-navy text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white">
                     {wishlistCount}
@@ -221,8 +240,8 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
                 )}
               </Link>
 
-              <Link to="/cart" className="relative p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
-                <ShoppingCart className="w-5 h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
+              <Link to="/cart" className="relative p-2 xl:p-2.5 cursor-pointer bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 hover:border-brand-navy/40 hover:-translate-y-1 transition-all group">
+                <ShoppingCart className="w-4 h-4 xl:w-5 xl:h-5 text-gray-600 group-hover:text-brand-navy transition-colors" strokeWidth={1.5} />
                 {cartCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 bg-brand-navy text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border border-white animate-pulse">
                     {cartCount}
@@ -231,11 +250,11 @@ function DesktopFullHeader({ cartCount, wishlistCount, token, user, handleLogout
               </Link>
 
               {token ? (
-                <div className="ml-2">
+                <div className="ml-1 xl:ml-2">
                   <AvatarDropdown user={user} onLogout={handleLogout} />
                 </div>
               ) : (
-                <Link to="/login" className="flex items-center gap-2 text-sm font-bold text-white bg-brand-blue hover:bg-blue-700 px-5 lg:px-6 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all ml-2 group">
+                <Link to="/login" className="flex items-center gap-2 text-[13px] xl:text-sm font-bold text-white bg-brand-blue hover:bg-blue-700 px-5 xl:px-6 py-2 xl:py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all ml-1 xl:ml-2 group shrink-0">
                   <LogIn className="w-4 h-4 group-hover:scale-110 transition-transform" />
                   <span className="tracking-wide">Login</span>
                 </Link>
@@ -254,6 +273,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
   const [mobileCatsOpen, setMobileCatsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false); // slide-out drawer for home header
   const [mobileOffersOpen, setMobileOffersOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [offers, setOffers] = useState([]);
   
   useEffect(() => {
@@ -293,8 +313,8 @@ export function Header({ variant = 'default', title, showShare = false }) {
     <>
       <DesktopFullHeader cartCount={cartCount} wishlistCount={wishlistCount} token={token} user={user} handleLogout={handleLogout} />
 
-      {/* Mobile */}
-      <div className="md:hidden">
+      {/* Mobile & Tablet */}
+      <div className="lg:hidden">
         {/* Sidebar overlay */}
         <AnimatePresence>
           {mobileMenuOpen && (
@@ -408,7 +428,7 @@ export function Header({ variant = 'default', title, showShare = false }) {
                 {/* Wallet */}
                 <Link to="/wallet" className="flex items-center gap-1.5 px-3 py-1.5 bg-transparent border border-white/20 rounded-full hover:bg-white/5 transition-colors">
                   <Wallet className="w-4 h-4 text-[#f36b21]" strokeWidth={2} />
-                  <span className="text-white text-xs sm:text-sm font-bold">₹1,240</span>
+                  <span className="text-white text-xs sm:text-sm font-bold">₹{user?.wallet_balance || 0}</span>
                 </Link>
 
                 {/* Cart icon */}
@@ -424,6 +444,14 @@ export function Header({ variant = 'default', title, showShare = false }) {
                   )}
                 </button>
 
+                {/* Search button */}
+                <button
+                  onClick={() => setMobileSearchOpen(!mobileSearchOpen)}
+                  className="relative p-2 rounded-full border border-white/20 hover:bg-white/5 transition-colors"
+                >
+                  <Search className="w-4 h-4 text-white" />
+                </button>
+
                 {/* Menu button */}
                 <button
                   onClick={() => setMenuOpen(true)}
@@ -434,6 +462,34 @@ export function Header({ variant = 'default', title, showShare = false }) {
               </div>
             </div>
           </div>
+
+          {/* Mobile Search Bar Toggle */}
+          <AnimatePresence>
+            {mobileSearchOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="w-full bg-[#0b162c] px-4 pb-3 overflow-hidden"
+              >
+                <div className="relative w-full max-w-lg mx-auto">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    autoFocus
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && e.target.value.trim()) {
+                        setMobileSearchOpen(false);
+                        navigate(`/category/all?search=${encodeURIComponent(e.target.value.trim())}`);
+                      }
+                    }}
+                    className="w-full bg-white/10 border border-white/20 rounded-full py-2 pl-9 pr-4 text-sm text-white placeholder-white/50 focus:outline-none focus:border-white/40 focus:bg-white/20 transition-all"
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </header>
       </div>
 

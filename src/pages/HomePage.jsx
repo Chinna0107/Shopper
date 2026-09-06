@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShieldCheck, Truck, Award, Headset } from 'lucide-react';
+import { Search, ShieldCheck, Truck, Award, Headset, ChevronRight, Store, MapPin } from 'lucide-react';
 import { Header } from '../components/Header';
 import { ProductCard } from '../components/ProductCard';
 import { AdBanner } from '../components/AdBanner';
@@ -15,15 +15,16 @@ import imgAarti from '../assets/story_aarti.png';
 export function HomePage() {
   const container = useRef(null);
   const navigate = useNavigate();
-  const { products, categories, loading } = useStoreData();
+  const { products, categories, vendors, loading } = useStoreData();
   const [banners, setBanners] = React.useState([]);
   const [bestsellerAds, setBestsellerAds] = React.useState([]);
-  const [vendors, setVendors] = React.useState([
-    { id: 'v1', business_name: 'Swabhivar Silks', store_image: 'https://vaarahisilks.com/cdn/shop/articles/Home_Banner_B_1080_x_1650_FHD_49daaf56-8dd9-4544-934c-f17ec4672e1c.jpg?v=1765869118' },
-    { id: 'v2', business_name: 'Kavya Creations', store_image: 'https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=500&q=80' },
-    { id: 'v3', business_name: 'The Loom Story', store_image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=500&q=80' },
-    { id: 'v4', business_name: 'Ethnic Aura', store_image: 'https://vaarahisilks.com/cdn/shop/articles/Home_Banner_B_1080_x_1650_FHD_49daaf56-8dd9-4544-934c-f17ec4672e1c.jpg?v=1765869118' },
-  ]);
+
+  const [productQuery, setProductQuery] = useState('');
+  const [shopQuery, setShopQuery] = useState('');
+
+  const productResults = productQuery ? products.filter(p => p.name.toLowerCase().includes(productQuery.toLowerCase()) || p.category.toLowerCase().includes(productQuery.toLowerCase())).slice(0, 5) : [];
+  const shopResults = shopQuery ? vendors?.filter(v => v.business_name?.toLowerCase().includes(shopQuery.toLowerCase())).slice(0, 5) : [];
+
 
   React.useEffect(() => {
     const url = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -32,10 +33,6 @@ export function HomePage() {
       .then(d => { if (d.banners) setBanners(d.banners); })
       .catch(e => console.error(e));
 
-    fetch(`${url}/general/vendors`)
-      .then(r => r.json())
-      .then(d => { if (d.vendors && d.vendors.length > 0) setVendors(d.vendors); })
-      .catch(e => console.error(e));
 
     fetch(`${url}/advertisements?type=bestseller_category&is_active=true`)
       .then(r => r.json())
@@ -61,34 +58,69 @@ export function HomePage() {
       <Header variant="home" />
 
       {/* Mobile Search Bar (Moved from Header) */}
-      <div className="md:hidden px-4 pt-8 pb-2 bg-white">
-        <div
-          className="relative flex items-center cursor-text"
-          onClick={() => navigate('/search')}
-        >
+      <div className="md:hidden px-4 pt-8 pb-2 bg-white relative z-[60]">
+        <div className="relative flex items-center cursor-text">
           <Search className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
           <input
             type="text"
+            value={productQuery}
+            onChange={(e) => setProductQuery(e.target.value)}
             placeholder="Search sarees, kurtis, brands..."
-            readOnly
-            className="w-full bg-white border border-gray-300 rounded-full py-3.5 pl-14 pr-4 text-[15px] font-medium text-gray-900 placeholder-gray-500 focus:outline-none transition-all shadow-sm cursor-text"
+            className="w-full bg-white border border-gray-300 rounded-full py-3.5 pl-14 pr-4 text-[15px] font-medium text-gray-900 placeholder-gray-500 focus:outline-none focus:border-brand-navy focus:ring-1 focus:ring-brand-navy transition-all shadow-sm cursor-text"
           />
         </div>
+        {productQuery && (
+          <div className="absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-[70] max-h-[60vh] overflow-y-auto">
+             {productResults.map(p => (
+                <Link to={`/product/${p.id}`} key={p.id} className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-xl transition-colors border-b border-gray-50 last:border-0">
+                  <img src={p.image_url || p.images?.[0]} className="w-12 h-12 object-cover rounded-lg shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-sm text-gray-900 line-clamp-1">{p.name}</h4>
+                    <p className="text-xs text-gray-500">₹{p.price}</p>
+                  </div>
+                </Link>
+             ))}
+             {productResults.length === 0 && <div className="p-4 text-center text-sm text-gray-500">No products found</div>}
+          </div>
+        )}
       </div>
 
-      <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1 md:mt-4 md:mb-2">
+      <div className="max-w-[1280px] mx-auto px-4 pt-4 mt-1 md:mt-4 md:mb-2 relative z-50">
         {/* Location Search Bar */}
-        <Link to="/search" className="block w-full md:w-[600px] md:mx-auto bg-blue-50 border border-blue-100 rounded-full px-5 py-3.5 md:py-4 mb-5 flex items-center gap-3 cursor-text transition-all hover:bg-blue-100 md:shadow-sm md:hover:shadow-md group">
-          <svg className="w-5 h-5 md:w-6 md:h-6 text-brand-navy group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="8" strokeWidth="2" />
-            <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
-            <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
-            <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
-            <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
-          </svg>
-          <span className="text-[15px] md:text-base font-semibold text-brand-navy">Search shops near your location</span>
-          <span className="ml-auto bg-brand-navy text-white text-xs font-bold px-3 py-1.5 rounded-full hidden md:block opacity-0 group-hover:opacity-100 transition-opacity">Find now &rarr;</span>
-        </Link>
+        <div className="relative block w-full md:w-[600px] md:mx-auto mb-5">
+          <div className="bg-blue-50 border border-blue-100 rounded-full px-5 py-3.5 md:py-4 flex items-center gap-3 cursor-text transition-all focus-within:bg-blue-100 focus-within:shadow-md md:shadow-sm md:hover:shadow-md group">
+            <svg className="w-5 h-5 md:w-6 md:h-6 text-brand-navy group-focus-within:scale-110 transition-transform shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="8" strokeWidth="2" />
+              <line x1="12" y1="2" x2="12" y2="6" strokeWidth="2" strokeLinecap="round" />
+              <line x1="12" y1="18" x2="12" y2="22" strokeWidth="2" strokeLinecap="round" />
+              <line x1="2" y1="12" x2="6" y2="12" strokeWidth="2" strokeLinecap="round" />
+              <line x1="18" y1="12" x2="22" y2="12" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <input 
+              type="text"
+              value={shopQuery}
+              onChange={(e) => setShopQuery(e.target.value)}
+              placeholder="Search shops near your location"
+              className="w-full bg-transparent border-none outline-none text-[15px] md:text-base font-semibold text-brand-navy placeholder:text-brand-navy"
+            />
+          </div>
+          {shopQuery && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 p-2 z-[70] max-h-[400px] overflow-y-auto">
+              {shopResults.map(vendor => (
+                <Link to={`/store/${vendor.id}`} key={vendor.id} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-xl transition-colors border-b border-gray-50 last:border-0">
+                  <div className="w-10 h-10 bg-brand-navy/5 text-brand-navy rounded-full flex items-center justify-center shrink-0">
+                    {vendor.store_image ? <img src={vendor.store_image} className="w-full h-full object-cover rounded-full" /> : <Store className="w-5 h-5" />}
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-sm text-gray-900">{vendor.business_name}</h4>
+                    <p className="text-xs text-gray-500 flex items-center gap-1"><MapPin className="w-3 h-3"/> Verified Shop</p>
+                  </div>
+                </Link>
+              ))}
+              {shopResults.length === 0 && <div className="p-4 text-center text-sm text-gray-500">No shops found</div>}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* 1. Hero Banner Carousel */}
@@ -96,7 +128,7 @@ export function HomePage() {
         {banners.length > 0 ? (
           <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-2">
             {banners.map((banner) => (
-              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[21/9] group border border-gray-100 shadow-sm">
+              <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-3xl lg:rounded-[2rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[3/1] lg:aspect-[7/2] group border border-gray-100 shadow-sm">
                 <img src={banner.image_url} alt={banner.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end px-6 py-8">
@@ -123,7 +155,7 @@ export function HomePage() {
           </div>
         ) : (
           <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-2">
-            <div className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[21/9] group border border-gray-100 shadow-sm">
+            <div className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-3xl lg:rounded-[2rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[3/1] lg:aspect-[7/2] group border border-gray-100 shadow-sm">
               <img src={imgHeroBannerPremium} alt="Hero Banner" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end px-6 py-8">
@@ -498,6 +530,40 @@ export function HomePage() {
           )}
 
           {/* Categories horizontally scrolling products */}
+
+          {/* Featured Stores */}
+          {vendors.length > 0 && (
+            <div className="mt-8 mb-12">
+              <div className="flex justify-between items-end mb-6 border-b border-gray-100 pb-4 px-2">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight font-serif mb-1">Featured Stores</h2>
+                  <p className="text-gray-500 text-sm md:text-base font-medium">Discover unique collections from our top vendors</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                {vendors.map(store => (
+                  <Link to={`/store/${store.id}`} key={store.id} className="group block h-full">
+                    <div className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 h-full flex flex-col hover:-translate-y-1">
+                      <div className="aspect-[4/3] bg-gray-50 relative overflow-hidden">
+                        {store.store_image ? (
+                          <img src={store.store_image} alt={store.business_name || store.store_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-brand-navy/20">
+                            <Store className="w-12 h-12" />
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+                      <div className="p-4 flex-1 flex flex-col items-center justify-center text-center">
+                        <h3 className="font-bold text-gray-900 text-lg group-hover:text-brand-navy transition-colors line-clamp-1">{store.business_name || store.store_name}</h3>
+                        <span className="text-xs text-brand-navy font-semibold uppercase tracking-wider mt-2 bg-brand-navy/5 px-3 py-1 rounded-full">Visit Store</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
           {categories.map((cat) => {
             const catProducts = products.filter(p => p.category === cat.name);
             if (catProducts.length === 0) return null;

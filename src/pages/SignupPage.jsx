@@ -58,10 +58,24 @@ export function SignupPage() {
     else setLocalError(res.error);
   };
 
-  const handleOtpChange = (val, idx) => {
-    if (!/^\d?$/.test(val)) return;
-    const next = [...otp]; next[idx] = val; setOtp(next);
-    if (val && idx < 5) otpRefs.current[idx + 1]?.focus();
+  const handleOtpChange = (e, idx) => {
+    const val = e.target.value;
+    if (val.length > 1) {
+      const pasted = val.replace(/\D/g, '').slice(0, 6).split('');
+      const next = [...otp];
+      pasted.forEach((char, i) => { if (i < 6) next[i] = char; });
+      setOtp(next);
+      const nextFocus = Math.min(pasted.length, 5);
+      setTimeout(() => otpRefs.current[nextFocus]?.focus(), 10);
+      return;
+    }
+
+    const char = val.slice(-1);
+    if (!/^\d?$/.test(char)) return;
+    const next = [...otp]; next[idx] = char; setOtp(next);
+    if (char && idx < 5) {
+      setTimeout(() => otpRefs.current[idx + 1]?.focus(), 10);
+    }
   };
 
   const handleOtpKeyDown = (e, idx) => {
@@ -265,8 +279,8 @@ export function SignupPage() {
                     <input
                       key={idx}
                       ref={(el) => (otpRefs.current[idx] = el)}
-                      type="text" inputMode="numeric" maxLength={1} value={digit}
-                      onChange={(e) => handleOtpChange(e.target.value, idx)}
+                      type="text" inputMode="numeric" value={digit}
+                      onChange={(e) => handleOtpChange(e, idx)}
                       onKeyDown={(e) => handleOtpKeyDown(e, idx)}
                       className={`w-12 h-14 text-center text-xl font-extrabold rounded-2xl border-2 focus:outline-none transition-all
                         ${digit ? 'border-brand-navy text-brand-navy shadow-[0_0_0_4px_rgba(254,102,3,0.12)] bg-[#0b162c]/5' : 'border-gray-200 bg-gray-50 text-[#0b162c] focus:border-[#0b162c] focus:bg-white focus:shadow-[0_0_0_4px_rgba(11,22,44,0.08)]'}`}

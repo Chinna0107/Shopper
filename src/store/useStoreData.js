@@ -30,20 +30,24 @@ const MOCK_PRODUCTS = [
 export const useStoreData = create((set) => ({
   products: [],
   categories: [],
+  vendors: [],
   loading: true,
   fetchData: async () => {
     try {
       set({ loading: true });
-      const [prodRes, catRes] = await Promise.all([
+      const [prodRes, catRes, vendRes] = await Promise.all([
         fetch(`${BACKEND_URL}/general/products`),
-        fetch(`${BACKEND_URL}/general/categories`)
+        fetch(`${BACKEND_URL}/general/categories`),
+        fetch(`${BACKEND_URL}/general/vendors`)
       ]);
       const prodData = await prodRes.json();
       const catData = await catRes.json();
+      const vendData = await vendRes.json();
       
       set({ 
         products: prodData.products || [], 
         categories: catData.categories || [],
+        vendors: vendData.vendors || [],
         loading: false 
       });
     } catch (err) {
@@ -51,6 +55,7 @@ export const useStoreData = create((set) => ({
       set({ 
         products: MOCK_PRODUCTS, 
         categories: MOCK_CATEGORIES,
+        vendors: [],
         loading: false 
       });
     }

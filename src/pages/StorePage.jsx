@@ -8,19 +8,21 @@ import { MapPin, Star, Clock, Phone, ChevronRight } from 'lucide-react';
 export function StorePage() {
   const { storeId } = useParams();
   const navigate = useNavigate();
-  const { products, loading } = useStoreData();
+  const { products, vendors, loading } = useStoreData();
   
-  // Use products from the store for this demo
-  const storeProducts = products.slice(0, 8);
+  const storeIdNum = parseInt(storeId);
+  const vendor = vendors?.find(v => v.id === storeIdNum);
+  
+  const storeProducts = products.filter(p => p.vendor_id === storeIdNum);
 
   const storeInfo = {
-    name: 'Swabhivar Signature Store',
-    rating: 4.8,
+    name: vendor?.business_name || vendor?.store_name || vendor?.name || 'Store Not Found',
+    rating: 4.8, // Mock rating for now
     reviews: 124,
-    address: 'Madhapur, Hyderabad - 500081',
-    timing: '10:00 AM - 9:00 PM (Open Now)',
-    phone: '+91 98765 43210',
-    coverImage: 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80',
+    address: vendor?.address || 'Address not available',
+    timing: '10:00 AM - 9:00 PM (Open Now)', // Mock timing
+    phone: vendor?.phone || 'Phone not available',
+    coverImage: vendor?.store_image || 'https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=800&q=80',
     logo: 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?w=200&q=80'
   };
 
@@ -28,6 +30,18 @@ export function StorePage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#f9f9f9]">
         <div className="w-8 h-8 border-4 border-brand-navy/20 border-t-brand-navy rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!loading && !vendor) {
+    return (
+      <div className="min-h-screen bg-[#f9f9f9] pb-20">
+        <Header title="Store Not Found" showShare={false} />
+        <div className="flex flex-col items-center justify-center pt-32 px-4 text-center">
+          <p className="text-gray-500 font-medium">The store you are looking for does not exist.</p>
+          <button onClick={() => navigate('/')} className="mt-6 px-6 py-2 bg-brand-orange text-white font-semibold rounded-xl">Go Home</button>
+        </div>
       </div>
     );
   }

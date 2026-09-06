@@ -4,16 +4,27 @@ import { Gift, Copy, Share2, CheckCircle2, Users, Wallet } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
+import api from '../utils/api';
 
 export function ReferPage() {
   const [copiedFriend, setCopiedFriend] = useState(false);
   const [copiedStore, setCopiedStore] = useState(false);
+  const [rewardAmount, setRewardAmount] = useState(50);
   const { token, user, fetchProfile } = useAuthStore();
 
   useEffect(() => {
     if (token && (!user || !user.referral_code)) {
       fetchProfile();
     }
+    
+    // Fetch current referral amount
+    api.get('/general/settings/referral_amount')
+      .then(res => {
+        if (res.data && res.data.amount) {
+          setRewardAmount(res.data.amount);
+        }
+      })
+      .catch(err => console.error("Could not fetch referral amount:", err));
   }, [token, user, fetchProfile]);
 
   if (!token) {
@@ -41,7 +52,7 @@ export function ReferPage() {
   const steps = [
     { title: "Share Code", desc: "Share your unique link or code with friends.", icon: Share2 },
     { title: "Friend Signs Up", desc: "They get a special discount on their first order.", icon: Users },
-    { title: "Your Earnings ", desc: "Once they complete their order, you get money in your wallet.", icon: Wallet },
+    { title: "Your Earnings ", desc: `Once they complete their order, you get ₹${rewardAmount} in your wallet.`, icon: Wallet },
   ];
 
   return (
@@ -62,9 +73,9 @@ export function ReferPage() {
               <Gift className="w-8 h-8 text-yellow-400" />
             </div>
             <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-md">
-              Refer by <span className="text-yellow-400">{user?.name ? user.name.split(' ')[0] : 'A 501'}</span>
+              Refer & Earn <span className="text-yellow-400">₹{rewardAmount}</span>
             </h1>
-            <p className="text-white/80 text-lg">Give your friends a treat, and get rewarded when they shop with us.</p>
+            <p className="text-white/80 text-lg">Give your friends a treat, and get rewarded with ₹{rewardAmount} when they shop with us.</p>
           </motion.div>
         </div>
       </div>

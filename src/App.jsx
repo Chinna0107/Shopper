@@ -6,6 +6,8 @@ import { SplashScreen } from './components/SplashScreen';
 import { useStoreData } from './store/useStoreData';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAuthStore } from './store/useAuthStore';
+import { useCartStore } from './store/useCartStore';
 
 import { HomePage } from './pages/HomePage';
 import { CategoryListingPage } from './pages/CategoryListingPage';
@@ -132,10 +134,20 @@ function AnimatedAppRoutes() {
 function App() {
   const [showSplash, setShowSplash] = useState(true);
   const { fetchData } = useStoreData();
+  const { token } = useAuthStore();
+  const { fetchCart, clearLocalCart } = useCartStore();
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    if (token) {
+      fetchCart();
+    } else {
+      clearLocalCart();
+    }
+  }, [token, fetchCart, clearLocalCart]);
 
   return (
     <>

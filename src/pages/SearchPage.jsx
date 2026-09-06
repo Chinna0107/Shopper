@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ArrowLeft, SlidersHorizontal, ChevronRight } from 'lucide-react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { ProductCard } from '../components/ProductCard';
+import { Store, MapPin } from 'lucide-react';
 import { useStoreData } from '../store/useStoreData';
 import { motion } from 'framer-motion';
 
@@ -15,8 +16,10 @@ export function SearchPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
+  const initialType = searchParams.get('type') === 'shops' ? 'shops' : 'products';
   const [query, setQuery] = useState(initialQuery);
-  const { products, categories, loading } = useStoreData();
+  const [searchMode, setSearchMode] = useState(initialType);
+  const { products, vendors, categories, loading } = useStoreData();
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -26,12 +29,11 @@ export function SearchPage() {
   }, []);
 
   useEffect(() => {
-    if (query) {
-      setSearchParams({ q: query });
-    } else {
-      setSearchParams({});
-    }
-  }, [query, setSearchParams]);
+    const params = {};
+    if (query) params.q = query;
+    if (searchMode === 'shops') params.type = 'shops';
+    setSearchParams(params);
+  }, [query, searchMode, setSearchParams]);
 
   const filteredProducts = products.filter(product => {
     if (!query) return false;
@@ -41,6 +43,12 @@ export function SearchPage() {
       product.category.toLowerCase().includes(searchLower) ||
       (product.description && product.description.toLowerCase().includes(searchLower))
     );
+  });
+
+  const filteredVendors = vendors?.filter(vendor => {
+    if (!query) return false;
+    const searchLower = query.toLowerCase();
+    return vendor.business_name?.toLowerCase().includes(searchLower);
   });
 
   const handleTagClick = (tag) => {
@@ -61,7 +69,7 @@ export function SearchPage() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search shop name, products, categories"
+            placeholder={searchMode === 'shops' ? "Search shop name or location..." : "Search products, categories..."}
             className="w-full bg-white border border-gray-200 rounded-full py-2.5 pl-11 pr-10 text-[15px] text-gray-900 focus:outline-none focus:ring-1 focus:border-brand-navy focus:shadow-sm transition-all placeholder-gray-400"
           />
           {query && (
@@ -80,6 +88,23 @@ export function SearchPage() {
 
       {/* Results Area */}
       <div className="max-w-2xl mx-auto w-full px-4 pt-5">
+        
+        {/* Toggle Mode */}
+        <div className="flex bg-gray-100 p-1 rounded-full mb-6">
+          <button 
+            onClick={() => setSearchMode('products')}
+            className={`flex-1 py-2 rounded-full text-sm font-bold transition-all ${searchMode === 'products' ? 'bg-white text-brand-navy shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            Products
+          </button>
+          <button 
+            onClick={() => setSearchMode('shops')}
+            className={`flex-1 py-2 rounded-full text-sm font-bold transition-all ${searchMode === 'shops' ? 'bg-white text-brand-navy shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
+          >
+            Shops
+          </button>
+        </div>
+
         {!query ? (
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             
@@ -161,27 +186,66 @@ export function SearchPage() {
           <div className="flex items-center justify-center py-20">
             <div className="w-8 h-8 border-4 border-[#8E112E] border-t-transparent rounded-full animate-spin"></div>
           </div>
-        ) : filteredProducts.length > 0 ? (
-          <div>
-            <h3 className="text-gray-900 font-bold mb-4">
-              Found {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''} for "{query}"
-            </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
-              {filteredProducts.map((product) => (
-                <div key={product.id} className="hover:-translate-y-1 transition-transform">
-                  <ProductCard product={product} />
-                </div>
-              ))}
+        ) : searchMode === 'products' ? (
+          filteredProducts.length > 0 ? (
+            <div>
+              <h3 className="text-gray-900 font-bold mb-4">
+                Found {filteredProducts.length} result{filteredProducts.length !== 1 ? 's' : ''} for "{query}"
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+                {filteredProducts.map((product) => (
+                  <div key={product.id} className="hover:-translate-y-1 transition-transform">
+                    <ProductCard product={product} />
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-gray-100">
+                <Search className="w-6 h-6 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">No products found</h3>
+              <p className="text-gray-500 text-sm max-w-xs">We couldn't find anything matching "{query}".</p>
+            </div>
+          )
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-gray-100">
-              <Search className="w-6 h-6 text-gray-400" />
+          filteredVendors && filteredVendors.length > 0 ? (
+            <div>
+              <h3 className="text-gray-900 font-bold mb-4">
+                Found {filteredVendors.length} shop{filteredVendors.length !== 1 ? 's' : ''} for "{query}"
+              </h3>
+              <div className="flex flex-col gap-4">
+                {filteredVendors.map((vendor) => (
+                  <Link key={vendor.id} to={`/store/${vendor.id}`} className="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 hover:shadow-md transition-shadow group">
+                    <div className="w-14 h-14 bg-brand-navy/5 text-brand-navy rounded-full flex items-center justify-center shrink-0">
+                      {vendor.store_image ? (
+                        <img src={vendor.store_image} alt={vendor.business_name} className="w-full h-full object-cover rounded-full" />
+                      ) : (
+                        <Store className="w-6 h-6" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-gray-900 text-[17px] group-hover:text-brand-navy transition-colors">{vendor.business_name}</h3>
+                      <div className="flex items-center gap-1 mt-1 text-sm text-gray-500">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>Verified Shop</span>
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-brand-navy group-hover:translate-x-1 transition-all" />
+                  </Link>
+                ))}
+              </div>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">No products found</h3>
-            <p className="text-gray-500 text-sm max-w-xs">We couldn't find anything matching "{query}". Try adjusting your spelling or try different keywords.</p>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-gray-100">
+                <Store className="w-6 h-6 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">No shops found</h3>
+              <p className="text-gray-500 text-sm max-w-xs">We couldn't find any shops matching "{query}".</p>
+            </div>
+          )
         )}
       </div>
     </div>
