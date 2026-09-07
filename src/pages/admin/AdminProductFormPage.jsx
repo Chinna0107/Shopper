@@ -35,16 +35,14 @@ function Field({ label, required, children, hint }) {
   );
 }
 
-const inputCls = 'w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-[#036e26]/30 focus:border-[#036e26] transition-colors';
-
-function Input({ className = '', ...props }) {
-  return <input className={`${inputCls} ${className}`} {...props} />;
+function Input({ className = '', error, ...props }) {
+  return <input className={`w-full px-3.5 py-2.5 border ${error ? 'border-red-500 bg-red-50 focus:ring-red-200' : 'border-gray-200 bg-white focus:border-[#036e26] focus:ring-[#036e26]/30'} rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 transition-colors ${className}`} {...props} />;
 }
-function Textarea({ className = '', ...props }) {
-  return <textarea className={`${inputCls} resize-none ${className}`} {...props} />;
+function Textarea({ className = '', error, ...props }) {
+  return <textarea className={`w-full px-3.5 py-2.5 border ${error ? 'border-red-500 bg-red-50 focus:ring-red-200' : 'border-gray-200 bg-white focus:border-[#036e26] focus:ring-[#036e26]/30'} rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 transition-colors resize-none ${className}`} {...props} />;
 }
-function Select({ className = '', children, ...props }) {
-  return <select className={`${inputCls} ${className}`} {...props}>{children}</select>;
+function Select({ className = '', error, children, ...props }) {
+  return <select className={`w-full px-3.5 py-2.5 border ${error ? 'border-red-500 bg-red-50 focus:ring-red-200' : 'border-gray-200 bg-white focus:border-[#036e26] focus:ring-[#036e26]/30'} rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 transition-colors ${className}`} {...props}>{children}</select>;
 }
 function Section({ title, children }) {
   return (
@@ -67,6 +65,7 @@ export function AdminProductFormPage() {
   const [uploadingField, setUploadingField] = useState(null);
   const [uploadingImages, setUploadingImages] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [errors, setErrors] = useState({});
 
   const [form, setForm] = useState({
     name: '', sku: '', barcode: '', product_code: '', brand: '', gender: 'Any',
@@ -214,8 +213,24 @@ export function AdminProductFormPage() {
   };
 
   const handleSave = async () => {
-    if (!form.name) { toast.error('Product name is required'); setActiveTab('basic'); return; }
-    if (!form.category) { toast.error('Category is required'); setActiveTab('basic'); return; }
+    const newErrors = {};
+    if (!form.name) newErrors.name = true;
+    if (!form.category) newErrors.category = true;
+    if (!form.price) newErrors.price = true;
+    if (!form.mrp) newErrors.mrp = true;
+    if (!form.stock) newErrors.stock = true;
+    if (!form.description) newErrors.description = true;
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      toast.error('Please fill in all required fields');
+      
+      if (newErrors.name || newErrors.category || newErrors.description) setActiveTab('basic');
+      else if (newErrors.price || newErrors.mrp || newErrors.stock) setActiveTab('pricing');
+      return;
+    }
+    setErrors({});
+
     setSaving(true);
     try {
       const extraAttrs = {
@@ -292,7 +307,9 @@ export function AdminProductFormPage() {
         <div className="space-y-5">
           <Section title="Product Identity">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Product Name" required><Input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Samsung Galaxy S24" /></Field>
+              <Field label="Product Name" required>
+                <Input value={form.name} onChange={e => set('name', e.target.value)} placeholder="e.g. Premium Cotton T-Shirt" error={errors.name} />
+              </Field>
               <Field label="Product SKU"><Input value={form.sku} onChange={e => set('sku', e.target.value)} placeholder="e.g. SKU-001" /></Field>
               <Field label="Barcode (Optional)"><Input value={form.barcode} onChange={e => set('barcode', e.target.value)} placeholder="EAN / UPC" /></Field>
               <Field label="Product Code"><Input value={form.product_code} onChange={e => set('product_code', e.target.value)} placeholder="Internal code" /></Field>
@@ -309,8 +326,8 @@ export function AdminProductFormPage() {
           </Section>
           <Section title="Category">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Field label="Product Category" required>
-                <Select value={form.category} onChange={e => handleCategoryChange(e.target.value)}>
+              <Field label="Product Category" required hint={categories.length === 0 ? "You haven't selected any categories yet." : ""}>
+                <Select value={form.category} onChange={e => handleCategoryChange(e.target.value)} error={errors.category}>
                   <option value="">Select Category</option>
                   {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                 </Select>
@@ -325,7 +342,9 @@ export function AdminProductFormPage() {
           </Section>
           <Section title="Description">
             <Field label="Short Description"><Input value={form.short_description} onChange={e => set('short_description', e.target.value)} placeholder="One-line summary..." /></Field>
-            <Field label="Product Description"><Textarea rows={6} value={form.description} onChange={e => set('description', e.target.value)} placeholder="Full product details..." /></Field>
+            <Field label="Product Description" required hint="Full product details, features, specifications">
+              <Textarea rows={5} value={form.description} onChange={e => set('description', e.target.value)} placeholder="Write a detailed product description..." error={errors.description} />
+            </Field>
           </Section>
         </div>
       );
@@ -370,13 +389,19 @@ export function AdminProductFormPage() {
         <div className="space-y-5">
           <Section title="Pricing">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Field label="Regular Price (₹)" required><Input type="number" min="0" value={form.price} onChange={e => set('price', e.target.value)} placeholder="0.00" /></Field>
-              <Field label="MRP (₹)"><Input type="number" min="0" value={form.mrp} onChange={e => set('mrp', e.target.value)} placeholder="0.00" /></Field>
+              <Field label="Regular Price (₹)" required>
+                <Input type="number" min="0" value={form.price} onChange={e => set('price', e.target.value)} placeholder="0.00" error={errors.price} />
+              </Field>
+              <Field label="MRP (₹)" required hint="Maximum Retail Price">
+                <Input type="number" min="0" value={form.mrp} onChange={e => set('mrp', e.target.value)} placeholder="0.00" error={errors.mrp} />
+              </Field>
             </div>
           </Section>
           <Section title="Stock & Inventory">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Field label="Stock Quantity"><Input type="number" min="0" value={form.stock} onChange={e => set('stock', e.target.value)} placeholder="0" /></Field>
+              <Field label="Stock Quantity" required>
+                <Input type="number" min="0" value={form.stock} onChange={e => set('stock', e.target.value)} placeholder="0" error={errors.stock} />
+              </Field>
               <Field label="Stock Status"><Select value={form.stock_status} onChange={e => set('stock_status', e.target.value)}>{STOCK_STATUS_OPTS.map(s => <option key={s}>{s}</option>)}</Select></Field>
               <Field label="Low Stock Alert"><Input type="number" min="0" value={form.low_stock_alert} onChange={e => set('low_stock_alert', e.target.value)} placeholder="e.g. 5" /></Field>
             </div>
