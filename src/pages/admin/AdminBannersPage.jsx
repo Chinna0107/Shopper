@@ -57,9 +57,10 @@ export function AdminBannersPage() {
     setSaving(true);
     try {
       const token = localStorage.getItem("token");
-      const url = `${BACKEND_URL}/admin/banners`;
+      const isEditing = !!formData.id;
+      const url = isEditing ? `${BACKEND_URL}/admin/banners/${formData.id}` : `${BACKEND_URL}/admin/banners`;
       await fetch(url, {
-        method: "POST",
+        method: isEditing ? "PUT" : "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(formData),
       });

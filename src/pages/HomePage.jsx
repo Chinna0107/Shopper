@@ -40,6 +40,24 @@ export function HomePage() {
       .catch(e => console.error(e));
   }, []);
 
+  const carouselRef = useRef(null);
+
+  React.useEffect(() => {
+    if (banners.length <= 1) return;
+    const interval = setInterval(() => {
+      if (carouselRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          carouselRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          carouselRef.current.scrollBy({ left: clientWidth, behavior: 'smooth' });
+        }
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [banners.length]);
+
+
   useGSAP(() => {
     if (!loading) {
       gsap.from('.animate-section', {
@@ -126,7 +144,7 @@ export function HomePage() {
       {/* 1. Hero Banner Carousel */}
       <div className="animate-section px-4 md:px-6 mb-8 max-w-[1280px] mx-auto mt-2 md:mt-4">
         {banners.length > 0 ? (
-          <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-2">
+          <div ref={carouselRef} className="flex gap-6 overflow-x-auto snap-x snap-mandatory hide-scrollbar mt-2 scroll-smooth">
             {banners.map((banner) => (
               <div key={banner.id} className="relative w-full shrink-0 snap-center rounded-[2rem] md:rounded-3xl lg:rounded-[2rem] overflow-hidden bg-gray-50 aspect-[3/2] md:aspect-[3/1] lg:aspect-[7/2] group border border-gray-100 shadow-sm">
                 <img src={banner.image_url} alt={banner.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
@@ -144,11 +162,6 @@ export function HomePage() {
                     {banner.subtitle || 'Explore our latest collection'}
                   </p>
 
-                  <div className="absolute bottom-6 right-6 flex gap-1.5 items-center">
-                    <div className="w-4 h-1.5 rounded-full bg-white"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
-                  </div>
                 </div>
               </div>
             ))}
@@ -170,12 +183,6 @@ export function HomePage() {
                 <p className="text-white/90 font-medium text-sm tracking-wide">
                   Up to 50% off
                 </p>
-
-                <div className="absolute bottom-6 right-6 flex gap-1.5 items-center">
-                  <div className="w-4 h-1.5 rounded-full bg-white"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/50"></div>
-                </div>
               </div>
             </div>
           </div>

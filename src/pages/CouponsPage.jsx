@@ -29,7 +29,7 @@ export function CouponsPage() {
   };
 
   const discountLabel = (o) =>
-    o.discount_type === 'flat' ? `₹${o.discount_percent} OFF` : `${o.discount_percent}% OFF`;
+    o.discount_type === 'amount' ? `₹${o.discount_percent} OFF` : `${o.discount_percent}% OFF`;
 
   const restrictionLabel = (o) => {
     if (!o.min_value && !o.restriction_value) return null;

@@ -173,7 +173,7 @@ export function AdminCategoriesPage() {
           <p className="text-gray-400 text-xs mt-0.5">Manage categories and their available models</p>
         </div>
         <button onClick={handleAdd}
-          className="flex items-center gap-2 bg-white hover:bg-[#004012] text-white px-4 py-2.5 rounded-xl font-semibold transition-colors">
+          className="flex items-center gap-2 bg-[#012980] hover:bg-[#e55c02] text-white px-4 py-2.5 rounded-xl font-semibold transition-colors">
           <Plus className="w-4 h-4" /> Add Category
         </button>
       </div>

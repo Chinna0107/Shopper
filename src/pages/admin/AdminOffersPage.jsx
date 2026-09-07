@@ -112,12 +112,24 @@ function Wizard({ type, initial, categories, products, onSave, onClose }) {
                   className={inputCls} placeholder="e.g. Summer Sale" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Discount %</label>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Discount Value</label>
+                  <select value={form.discount_type || 'percent'} onChange={e => set('discount_type', e.target.value)}
+                    className="text-xs font-semibold bg-transparent text-gray-900 outline-none cursor-pointer">
+                    <option value="percent">Percentage (%)</option>
+                    <option value="amount">Flat Amount (₹)</option>
+                  </select>
+                </div>
                 <div className="relative">
-                  <input type="number" min="1" max="100" value={form.discount_percent}
+                  <input type="number" min="1" max={form.discount_type === 'amount' ? undefined : "100"} value={form.discount_percent}
                     onChange={e => set('discount_percent', e.target.value)}
-                    className={inputCls + ' pr-8'} placeholder="e.g. 20" />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">%</span>
+                    className={inputCls + (form.discount_type === 'amount' ? ' pl-8' : ' pr-8')} 
+                    placeholder={form.discount_type === 'amount' ? "e.g. 500" : "e.g. 20"} />
+                  {form.discount_type === 'amount' ? (
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">₹</span>
+                  ) : (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">%</span>
+                  )}
                 </div>
               </div>
               <div>
@@ -142,12 +154,24 @@ function Wizard({ type, initial, categories, products, onSave, onClose }) {
                   className={inputCls} placeholder="e.g. SAVE20" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Discount %</label>
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">Discount Value</label>
+                  <select value={form.discount_type || 'percent'} onChange={e => set('discount_type', e.target.value)}
+                    className="text-xs font-semibold bg-transparent text-gray-900 outline-none cursor-pointer">
+                    <option value="percent">Percentage (%)</option>
+                    <option value="amount">Flat Amount (₹)</option>
+                  </select>
+                </div>
                 <div className="relative">
-                  <input type="number" min="1" max="100" value={form.discount_percent}
+                  <input type="number" min="1" max={form.discount_type === 'amount' ? undefined : "100"} value={form.discount_percent}
                     onChange={e => set('discount_percent', e.target.value)}
-                    className={inputCls + ' pr-8'} placeholder="e.g. 20" />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">%</span>
+                    className={inputCls + (form.discount_type === 'amount' ? ' pl-8' : ' pr-8')} 
+                    placeholder={form.discount_type === 'amount' ? "e.g. 500" : "e.g. 20"} />
+                  {form.discount_type === 'amount' ? (
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">₹</span>
+                  ) : (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-bold">%</span>
+                  )}
                 </div>
               </div>
               <div>
@@ -372,7 +396,9 @@ export function AdminOffersPage() {
                     </button>
                   )}
                 </div>
-                <p className="text-2xl font-bold text-gray-900 mb-1">{item.discount_percent}% OFF</p>
+                <p className="text-2xl font-bold text-gray-900 mb-1">
+                  {item.discount_type === 'amount' ? `₹${item.discount_percent}` : `${item.discount_percent}%`} OFF
+                </p>
                 <div className="text-xs text-gray-400 space-y-0.5 mb-4">
                   <p>Applies to: <span className="text-gray-600 font-medium capitalize">
                     {item.scope === 'all' ? 'All Products' : item.scope === 'category' ? `${catIds.length} categor${catIds.length !== 1 ? 'ies' : 'y'}` : `${prdIds.length} product${prdIds.length !== 1 ? 's' : ''}`}
