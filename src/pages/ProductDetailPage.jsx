@@ -146,7 +146,7 @@ export function ProductDetailPage() {
     { title: "Policies & Delivery", keys: ['warranty_period', 'return_policy', 'replacement_policy', 'shipping_charge', 'free_shipping', 'cod_available', 'available_cities', 'pickup_location', 'warehouse'] },
     { title: "Manufacturing Details", keys: ['manufacturer_name', 'country_of_origin', 'hsn_code', 'gst_number'] },
     { title: "Documents & Resources", keys: ['user_manual_url', 'brochure_url', 'certificate_urls'] },
-    { title: "Vendor Contact", keys: ['contact_number', 'whatsapp_number', 'vendor_email'] }
+    { title: "Vendor Info", keys: ['shop_name', 'shop_location'] }
   ];
 
   const groupedSpecs = specGroups.map(group => {

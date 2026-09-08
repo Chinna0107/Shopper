@@ -81,7 +81,7 @@ export function AdminProductFormPage() {
     user_manual_url: '', brochure_url: '', certificate_urls: [],
     pickup_location: '', warehouse: '', available_cities: '',
     manufacturer_name: '', country_of_origin: '', hsn_code: '',
-    gst_number: '', contact_number: '', whatsapp_number: '', vendor_email: '',
+    gst_number: '', shop_name: '', shop_location: '',
     // Admin controls
     is_active: true, is_bestseller: false, is_trending: false, is_offer: false, status: 'approved',
     custom_attributes: {},
@@ -128,9 +128,8 @@ export function AdminProductFormPage() {
         manufacturer_name: attrs.manufacturer_name || '',
         country_of_origin: attrs.country_of_origin || '',
         gst_number: attrs.gst_number || '',
-        contact_number: attrs.contact_number || '',
-        whatsapp_number: attrs.whatsapp_number || '',
-        vendor_email: attrs.vendor_email || '',
+        shop_name: attrs.shop_name || '',
+        shop_location: attrs.shop_location || '',
         product_code: attrs.product_code || '',
         product_type: attrs.product_type || 'Physical',
         condition: attrs.condition || 'New',
@@ -239,8 +238,8 @@ export function AdminProductFormPage() {
         certificate_urls: form.certificate_urls, pickup_location: form.pickup_location,
         warehouse: form.warehouse, available_cities: form.available_cities,
         manufacturer_name: form.manufacturer_name, country_of_origin: form.country_of_origin,
-        gst_number: form.gst_number, contact_number: form.contact_number,
-        whatsapp_number: form.whatsapp_number, vendor_email: form.vendor_email,
+        hsn_code: form.hsn_code,
+        gst_number: form.gst_number, shop_name: form.shop_name, shop_location: form.shop_location,
         product_code: form.product_code, product_type: form.product_type,
         condition: form.condition, seo_title: form.seo_title,
         seo_keywords: form.seo_keywords, meta_description: form.meta_description,
@@ -492,9 +491,12 @@ export function AdminProductFormPage() {
               <Field label="Pickup Location"><Input value={form.pickup_location} onChange={e => set('pickup_location', e.target.value)} placeholder="e.g. Mumbai Warehouse" /></Field>
               <Field label="Warehouse"><Input value={form.warehouse} onChange={e => set('warehouse', e.target.value)} placeholder="Warehouse name" /></Field>
               <Field label="Available Cities" hint="Comma-separated"><Input value={form.available_cities} onChange={e => set('available_cities', e.target.value)} placeholder="Mumbai, Delhi" /></Field>
-              <Field label="Contact Number"><Input type="tel" value={form.contact_number} onChange={e => set('contact_number', e.target.value)} /></Field>
-              <Field label="WhatsApp Number"><Input type="tel" value={form.whatsapp_number} onChange={e => set('whatsapp_number', e.target.value)} /></Field>
-              <Field label="Email"><Input type="email" value={form.vendor_email} onChange={e => set('vendor_email', e.target.value)} /></Field>
+              <Field label="Shop Name">
+                <Input value={form.shop_name} onChange={e => set('shop_name', e.target.value)} placeholder="e.g. Acme Electronics" />
+              </Field>
+              <Field label="Shop Location">
+                <Input value={form.shop_location} onChange={e => set('shop_location', e.target.value)} placeholder="e.g. Mumbai, Maharashtra" />
+              </Field>
             </div>
           </Section>
           <Section title="Manufacturer & Tax">

@@ -42,6 +42,28 @@ export function VendorOrdersPage() {
     }
   };
 
+  const updateStatus = async (orderId, status) => {
+    try {
+      const token = localStorage.getItem('vendor_token');
+      const res = await fetch(`${BACKEND_URL}/vendor/orders/${orderId}/status`, {
+        method: 'PUT',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        },
+        body: JSON.stringify({ status })
+      });
+      if (res.ok) {
+        toast.success('Order status updated');
+        fetchOrders();
+      } else {
+        toast.error('Failed to update status');
+      }
+    } catch (error) {
+      toast.error('Failed to update status');
+    }
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -238,6 +260,7 @@ export function VendorOrdersPage() {
                 <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Date</th>
                 <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Your Items</th>
                 <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Your Revenue</th>
+                <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Payout Status</th>
                 <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500">Overall Status</th>
                 <th className="px-8 py-5 font-bold text-xs uppercase tracking-wider text-gray-500 text-right">Details</th>
               </tr>
@@ -247,7 +270,7 @@ export function VendorOrdersPage() {
                 <tr><td colSpan="6" className="px-6 py-12 text-center text-gray-500">Loading orders...</td></tr>
               ) : filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan="7" className="px-6 py-12 text-center text-gray-500">
                     <ShoppingBag className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                     No orders have been placed for your products yet.
                   </td>
@@ -278,6 +301,13 @@ export function VendorOrdersPage() {
                           <span className="font-extrabold text-gray-900 text-lg tracking-tight">₹{parseFloat(order.total || 0).toLocaleString()}</span>
                         </td>
                         <td className="px-8 py-5">
+                          <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
+                            order.payout_status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {order.payout_status || 'Pending'}
+                          </span>
+                        </td>
+                        <td className="px-8 py-5">
                           <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${STATUS_COLORS[order.status?.toLowerCase() || 'pending']}`}>
                             {order.status || 'Pending'}
                           </span>
@@ -291,7 +321,7 @@ export function VendorOrdersPage() {
                       
                       {expanded === order.id && (
                         <tr>
-                          <td colSpan="6" className="p-0 border-b border-gray-100">
+                          <td colSpan="7" className="p-0 border-b border-gray-100">
                             <div className="bg-gray-50/50 p-6 shadow-inner border-y border-gray-100">
                               <div className="flex flex-col xl:flex-row gap-6">
                                 <div className="flex-1 space-y-6">
@@ -352,7 +382,21 @@ export function VendorOrdersPage() {
                                   {/* Order Actions */}
                                   <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
                                     <h4 className="font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100">Vendor Actions</h4>
-                                    <div className="space-y-3">
+                                    <div className="space-y-4">
+                                      <div>
+                                        <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">Update Order Status</p>
+                                        <select 
+                                          value={order.status || 'pending'} 
+                                          onChange={(e) => updateStatus(order.id, e.target.value)}
+                                          className="w-full px-3 py-2 rounded-xl bg-white border border-gray-200 text-gray-900 text-sm focus:outline-none focus:border-[#012980] focus:ring-1 focus:ring-[#012980]"
+                                        >
+                                          <option value="pending">Pending</option>
+                                          <option value="processing">Processing</option>
+                                          <option value="shipped">Shipped</option>
+                                          <option value="delivered">Delivered</option>
+                                          <option value="cancelled">Cancelled</option>
+                                        </select>
+                                      </div>
                                       <button onClick={(e) => { e.stopPropagation(); printInvoice(order); }} className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors shadow-sm">
                                         <Printer className="w-4 h-4" /> Print Invoice
                                       </button>

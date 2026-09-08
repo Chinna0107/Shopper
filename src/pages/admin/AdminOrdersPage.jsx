@@ -32,7 +32,7 @@ export function AdminOrdersPage() {
   const [tracking, setTracking] = useState({});
   const [shipping, setShipping] = useState({});
 
-  useEffect(() => {
+  const fetchOrders = () => {
     const token = localStorage.getItem("token");
     if (!token) {
       setLoading(false);
@@ -50,7 +50,45 @@ export function AdminOrdersPage() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchOrders();
   }, []);
+
+  const executePayVendor = async (payoutId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BACKEND_URL}/admin/vendor-order-payout/${payoutId}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success('Vendor marked as paid');
+        fetchOrders();
+      } else {
+        toast.error(data.error || 'Failed to pay vendor');
+      }
+    } catch (error) {
+      toast.error('Failed to pay vendor');
+    }
+  };
+
+  const handlePayVendor = (payoutId) => {
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p className="text-sm font-medium text-gray-800 mb-3">Confirm payout to vendor?</p>
+          <div className="flex justify-end gap-2">
+            <button className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200" onClick={closeToast}>Cancel</button>
+            <button className="px-3 py-1.5 bg-[#012980] text-white rounded-lg text-xs font-medium hover:bg-blue-900" onClick={() => { executePayVendor(payoutId); closeToast(); }}>Confirm</button>
+          </div>
+        </div>
+      ),
+      { autoClose: false, closeOnClick: false }
+    );
+  };
 
   const updateStatus = async (orderId, status) => {
     const token = localStorage.getItem("token");
@@ -459,6 +497,32 @@ export function AdminOrdersPage() {
                       )}
                     </div>
                   </div>
+
+                  {order.vendor_payouts && order.vendor_payouts.length > 0 && (
+                    <div className="pt-4 border-t border-brand-navy/5">
+                      <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">Vendor Payouts</p>
+                      <div className="space-y-2">
+                        {order.vendor_payouts.map(payout => (
+                          <div key={payout.id} className="flex items-center gap-3 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100">
+                            <span className="text-sm font-medium text-gray-700">Vendor #{payout.vendor_id}</span>
+                            <span className="text-sm font-bold text-gray-900">₹{payout.amount}</span>
+                            <div className="ml-auto">
+                              {payout.status === 'paid' ? (
+                                <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Paid</span>
+                              ) : (
+                                <button
+                                  onClick={() => handlePayVendor(payout.id)}
+                                  className="text-xs bg-[#012980] hover:bg-blue-900 text-white px-3 py-1 rounded-lg transition-colors shadow-sm font-medium"
+                                >
+                                  Pay Vendor
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
                   {/* Action Buttons */}
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-brand-navy/5">

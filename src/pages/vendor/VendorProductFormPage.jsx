@@ -109,7 +109,7 @@ export function VendorProductFormPage() {
     // Location & Contact
     pickup_location: '', warehouse: '', available_cities: '',
     manufacturer_name: '', country_of_origin: '', hsn_code: '',
-    gst_number: '', contact_number: '', whatsapp_number: '', vendor_email: '',
+    gst_number: '', shop_name: '', shop_location: '',
     // Category custom fields
     custom_attributes: {},
   });
@@ -168,9 +168,8 @@ export function VendorProductFormPage() {
         manufacturer_name: attrs.manufacturer_name || '',
         country_of_origin: attrs.country_of_origin || '',
         gst_number: attrs.gst_number || '',
-        contact_number: attrs.contact_number || '',
-        whatsapp_number: attrs.whatsapp_number || '',
-        vendor_email: attrs.vendor_email || '',
+        shop_name: attrs.shop_name || '',
+        shop_location: attrs.shop_location || '',
         product_code: attrs.product_code || '',
         product_type: attrs.product_type || 'Physical',
         condition: attrs.condition || 'New',
@@ -295,8 +294,7 @@ export function VendorProductFormPage() {
         certificate_urls: form.certificate_urls, pickup_location: form.pickup_location,
         warehouse: form.warehouse, available_cities: form.available_cities,
         manufacturer_name: form.manufacturer_name, country_of_origin: form.country_of_origin,
-        gst_number: form.gst_number, contact_number: form.contact_number,
-        whatsapp_number: form.whatsapp_number, vendor_email: form.vendor_email,
+        gst_number: form.gst_number, shop_name: form.shop_name, shop_location: form.shop_location,
         product_code: form.product_code, product_type: form.product_type,
         condition: form.condition, seo_title: form.seo_title,
         seo_keywords: form.seo_keywords, meta_description: form.meta_description,
@@ -638,14 +636,11 @@ export function VendorProductFormPage() {
                 <Field label="Available Cities" hint="Comma-separated city names">
                   <Input value={form.available_cities} onChange={e => set('available_cities', e.target.value)} placeholder="Mumbai, Delhi, Bangalore" />
                 </Field>
-                <Field label="Contact Number">
-                  <Input type="tel" value={form.contact_number} onChange={e => set('contact_number', e.target.value)} placeholder="+91 98765 43210" />
+                <Field label="Shop Name">
+                  <Input value={form.shop_name} onChange={e => set('shop_name', e.target.value)} placeholder="e.g. Acme Electronics" />
                 </Field>
-                <Field label="WhatsApp Number">
-                  <Input type="tel" value={form.whatsapp_number} onChange={e => set('whatsapp_number', e.target.value)} placeholder="+91 98765 43210" />
-                </Field>
-                <Field label="Email">
-                  <Input type="email" value={form.vendor_email} onChange={e => set('vendor_email', e.target.value)} placeholder="support@yourstore.com" />
+                <Field label="Shop Location">
+                  <Input value={form.shop_location} onChange={e => set('shop_location', e.target.value)} placeholder="e.g. Mumbai, Maharashtra" />
                 </Field>
               </div>
             </Section>

@@ -26,6 +26,40 @@ export function AdminVendorOrdersPage() {
     }
   };
 
+  const executePayVendor = async (payoutId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`${BACKEND_URL}/admin/vendor-order-payout/${payoutId}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success('Vendor marked as paid successfully');
+        fetchOrders();
+      } else {
+        toast.error(data.error || 'Failed to pay vendor');
+      }
+    } catch (error) {
+      toast.error('Failed to pay vendor');
+    }
+  };
+
+  const handlePayVendor = (payoutId) => {
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p className="text-sm font-medium text-gray-800 mb-3">Confirm payout to vendor?</p>
+          <div className="flex justify-end gap-2">
+            <button className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-lg text-xs font-medium hover:bg-gray-200" onClick={closeToast}>Cancel</button>
+            <button className="px-3 py-1.5 bg-[#012980] text-white rounded-lg text-xs font-medium hover:bg-blue-900" onClick={() => { executePayVendor(payoutId); closeToast(); }}>Confirm</button>
+          </div>
+        </div>
+      ),
+      { autoClose: false, closeOnClick: false }
+    );
+  };
+
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -64,6 +98,7 @@ export function AdminVendorOrdersPage() {
                 <th className="px-6 py-4 font-semibold text-sm text-gray-900">Vendor Items</th>
                 <th className="px-6 py-4 font-semibold text-sm text-gray-900">Order Total</th>
                 <th className="px-6 py-4 font-semibold text-sm text-gray-900">Status</th>
+                <th className="px-6 py-4 font-semibold text-sm text-gray-900">Payouts</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -101,6 +136,24 @@ export function AdminVendorOrdersPage() {
                           'bg-yellow-100 text-yellow-800'}`}>
                         {order.status}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {order.vendor_payouts && order.vendor_payouts.map(payout => (
+                        <div key={payout.id} className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-medium text-gray-700">Vendor #{payout.vendor_id}:</span>
+                          <span className="text-sm font-bold text-gray-900">₹{payout.amount}</span>
+                          {payout.status === 'paid' ? (
+                            <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded-full">Paid</span>
+                          ) : (
+                            <button
+                              onClick={() => handlePayVendor(payout.id)}
+                              className="text-xs bg-[#012980] hover:bg-blue-900 text-white px-2 py-1 rounded transition-colors shadow-sm"
+                            >
+                              Pay
+                            </button>
+                          )}
+                        </div>
+                      ))}
                     </td>
                   </tr>
                 ))

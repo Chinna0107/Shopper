@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Package, ShoppingBag, IndianRupee, Clock, Eye } from 'lucide-react';
+import { Package, ShoppingBag, IndianRupee, Clock, Eye, Wallet } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ export function VendorDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="group bg-white p-6 rounded-[24px] shadow-sm border border-gray-100/50 flex items-center gap-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
           <div className="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-[#012980]/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
           <div className="w-16 h-16 bg-gradient-to-br from-[#012980] to-[#e55c02] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#012980]/30 flex-shrink-0">
@@ -77,6 +77,18 @@ export function VendorDashboardPage() {
             <p className="text-sm font-bold text-gray-400 tracking-wide uppercase mb-1">Active Products</p>
             <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight">
               {loading ? '...' : stats.totalProducts}
+            </h3>
+          </div>
+        </div>
+        <div className="group bg-white p-6 rounded-[24px] shadow-sm border border-gray-100/50 flex items-center gap-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden">
+          <div className="absolute -right-6 -top-6 w-24 h-24 bg-gradient-to-br from-amber-500/10 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+          <div className="w-16 h-16 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-amber-500/30 flex-shrink-0">
+            <Wallet className="w-8 h-8" />
+          </div>
+          <div className="z-10">
+            <p className="text-sm font-bold text-gray-400 tracking-wide uppercase mb-1">Pending Payouts</p>
+            <h3 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              {loading ? '...' : `₹${(stats.pendingSettlements || 0).toLocaleString()}`}
             </h3>
           </div>
         </div>
