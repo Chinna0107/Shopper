@@ -232,10 +232,7 @@ export function ProductCard({ product, layout = 'grid' }) {
           <span className="text-xs md:text-sm text-gray-400 line-through mb-0.5">₹{Math.round(displayPrice * 1.4)?.toLocaleString('en-IN')}</span>
         </div>
 
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-[#3EA361] text-[10px] md:text-[11px] font-medium">₹100 wallet cash</span>
-          <span className="text-[#9061DF] text-[10px] md:text-[11px] font-medium">+50 pts</span>
-        </div>
+
 
         <div className="mt-auto pt-3">
           <button 
