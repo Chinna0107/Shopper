@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Gift, Copy, Share2, CheckCircle2, Users, Wallet } from 'lucide-react';
+import { Gift, Copy, Share2, CheckCircle2, Users, Wallet, TrendingUp } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
@@ -52,7 +52,8 @@ export function ReferPage() {
   const steps = [
     { title: "Share Code", desc: "Share your unique link or code with friends.", icon: Share2 },
     { title: "Friend Signs Up", desc: "They get a special discount on their first order.", icon: Users },
-    { title: "Your Earnings ", desc: `Once they complete their order, you get ₹${rewardAmount} in your wallet.`, icon: Wallet },
+    { title: "Vendor Commissions 🚀", desc: "Refer a vendor and earn a lifetime commission on every single product they sell!", icon: TrendingUp },
+    { title: "Your Earnings ", desc: `Once they complete their order, you get the amount to your wallet.`, icon: Wallet },
   ];
 
   return (
@@ -73,9 +74,9 @@ export function ReferPage() {
               <Gift className="w-8 h-8 text-yellow-400" />
             </div>
             <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-md">
-              Refer & Earn <span className="text-yellow-400">₹{rewardAmount}</span>
+              Refer & Earn <span className="text-yellow-400"></span>
             </h1>
-            <p className="text-white/80 text-lg">Give your friends a treat, and get rewarded with ₹{rewardAmount} when they shop with us.</p>
+            <p className="text-white/80 text-lg">Give your friends a treat, and get rewarded with the amount when they shop with us.</p>
           </motion.div>
         </div>
       </div>

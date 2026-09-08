@@ -138,7 +138,7 @@ export function ProductDetailPage() {
     ...customAttrs
   };
 
-  const hiddenKeys = ['seo_title', 'seo_keywords', 'meta_description', 'search_tags', 'delivery_cod'];
+  const hiddenKeys = ['seo_title', 'seo_keywords', 'meta_description', 'search_tags', 'delivery_cod', 'contact_number', 'whatsapp_number', 'vendor_email', 'refund_available'];
 
   const specGroups = [
     { title: "Basic Information", keys: ['Brand', 'SKU', 'Gender', 'Category', 'Color', 'product_code', 'condition', 'product_type'] },
