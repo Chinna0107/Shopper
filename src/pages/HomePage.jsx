@@ -266,8 +266,8 @@ export function HomePage() {
           {/* Bestseller Categories (Requested Style) */}
           <div className="pt-2">
             <div className="mb-4">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight mb-1">Bestseller Categories</h3>
-              <p className="text-gray-500 text-sm">Top Picks, Just For You!</p>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 tracking-tight mb-1">Shop By Budget</h3>
+              <p className="text-gray-500 text-sm">Discover premium fashion that perfectly fits your wallet.</p>
             </div>
             <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x">
               

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Wallet, ArrowUpRight, ArrowDownLeft, Clock, CreditCard, ShieldCheck, History, X, Plus } from 'lucide-react';
+import { Wallet, ArrowUpRight, ArrowDownLeft, Clock, CreditCard, ShieldCheck, History, X, Plus, Share2 } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore';
 import api from '../utils/api';
 
@@ -143,15 +143,33 @@ export function WalletPage() {
               <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Your Referral Code</p>
               <p className="text-2xl font-extrabold text-brand-navy tracking-wider">{user?.referral_code || 'COMINGSOON'}</p>
             </div>
-            <button 
-              onClick={() => {
-                navigator.clipboard.writeText(user?.referral_code || 'COMINGSOON');
-                toast.success("Referral code copied!");
-              }}
-              className="bg-brand-navy hover:bg-blue-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
-            >
-              Copy Code
-            </button>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(user?.referral_code || 'COMINGSOON');
+                  toast.success("Referral code copied!");
+                }}
+                className="bg-brand-navy hover:bg-blue-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors"
+              >
+                Copy Code
+              </button>
+              <button 
+                onClick={() => {
+                  const code = user?.referral_code || 'COMINGSOON';
+                  const text = `Use my referral code ${code} to sign up and get rewards!`;
+                  if (navigator.share) {
+                    navigator.share({ title: 'Referral Code', text }).catch(() => {});
+                  } else {
+                    navigator.clipboard.writeText(text);
+                    toast.success("Share text copied!");
+                  }
+                }}
+                className="bg-blue-50 hover:bg-blue-100 text-brand-navy px-4 py-2.5 rounded-xl text-sm font-bold transition-colors flex items-center justify-center border border-blue-200"
+                title="Share Code"
+              >
+                <Share2 className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Copy, TrendingUp, Gift } from 'lucide-react';
+import { Users, Copy, TrendingUp, Gift, Share2 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -57,9 +57,27 @@ export function VendorReferralPage() {
               <span className="text-3xl font-extrabold tracking-wider flex-1 text-center">
                 {loading ? '...' : (vendor?.referral_code || 'N/A')}
               </span>
-              <button onClick={copyToClipboard} className="p-3 bg-white text-[#012980] rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
-                <Copy className="w-5 h-5" />
-              </button>
+              <div className="flex gap-2">
+                <button onClick={copyToClipboard} className="p-3 bg-white text-[#012980] rounded-lg hover:bg-gray-50 transition-colors shadow-sm" title="Copy Code">
+                  <Copy className="w-5 h-5" />
+                </button>
+                <button 
+                  onClick={() => {
+                    const code = vendor?.referral_code || 'N/A';
+                    const text = `Use my referral code ${code} to sign up and get rewards!`;
+                    if (navigator.share) {
+                      navigator.share({ title: 'Referral Code', text }).catch(() => {});
+                    } else {
+                      navigator.clipboard.writeText(text);
+                      toast.success("Share text copied!");
+                    }
+                  }}
+                  className="p-3 bg-white text-[#012980] rounded-lg hover:bg-gray-50 transition-colors shadow-sm" 
+                  title="Share Code"
+                >
+                  <Share2 className="w-5 h-5" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
