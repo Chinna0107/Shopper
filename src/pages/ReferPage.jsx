@@ -51,7 +51,7 @@ export function ReferPage() {
 
   const steps = [
     { title: "Share Code", desc: "Share your unique link or code with friends.", icon: Share2 },
-    { title: "Friend Signs Up", desc: "They get a special discount on their first order.", icon: Users },
+    { title: "Friend Signs Up", desc: "Once they ordered you will get 1% commision.", icon: Users },
     { title: "Vendor Commissions 🚀", desc: "Refer a vendor and earn a lifetime commission on every single product they sell!", icon: TrendingUp },
     { title: "Your Earnings ", desc: `Once they complete their order, you get the amount to your wallet.`, icon: Wallet },
   ];

@@ -88,24 +88,6 @@ export function StorePage() {
               <p className="text-sm font-semibold text-gray-900 truncate">{storeInfo.address}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-2xl border border-gray-100">
-            <div className="w-8 h-8 rounded-full bg-[#0b162c]/10 flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4 text-[#0b162c]" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Timing</p>
-              <p className="text-sm font-semibold text-green-600 truncate">{storeInfo.timing}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-2xl border border-gray-100">
-            <div className="w-8 h-8 rounded-full bg-[#0b162c]/10 flex items-center justify-center shrink-0">
-              <Phone className="w-4 h-4 text-[#0b162c]" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wide">Contact</p>
-              <p className="text-sm font-semibold text-gray-900 truncate">{storeInfo.phone}</p>
-            </div>
-          </div>
         </div>
       </div>
       
